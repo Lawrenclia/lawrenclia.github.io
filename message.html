@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>留言板 · Lawrenclia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+  
+  <style>
+    :root {
+      --accent: #ff6b9a;
+      /* 定义一个比accent稍浅的颜色用于边框和阴影 */
+      --accent-light: #ff8cae; 
+      /* 定义一个更柔和的阴影色 */
+      --shadow-color: rgba(255, 107, 154, 0.15); 
+    }
+    body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft Yahei',sans-serif;background:#fbfbfd;color:#111;line-height:1.6}
+    header{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.05);padding:16px 32px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
+    header h1{margin:0;font-size:20px}
+    /* =========================
+       2. 顶部导航栏
+    ========================= */
+    .navbar {
+      width: 100%;
+      background: rgba(30,30,30,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .navbar-inner {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+      height: 40px;
+      padding: 0 20px 0 20px;
+      box-sizing: border-box;
+    }
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-link:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .wrap {
+      max-width: 800px;
+      margin: 80px auto 40px auto;
+      padding: 0 20px;
+    }
+    article {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 16px rgba(16,24,40,0.06);
+    }
+    article h2 {
+      margin-top: 0;
+      color: #222;
+      font-size: 22px;
+    }
+    article p {
+      margin: 12px 0;
+      color: #444;
+    }
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      padding: 30px 10px;
+      border-top: 1px solid #eee;
+      margin-top: 60px;
+    }
+    .wrap{max-width:800px;margin:80px auto;padding:0 20px}
+    footer{text-align:center;color:#777;font-size:14px;padding:30px 10px;border-top:1px solid #eee;margin-top:60px}
+    
+    /* 留言板专属样式 */
+    .guestbook-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .guestbook-header h2 {
+      margin: 0;
+      color: #222;
+      font-size: 24px;
+    }
+    #leave-message-btn {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #leave-message-btn:hover {
+      background: #e65a88;
+    }
+    .disclaimer {
+        background-color: #fffbe6;
+        border: 1px solid #ffe58f;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 25px;
+        color: #d46b08;
+        font-size: 14px;
+    }
+    .message-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .message-item {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      /* 调整：使用 accent 颜色作为边框和阴影的主色 */
+      border: 2px solid var(--accent-light); /* 新增边框 */
+      box-shadow: 0 6px 16px var(--shadow-color);
+      display: flex;
+      gap: 15px;
+      position: relative; /* 允许子元素进行绝对定位 */
+      padding-bottom: 40px; /* 为右下角署名留出空间 */
+    }
+    .message-number {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    .message-details {
+      flex-grow: 1;
+      position: relative;
+    }
+    .message-text {
+      color: #444;
+      white-space: pre-wrap; /* 保留换行和空格 */
+      word-break: break-word;
+      margin-top: 0;
+    }
+    /* 调整：将署名移动到右下角 */
+    .message-author {
+      position: absolute;
+      right: 0;
+      bottom: -5px; /* 移到底部一点 */
+      color: var(--accent); /* 使用主色调 */
+      font-size: 14px;
+      font-weight: 600;
+      padding: 5px 10px;
+      background: #fff;
+      border-radius: 8px 0 16px 0;
+    }
+
+    /* 弹窗样式 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .modal-overlay.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transform: scale(0.95);
+      transition: transform 0.3s;
+    }
+    .modal-overlay.visible .modal-content {
+      transform: scale(1);
+    }
+    .modal-content h3 {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .modal-content input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      box-sizing: border-box;
+    }
+    .modal-content textarea {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 16px;
+      font-family: inherit;
+      resize: vertical;
+      box-sizing: border-box;
+    }
+    .modal-actions {
+      margin-top: 16px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+    }
+    .modal-actions button {
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #cancel-btn {
+      background: #f0f0f0;
+      color: #333;
+    }
+    #cancel-btn:hover {
+      background: #e0e0e0;
+    }
+    #submit-btn {
+      background: var(--accent);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <span style="color:#fff;font-weight:700;font-size:18px;margin-right:auto;padding-left:8px;">留言板</span>
+      <a class="nav-link" href="index">首页</a>
+      <a class="nav-link" href="projects">项目</a>
+      <a class="nav-link" href="construct">博客</a>
+      <a class="nav-link" href="construct">画廊</a>
+      <a class="nav-link" href="about">关于</a>
+    </div>
+  </nav>
+  
+  <div class="wrap">
+    <div class="guestbook-header">
+      <h2>留言板</h2>
+      <button id="leave-message-btn">写留言</button>
+    </div>
+    
+    <div class="disclaimer">
+      <strong>注意：</strong>本留言板已升级为使用 Supabase 平台。请勿发布任何违法、违规或不当内容。感谢您的理解与支持！
+    </div>
+
+    <div class="message-container" id="message-list">
+      </div>
+  </div>
+
+
+  <div class="modal-overlay" id="message-modal">
+    <div class="modal-content">
+      <h3>写下你的留言</h3>
+      <input type="text" id="author-input" placeholder="你的名字（选填）">
+      <textarea id="message-input" placeholder="在这里输入..."></textarea>
+      <div class="modal-actions">
+        <button id="cancel-btn">取消</button>
+        <button id="submit-btn">提交</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ==========================================================
+  // !!! 替换成您自己的 Supabase 项目 URL 和 Public Key !!!
+  // ==========================================================
+  const SUPABASE_URL = 'https://glphhykfjhuwltgfwqyw.supabase.co'; 
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdscGhoeWtmamh1d2x0Z2Z3cXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDA1NjEsImV4cCI6MjA3NDQ3NjU2MX0.QkatvzOsTZ0l9i_rS6MesgeOiS5Lw6eEjzS-INBCU-c';
+
+  // 初始化 Supabase 客户端
+  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const leaveMessageBtn = document.getElementById('leave-message-btn');
+    const modal = document.getElementById('message-modal');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const authorInput = document.getElementById('author-input');
+    const messageInput = document.getElementById('message-input');
+    const messageList = document.getElementById('message-list');
+
+    // 初始化时加载留言
+    loadMessages();
+
+    leaveMessageBtn.addEventListener('click', () => {
+      modal.classList.add('visible');
+    });
+
+    function closeModal() {
+      modal.classList.remove('visible');
+    }
+    cancelBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModal();
+      }
+    });
+
+    // 提交留言逻辑
+    submitBtn.addEventListener('click', async () => {
+      const authorName = authorInput.value.trim() || '匿名';
+      const messageText = messageInput.value.trim();
+      
+      if (messageText) {
+        submitBtn.textContent = '提交中...';
+        submitBtn.disabled = true;
+
+        const { error } = await supabase
+          .from('messages')
+          .insert([{ author: authorName, content: messageText }]);
+
+        submitBtn.textContent = '提交';
+        submitBtn.disabled = false;
+
+        if (error) {
+          alert('提交失败: ' + error.message);
+          console.error('Submission Error:', error);
+        } else {
+          authorInput.value = '';
+          messageInput.value = '';
+          closeModal();
+          loadMessages(); 
+        }
+      } else {
+        alert('留言内容不能为空！');
+      }
+    });
+
+    // 加载留言逻辑
+    async function loadMessages() {
+      messageList.innerHTML = '<div style="text-align:center; color:#777;">留言加载中...</div>';
+
+      const { data: messages, error } = await supabase
+        .from('messages')
+        .select('author, content, created_at')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Loading Error:', error);
+        messageList.innerHTML = '<div style="text-align:center; color:red;">留言加载失败，请检查API配置。</div>';
+        return;
+      }
+
+      messageList.innerHTML = '';
+      if (messages.length === 0) {
+        messageList.innerHTML = '<div style="text-align:center; color:#777;">暂无留言，快来写下第一条吧！</div>';
+        return;
+      }
+
+      messages.forEach((msg, index) => {
+        const sequenceNumber = messages.length - index; 
+        addMessage(sequenceNumber, msg.author, msg.content);
+      });
+    }
+
+    function addMessage(sequenceNumber, author, text) {
+      const messageId = String(sequenceNumber).padStart(3, '0');
+      
+      const messageItem = document.createElement('div');
+      messageItem.className = 'message-item';
+      
+      messageItem.innerHTML = `
+        <div class="message-number">#${messageId}</div>
+        <div class="message-details">
+          <div class="message-text">${escapeHTML(text)}</div>
+          <div class="message-author">—— ${escapeHTML(author)}</div> 
+        </div>
+      `;
+      messageList.appendChild(messageItem);
+    }
+
+    function escapeHTML(str) {
+      return str.replace(/[&<>"']/g, function(match) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[match];
+      });
+    }
+  });
+</script>
+
+</body>
+</html>

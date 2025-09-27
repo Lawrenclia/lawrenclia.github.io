@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>关于 · Lawrenclia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #ff6b9a;
+    }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+      background: #fbfbfd;
+      color: #111;
+      line-height: 1.6;
+    }
+    /* =========================
+       2. 顶部导航栏
+    ========================= */
+    .navbar {
+      width: 100%;
+      background: rgba(30,30,30,0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .navbar-inner {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+      height: 40px;
+      padding: 0 20px 0 20px;
+      box-sizing: border-box;
+    }
+    .nav-link {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-link:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+    .wrap {
+      max-width: 800px;
+      margin: 80px auto 40px auto;
+      padding: 0 20px;
+    }
+    article {
+      background: #fff;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 6px 16px rgba(16,24,40,0.06);
+    }
+    article h2 {
+      margin-top: 0;
+      color: #222;
+      font-size: 22px;
+    }
+    article p {
+      margin: 12px 0;
+      color: #444;
+    }
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+      padding: 30px 10px;
+      border-top: 1px solid #eee;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部导航栏 -->
+  <nav class="navbar">
+    <div class="navbar-inner">
+      <span style="color:#fff;font-weight:700;font-size:18px;margin-right:auto;padding-left:8px;">关于我</span>
+      <a class="nav-link" href="index">首页</a>
+      <a class="nav-link" href="projects">项目</a>
+      <a class="nav-link" href="construct">博客</a>
+      <a class="nav-link" href="construct">画廊</a>
+    </div>
+  </nav>
+  <div class="wrap">
+    <h2>你好，我是 Lawrenclia</h2>
+    <h3>你可以通过我的 <a href="https://github.com/Lawrenclia" target="_blank">GitHub</a> 查看我的开源项目。</h3>
+  </div>
+</body>
+</html>
+

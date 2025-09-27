@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>画廊 · Lawrenclia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft Yahei',sans-serif;background:#fbfbfd;color:#111;line-height:1.6}
+    header{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.05);padding:16px 32px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
+    header h1{margin:0;font-size:20px}
+    nav a{margin-left:18px;text-decoration:none;color:#555;font-weight:500}
+    nav a:hover{color:#ff6b9a}
+    .wrap{max-width:1000px;margin:40px auto;padding:0 20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px}
+    .item{position:relative;overflow:hidden;border-radius:16px;box-shadow:0 6px 16px rgba(16,24,40,0.06);background:#fff}
+    .item img{width:100%;display:block;transition:transform 0.4s ease}
+    .item:hover img{transform:scale(1.05)}
+    .caption{position:absolute;bottom:0;left:0;right:0;padding:10px 14px;background:linear-gradient(0deg,rgba(0,0,0,0.6),transparent);color:#fff;font-size:14px}
+    footer{text-align:center;color:#777;font-size:14px;padding:30px 10px;border-top:1px solid #eee;margin-top:60px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>我的画廊</h1>
+    <nav>
+      <a href="index.html">首页</a>
+      <a href="projects.html">项目</a>
+      <a href="blog.html">博客</a>
+      <a href="about.html">关于</a>
+    </nav>
+  </header>
+  <div class="wrap">
+    <div class="grid">
+      <div class="item">
+        <img src="images/pic1.JPEG" alt="pic1">
+        <div class="caption">东海</div>
+      </div>
+      <div class="item">
+        <img src="images/pic2.JPEG" alt="pic2">
+        <div class="caption">安庆</div>
+      </div>
+      <div class="item">
+        <img src="images/pic3.JPEG" alt="pic3">
+        <div class="caption">安庆</div>
+      </div>
+    </div>
+  </div>
+  <footer>
+    © 2025 Lawrenclia · 使用 GitHub Pages 发布
+  </footer>
+</body>
+</html>

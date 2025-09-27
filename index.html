@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>HELLO · 你好</title>
+    <meta name="description" content="你好" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* =========================
+           1. 全局变量与基础样式
+        ========================= */
+        :root {
+            --bg: #fbfbfd;
+            --card: rgba(255,255,255,0.2);      /* 卡片液态玻璃背景 */
+            --muted: rgba(255,255,255,0.8);     /* 次要文字色 */
+            --accent: #ff6b9a;                  /* 强调色（粉） */
+            --glass: rgba(255,255,255,0.4);     /* 图标/按钮背景 */
+            --radius: 24px;
+            --random-bg-url: none;              /* JS动态设置背景图 */
+        }
+        * { box-sizing: border-box; }
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            font-family: Inter, system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+            background: #333;
+            color: #fff;
+        }
+
+        /* =========================
+           2. 顶部导航栏
+        ========================= */
+        .navbar {
+            width: 100%;
+            background: rgba(30,30,30,0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        .navbar-inner {
+            width: 100%;                /* 占满整行 */
+            max-width: none;
+            margin: 0;
+            display: flex;
+            justify-content: flex-end;  /* 靠右对齐 */
+            align-items: center;
+            gap: 20px;                  
+            height: 40px;
+            padding: 0 20px 0 20px;       
+            box-sizing: border-box;
+        }
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .nav-link:hover {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* =========================
+           3. 背景容器与效果层
+        ========================= */
+        .wrap {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 92px 36px 36px 36px; /* 顶部留出导航栏空间 */
+            position: relative;
+            overflow: hidden;
+        }
+        /* 背景模糊层 */
+        .wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: var(--random-bg-url);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: none;
+            transform: none
+        }
+        /* 半透明遮罩层 */
+        .wrap::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        /* =========================
+           4. 头像样式（卡片上方居中悬浮）
+        ========================= */
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: transparent;
+            box-shadow: 0 0 0 4px var(--accent), 0 8px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin-bottom: 0px; 
+            margin-top: 0px;
+            position: relative;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* =========================
+           5. 卡片样式
+        ========================= */
+        .card {
+            width: 100%;
+            max-width: 430px;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            display: block;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+
+        .deco {
+            margin-top: -20px; 
+        }
+
+
+        /* =========================
+           6. 状态消息框
+        ========================= */
+        .status-message {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 4px 4px;
+            
+            color: #fff;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            font-weight: 500;
+        }
+
+        /* =========================
+           7. 社交图标标签
+        ========================= */
+        .icon-tags {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+        .icon-tag {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .icon-tag:hover {
+            background: rgba(255,255,255,0.6);
+            transform: translateY(-2px);
+        }
+        .icon-tag img {
+            width: 50%;
+            height: 50%;
+            filter: invert(100%);
+        }
+
+        /* =========================
+           8. 响应式适配
+        ========================= */
+        @media (max-width: 600px) {
+            .card {
+                max-width: 96vw;
+                padding: 14px;
+            }
+            .avatar {
+                width: 72px;
+                height: 72px;
+                margin-bottom: -36px;
+                margin-top: 0px;
+            }
+            .navbar-inner {
+                padding-right: 16px;
+                gap: 12px;
+            }
+        }
+
+        /* =========================
+           9. 其它辅助样式
+        ========================= */
+        footer {
+            margin-top: 18px;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        .tags, .tag, .wave { display: none; } /* 隐藏未用元素 */
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <span style="color:#fff;font-weight:700;font-size:18px;margin-right:auto;padding-left:8px;">首页</span>
+            <a class="nav-link" href="projects" id="projects">项目</a>
+            <a class="nav-link" href="construct" id="blog">博客</a>
+            <a class="nav-link" href="construct" id="gallery">画廊</a>
+            <a class="nav-link" href="message" id="message">留言</a>
+            <a class="nav-link" href="about" id="nav-about">关于</a>
+        </div>
+    </nav>
+    <div class="wrap" id="wrap">
+        <!-- 头像悬浮在卡片上方 -->
+        <div class="avatar" aria-hidden>
+            <img src="images/avatar.png" alt="my_avatar">
+        </div>
+        <div class="card" role="main">
+            <div class="deco">
+                
+                <div class="status-message">
+                    <h2>你好，我是 Lawrenclia. >੭ ᐕ)੭*⁾⁾</h2>
+                    <h3> 这是我的网站，喜欢您来。</h3>
+                </div>
+                <div class="icon-tags">
+                    <a class="icon-tag" href="https://github.com/Lawrenclia" title="GitHub" target="_blank" rel="noopener">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/github.svg" alt="GitHub">
+                    </a>
+                    <a class="icon-tag" href="https://wpa.qq.com/msgrd?v=3&uin=1041302645&site=qq&menu=yes" title="QQ" target="_blank" rel="noopener">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/tencentqq.svg" alt="QQ">
+                    </a>
+                    <a class="icon-tag" href="https://x.com/LeoakyX" title="X" target="_blank" rel="noopener">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/twitter.svg" alt="X">
+                    </a>
+                    <a class="icon-tag" href="https://mc.sjtu.cn/wiki/%E7%94%A8%E6%88%B7:Chianghx" title="sjmc" target="_blank" rel="noopener">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/minecraft.svg" alt="sjmc">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================
+        // 动态背景图片加载
+        // =========================
+        async function fetchRandomBackground() {
+            // 多个图源，随机选择一个
+            const sources = [
+                'https://www.loliapi.com/acg/?t=',
+                'https://www.loliapi.com/acg/?t=',
+                'https://www.loliapi.com/acg/?t=',
+                'https://api.suyuanw.cn/api/comic/api.php?=',
+                'https://www.dmoe.cc/random.php?=',
+                'https://api.mtyqx.cn/tapi/random.php?=',
+                'https://acg.suyanw.cn/api.php?=',
+            ];
+            const idx = Math.floor(Math.random() * sources.length);
+            return sources[idx] + Date.now();
+        }
+        // 设置背景图片到 .wrap 的 CSS 变量
+        async function setPageBackground() {
+            const imageUrl = await fetchRandomBackground();
+            const wrapElement = document.getElementById('wrap');
+            if (!imageUrl) {
+                wrapElement.style.background = '#4a4e69';
+                return;
+            }
+            // 直接设置背景，无需预加载和尺寸判定
+            wrapElement.style.setProperty('--random-bg-url', `url('${imageUrl}')`);
+        }
+        setPageBackground();
+    </script>
+</body>
+</html>
