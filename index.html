@@ -48,17 +48,18 @@
             width:min(800px,calc(100% - 40px));
             background: rgba(255, 255, 255, 0.6); /* 增大透明度 */
             border-radius: 18px; /* 苹果风格圆角 */
-            padding: 0 24px;
+            padding: 0 28px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border:1px solid var(--border);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* 更柔和的阴影 */
             transition: all 0.3s ease;
+            overflow: hidden;
         }
         .navbar:hover {
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* 悬停时增强阴影 */
         }
-        .nav-left{display:flex;align-items:center;gap:12px;margin-right:auto;}
+        .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
         .brand{
             font-weight:600; 
             font-size:20px; 
@@ -80,7 +81,14 @@
             font-size:14px;
             box-shadow: 0 2px 10px rgba(0, 113, 227, 0.3); /* 轻微发光效果 */
         }
-        .nav-links{display:flex; gap:8px; align-items:center; margin-left:14px}
+        .nav-center{
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .nav-right {
+            margin-left: auto;
+        }
         .nav-link{
             padding:8px 12px; 
             border-radius:10px; 
@@ -89,11 +97,44 @@
             color: var(--muted);
             text-decoration:none; 
             transition: all .2s ease;
+            position: relative;
+            overflow: hidden;
         }
         .nav-link:hover{ 
             color:#1d1d1f; 
             background: rgba(0, 0, 0, 0.03); /* 更淡的悬停背景 */
             transform: translateY(-1px); /* 轻微上浮效果 */
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-link:hover::after {
+            width: 60%;
+        }
+        .theme-toggle {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            color: #1d1d1f;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+        .theme-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
+            transform: rotate(90deg);
         }
 
 
@@ -265,7 +306,7 @@
         }
 
         /* =========================
-           8. 响应式适配
+           8. 响应式适配 - 优化移动端字体
         ========================= */
         @media (max-width: 600px) {
             .card {
@@ -281,9 +322,27 @@
                 padding: 0 16px;
                 height: 48px;
             }
+            .nav-center {
+                gap: 8px;
+            }
+            .brand div:last-child {
+                display: none;
+            }
+            .brand div:first-of-type + div {
+                font-size: 12px; /* 减小移动端品牌名称字体 */
+            }
             .nav-link {
-                font-size: 13px;
-                padding: 6px 10px;
+                font-size: 12px; /* 减小移动端导航链接字体 */
+                padding: 6px 8px;
+            }
+            .status-message h2 {
+                font-size: 18px; /* 减小移动端主标题字体 */
+            }
+            .status-message h3 {
+                font-size: 14px; /* 减小移动端副标题字体 */
+            }
+            footer {
+                font-size: 12px; /* 减小移动端页脚字体 */
             }
         }
 
@@ -306,24 +365,22 @@
     <!-- 顶部导航栏 -->
     <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
-        <div class="brand" aria-hidden>
-            <div style="display:flex;flex-direction:column;line-height:1;">
-            <div style="font-size:13px;font-weight:600">Lawrenclia</div>
-            <div style="font-size:11px;color:rgba(0,0,0,0.5);margin-top:2px">Creative · Dev</div>
+            <div class="brand" aria-hidden>
+                <div style="display:flex;flex-direction:column;line-height:1;">
+                    <div style="font-size:16px;font-weight:600">Lawrenclia</div>
+                </div>
             </div>
         </div>
-        <nav class="nav-links" aria-label="页面链接">
-            
-        </nav>
-        </div>
 
-        <div style="display:flex;gap:8px;align-items:center">
+        <div class="nav-right">
             <a class="nav-link" href="projects">项目</a>
             <a class="nav-link" href="construct">博客</a>
             <a class="nav-link" href="construct">画廊</a>
             <a class="nav-link" href="message">留言</a>
             <a class="nav-link" href="about">关于</a>
         </div>
+
+        
     </header>
     <div class="wrap" id="wrap">
         <!-- 头像悬浮在卡片上方 -->
@@ -392,6 +449,33 @@
             wrapElement.style.setProperty('--random-bg-url', `url('${imageUrl}')`);
         }
         setPageBackground();
+
+        // 主题切换功能
+        const themeToggle = document.querySelector('.theme-toggle');
+        const htmlElement = document.documentElement;
+        
+        themeToggle.addEventListener('click', () => {
+            // 切换深色/浅色主题
+            const isDark = htmlElement.classList.toggle('dark-theme');
+            
+            if (isDark) {
+                // 深色主题
+                htmlElement.style.setProperty('--bg', '#1a1a1a');
+                htmlElement.style.setProperty('--card', 'rgba(30, 30, 30, 0.7)');
+                htmlElement.style.setProperty('--muted', 'rgba(200, 200, 200, 0.7)');
+                htmlElement.style.setProperty('--text', '#f0f0f0');
+                htmlElement.style.setProperty('--border', 'rgba(50, 50, 50, 0.5)');
+                htmlElement.style.setProperty('--glass', 'rgba(50, 50, 50, 0.5)');
+            } else {
+                // 浅色主题（恢复默认）
+                htmlElement.style.setProperty('--bg', '#f5f5f7');
+                htmlElement.style.setProperty('--card', 'rgba(255, 255, 255, 0.5)');
+                htmlElement.style.setProperty('--muted', 'rgba(255, 255, 255, 0.8)');
+                htmlElement.style.setProperty('--text', '#ffffff');
+                htmlElement.style.setProperty('--border', 'rgba(255, 255, 255, 0.2)');
+                htmlElement.style.setProperty('--glass', 'rgba(255, 255, 255, 0.4)');
+            }
+        });
     </script>
 </body>
 </html>
