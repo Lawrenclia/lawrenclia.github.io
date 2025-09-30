@@ -195,6 +195,46 @@
       margin-top: 60px;
     }
 
+    /* =========================
+        8. 响应式适配 - 优化移动端字体
+    ========================= */
+    @media (max-width: 600px) {
+        .card {
+            max-width: 90vw; /* 小屏幕也减小宽度 */
+            padding: 24px;
+            border-radius: 24px; /* 小屏幕减小圆角 */
+        }
+        .avatar {
+            width: 90px;
+            height: 90px;
+        }
+        .navbar {
+            padding: 0 16px;
+            height: 48px;
+        }
+        .nav-center {
+            gap: 8px;
+        }
+        /* .brand div:last-child {
+            display: none;
+        } */
+        .brand div:first-of-type + div {
+            font-size: 12px; /* 减小移动端品牌名称字体 */
+        }
+        .nav-link {
+            font-size: 12px; /* 减小移动端导航链接字体 */
+            padding: 6px 8px;
+        }
+        .status-message h2 {
+            font-size: 18px; /* 减小移动端主标题字体 */
+        }
+        .status-message h3 {
+            font-size: 14px; /* 减小移动端副标题字体 */
+        }
+        footer {
+            font-size: 12px; /* 减小移动端页脚字体 */
+        }
+    }
   </style>
 </head>
 <body>
