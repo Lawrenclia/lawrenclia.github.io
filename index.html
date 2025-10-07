@@ -6,6 +6,7 @@
     <title>HELLO · Lawrenclia的破站</title>
     <meta name="description" content="你好" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* =========================
            1. 全局变量与基础样式 - 苹果液态玻璃风格调整
@@ -20,7 +21,31 @@
             --radius: 32px; /* 苹果风格圆角 */
             --border: rgba(255, 255, 255, 0.2);     /* 边框改为白色半透明 */
             --random-bg-url: none;
+
+            /* 导航栏专属变量 */
+            --nav-bg: rgba(255, 255, 255, 0.6);
+            --nav-text: #1d1d1f;
+            --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
+            --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
         }
+
+        .dark-theme {
+            --bg: #1a1a1a;
+            --card: rgba(30, 30, 30, 0.7);
+            --muted: rgba(200, 200, 200, 0.7);
+            --text: #f0f0f0;
+            --border: rgba(50, 50, 50, 0.5);
+            --glass: rgba(50, 50, 50, 0.5);
+
+            /* 导航栏专属变量 */
+            --nav-bg: rgba(30, 30, 30, 0.7);
+            --nav-text: #f0f0f0;
+            --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
+            --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
         * { box-sizing: border-box; }
         html, body {
             height: 100%;
@@ -30,6 +55,7 @@
             background: var(--bg);
             color: #1d1d1f; /* 苹果风格文字色 */
             -webkit-font-smoothing: antialiased; /* 平滑字体 */
+            transition: background-color 0.3s ease;
         }
 
         /* =========================
@@ -46,25 +72,35 @@
             transform:translateX(-50%);
             z-index:30; 
             width:min(800px,calc(100% - 40px));
-            background: rgba(255, 255, 255, 0.6); /* 增大透明度 */
-            border-radius: 18px; /* 苹果风格圆角 */
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 18px;
             padding: 0 28px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border:1px solid var(--border);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* 更柔和的阴影 */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
             overflow: hidden;
         }
-        .navbar:hover {
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* 悬停时增强阴影 */
+
+        .dark-theme .navbar {
+            background: rgba(30, 30, 30, 0.7);
         }
+
+        .navbar:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark-theme .navbar:hover {
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
         .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
         .brand{
             font-weight:600; 
             font-size:20px; 
             letter-spacing:0.2px; /* 减小字间距 */
-            color: #1d1d1f;
+            color: var(--nav-text);
             display:flex; 
             align-items:center; 
             gap:10px;
@@ -73,13 +109,13 @@
             width:28px;
             height:28px;
             border-radius:8px; 
-            background: var(--accent); /* 使用强调色作为logo背景 */
+            background: var(--accent);
             display:inline-grid;
             place-items:center;
             font-weight:600;
             color:#fff;
             font-size:14px;
-            box-shadow: 0 2px 10px rgba(0, 113, 227, 0.3); /* 轻微发光效果 */
+            box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3);
         }
         .nav-center{
             display: flex;
@@ -88,22 +124,24 @@
         }
         .nav-right {
             margin-left: auto;
-            color: #1d1d1f;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .nav-link{
             padding:8px 12px; 
             border-radius:10px; 
             font-weight:400; /* 减轻字体重量 */
             font-size:14px; 
-            color: #1d1d1f;
+            color: var(--nav-text);
             text-decoration:none; 
             transition: all .2s ease;
             position: relative;
             overflow: hidden;
         }
         .nav-link:hover{ 
-            color:#1d1d1f; 
-            background: rgba(0, 0, 0, 0.03); /* 更淡的悬停背景 */
+            color:var(--nav-text); 
+            background: var(--nav-link-hover-bg);
             transform: translateY(-1px); /* 轻微上浮效果 */
         }
         .nav-link::after {
@@ -126,16 +164,20 @@
             border-radius: 50%;
             background: transparent;
             border: none;
-            color: #1d1d1f;
+            color: var(--nav-text);
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s ease;
+            transition: all 0.3s ease;
         }
         .theme-toggle:hover {
             background: rgba(0, 0, 0, 0.05);
             transform: rotate(90deg);
+        }
+
+        .dark-theme .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
 
@@ -166,6 +208,10 @@
             filter: brightness(0.8) saturate(1.05); /* 降低亮度使白色文字更清晰 */
             transform: scale(1.02); /* 轻微放大，增强沉浸感 */
             transition: all 1.5s ease; /* 平滑过渡效果 */
+        }
+
+        .dark-theme .wrap::after {
+            filter: brightness(0.6) saturate(1.05); /* 深色模式下进一步降低亮度 */
         }
         .wrap:hover::after {
             transform: scale(1.03); /* 悬停时轻微放大 */
@@ -363,7 +409,6 @@
     </style>
 </head>
 <body>
-    <!-- 顶部导航栏 -->
     <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
@@ -375,16 +420,17 @@
 
         <div class="nav-right">
             <a class="nav-link" href="projects">项目</a>
-            <!-- <a class="nav-link" href="construct">博客</a>
-            <a class="nav-link" href="construct">画廊</a> -->
             <a class="nav-link" href="message">留言</a>
             <a class="nav-link" href="about">关于</a>
+            <button class="theme-toggle" aria-label="切换主题">
+                <i class="fas fa-moon"></i>
+            </button>
         </div>
+
 
         
     </header>
     <div class="wrap" id="wrap">
-        <!-- 头像悬浮在卡片上方 -->
         <div class="avatar" aria-hidden>
             <img src="images/avatar.png" alt="my_avatar">
         </div>
@@ -453,31 +499,46 @@
 
         // 主题切换功能
         const themeToggle = document.querySelector('.theme-toggle');
-        const htmlElement = document.documentElement;
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
         
+        // 检查本地存储中的主题偏好
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          body.classList.add('dark-theme');
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        }
+        
+        // 切换主题
         themeToggle.addEventListener('click', () => {
-            // 切换深色/浅色主题
-            const isDark = htmlElement.classList.toggle('dark-theme');
-            
-            if (isDark) {
-                // 深色主题
-                htmlElement.style.setProperty('--bg', '#1a1a1a');
-                htmlElement.style.setProperty('--card', 'rgba(30, 30, 30, 0.7)');
-                htmlElement.style.setProperty('--muted', 'rgba(200, 200, 200, 0.7)');
-                htmlElement.style.setProperty('--text', '#f0f0f0');
-                htmlElement.style.setProperty('--border', 'rgba(50, 50, 50, 0.5)');
-                htmlElement.style.setProperty('--glass', 'rgba(50, 50, 50, 0.5)');
+          body.classList.toggle('dark-theme');
+          
+          if (body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+          } else {
+            localStorage.setItem('theme', 'light');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+          }
+        });
+
+        // 监听系统主题变化
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) { // 只有在用户没有手动设置主题时才响应系统变化
+            if (e.matches) {
+              body.classList.add('dark-theme');
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
             } else {
-                // 浅色主题（恢复默认）
-                htmlElement.style.setProperty('--bg', '#f5f5f7');
-                htmlElement.style.setProperty('--card', 'rgba(255, 255, 255, 0.5)');
-                htmlElement.style.setProperty('--muted', 'rgba(255, 255, 255, 0.8)');
-                htmlElement.style.setProperty('--text', '#ffffff');
-                htmlElement.style.setProperty('--border', 'rgba(255, 255, 255, 0.2)');
-                htmlElement.style.setProperty('--glass', 'rgba(255, 255, 255, 0.4)');
+              body.classList.remove('dark-theme');
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
             }
+          }
         });
     </script>
 </body>
 </html>
-    
