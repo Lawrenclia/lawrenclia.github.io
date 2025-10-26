@@ -309,6 +309,7 @@ footer {
     padding: 30px 10px; /* 内边距 */
     border-top: 1px solid var(--border); /* 顶部边框 */
     margin-top: 60px; /* 与上方内容的间距 */
+    background: var(--background);
 }
 
 /* =========================

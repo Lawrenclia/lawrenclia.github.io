@@ -7,7 +7,7 @@
 }
 :root {
     --accent: #ff6b9a;
-    --background: #f5e8ff; 
+    --background: linear-gradient(90deg, #f5e8ff 0%, #ffe8f5 100%);
     --text: #111;
     --card-bg: #fff;
     --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
