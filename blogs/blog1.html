@@ -3,13 +3,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>关于 · Lawrenclia</title>
+  <title>芝士博客 · Lawrenclia</title> 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <style>
     :root {
       --accent: #ff6b9a;
-      --background: #e5feff;
+      --background: #fbfbfd; 
       --text: #111;
       --card-bg: #fff;
       --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
@@ -38,7 +39,7 @@
       transition: background 0.3s ease;
     }
     /* =========================
-        2. 顶部导航栏
+        2. 顶部导航栏 
     ========================= */
     .navbar{
         height: 54px;
@@ -165,7 +166,7 @@
     }
 
     .wrap {
-      max-width: 1000px;
+      max-width: 800px; 
       margin: 80px auto 40px auto;
       padding: 0 20px;
     }
@@ -173,174 +174,231 @@
     article {
       background: var(--card-bg);
       border-radius: 16px;
-      padding: 24px;
       margin-bottom: 28px;
       box-shadow: var(--card-shadow);
       transition: all 0.3s ease;
     }
-    article h2 {
-      margin-top: 0;
-      color: var(--text);
-      font-size: 22px;
-    }
-    article p {
-      margin: 12px 0;
-      color: var(--muted);
-    }
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      padding: 30px 10px;
-      border-top: 1px solid var(--border);
-      margin-top: 60px;
-    }
-  
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
-    }
-
-    .item {
-      position: relative;
-      overflow: hidden;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(20px) saturate(1.8);
-      -webkit-backdrop-filter: blur(20px) saturate(1.8);
-      border: 1px solid rgba(255, 255, 255, 0.4);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-      text-align: center;
-      padding: 40px 20px;
-      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      text-decoration: none;
-      color: #111;
-    }
     
-    .item h3 {
-      margin: 0;
-      font-size: 18px;
-      font-weight: bold;
-      color: #111;
+    /* =========================
+        博客卡片样式 (blog.html用)
+    ========================= */
+    .blog-card {
+        display: flex;
+        padding: 0;
+        overflow: hidden;
     }
-
-    .item p {
-      margin-top: 10px;
-      font-size: 14px;
-      color: #555;
+    .blog-card-image-link {
+        flex-shrink: 0;
+        display: block;
     }
-
-    .item:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    .blog-card-image {
+        width: 220px;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
     }
-    
-    .dark-theme .item {
-      background: rgba(50, 50, 50, 0.4); /* 深色卡片背景：深灰半透明 */
-      border: 1px solid rgba(255, 255, 255, 0.15); /* 深色边框：白色半透明（更淡） */
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* 深色阴影：更浓，增强层次感 */
-      color: var(--text); /* 继承深色模式文字色：#f0f0f0（白色） */
+    .blog-card-image-link:hover .blog-card-image {
+        transform: scale(1.05);
     }
-
-    .dark-theme .item h3 {
-      color: var(--text); /* 深色标题：白色 */
+    .blog-card-content {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 24px;
     }
-
-    .dark-theme .item p {
-      color: var(--muted); /* 深色描述：浅灰色（继承 --muted: #bbb） */
+    .blog-card-content h2 {
+        margin-top: 0;
+        margin-bottom: 8px;
+        color: var(--text);
+        font-size: 22px;
     }
-
-    /* 深色模式下卡片 hover 效果（可选，增强交互） */
-    .dark-theme .item:hover {
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4); /* 深色 hover 阴影：更浓 */
+    .blog-card-content h2 a {
+        color: inherit;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    .blog-card-content h2 a:hover {
+        color: var(--accent);
+    }
+    .blog-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    .blog-card-tags span {
+        background: rgba(255, 107, 154, 0.1);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 500;
+        padding: 4px 10px;
+        border-radius: 8px;
+    }
+    .blog-card-description {
+        margin: 0 0 16px 0;
+        flex-grow: 1;
+        color: var(--muted);
+    }
+    .blog-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        font-size: 13px;
+        color: var(--muted);
+    }
+    .blog-card-meta span {
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
     /* =========================
-        8. 响应式适配 - 优化移动端字体
+        新：博客文章详情页样式
     ========================= */
-    @media (max-width: 600px) {
-        .card {
-            max-width: 90vw; /* 小屏幕也减小宽度 */
-            padding: 24px;
-            border-radius: 24px; /* 小屏幕减小圆角 */
-        }
-        .avatar {
-            width: 90px;
-            height: 90px;
-        }
-        .navbar {
-            padding: 0 10px;
-            height: 48px;
-        }
-        .nav-center {
-            gap: 8px;
-        }
-        /* .brand div:last-child {
-            display: none;
-        } */
-        .brand div:first-of-type + div {
-            font-size: 11px; /* 减小移动端品牌名称字体 */
-        }
-        .nav-link {
-            font-size: 11px; /* 减小移动端导航链接字体 */
-            padding: 6px 6px;
-        }
-        .status-message h2 {
-            font-size: 18px; /* 减小移动端主标题字体 */
-        }
-        .status-message h3 {
-            font-size: 14px; /* 减小移动端副标题字体 */
-        }
-        footer {
-            font-size: 12px; /* 减小移动端页脚字体 */
-        }
+    .blog-post {
+        padding: 32px 40px; /* 内部留白 */
+    }
+    .blog-post h1 {
+        font-size: 32px;
+        margin-top: 0;
+        margin-bottom: 16px;
+        color: var(--text);
+    }
+    /* 重用卡片元数据和标签样式 */
+    .blog-post .blog-card-meta {
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+    .blog-post .blog-card-tags {
+        margin-bottom: 24px;
     }
 
+    .blog-post-image {
+        width: 100%;
+        height: auto;
+        max-height: 400px; /* 限制最大高度 */
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 24px;
+    }
+
+    .blog-post-content {
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--text);
+    }
+    .blog-post-content p {
+        margin-top: 0;
+        margin-bottom: 1.2em;
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-top: 24px;
+        color: var(--accent);
+        text-decoration: none;
+        font-weight: 500;
+        transition: transform 0.2s ease;
+    }
+    .back-link:hover {
+        transform: translateX(-4px);
+    }
+
+
+    /* =========================
+        8. 响应式适配
+    ========================= */
+    @media (max-width: 600px) {
+        /* ... (已有样式) ... */
+        .card { max-width: 90vw; padding: 24px; border-radius: 24px; }
+        .avatar { width: 90px; height: 90px; }
+        .navbar { padding: 0 10px; height: 48px; }
+        .nav-center { gap: 8px; }
+        .brand div:first-of-type + div { font-size: 11px; }
+        .nav-link { font-size: 11px; padding: 6px 6px; }
+        .status-message h2 { font-size: 18px; }
+        .status-message h3 { font-size: 14px; }
+        footer { font-size: 12px; }
+
+        /* 卡片响应式 */
+        .blog-card {
+            flex-direction: column;
+        }
+        .blog-card-image {
+            width: 100%;
+            height: 180px;
+        }
+        .blog-card-content {
+            padding: 20px;
+        }
+
+        /* 新：文章详情页响应式 */
+        .blog-post {
+            padding: 24px;
+        }
+        .blog-post h1 {
+            font-size: 26px;
+        }
+        .blog-post-content {
+            font-size: 15px;
+        }
+    }
   </style>
 </head>
 <body>
-  <!-- 顶部导航栏 -->
   <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
                 <div style="display:flex;flex-direction:column;line-height:1;">
-                    <div style="font-size:16px;font-weight:600">项目 · Lawrenclia</div>
+                    <div style="font-size:16px;font-weight:600">博客 · Lawrenclia</div>
                 </div>
             </div>
         </div>
 
         <div class="nav-right">
-            <a class="nav-link" href="index">首页</a>
-            <a class="nav-link" href="blog">博客</a>
-            <!-- <a class="nav-link" href="construct"></a>
-            <a class="nav-link" href="construct">画廊</a> -->
-            <a class="nav-link" href="message">留言</a>
-            <a class="nav-link" href="about">关于</a>
+            <a class="nav-link" href="../index">首页</a>
+            <a class="nav-link" href="../projects">项目</a>
+            <a class="nav-link" href="../message">留言</a>
+            <a class="nav-link" href="../about">关于</a>
             <button class="theme-toggle" aria-label="切换主题">
                 <i class="fas fa-moon"></i>
             </button>
         </div>
     </header>
+
   <div class="wrap">
-    <div class="grid">
-      <a class="item" href="https://github.com/Lawrenclia/CS1604" target="_blank">
-        <h3>CS1604课程相关项目</h3>
-        <p>这是一个关于SJTU-CS1604课程的项目</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/CS1605" target="_blank">
-        <h3>CS1605课程相关项目</h3>
-        <p>这是一个关于SJTU-CS1605课程的项目</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/ICE2607" target="_blank">
-        <h3>ICE2607课程相关项目</h3>
-        <p>这是一个关于SJTU-ICE2607课程（金）的项目</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/CS2602" target="_blank">
-        <h3>CS2602课程相关项目</h3>
-        <p>这是一个关于SJTU-CS2602课程的项目</p>
-      </a>
-    </div>
+    
+    <article class="blog-post">
+        
+        <h1>芝士博客</h1>
+
+        <div class="blog-card-meta">
+          <span>
+            <i class="fas fa-user"></i>
+            Lawrenclia
+          </span>
+          <span>
+            <i class="fas fa-calendar-alt"></i>
+            10/2/2025
+          </span>
+        </div>
+
+        <div class="blog-card-tags">
+          <span>个人</span>
+          <span>随笔</span>
+        </div>
+
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="芝士博客配图" class="blog-post-image">
+
+        <div class="blog-post-content">
+            <p>也许这个页面会一直鸽下去，等我有了想法再写吧。哦，对了，孩子们，AI真的太好用了。</p>
+        </div>
+
+        <a href="../blog.html" class="back-link">&larr; 返回博客列表</a>
+
+    </article>
+
   </div>
 
   <script>

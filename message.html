@@ -27,6 +27,13 @@
       --cancel-btn-bg: #f0f0f0;
       --cancel-btn-text: #333;
       --cancel-btn-hover: #e0e0e0;
+
+      /* 导航栏专属变量 (从 index.html 复制而来) */
+      --nav-bg: rgba(255, 255, 255, 0.6);
+      --nav-text: #1d1d1f;
+      --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
+      --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     }
 
     /* 深色主题变量 */
@@ -45,6 +52,13 @@
       --cancel-btn-bg: #3a3a3a;
       --cancel-btn-text: #f0f0f0;
       --cancel-btn-hover: #4a4a4a;
+
+      /* 导航栏专属变量 (从 index.html 复制而来) */
+      --nav-bg: rgba(30, 30, 30, 0.7);
+      --nav-text: #f0f0f0;
+      --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
+      --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
     }
 
     body{
@@ -55,7 +69,10 @@
       line-height:1.6;
       transition: background-color 0.3s ease;
     }
-    /* 顶部导航栏 */
+    
+    /* =========================
+       2. 顶部导航栏 (从 index.html 复制而来)
+    ========================= */
     .navbar{
         height: 54px;
         display:flex;
@@ -67,35 +84,35 @@
         transform:translateX(-50%);
         z-index:30; 
         width:min(800px,calc(100% - 40px));
-        background: rgba(255, 255, 255, 0.6);
+        background: var(--nav-bg); /* 使用专属变量 */
         border-radius: 18px;
         padding: 0 28px;
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border:1px solid var(--border);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        box-shadow: var(--nav-shadow); /* 使用专属变量 */
         transition: all 0.3s ease;
         overflow: hidden;
     }
 
     .dark-theme .navbar {
-        background: rgba(30, 30, 30, 0.7);
+        background: var(--nav-bg); /* 使用专属变量 */
     }
 
     .navbar:hover {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        box-shadow: var(--nav-hover-shadow); /* 使用专属变量 */
     }
 
     .dark-theme .navbar:hover {
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        box-shadow: var(--nav-hover-shadow); /* 使用专属变量 */
     }
 
     .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
     .brand{
         font-weight:600; 
         font-size:20px; 
-        letter-spacing:0.2px;
-        color: var(--text);
+        letter-spacing:0.2px; 
+        color: var(--nav-text); /* 使用专属变量 */
         display:flex; 
         align-items:center; 
         gap:10px;
@@ -104,13 +121,13 @@
         width:28px;
         height:28px;
         border-radius:8px; 
-        background: var(--accent);
+        background: var(--accent); /* 保留 message.html 的粉色 accent */
         display:inline-grid;
         place-items:center;
         font-weight:600;
         color:#fff;
         font-size:14px;
-        box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3);
+        box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3); /* 保留 message.html 的粉色 shadow */
     }
     .nav-center{
         display: flex;
@@ -126,24 +143,19 @@
     .nav-link{
         padding:8px 12px; 
         border-radius:10px; 
-        font-weight:400;
+        font-weight:400; 
         font-size:14px; 
-        color: var(--muted);
+        color: var(--nav-text); /* 使用专属变量 */
         text-decoration:none; 
         transition: all .2s ease;
         position: relative;
         overflow: hidden;
     }
     .nav-link:hover{ 
-        color:var(--text); 
-        background: rgba(255, 232, 232, 0.03);
-        transform: translateY(-1px);
+        color:var(--nav-text); /* 使用专属变量 */
+        background: var(--nav-link-hover-bg); /* 使用专属变量 */
+        transform: translateY(-1px); 
     }
-
-    .dark-theme .nav-link:hover {
-        background: rgba(255, 255, 255, 0.05);
-    }
-
     .nav-link::after {
         content: '';
         position: absolute;
@@ -151,7 +163,7 @@
         left: 50%;
         width: 0;
         height: 2px;
-        background: var(--accent);
+        background: var(--accent); /* 保留 message.html 的粉色 accent */
         transition: all 0.3s ease;
         transform: translateX(-50%);
     }
@@ -164,7 +176,7 @@
         border-radius: 50%;
         background: transparent;
         border: none;
-        color: var(--text);
+        color: var(--nav-text); /* 使用专属变量 */
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -179,6 +191,8 @@
     .dark-theme .theme-toggle:hover {
         background: rgba(255, 255, 255, 0.1);
     }
+    /* 导航栏 CSS 结束 */
+
 
     .wrap {
       max-width: 800px;
@@ -434,11 +448,12 @@
         </div>
 
         <div class="nav-right">
-            <a class="nav-link" href="index">首页</a>
-            <a class="nav-link" href="projects">项目</a>
-            <!-- <a class="nav-link" href="construct">博客</a>
-            <a class="nav-link" href="construct">画廊</a> -->
-            <a class="nav-link" href="about">关于</a>
+            <a class="nav-link" href="index.html">首页</a>
+            <a class="nav-link" href="projects.html">项目</a>
+            <a class="nav-link" href="blog.html">博客</a>
+            <!-- <a class="nav-link" href="construct.html">博客</a>
+            <a class="nav-link" href="construct.html">画廊</a> -->
+            <a class="nav-link" href="about.html">关于</a>
             <button class="theme-toggle" aria-label="切换主题">
                 <i class="fas fa-moon"></i>
             </button>

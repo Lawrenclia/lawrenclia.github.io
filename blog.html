@@ -5,38 +5,411 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>博客 · Lawrenclia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  
   <style>
-    body{margin:0;font-family:Inter,system-ui,-apple-system,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft Yahei',sans-serif;background:#fbfbfd;color:#111;line-height:1.6}
-    header{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.05);padding:16px 32px;position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center}
-    header h1{margin:0;font-size:20px}
-    nav a{margin-left:18px;text-decoration:none;color:#555;font-weight:500}
-    nav a:hover{color:#ff6b9a}
-    .wrap{max-width:800px;margin:40px auto;padding:0 20px}
-    article{background:#fff;border-radius:16px;padding:24px;margin-bottom:28px;box-shadow:0 6px 16px rgba(16,24,40,0.06)}
-    article h2{margin-top:0;color:#222;font-size:22px}
-    article p{margin:12px 0;color:#444}
-    footer{text-align:center;color:#777;font-size:14px;padding:30px 10px;border-top:1px solid #eee;margin-top:60px}
+    :root {
+      --accent: #ff6b9a;
+      --background: #fbfbfd; 
+      --text: #111;
+      --card-bg: #fff;
+      --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
+      --muted: #666;
+      --border: rgba(0,0,0,0.08);
+      --link: #0066cc;
+    }
+
+    /* 深色主题变量 */
+    .dark-theme {
+      --background: #1a1a1a;
+      --text: #f0f0f0;
+      --card-bg: #2d2d2d;
+      --card-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      --muted: #bbb;
+      --border: rgba(255,255,255,0.1);
+      --link: #66b2ff;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background 0.3s ease;
+    }
+    /* =========================
+        2. 顶部导航栏 
+    ========================= */
+    .navbar{
+        height: 54px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        position:fixed; 
+        top:16px; 
+        left:50%; 
+        transform:translateX(-50%);
+        z-index:30; 
+        width:min(800px,calc(100% - 40px));
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 18px;
+        padding: 0 28px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border:1px solid var(--border);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .dark-theme .navbar {
+        background: rgba(30, 30, 30, 0.7);
+    }
+
+    .navbar:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .dark-theme .navbar:hover {
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
+    .brand{
+        font-weight:600; 
+        font-size:20px; 
+        letter-spacing:0.2px;
+        color: var(--text);
+        display:flex; 
+        align-items:center; 
+        gap:10px;
+    }
+    .brand .logo{
+        width:28px;
+        height:28px;
+        border-radius:8px; 
+        background: var(--accent);
+        display:inline-grid;
+        place-items:center;
+        font-weight:600;
+        color:#fff;
+        font-size:14px;
+        box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3);
+    }
+    .nav-center{
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+    .nav-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .nav-link{
+        padding:8px 12px; 
+        border-radius:10px; 
+        font-weight:400;
+        font-size:14px; 
+        color: var(--muted);
+        text-decoration:none; 
+        transition: all .2s ease;
+        position: relative;
+        overflow: hidden;
+    }
+    .nav-link:hover{ 
+        color:var(--text); 
+        background: rgba(255, 232, 232, 0.03);
+        transform: translateY(-1px);
+    }
+
+    .dark-theme .nav-link:hover {
+        background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: 6px;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: var(--accent);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+    }
+    .nav-link:hover::after {
+        width: 60%;
+    }
+    .theme-toggle {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: transparent;
+        border: none;
+        color: var(--text);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+    .theme-toggle:hover {
+        background: rgba(0, 0, 0, 0.05);
+        transform: rotate(90deg);
+    }
+
+    .dark-theme .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .wrap {
+      max-width: 800px; 
+      margin: 80px auto 40px auto;
+      padding: 0 20px;
+    }
+
+    article {
+      background: var(--card-bg);
+      border-radius: 16px;
+      /* padding: 24px; (原padding: 24px; 将在.blog-card中移除) */
+      margin-bottom: 28px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.3s ease;
+    }
+    article h2 {
+      margin-top: 0;
+      color: var(--text);
+      font-size: 22px;
+    }
+    article p {
+      margin: 12px 0;
+      color: var(--muted);
+    }
+    
+    /* =========================
+        新添加的博客卡片样式
+    ========================= */
+    .blog-card {
+        display: flex;
+        padding: 0; /* 移除 article 的内边距，以便图片可以贴合边缘 */
+        overflow: hidden; /* 确保图片圆角生效 */
+    }
+
+    .blog-card-image-link {
+        flex-shrink: 0; /* 防止图片被压缩 */
+        display: block;
+    }
+    
+    .blog-card-image {
+        width: 220px; /* 图片宽度 */
+        height: 100%; /* 图片高度占满卡片 */
+        object-fit: cover; /* 裁剪图片以填充，不变形 */
+        display: block;
+        transition: transform 0.3s ease;
+    }
+    
+    .blog-card-image-link:hover .blog-card-image {
+        transform: scale(1.05); /* 鼠标悬停时图片放大 */
+    }
+
+    .blog-card-content {
+        display: flex;
+        flex-direction: column; /* 内部元素垂直排列 */
+        flex-grow: 1; /* 占据剩余空间 */
+        padding: 24px; /* 内容区的内边距 */
+    }
+
+    .blog-card-content h2 {
+        margin-bottom: 8px;
+    }
+    
+    .blog-card-content h2 a {
+        color: inherit; /* 继承父元素颜色 */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .blog-card-content h2 a:hover {
+        color: var(--accent); /* 鼠标悬停时变为主题色 */
+    }
+
+    .blog-card-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .blog-card-tags span {
+        background: rgba(255, 107, 154, 0.1); /* 主题色的浅色背景 */
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 500;
+        padding: 4px 10px;
+        border-radius: 8px;
+    }
+
+    .blog-card-description {
+        margin: 0 0 16px 0;
+        flex-grow: 1; /* 占据多余空间，将元数据推到底部 */
+    }
+
+    .blog-card-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px; /* 元数据项之间的间距 */
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    .blog-card-meta span {
+        display: flex;
+        align-items: center;
+        gap: 6px; /* 图标和文字的间距 */
+    }
+
+
+    /* =========================
+        8. 响应式适配 - 优化移动端字体
+    ========================= */
+    @media (max-width: 600px) {
+        .card {
+            max-width: 90vw;
+            padding: 24px;
+            border-radius: 24px;
+        }
+        .avatar {
+            width: 90px;
+            height: 90px;
+        }
+        .navbar {
+            padding: 0 10px;
+            height: 48px;
+        }
+        .nav-center {
+            gap: 8px;
+        }
+        .brand div:first-of-type + div {
+            font-size: 11px;
+        }
+        .nav-link {
+            font-size: 11px;
+            padding: 6px 6px;
+        }
+        .status-message h2 {
+            font-size: 18px;
+        }
+        .status-message h3 {
+            font-size: 14px;
+        }
+        footer {
+            font-size: 12px;
+        }
+
+        /* 新增的响应式样式 */
+        .blog-card {
+            flex-direction: column; /* 垂直堆叠 */
+        }
+        .blog-card-image {
+            width: 100%;
+            height: 180px; /* 在移动端给图片一个固定高度 */
+        }
+        .blog-card-content {
+            padding: 20px; /* 移动端内边距稍小 */
+        }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <h1>我的博客</h1>
-    <nav>
-      <a href="index.html">首页</a>
-      <a href="projects.html">项目</a>
-      <a href="gallert.html">画廊</a>
-      <a href="about.html">关于</a>
-    </nav>
-  </header>
+  <header class="navbar" role="navigation" aria-label="主导航">
+        <div class="nav-left">
+            <div class="brand" aria-hidden>
+                <div style="display:flex;flex-direction:column;line-height:1;">
+                    <div style="font-size:16px;font-weight:600">博客 · Lawrenclia</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <a class="nav-link" href="index.html">首页</a>
+            <a class="nav-link" href="projects.html">项目</a>
+            <a class="nav-link" href="message.html">留言</a>
+            <a class="nav-link" href="about.html">关于</a>
+            <button class="theme-toggle" aria-label="切换主题">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
   <div class="wrap">
-    <article>
-      <h2>芝士博客</h2>
-      <p>也许这个页面会一直鸽下去，等我有了想法再写吧。</p>
-      <p>哦，对了，孩子们，AI真的太好用了。</p>
+    <article class="blog-card">
+      
+      <a href="blogs/blog1.html" class="blog-card-image-link" aria-label="阅读文章：芝士博客">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" alt="blog1" class="blog-card-image">
+      </a>
+      
+      <div class="blog-card-content">
+        
+        <h2>
+          <a href="blogs/blog1.html">芝士博客</a>
+        </h2>
+        
+        <div class="blog-card-tags">
+          <span>个人</span>
+          <span>随笔</span>
+          <!-- <span>技术</span> -->
+        </div>
+        
+        <p class="blog-card-description">也许这个页面会一直鸽下去，等我有了想法再写吧。哦，对了，孩子们，AI真的太好用了。</p>
+        
+        <div class="blog-card-meta">
+          <span>
+            <i class="fas fa-user"></i>
+            Lawrenclia
+          </span>
+          <span>
+            <i class="fas fa-calendar-alt"></i>
+            10/2/2025
+          </span>
+        </div>
+        
+      </div>
     </article>
-  </div>
-  <footer>
-    © 2025 Lawrenclia · 使用 GitHub Pages 发布
-  </footer>
+
+    </div>
+
+  <script>
+    // 主题切换功能
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+    
+    // 检查本地存储中的主题偏好
+    if (localStorage.getItem('theme') === 'dark' || 
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-theme');
+      icon.classList.remove('fa-moon');
+      icon.classList.add('fa-sun');
+    }
+    
+    // 切换主题
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-theme');
+      
+      if (body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark');
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        localStorage.setItem('theme', 'light');
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    });
+  </script>
+
 </body>
 </html>
