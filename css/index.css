@@ -446,24 +446,6 @@ html, body {
     footer {
         font-size: 12px;
     }
-
-    /* === [FIX 2] 新增：为移动端提供毛玻璃后备 === */
-    /* 由于移动端浏览器不支持 backdrop-filter: url()，
-      我们降级为支持性更好的 blur()（毛玻璃效果）
-    */
-    .navbar,
-    .card {
-        /* 注意：这里的 backdrop-filter 会覆盖掉桌面端的 url(#lg-dist) 
-         你可以调整 blur(18px) 的值来获得最佳观感
-        */
-        backdrop-filter: blur(18px) brightness(1.1);
-        -webkit-backdrop-filter: blur(18px) brightness(1.1);
-    }
-    
-    .icon-tag {
-        backdrop-filter: none; /* 移除多余的滤镜 */
-        -webkit-backdrop-filter: none;
-    }
 }
 
 
