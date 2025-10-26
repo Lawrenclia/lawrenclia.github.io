@@ -27,6 +27,11 @@
     --nav-link-hover-bg: rgba(0, 0, 0, 0.03); /* 导航栏链接悬停背景：近乎透明的黑色 */
     --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* 导航栏默认阴影 */
     --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* 导航栏悬停时更深的阴影 */
+
+    /* === 新增：液态玻璃高光 (亮色) === */
+    --lg-highlight: rgba(255, 255, 255, 0.75); /* Liquid glass highlight color (bright) */
+    --lg-highlight-shadow: inset 1px 1px 0px var(--lg-highlight), /* The actual inset shadow effect */
+                           inset 0 0 4px rgba(255, 255, 255, 0.3);
 }
 
 /* 深色主题变量 */
@@ -45,6 +50,10 @@
     --nav-link-hover-bg: rgba(255, 255, 255, 0.05); /* 导航栏链接悬停背景：近乎透明的白色 */
     --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 导航栏阴影（暗色） */
     --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* 导航栏悬停阴影（暗色） */
+
+    /* === 新增：液态玻璃高光 (暗色) === */
+    --lg-highlight: rgba(255, 255, 255, 0.15); /* Liquid glass highlight (dimmer for dark mode) */
+    --lg-highlight-shadow: inset 1px 1px 0px var(--lg-highlight);
 }
 
 /* 全局的 box-sizing，在文件顶部已声明，此处为重复声明 */
@@ -81,10 +90,17 @@ html, body {
     background: var(--nav-bg); /* 使用导航栏背景变量 */
     border-radius: 18px;
     padding: 0 28px;
-    backdrop-filter: blur(20px); /* 背景模糊（毛玻璃效果） */
-    -webkit-backdrop-filter: blur(20px); /* 兼容 Safari */
+    
+    /* === 修改：应用液态滤镜 === */
+    /* 这一行会调用你在HTML中添加的SVG滤镜 */
+    backdrop-filter: url(#lg-dist);
+    -webkit-backdrop-filter: url(#lg-dist); /* 兼容 Safari */
+
     border:1px solid var(--border); /* 使用玻璃边框变量 */
-    box-shadow: var(--nav-shadow); /* 使用导航栏阴影变量 */
+    
+    /* === 修改：合并阴影和高光 === */
+    box-shadow: var(--nav-shadow), var(--lg-highlight-shadow); /* 使用导航栏阴影变量 + 液态高光 */
+    
     transition: all 0.3s ease;
     overflow: hidden;
 }
@@ -94,14 +110,16 @@ html, body {
     background: var(--nav-bg); /* 自动应用暗色模式的 --nav-bg */
 }
 
-/* 导航栏悬停效果 */
+/* === 修改后的导航栏悬停效果 === */
 .navbar:hover {
-    box-shadow: var(--nav-hover-shadow); /* 应用悬停阴影变量 */
+    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 应用悬停阴影变量 + 液态高光 */
+    transform: translateX(-50%) scale(1.02); /* 修改：在保持居中的同时变大 */
 }
 
-/* 暗色模式下的导航栏悬停效果 */
+/* === 修改后的暗色模式导航栏悬停效果 === */
 .dark-theme .navbar:hover {
-    box-shadow: var(--nav-hover-shadow); /* 自动应用暗色模式的 --nav-hover-shadow */
+    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 自动应用暗色模式的 --nav-hover-shadow + 液态高光 */
+    transform: translateX(-50%) scale(1.02); /* 修改：在保持居中的同时变大 */
 }
 
 /* 导航栏左侧容器 */
@@ -227,15 +245,17 @@ html, body {
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
-    /* 关键：滤镜效果。模糊 8px，亮度 80%，饱和度 105% */
-    filter: blur(8px) brightness(0.8) saturate(1.05);
+    
+    /* === 移除：背景模糊, 保留亮度和饱和度 === */
+    filter: brightness(0.8) saturate(1.05);
+
     transform: scale(1.02); /* 轻微放大，避免模糊后边缘出现白边 */
     transition: all 1.5s ease; /* 为背景图（如果切换）和 transform 添加平滑过渡 */
 }
 
 /* 暗色模式下的背景模糊层 */
 .dark-theme .wrap::after {
-    filter: brightness(0.6) saturate(1.05); /* 亮度进一步降低 */
+    filter: brightness(0.6) saturate(1.05); /* 亮度进一步降低 (这里原本就没有blur) */
 }
 /* 鼠标悬停在 .wrap 上时，背景图放大，产生视差感 */
 .wrap:hover::after {
@@ -282,6 +302,17 @@ html, body {
     height: 100%;
     object-fit: cover; /* 裁剪图片以填充容器，不变形 */
     border-radius: 50%;
+    transition: filter 0.3s ease; /* 为亮度变化添加过渡 */
+}
+
+/* === 新增：暗色模式下的头像样式 === */
+.dark-theme .avatar {
+    border-color: #686868; /* 加深的边框颜色 */
+    background: #222; /* 加深的背景（图片加载失败时）*/
+}
+
+.dark-theme .avatar img {
+    filter: brightness(0.8); /* 图片本身变暗 20% */
 }
 
 /* =========================
@@ -293,10 +324,17 @@ html, body {
     background: var(--card); /* 应用玻璃卡片背景变量 */
     border-radius: var(--radius); /* 应用大圆角变量 */
     padding: 25px; /* 内边距 */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* 阴影 */
+    
+    /* === 修改：合并阴影和高光 === */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1), var(--lg-highlight-shadow); /* 阴影 + 液态高光 */
+    
     border: 1px solid var(--border); /* 应用玻璃边框变量 */
-    backdrop-filter: blur(30px); /* 关键：增强卡片背景模糊效果 */
-    -webkit-backdrop-filter: blur(30px); /* 兼容 Safari */
+
+    /* === 修改：应用液态滤镜 === */
+    /* 这一行会调用你在HTML中添加的SVG滤镜 */
+    backdrop-filter: url(#lg-dist);
+    -webkit-backdrop-filter: url(#lg-dist); /* 兼容 Safari */
+
     display: block;
     margin-top: 20px; /* 与头像的间距 */
     position: relative; /* 相对定位 */
@@ -304,10 +342,11 @@ html, body {
     color: var(--text); /* 应用白色文字变量 */
     transition: all 0.3s ease; /* 平滑过渡 */
 }
-/* 卡片悬停效果 */
+
+/* === 修改后的卡片悬停效果 === */
 .card:hover {
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* 阴影加深 */
-    transform: translateY(-3px); /* 轻微上浮 */
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15), var(--lg-highlight-shadow); /* 阴影加深 + 液态高光 */
+    transform: scale(1.03); /* 修改：轻微上浮 -> 整体变大 */
 }
 
 /* 装饰性容器（用于调整卡片内部布局） */
@@ -361,8 +400,12 @@ html, body {
     height: 44px;
     border-radius: 12px; /* 圆角矩形 */
     background: var(--glass); /* 应用玻璃背景变量 */
-    backdrop-filter: blur(15px); /* 按钮自身也带模糊效果 */
-    -webkit-backdrop-filter: blur(15px);
+    
+    /* === 修改：应用液态滤镜 === */
+    /* 这一行会调用你在HTML中添加的SVG滤镜 */
+    backdrop-filter: url(#lg-dist);
+    -webkit-backdrop-filter: url(#lg-dist); /* 兼容 Safari */
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -370,12 +413,14 @@ html, body {
     cursor: pointer;
     transition: all 0.2s ease;
 }
-/* 图标按钮悬停效果 */
+
+/* === 修改后的图标按钮悬停效果 === */
 .icon-tag:hover {
     background: white; /* 变为不透明白色 */
-    transform: translateY(-3px); /* 上浮 */
+    transform: scale(1.1); /* 修改：上浮 -> 整体变大 */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 添加阴影 */
 }
+
 /* 图标按钮内的图片 (SVG) */
 .icon-tag img {
     width: 50%;
@@ -383,9 +428,10 @@ html, body {
     filter: invert(100%); /* 关键：将黑色 SVG 图标反转为白色 */
     transition: all 0.2s ease;
 }
-/* 图标按钮悬停时，内部图片的效果 */
+
+/* === 修改后的图标按钮内部图片效果 === */
 .icon-tag:hover img {
-    transform: scale(1.1); /* 轻微放大 */
+    /* transform: scale(1.1); */ /* 移除：避免双重缩放 */
     filter: invert(0%); /* 关键：图标恢复为原始颜色（黑色） */
 }
 
