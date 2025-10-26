@@ -11,6 +11,9 @@
         /* =========================
            1. 全局变量与基础样式 - 苹果液态玻璃风格调整
         ========================= */
+        * { 
+            box-sizing: border-box; 
+        }
         :root {
             --bg: #f5f5f7; /* 苹果风格背景色 */
             --card: rgba(255, 255, 255, 0.5); /* 增大透明度 */
@@ -366,7 +369,7 @@
                 height: 90px;
             }
             .navbar {
-                padding: 0 16px;
+                padding: 0 10px;
                 height: 48px;
             }
             .nav-center {
@@ -376,10 +379,10 @@
                 display: none;
             } */
             .brand div:first-of-type + div {
-                font-size: 12px; /* 减小移动端品牌名称字体 */
+                font-size: 11px; /* 减小移动端品牌名称字体 */
             }
             .nav-link {
-                font-size: 12px; /* 减小移动端导航链接字体 */
+                font-size: 11px; /* 减小移动端导航链接字体 */
                 padding: 6px 8px;
             }
             .status-message h2 {
