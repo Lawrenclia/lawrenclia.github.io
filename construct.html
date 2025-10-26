@@ -1,51 +1,343 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>页面正在建设中 - 施工中</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>施工中 · Lawrenclia的小破站</title>
+    <meta name="description" content="页面正在建设中" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* 页面居中和全屏样式 */
-        body {
-            display: flex; /* 启用Flex布局 */
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            min-height: 100vh; /* 最小高度为视窗的100% */
-            margin: 0; /* 移除默认外边距 */
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4; /* 浅灰色背景 */
-            color: #333; /* 深灰色文本 */
+        /* =========================
+           1. 全局变量与基础样式
+        ========================= */
+        * { 
+            box-sizing: border-box; 
+        }
+        :root {
+            --bg: #f5f5f7;
+            --card: rgba(255, 255, 255, 0.5);
+            --muted: rgba(255, 255, 255, 0.8);
+            --text: #ffffff;
+            --accent: #0071e3;
+            --glass: rgba(255, 255, 255, 0.4);
+            --radius: 32px;
+            --border: rgba(255, 255, 255, 0.2);
+            --random-bg-url: none;
+
+            /* 导航栏专属变量 */
+            --nav-bg: rgba(255, 255, 255, 0.6);
+            --nav-text: #1d1d1f;
+            --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
+            --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .dark-theme {
+            --bg: #1a1a1a;
+            --card: rgba(30, 30, 30, 0.7);
+            --muted: rgba(200, 200, 200, 0.7);
+            --text: #f0f0f0;
+            --border: rgba(50, 50, 50, 0.5);
+            --glass: rgba(50, 50, 50, 0.5);
+
+            /* 导航栏专属变量 */
+            --nav-bg: rgba(30, 30, 30, 0.7);
+            --nav-text: #f0f0f0;
+            --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
+            --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        * { box-sizing: border-box; }
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: #1d1d1f; 
+            -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease;
+        }
+
+        /* =========================
+           2. 顶部导航栏
+        ========================= */
+        .navbar{
+            height: 54px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            position:fixed; 
+            top:16px; 
+            left:50%; 
+            transform:translateX(-50%);
+            z-index:30; 
+            width:min(800px,calc(100% - 40px));
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 18px;
+            padding: 0 28px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border:1px solid var(--border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .dark-theme .navbar { background: rgba(30, 30, 30, 0.7); }
+        .navbar:hover { box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); }
+        .dark-theme .navbar:hover { box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); }
+        .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
+        .brand{ font-weight:600; font-size:20px; letter-spacing:0.2px; color: var(--nav-text); display:flex; align-items:center; gap:10px; }
+        .brand .logo{ width:28px; height:28px; border-radius:8px; background: var(--accent); display:inline-grid; place-items:center; font-weight:600; color:#fff; font-size:14px; box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3); }
+        .nav-center{ display: flex; gap: 12px; align-items: center; }
+        .nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+        .nav-link{ padding:8px 12px; border-radius:10px; font-weight:400; font-size:14px; color: var(--nav-text); text-decoration:none; transition: all .2s ease; position: relative; overflow: hidden; }
+        .nav-link:hover{ color:var(--nav-text); background: var(--nav-link-hover-bg); transform: translateY(-1px); }
+        .nav-link::after { content: ''; position: absolute; bottom: 6px; left: 50%; width: 0; height: 2px; background: var(--accent); transition: all 0.3s ease; transform: translateX(-50%); }
+        .nav-link:hover::after { width: 60%; }
+        .theme-toggle { width: 36px; height: 36px; border-radius: 50%; background: transparent; border: none; color: var(--nav-text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease; }
+        .theme-toggle:hover { background: rgba(0, 0, 0, 0.05); transform: rotate(90deg); }
+        .dark-theme .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); }
+
+
+        /* =========================
+           3. 背景容器与效果层 
+        ========================= */
+        .wrap {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 92px 36px 36px 36px;
+            position: relative;
+            overflow: hidden;
+        }
+        .wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image: var(--random-bg-url);
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            filter: blur(8px) brightness(0.8) saturate(1.05);
+            transform: scale(1.02);
+            transition: all 1.5s ease;
+        }
+        .dark-theme .wrap::after { filter: brightness(0.6) saturate(1.05); }
+        .wrap:hover::after { transform: scale(1.03); }
+        .wrap::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+
+        /* =========================
+           5. 卡片样式
+        ========================= */
+        .card {
+            width: 100%;
+            max-width: 420px;
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            display: block;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+        }
+        
+        /* =========================
+           施工中 页面专属样式
+        ========================= */
+        .content-construct {
             text-align: center;
+            padding: 20px 10px;
         }
-        
-        /* 标题样式 */
-        .construction-message {
-            padding: 20px;
-            border: 5px solid #ffcc00; /* 醒目的黄色边框 */
-            border-radius: 10px; /* 圆角 */
-            background-color: #fff; /* 白色背景 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
+        .content-construct .icon {
+            font-size: 60px;
+            color: var(--accent);
+            margin-bottom: 20px;
         }
-        
-        /* 主要大字 */
-        h1 {
-            font-size: 4em; /* 字体大小，非常大 */
-            color: #cc0000; /* 红色，表示注意 */
-            margin-bottom: 10px;
+        .content-construct h1 {
+            font-size: 40px; /* 调整大小以适应图标 */
+            margin: 0 0 10px 0;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.2;
         }
-        
-        /* 辅助文字 */
-        p {
-            font-size: 1.2em;
-            color: #666;
+        .content-construct p {
+            margin: 10px 0 30px;
+            font-size: 18px;
+            color: var(--muted);
+            font-weight: 400;
+        }
+        .content-construct a {
+            display: inline-block;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+        .content-construct a:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        /* =========================
+           8. 响应式适配 
+        ========================= */
+        @media (max-width: 600px) {
+            .card {
+                max-width: 90vw;
+                padding: 24px;
+                border-radius: 24px;
+            }
+            .navbar {
+                padding: 0 16px;
+                height: 48px;
+            }
+            .nav-link {
+                font-size: 12px;
+                padding: 6px 8px;
+            }
+            /* 施工中 内容响应式 */
+            .content-construct .icon {
+                font-size: 50px;
+            }
+            .content-construct h1 {
+                font-size: 32px;
+            }
+            .content-construct p {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="construction-message">
-        <h1>施工中 (Under Construction)</h1>
-        <p>抱歉，您访问的页面正在努力建设和完善中。</p>
-        <p>感谢您的耐心等待！请稍后再回来查看。</p>
+    <header class="navbar" role="navigation" aria-label="主导航">
+        <div class="nav-left">
+            <div class="brand" aria-hidden>
+                <div style="display:flex;flex-direction:column;line-height:1;">
+                    <div style="font-size:16px;font-weight:600">施工中 · Lawrenclia</div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <a class="nav-link" href="index.html">首页</a>
+            <a class="nav-link" href="projects.html">项目</a>
+            <a class="nav-link" href="blog.html">博客</a>
+            <a class="nav-link" href="message.html">留言</a>
+            <a class="nav-link" href="about.html">关于</a>
+            <button class="theme-toggle" aria-label="切换主题">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="wrap" id="wrap">
+        
+        <div class="card" role="main">
+            <div class="content-construct">
+                <i class="fas fa-tools icon"></i>
+                <h1>施工中</h1>
+                <p>页面正在努力建设中...</p>
+                <a href="index.html">返回首页</a>
+            </div>
+        </div>
     </div>
+
+    <script>
+        // 背景图脚本 
+        function isMobile(){
+        return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+        }
+
+        async function fetchRandomBackground(){
+        const pcSources = [
+            'https://www.loliapi.com/acg/?t=',
+            'https://api.mtyqx.cn/tapi/random.php?=',
+            'https://acg.suyanw.cn/api.php?=',
+        ];
+        const mobileSources = [
+            'https://www.loliapi.com/acg/?t=',
+        ];
+        const sources = isMobile()? mobileSources : pcSources;
+        const idx = Math.floor(Math.random()*sources.length);
+        return sources[idx] + Date.now();
+        }
+
+        async function setPageBackground() {
+            const imageUrl = await fetchRandomBackground();
+            const wrapElement = document.getElementById('wrap');
+            if (!imageUrl) {
+                wrapElement.style.background = '#f5f5f7';
+                return;
+            }
+            wrapElement.style.setProperty('--random-bg-url', `url('${imageUrl}')`);
+        }
+        setPageBackground();
+
+        // 主题切换功能
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        
+        if (localStorage.getItem('theme') === 'dark' || 
+            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          body.classList.add('dark-theme');
+          icon.classList.remove('fa-moon');
+          icon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+          body.classList.toggle('dark-theme');
+          
+          if (body.classList.contains('dark-theme')) {
+            localStorage.setItem('theme', 'dark');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+          } else {
+            localStorage.setItem('theme', 'light');
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+          }
+        });
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+          if (!localStorage.getItem('theme')) {
+            if (e.matches) {
+              body.classList.add('dark-theme');
+              icon.classList.remove('fa-moon');
+              icon.classList.add('fa-sun');
+            } else {
+              body.classList.remove('dark-theme');
+              icon.classList.remove('fa-sun');
+              icon.classList.add('fa-moon');
+            }
+          }
+        });
+    </script>
 </body>
 </html>
