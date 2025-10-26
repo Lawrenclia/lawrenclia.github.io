@@ -122,18 +122,6 @@ html, body {
     background: var(--nav-bg); /* 自动应用暗色模式的 --nav-bg */
 }
 
-/* === 恢复：悬停变大效果 === */
-.navbar:hover {
-    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 应用悬停阴影变量 + 液态高光 */
-    transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
-}
-
-/* === 恢复：悬停变大效果 === */
-.dark-theme .navbar:hover {
-    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 自动应用暗色模式的 --nav-hover-shadow + 液态高光 */
-    transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
-}
-
 /* 导航栏左侧容器 */
 .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
 /* 品牌 Logo 和文字 */
@@ -184,12 +172,7 @@ html, body {
     position: relative;
     overflow: hidden;
 }
-/* 链接悬停效果 */
-.nav-link:hover{ 
-    color:var(--nav-text); 
-    background: var(--nav-link-hover-bg); /* 应用链接悬停背景变量 */
-    transform: translateY(-1px); 
-}
+
 /* 链接下方的装饰性线条（初始状态） */
 .nav-link::after {
     content: '';
@@ -202,10 +185,7 @@ html, body {
     transition: all 0.3s ease;
     transform: translateX(-50%);
 }
-/* 链接悬停时，装饰性线条展开 */
-.nav-link:hover::after {
-    width: 60%;
-}
+
 /* 主题切换按钮 */
 .theme-toggle {
     width: 36px;
@@ -220,11 +200,7 @@ html, body {
     justify-content: center;
     transition: all 0.3s ease;
 }
-/* 按钮悬停效果 */
-.theme-toggle:hover {
-    background: rgba(0, 0, 0, 0.05);
-    transform: rotate(90deg); /* 旋转图标 */
-}
+
 /* 暗色模式下按钮悬停效果 */
 .dark-theme .theme-toggle:hover {
     background: rgba(255, 255, 255, 0.1);
@@ -269,10 +245,7 @@ html, body {
 .dark-theme .wrap::after {
     filter: brightness(0.6) saturate(1.05); /* 亮度进一步降低 (这里原本就没有blur) */
 }
-/* 鼠标悬停在 .wrap 上时，背景图放大，产生视差感 */
-.wrap:hover::after {
-    transform: scale(1.03); 
-}
+
 /* 半透明遮罩层 (::before 伪元素) */
 .wrap::before {
     content: '';
@@ -303,11 +276,7 @@ html, body {
     border: 4px solid white; /* 白色边框 */
     transition: all 0.3s ease; /* 平滑过渡 */
 }
-/* 头像悬停效果 */
-.avatar:hover {
-    transform: translateY(-5px) scale(1.03); /* 上浮并轻微放大 */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* 阴影加深 */
-}
+
 /* 头像图片 */
 .avatar img {
     width: 100%;
@@ -352,12 +321,6 @@ html, body {
     z-index: 2; /* 位于遮罩层之上 */
     color: var(--text); /* 应用白色文字变量 */
     transition: all 0.3s ease; /* 平滑过渡 */
-}
-
-/* === 恢复：悬停变大效果 === */
-.card:hover {
-    box-shadow: var(--glass-outer-shadow), var(--lg-highlight-shadow); /* 阴影加深 + 液态高光 */
-    transform: scale(1.03); /* 悬停时变大 */
 }
 
 /* 装饰性容器（用于调整卡片内部布局） */
@@ -428,25 +391,12 @@ html, body {
     transition: all 0.2s ease;
 }
 
-/* === 修改：使用新示例的悬停效果 === */
-.icon-tag:hover {
-    /* background: white; */ /* 移除 */
-    transform: scale(0.95); /* 修改：变大 -> 变小 */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 添加阴影 */
-}
-
 /* 图标按钮内的图片 (SVG) */
 .icon-tag img {
     width: 50%;
     height: 50%;
     filter: invert(100%); /* 关键：将黑色 SVG 图标反转为白色 */
     transition: all 0.2s ease;
-}
-
-/* === 修改：调整内部图片悬停效果 === */
-.icon-tag:hover img {
-    /* 移除：父元素在缩放，所以子元素不需要再缩放 */
-    filter: invert(0%); /* 关键：图标恢复为原始颜色（黑色） */
 }
 
 /* =========================
@@ -496,11 +446,29 @@ html, body {
     footer {
         font-size: 12px;
     }
+
+    /* === [FIX 2] 新增：为移动端提供毛玻璃后备 === */
+    /* 由于移动端浏览器不支持 backdrop-filter: url()，
+      我们降级为支持性更好的 blur()（毛玻璃效果）
+    */
+    .navbar,
+    .card {
+        /* 注意：这里的 backdrop-filter 会覆盖掉桌面端的 url(#lg-dist) 
+         你可以调整 blur(18px) 的值来获得最佳观感
+        */
+        backdrop-filter: blur(18px) brightness(1.1);
+        -webkit-backdrop-filter: blur(18px) brightness(1.1);
+    }
+    
+    .icon-tag {
+        backdrop-filter: none; /* 移除多余的滤镜 */
+        -webkit-backdrop-filter: none;
+    }
 }
 
 
 /* =========================
-   8b. 触摸设备 :active 放大效果 (新增)
+   8b. 触摸设备 :active 放大效果 (保留)
 ========================= */
 /* 针对不支持悬停的触摸设备 (如手机、平板) */
 @media (hover: none) and (pointer: coarse) {
@@ -560,3 +528,73 @@ footer {
 }
 /* 隐藏旧版或未使用的类 */
 .tags, .tag, .wave { display: none; }
+
+
+/* ==================================
+   10. 仅限桌面端的悬停效果 (修复移动端粘滞问题)
+================================== */
+
+/* 仅在支持悬停的设备（如桌面电脑）上应用 :hover 效果 */
+@media (hover: hover) and (pointer: fine) {
+
+    /* 导航栏悬停 */
+    .navbar:hover {
+        box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow);
+        transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
+    }
+
+    .dark-theme .navbar:hover {
+        box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow);
+        transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
+    }
+
+    /* 导航链接悬停 */
+    .nav-link:hover{ 
+        color:var(--nav-text); 
+        background: var(--nav-link-hover-bg); /* 应用链接悬停背景变量 */
+        transform: translateY(-1px); 
+    }
+    
+    .nav-link:hover::after {
+        width: 60%;
+    }
+
+    /* 主题切换按钮悬停 */
+    .theme-toggle:hover {
+        background: rgba(0, 0, 0, 0.05);
+        transform: rotate(90deg); /* 旋转图标 */
+    }
+
+    .dark-theme .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* 背景图悬停 */
+    .wrap:hover::after {
+        transform: scale(1.03); 
+    }
+
+    /* 头像悬停 */
+    .avatar:hover {
+        transform: translateY(-5px) scale(1.03); /* 上浮并轻微放大 */
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* 阴影加深 */
+    }
+    
+    /* 卡片悬停 */
+    .card:hover {
+        box-shadow: var(--glass-outer-shadow), var(--lg-highlight-shadow); /* 阴影加深 + 液态高光 */
+        transform: scale(1.03); /* 悬停时变大 */
+    }
+
+    /* 社交图标悬停 */
+    .icon-tag:hover {
+        /* background: white; */ /* 移除 */
+        transform: scale(0.95); /* 修改：变大 -> 变小 */
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 添加阴影 */
+    }
+
+    .icon-tag:hover img {
+        /* 移除：父元素在缩放，所以子元素不需要再缩放 */
+        filter: invert(0%); /* 关键：图标恢复为原始颜色（黑色） */
+    }
+}
