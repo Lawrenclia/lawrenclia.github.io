@@ -7,252 +7,37 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
+  <link rel="stylesheet" href="css/common.css">
   
   <style>
-    * { 
-        box-sizing: border-box; 
-    }
     :root {
-      --accent: #ff6b9a;
-      --accent-light: #ff8cae; 
-      --shadow-color: rgba(255, 107, 154, 0.15); 
-      --background: #efffe8;
-      --text: #111;
-      --card-bg: #fff;
-      --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
-      --muted: #666;
-      --border: rgba(0,0,0,0.08);
-      --link: #0066cc;
-      --disclaimer-bg: #fffbe6;
-      --disclaimer-border: #ffe58f;
-      --disclaimer-text: #d46b08;
-      --modal-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      --cancel-btn-bg: #f0f0f0;
-      --cancel-btn-text: #333;
-      --cancel-btn-hover: #e0e0e0;
-
-      /* 导航栏专属变量 */
-      --nav-bg: rgba(255, 255, 255, 0.6);
-      --nav-text: #1d1d1f;
-      --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
-      --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-      --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+        --background: #efffe8;
     }
-
-    /* 深色主题变量 */
-    .dark-theme {
-      --background: #1a1a1a;
-      --text: #f0f0f0;
-      --card-bg: #2d2d2d;
-      --card-shadow: 0 6px 16px rgba(0,0,0,0.3);
-      --muted: #bbb;
-      --border: rgba(255,255,255,0.1);
-      --link: #66b2ff;
-      --disclaimer-bg: #332d00;
-      --disclaimer-border: #5c5000;
-      --disclaimer-text: #ffd56b;
-      --modal-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      --cancel-btn-bg: #3a3a3a;
-      --cancel-btn-text: #f0f0f0;
-      --cancel-btn-hover: #4a4a4a;
-
-      /* 导航栏专属变量 */
-      --nav-bg: rgba(30, 30, 30, 0.7);
-      --nav-text: #f0f0f0;
-      --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
-      --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-      --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    }
-
-   body{
-      margin:0;
-      font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background:var(--background);
-      color:var(--text);
-      line-height:1.6;
-      transition: background-color 0.3s ease;
-    }
-    
-    /* =========================
-       2. 顶部导航栏 (从 index.html 复制而来)
-    ========================= */
-    .navbar{
-        height: 54px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        position:fixed; 
-        top:16px; 
-        left:50%; 
-        transform:translateX(-50%);
-        z-index:30; 
-        width:min(800px,calc(100% - 40px));
-        background: var(--nav-bg); /* 使用专属变量 */
-        border-radius: 18px;
-        padding: 0 28px;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border:1px solid var(--border);
-        box-shadow: var(--nav-shadow); /* 使用专属变量 */
-        transition: all 0.3s ease;
-        overflow: hidden;
-    }
-
-    .dark-theme .navbar {
-        background: var(--nav-bg); /* 使用专属变量 */
-    }
-
-    .navbar:hover {
-        box-shadow: var(--nav-hover-shadow); /* 使用专属变量 */
-    }
-
-    .dark-theme .navbar:hover {
-        box-shadow: var(--nav-hover-shadow); /* 使用专属变量 */
-    }
-
-    .nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
-    .brand{
-        font-weight:600; 
-        font-size:20px; 
-        letter-spacing:0.2px; 
-        color: var(--nav-text); /* 使用专属变量 */
-        display:flex; 
-        align-items:center; 
-        gap:10px;
-    }
-    .brand .logo{
-        width:28px;
-        height:28px;
-        border-radius:8px; 
-        background: var(--accent); /* 保留 message.html 的粉色 accent */
-        display:inline-grid;
-        place-items:center;
-        font-weight:600;
-        color:#fff;
-        font-size:14px;
-        box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3); /* 保留 message.html 的粉色 shadow */
-    }
-    .nav-center{
-        display: flex;
-        gap: 12px;
-        align-items: center;
-    }
-    .nav-right {
-        margin-left: auto;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    .nav-link{
-        padding:8px 12px; 
-        border-radius:10px; 
-        font-weight:400; 
-        font-size:14px; 
-        color: var(--nav-text); /* 使用专属变量 */
-        text-decoration:none; 
-        transition: all .2s ease;
-        position: relative;
-        overflow: hidden;
-    }
-    .nav-link:hover{ 
-        color:var(--nav-text); /* 使用专属变量 */
-        background: var(--nav-link-hover-bg); /* 使用专属变量 */
-        transform: translateY(-1px); 
-    }
-    .nav-link::after {
-        content: '';
-        position: absolute;
-        bottom: 6px;
-        left: 50%;
-        width: 0;
-        height: 2px;
-        background: var(--accent); /* 保留 message.html 的粉色 accent */
-        transition: all 0.3s ease;
-        transform: translateX(-50%);
-    }
-    .nav-link:hover::after {
-        width: 60%;
-    }
-    .theme-toggle {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: transparent;
-        border: none;
-        color: var(--nav-text); /* 使用专属变量 */
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s ease;
-    }
-    .theme-toggle:hover {
-        background: rgba(0, 0, 0, 0.05);
-        transform: rotate(90deg);
-    }
-
-    .dark-theme .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-    /* 导航栏 CSS 结束 */
-
-
-    .wrap {
-      max-width: 800px;
-      margin: 80px auto 40px auto;
-      padding: 0 20px;
-    }
-    article {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 24px;
-      margin-bottom: 28px;
-      box-shadow: var(--card-shadow);
-      transition: all 0.3s ease;
-    }
-    article h2 {
-      margin-top: 0;
-      color: var(--text);
-      font-size: 22px;
-    }
-    article p {
-      margin: 12px 0;
-      color: var(--muted);
-    }
-    footer {
-      text-align: center;
-      color: var(--muted);
-      font-size: 14px;
-      padding: 30px 10px;
-      border-top: 1px solid var(--border);
-      margin-top: 60px;
-    }
-    
     /* 留言板专属样式 */
     .guestbook-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
     }
     .guestbook-header h2 {
-      margin: 0;
-      color: var(--text);
-      font-size: 24px;
+        margin: 0;
+        color: var(--text);
+        font-size: 24px;
     }
     #leave-message-btn {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
     }
     #leave-message-btn:hover {
-      background: #e65a88;
+        background: #e65a88;
     }
     .disclaimer {
         background-color: var(--disclaimer-bg);
@@ -264,181 +49,143 @@
         font-size: 14px;
     }
     .message-container {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
     }
     .message-item {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 20px;
-      border: 2px solid var(--accent-light);
-      box-shadow: 0 6px 16px var(--shadow-color);
-      display: flex;
-      gap: 15px;
-      position: relative;
-      padding-bottom: 40px;
-      transition: all 0.3s ease;
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 20px;
+        border: 2px solid var(--accent-light);
+        box-shadow: 0 6px 16px var(--shadow-color);
+        display: flex;
+        gap: 15px;
+        position: relative;
+        padding-bottom: 40px;
+        transition: all 0.3s ease;
     }
     .message-number {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--accent);
-      flex-shrink: 0;
-      line-height: 1;
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--accent);
+        flex-shrink: 0;
+        line-height: 1;
     }
     .message-details {
-      flex-grow: 1;
-      position: relative;
+        flex-grow: 1;
+        position: relative;
     }
     .message-text {
-      color: var(--text);
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin-top: 0;
+        color: var(--text);
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin-top: 0;
     }
     .message-author {
-      position: absolute;
-      right: 0;
-      bottom: -5px;
-      color: var(--accent);
-      font-size: 14px;
-      font-weight: 600;
-      padding: 5px 10px;
-      background: var(--card-bg);
-      border-radius: 8px 0 16px 0;
+        position: absolute;
+        right: 0;
+        bottom: -5px;
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: 600;
+        padding: 5px 10px;
+        background: var(--card-bg);
+        border-radius: 8px 0 16px 0;
     }
 
     /* 弹窗样式 */
     .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 100;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s, visibility 0.3s;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 100;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s, visibility 0.3s;
     }
     .modal-overlay.visible {
-      opacity: 1;
-      visibility: visible;
+        opacity: 1;
+        visibility: visible;
     }
     .modal-content {
-      background: var(--card-bg);
-      border-radius: 16px;
-      padding: 24px;
-      width: 90%;
-      max-width: 500px;
-      box-shadow: var(--modal-shadow);
-      transform: scale(0.95);
-      transition: transform 0.3s;
+        background: var(--card-bg);
+        border-radius: 16px;
+        padding: 24px;
+        width: 90%;
+        max-width: 500px;
+        box-shadow: var(--modal-shadow);
+        transform: scale(0.95);
+        transition: transform 0.3s;
     }
     .modal-overlay.visible .modal-content {
-      transform: scale(1);
+        transform: scale(1);
     }
     .modal-content h3 {
-      margin-top: 0;
-      margin-bottom: 16px;
-      color: var(--text);
+        margin-top: 0;
+        margin-bottom: 16px;
+        color: var(--text);
     }
     .modal-content input[type="text"],
     .modal-content textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      box-sizing: border-box;
-      background: var(--background);
-      color: var(--text);
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: 1px solid var(--border);
+        box-sizing: border-box;
+        background: var(--background);
+        color: var(--text);
     }
     .modal-content input[type="text"]::placeholder,
     .modal-content textarea::placeholder {
-      color: var(--muted);
+        color: var(--muted);
     }
     .modal-content textarea {
-      min-height: 120px;
-      font-size: 16px;
-      font-family: inherit;
-      resize: vertical;
+        min-height: 120px;
+        font-size: 16px;
+        font-family: inherit;
+        resize: vertical;
     }
     .modal-actions {
-      margin-top: 16px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
+        margin-top: 16px;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
     }
     .modal-actions button {
-      border: none;
-      padding: 10px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.2s;
     }
     #cancel-btn {
-      background: var(--cancel-btn-bg);
-      color: var(--cancel-btn-text);
+        background: var(--cancel-btn-bg);
+        color: var(--cancel-btn-text);
     }
     #cancel-btn:hover {
-      background: var(--cancel-btn-hover);
+        background: var(--cancel-btn-hover);
     }
     #submit-btn {
-      background: var(--accent);
-      color: #fff;
+        background: var(--accent);
+        color: #fff;
     }
 
-    /* =========================
-        8. 响应式适配 - 优化移动端字体
-    ========================= */
-    @media (max-width: 600px) {
-        .card {
-            max-width: 90vw; /* 小屏幕也减小宽度 */
-            padding: 24px;
-            border-radius: 24px; /* 小屏幕减小圆角 */
-        }
-        .avatar {
-            width: 90px;
-            height: 90px;
-        }
-        .navbar {
-            padding: 0 10px;
-            height: 48px;
-        }
-        .nav-center {
-            gap: 8px;
-        }
-        /* .brand div:last-child {
-            display: none;
-        } */
-        .brand div:first-of-type + div {
-            font-size: 11px; /* 减小移动端品牌名称字体 */
-        }
-        .nav-link {
-            font-size: 11px; /* 减小移动端导航链接字体 */
-            padding: 6px 6px;
-        }
-        .status-message h2 {
-            font-size: 18px; /* 减小移动端主标题字体 */
-        }
-        .status-message h3 {
-            font-size: 14px; /* 减小移动端副标题字体 */
-        }
-        footer {
-            font-size: 12px; /* 减小移动端页脚字体 */
-        }
-    }
+
   </style>
 </head>
+
 <body>
   <!-- 顶部导航栏 -->
   <header class="navbar" role="navigation" aria-label="主导航">

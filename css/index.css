@@ -1,0 +1,455 @@
+/* =========================
+   1. 全局变量与基础样式 - 苹果液态玻璃风格调整
+========================= */
+
+/* 通用选择器，设置所有元素的盒模型为 border-box */
+/* 这意味着元素的 padding 和 border 不会增加其总宽度和高度 */
+* { 
+    box-sizing: border-box; 
+}
+
+/* :root 选择器用于在 HTML 文档的根元素上声明全局 CSS 变量 */
+/* 这些变量定义了“亮色主题”的配色和样式 */
+:root {
+    --bg: #f5f5f7; /* 苹果风格的浅灰色背景色 */
+    --card: rgba(255, 255, 255, 0.5); /* 卡片背景：白色半透明，营造玻璃效果 */
+    --muted: rgba(255, 255, 255, 0.8); /* 次要文字（如副标题）：白色，80%透明度 */
+    --text: #ffffff; /* 主要文字（如主标题）：纯白色 */
+    --accent: #ff6b9a; /* 强调色（如 Logo、链接下划线）：粉色 */
+    --glass: rgba(255, 255, 255, 0.4); /* 玻璃图标按钮背景：白色，40%透明度 */
+    --radius: 32px; /* 苹果风格的大圆角半径 */
+    --border: rgba(255, 255, 255, 0.2); /* 边框：白色，20%透明度，用于玻璃卡片 */
+    --random-bg-url: none; /* 动态背景图片的 URL 占位符，将由 JS 填充 */
+
+    /* 导航栏专属变量（亮色） */
+    --nav-bg: rgba(255, 255, 255, 0.6); /* 导航栏背景：白色，60%透明度 */
+    --nav-text: #1d1d1f; /* 导航栏文字：深灰色，确保在亮背景上可读 */
+    --nav-link-hover-bg: rgba(0, 0, 0, 0.03); /* 导航栏链接悬停背景：近乎透明的黑色 */
+    --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* 导航栏默认阴影 */
+    --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); /* 导航栏悬停时更深的阴影 */
+}
+
+/* 深色主题变量 */
+/* 当 <body> 元素具有 'dark-theme' 类时，这些变量将覆盖 :root 中的同名变量 */
+.dark-theme {
+    --bg: #1a1a1a; /* 深色模式背景：纯黑色 */
+    --card: rgba(30, 30, 30, 0.7); /* 卡片背景：深灰色，70%透明度 */
+    --muted: rgba(200, 200, 200, 0.7); /* 次要文字：浅灰色，70%透明度 */
+    --text: #f0f0f0; /* 主要文字：浅灰色 */
+    --border: rgba(50, 50, 50, 0.5); /* 边框：深灰色，50%透明度 */
+    --glass: rgba(50, 50, 50, 0.5); /* 玻璃图标按钮背景：深灰色，50%透明度 */
+
+    /* 导航栏专属变量（暗色） */
+    --nav-bg: rgba(30, 30, 30, 0.7); /* 导航栏背景：深灰色，70%透明度 */
+    --nav-text: #f0f0f0; /* 导航栏文字：浅灰色 */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.05); /* 导航栏链接悬停背景：近乎透明的白色 */
+    --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* 导航栏阴影（暗色） */
+    --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* 导航栏悬停阴影（暗色） */
+}
+
+/* 全局的 box-sizing，在文件顶部已声明，此处为重复声明 */
+* { box-sizing: border-box; }
+
+/* HTML 和 Body 基础样式 */
+html, body {
+    height: 100%; /* 确保页面占满整个视口高度 */
+    width: 100%; /* 确保页面占满整个视口宽度 */
+    margin: 0; /* 移除默认外边距 */
+    /* 字体栈：优先使用 Inter，然后是苹果系统字体，最后是无衬线字体 */
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); /* 应用背景色变量 */
+    color: #1d1d1f; /* 默认文字颜色（主要用于非卡片区域，如导航栏） */
+    -webkit-font-smoothing: antialiased; /* 在 Webkit 浏览器上启用抗锯齿，使字体更平滑 */
+    transition: background-color 0.3s ease; /* 为背景色变化添加平滑过渡 */
+}
+
+/* =========================
+   2. 顶部导航栏
+========================= */
+/* 导航栏容器样式，与 message.html 中的完全一致 */
+.navbar{
+    height: 54px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:fixed; 
+    top:16px; 
+    left:50%; 
+    transform:translateX(-50%);
+    z-index:30; 
+    width:min(800px,calc(100% - 40px));
+    background: var(--nav-bg); /* 使用导航栏背景变量 */
+    border-radius: 18px;
+    padding: 0 28px;
+    backdrop-filter: blur(20px); /* 背景模糊（毛玻璃效果） */
+    -webkit-backdrop-filter: blur(20px); /* 兼容 Safari */
+    border:1px solid var(--border); /* 使用玻璃边框变量 */
+    box-shadow: var(--nav-shadow); /* 使用导航栏阴影变量 */
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* 暗色模式下的导航栏 */
+.dark-theme .navbar {
+    background: var(--nav-bg); /* 自动应用暗色模式的 --nav-bg */
+}
+
+/* 导航栏悬停效果 */
+.navbar:hover {
+    box-shadow: var(--nav-hover-shadow); /* 应用悬停阴影变量 */
+}
+
+/* 暗色模式下的导航栏悬停效果 */
+.dark-theme .navbar:hover {
+    box-shadow: var(--nav-hover-shadow); /* 自动应用暗色模式的 --nav-hover-shadow */
+}
+
+/* 导航栏左侧容器 */
+.nav-left{display:flex;align-items:center;gap:12px;margin-right: auto;}
+/* 品牌 Logo 和文字 */
+.brand{
+    font-weight:600; 
+    font-size:20px; 
+    letter-spacing:0.2px; 
+    color: var(--nav-text); /* 应用导航栏文字颜色变量 */
+    display:flex; 
+    align-items:center; 
+    gap:10px;
+}
+/* 品牌 Logo 图标 */
+.brand .logo{
+    width:28px;
+    height:28px;
+    border-radius:8px; 
+    background: var(--accent); /* 应用强调色变量 */
+    display:inline-grid;
+    place-items:center;
+    font-weight:600;
+    color:#fff;
+    font-size:14px;
+    box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3); /* 粉色阴影 */
+}
+/* 导航栏中间容器 */
+.nav-center{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+/* 导航栏右侧容器 */
+.nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+/* 导航栏链接 */
+.nav-link{
+    padding:8px 12px; 
+    border-radius:10px; 
+    font-weight:400; 
+    font-size:14px; 
+    color: var(--nav-text);
+    text-decoration:none; 
+    transition: all .2s ease;
+    position: relative;
+    overflow: hidden;
+}
+/* 链接悬停效果 */
+.nav-link:hover{ 
+    color:var(--nav-text); 
+    background: var(--nav-link-hover-bg); /* 应用链接悬停背景变量 */
+    transform: translateY(-1px); 
+}
+/* 链接下方的装饰性线条（初始状态） */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent); /* 应用强调色 */
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+/* 链接悬停时，装饰性线条展开 */
+.nav-link:hover::after {
+    width: 60%;
+}
+/* 主题切换按钮 */
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: var(--nav-text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+/* 按钮悬停效果 */
+.theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.05);
+    transform: rotate(90deg); /* 旋转图标 */
+}
+/* 暗色模式下按钮悬停效果 */
+.dark-theme .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+/* =========================
+   3. 背景容器与效果层
+========================= */
+/* 主要内容包裹容器 */
+.wrap {
+    min-height: 100vh; /* 最小高度占满视口 */
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* 子元素垂直排列 */
+    align-items: center; /* 水平居中 */
+    justify-content: center; /* 垂直居中 */
+    /* 顶部内边距 92px（为导航栏留出空间），左右 36px，底部 36px */
+    padding: 92px 36px 36px 36px;
+    position: relative; /* 作为伪元素定位的基准 */
+    overflow: hidden; /* 隐藏模糊放大的背景图边缘 */
+}
+/* 背景模糊层 (::after 伪元素) */
+.wrap::after {
+    content: ''; /* 伪元素必须 */
+    position: absolute; /* 绝对定位，覆盖整个 .wrap */
+    inset: 0; /* (top: 0; left: 0; right: 0; bottom: 0;) 的简写 */
+    z-index: 0; /* 位于最底层 */
+    background-image: var(--random-bg-url); /* 应用 JS 提供的背景图 */
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* 关键：滤镜效果。模糊 8px，亮度 80%，饱和度 105% */
+    filter: blur(8px) brightness(0.8) saturate(1.05);
+    transform: scale(1.02); /* 轻微放大，避免模糊后边缘出现白边 */
+    transition: all 1.5s ease; /* 为背景图（如果切换）和 transform 添加平滑过渡 */
+}
+
+/* 暗色模式下的背景模糊层 */
+.dark-theme .wrap::after {
+    filter: brightness(0.6) saturate(1.05); /* 亮度进一步降低 */
+}
+/* 鼠标悬停在 .wrap 上时，背景图放大，产生视差感 */
+.wrap:hover::after {
+    transform: scale(1.03); 
+}
+/* 半透明遮罩层 (::before 伪元素) */
+.wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    /* 叠加一层 10% 透明度的黑色遮罩，增强文字对比度 */
+    background: rgba(0, 0, 0, 0.1); 
+    z-index: 1; /* 位于背景层之上，卡片之下 */
+}
+
+/* =========================
+   4. 头像样式（卡片上方居中悬浮）
+========================= */
+.avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%; /* 圆形 */
+    background: white; /* 头像背景（图片加载失败时显示） */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* 柔和阴影 */
+    overflow: hidden; /* 隐藏图片溢出部分 */
+    margin-bottom: 0px; 
+    margin-top: 0px;
+    position: relative; /* 相对定位 */
+    z-index: 3; /* 位于遮罩层和卡片之上 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid white; /* 白色边框 */
+    transition: all 0.3s ease; /* 平滑过渡 */
+}
+/* 头像悬停效果 */
+.avatar:hover {
+    transform: translateY(-5px) scale(1.03); /* 上浮并轻微放大 */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* 阴影加深 */
+}
+/* 头像图片 */
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 裁剪图片以填充容器，不变形 */
+    border-radius: 50%;
+}
+
+/* =========================
+   5. 卡片样式 - 液态玻璃核心调整
+========================= */
+.card {
+    width: 100%;
+    max-width: 420px; /* 卡片最大宽度 */
+    background: var(--card); /* 应用玻璃卡片背景变量 */
+    border-radius: var(--radius); /* 应用大圆角变量 */
+    padding: 25px; /* 内边距 */
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1); /* 阴影 */
+    border: 1px solid var(--border); /* 应用玻璃边框变量 */
+    backdrop-filter: blur(30px); /* 关键：增强卡片背景模糊效果 */
+    -webkit-backdrop-filter: blur(30px); /* 兼容 Safari */
+    display: block;
+    margin-top: 20px; /* 与头像的间距 */
+    position: relative; /* 相对定位 */
+    z-index: 2; /* 位于遮罩层之上 */
+    color: var(--text); /* 应用白色文字变量 */
+    transition: all 0.3s ease; /* 平滑过渡 */
+}
+/* 卡片悬停效果 */
+.card:hover {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); /* 阴影加深 */
+    transform: translateY(-3px); /* 轻微上浮 */
+}
+
+/* 装饰性容器（用于调整卡片内部布局） */
+.deco {
+    margin-top: -20px; /* 负外边距，使内容轻微上移，与头像更紧凑 */
+}
+
+
+/* =========================
+   6. 状态消息框
+========================= */
+.status-message {
+    padding: 12px 16px;
+    line-height: 1.6;
+    text-align: center; /* 文本居中 */
+}
+
+/* 消息框 H2 和 H3 的通用设置 */
+.status-message h2,
+.status-message h3 {
+    margin: 6px 0; /* 减小垂直外边距 */
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+/* 主标题 H2 */
+.status-message h2 {
+    font-size: 22px;
+    letter-spacing: -0.3px; /* 苹果风格的紧密字间距 */
+    color: var(--text); /* 应用白色文字变量 */
+}
+/* 副标题 H3 */
+.status-message h3 {
+    font-size: 16px;
+    color: var(--muted); /* 应用半透明白色文字变量 */
+    font-weight: 400; /* 字体更细 */
+}
+
+/* =========================
+   7. 社交图标标签 - 苹果风格调整
+========================= */
+.icon-tags {
+    display: flex;
+    gap: 14px; /* 图标间距 */
+    justify-content: center; /* 水平居中 */
+    margin-top: -5px; /* 向上移动，靠近文字 */
+}
+/* 单个图标按钮 */
+.icon-tag {
+    width: 44px; /* 增大点击区域 */
+    height: 44px;
+    border-radius: 12px; /* 圆角矩形 */
+    background: var(--glass); /* 应用玻璃背景变量 */
+    backdrop-filter: blur(15px); /* 按钮自身也带模糊效果 */
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.4); /* 更亮的边框 */
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+/* 图标按钮悬停效果 */
+.icon-tag:hover {
+    background: white; /* 变为不透明白色 */
+    transform: translateY(-3px); /* 上浮 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 添加阴影 */
+}
+/* 图标按钮内的图片 (SVG) */
+.icon-tag img {
+    width: 50%;
+    height: 50%;
+    filter: invert(100%); /* 关键：将黑色 SVG 图标反转为白色 */
+    transition: all 0.2s ease;
+}
+/* 图标按钮悬停时，内部图片的效果 */
+.icon-tag:hover img {
+    transform: scale(1.1); /* 轻微放大 */
+    filter: invert(0%); /* 关键：图标恢复为原始颜色（黑色） */
+}
+
+/* =========================
+   8. 响应式适配 - 优化移动端字体
+========================= */
+/* 当视口宽度小于等于 600px 时生效 */
+@media (max-width: 600px) {
+    /* 减小卡片尺寸和圆角 */
+    .card {
+        max-width: 90vw; /* 卡片最大宽度为视口宽度的 90% */
+        padding: 24px;
+        border-radius: 24px;
+    }
+    /* 减小头像尺寸 */
+    .avatar {
+        width: 90px;
+        height: 90px;
+    }
+    /* 减小导航栏高度和内边距 */
+    .navbar {
+        padding: 0 10px;
+        height: 48px;
+    }
+    /* 减小导航栏中间间距 */
+    .nav-center {
+        gap: 8px;
+    }
+    
+    /* 减小品牌文字大小 */
+    .brand div:first-of-type + div {
+        font-size: 11px;
+    }
+    /* 减小导航栏链接字体和内边距 */
+    .nav-link {
+        font-size: 11px;
+        padding: 6px 6px;
+    }
+    /* 减小卡片内标题字体 */
+    .status-message h2 {
+        font-size: 18px;
+    }
+    /* 减小卡片内副标题字体 */
+    .status-message h3 {
+        font-size: 14px;
+    }
+    /* 减小页脚字体 */
+    footer {
+        font-size: 12px;
+    }
+}
+
+/* =========================
+   9. 其它辅助样式
+========================= */
+/* 页脚（在 .wrap 之外） */
+footer {
+    margin-top: 30px; /* 与 .wrap 的间距 */
+    color: var(--muted); /* 应用半透明白色文字 */
+    font-size: 13px;
+    text-align: center;
+    z-index: 2; /* 确保在背景之上 */
+    position: relative;
+    letter-spacing: 0.2px;
+}
+/* 隐藏旧版或未使用的类 */
+.tags, .tag, .wave { display: none; }

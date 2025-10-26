@@ -1,0 +1,367 @@
+/* =========================
+   1. 全局样式与变量
+========================= */
+
+/* 通用选择器，设置所有元素的盒模型为 border-box */
+/* 这意味着元素的 padding 和 border 不会增加其总宽度和高度 */
+* { 
+    box-sizing: border-box; 
+}
+
+/* :root 选择器用于在 HTML 文档的根元素上声明全局 CSS 变量 */
+/* 这些变量主要用于定义网站的“亮色主题”配色方案 */
+:root {
+    /* --accent: 主题强调色，用于按钮、链接悬停等 */
+    --accent: #ff6b9a;
+    /* --accent-light: 主题强调色的浅色变体，用于边框等 */
+    --accent-light: #ff8cae; 
+    /* --shadow-color: 基于主题色的阴影颜色，用于留言项 */
+    --shadow-color: rgba(255, 107, 154, 0.15); 
+    
+    /* --text: 实体卡片（如留言板）中的主要文本颜色 */
+    --text: #111;
+    /* --card-bg: 实体卡片的背景色 */
+    --card-bg: #fff;
+    /* --card-shadow: 实体卡片的阴影 */
+    --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
+    /* --muted: 次要文本颜色（如页脚、描述文字） */
+    --muted: #666;
+    /* --border: 边框颜色 */
+    --border: rgba(0,0,0,0.08);
+    /* --link: 超链接颜色 */
+    --link: #0066cc;
+    
+    /* --disclaimer-bg: 留言板提示框的背景色 */
+    --disclaimer-bg: #fffbe6;
+    /* --disclaimer-border: 留言板提示框的边框色 */
+    --disclaimer-border: #ffe58f;
+    /* --disclaimer-text: 留言板提示框的文本颜色 */
+    --disclaimer-text: #d46b08;
+    
+    /* --modal-shadow: 弹出窗口（模态框）的阴影 */
+    --modal-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    /* --cancel-btn-bg: 弹出窗口中“取消”按钮的背景色 */
+    --cancel-btn-bg: #f0f0f0;
+    /* --cancel-btn-text: 弹出窗口中“取消”按钮的文本颜色 */
+    --cancel-btn-text: #333;
+    /* --cancel-btn-hover: “取消”按钮悬停时的背景色 */
+    --cancel-btn-hover: #e0e0e0;
+
+    /* 导航栏专属变量（亮色主题） */
+    /* --nav-bg: 导航栏的毛玻璃背景色 */
+    --nav-bg: rgba(255, 255, 255, 0.6);
+    /* --nav-text: 导航栏的文本颜色 */
+    --nav-text: #1d1d1f;
+    /* --nav-link-hover-bg: 导航栏链接悬停时的背景色 */
+    --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
+    /* --nav-shadow: 导航栏的默认阴影 */
+    --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    /* --nav-hover-shadow: 导航栏悬停时的阴影 */
+    --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* 深色主题变量 */
+/* 当 <body> 元素具有 'dark-theme' 类时，这些变量将覆盖 :root 中的同名变量 */
+.dark-theme {
+    /* --background: 页面的全局背景色（暗色） */
+    --background: #1a1a1a;
+    /* --text: 实体卡片的主要文本颜色（暗色） */
+    --text: #f0f0f0;
+    /* --card-bg: 实体卡片的背景色（暗色） */
+    --card-bg: #2d2d2d;
+    /* --card-shadow: 实体卡片的阴影（暗色） */
+    --card-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    /* --muted: 次要文本颜色（暗色） */
+    --muted: #bbb;
+    /* --border: 边框颜色（暗色） */
+    --border: rgba(255,255,255,0.1);
+    /* --link: 超链接颜色（暗色） */
+    --link: #66b2ff;
+    
+    /* --disclaimer-*: 提示框的颜色（暗色） */
+    --disclaimer-bg: #332d00;
+    --disclaimer-border: #5c5000;
+    --disclaimer-text: #ffd56b;
+    
+    /* --modal-shadow: 弹出窗口阴影（暗色） */
+    --modal-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    /* --cancel-btn-*: “取消”按钮颜色（暗色） */
+    --cancel-btn-bg: #3a3a3a;
+    --cancel-btn-text: #f0f0f0;
+    --cancel-btn-hover: #4a4a4a;
+
+    /* 导航栏专属变量（暗色） */
+    --nav-bg: rgba(30, 30, 30, 0.7);
+    --nav-text: #f0f0f0;
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
+    --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* 页面主体样式 */
+body {
+    margin: 0; /* 移除默认的外边距 */
+    /* 设置字体栈：优先使用 Inter，然后是苹果系统字体，最后是无衬线字体 */
+    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    /* 使用变量设置背景色（默认为亮色，.dark-theme 下会变为暗色） */
+    background: var(--background);
+    /* 使用变量设置默认文本颜色 */
+    color: var(--text);
+    /* 设置全局行高 */
+    line-height: 1.6;
+    /* 为背景色变化添加平滑过渡效果 */
+    transition: background-color 0.3s ease;
+}
+
+/* =========================
+   2. 顶部导航栏 (所有页面通用)
+========================= */
+
+/* 导航栏容器 */
+.navbar {
+    height: 54px; /* 固定高度 */
+    display: flex; /* 使用 Flexbox 布局 */
+    align-items: center; /* 垂直居中子元素 */
+    justify-content: center; /* 水平居中（主要用于内部左右两侧布局） */
+    position: fixed; /* 固定在视口顶部 */
+    top: 16px; /* 距离视口顶部 16px */
+    left: 50%; /* 水平居中定位 */
+    transform: translateX(-50%); /* 通过 transform 精确居中 */
+    z-index: 30; /* 确保导航栏在页面内容之上 */
+    /* 宽度：最大 800px，最小为（视口宽度 - 40px），确保两侧总有 20px 边距 */
+    width: min(800px, calc(100% - 40px));
+    background: var(--nav-bg); /* 使用变量设置背景（毛玻璃效果） */
+    border-radius: 18px; /* 圆角 */
+    padding: 0 28px; /* 内部左右内边距 */
+    backdrop-filter: blur(20px); /* 关键：背景模糊（毛玻璃效果） */
+    -webkit-backdrop-filter: blur(20px); /* 兼容 Safari */
+    border: 1px solid var(--border); /* 细边框 */
+    box-shadow: var(--nav-shadow); /* 使用变量设置阴影 */
+    transition: all 0.3s ease; /* 为所有变化（如阴影）添加过渡 */
+    overflow: hidden; /* 隐藏内部溢出的内容 */
+}
+
+/* 暗色模式下的导航栏（变量已在 .dark-theme 中定义，此处无需重复） */
+.dark-theme .navbar {
+    background: var(--nav-bg); /* 自动应用暗色模式的 --nav-bg 变量 */
+}
+
+/* 导航栏悬停效果 */
+.navbar:hover {
+    box-shadow: var(--nav-hover-shadow); /* 悬停时使用更深的阴影 */
+}
+
+/* 暗色模式下的导航栏悬停效果 */
+.dark-theme .navbar:hover {
+    box-shadow: var(--nav-hover-shadow); /* 自动应用暗色模式的 --nav-hover-shadow */
+}
+
+/* 导航栏左侧容器 */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* 子元素间距 */
+    margin-right: auto; /* 关键：将自身推到最左侧，将 .nav-right 推到最右侧 */
+}
+
+/* 品牌 Logo 和文字 */
+.brand {
+    font-weight: 600; /* 字体加粗 */
+    font-size: 20px; /* 字体大小 */
+    letter-spacing: 0.2px; /* 字间距 */
+    color: var(--nav-text); /* 使用导航栏文本颜色 */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 品牌 Logo 图标 */
+.brand .logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px; /* 圆角矩形 */
+    background: var(--accent); /* 使用主题强调色 */
+    display: inline-grid; /* 另一种居中方式 */
+    place-items: center; /* 水平和垂直居中 */
+    font-weight: 600;
+    color: #fff; /* Logo 内文字为白色 */
+    font-size: 14px;
+    /* Logo 的阴影，使用主题色的半透明阴影 */
+    box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3);
+}
+
+/* 导航栏中间容器（此布局中未使用，但保留） */
+.nav-center {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+/* 导航栏右侧容器（用于链接和主题切换按钮） */
+.nav-right {
+    margin-left: auto; /* 关键：将自身推到最右侧 */
+    display: flex;
+    align-items: center;
+    gap: 8px; /* 链接和按钮之间的间距 */
+}
+
+/* 导航栏链接 */
+.nav-link {
+    padding: 8px 12px; /* 内边距 */
+    border-radius: 10px; /* 圆角 */
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--nav-text); /* 文本颜色 */
+    text-decoration: none; /* 去除下划线 */
+    transition: all .2s ease; /* 过渡效果 */
+    position: relative; /* 为 ::after 伪元素定位 */
+    overflow: hidden; /* 隐藏溢出的 ::after 元素 */
+}
+
+/* 链接悬停效果 */
+.nav-link:hover { 
+    color: var(--nav-text);
+    background: var(--nav-link-hover-bg); /* 悬停时添加浅色背景 */
+    transform: translateY(-1px); /* 轻微上浮 */
+}
+
+/* 链接下方的装饰性线条（初始状态） */
+.nav-link::after {
+    content: ''; /* 伪元素必须有 content 属性 */
+    position: absolute; /* 绝对定位于 .nav-link 内部 */
+    bottom: 6px; /* 距离底部 6px */
+    left: 50%; /* 水平居中 */
+    width: 0; /* 初始宽度为 0 */
+    height: 2px; /* 高度 2px */
+    background: var(--accent); /* 使用主题色 */
+    transition: all 0.3s ease; /* 宽度变化过渡 */
+    transform: translateX(-50%); /* 精确居中 */
+}
+
+/* 链接悬停时，装饰性线条的效果 */
+.nav-link:hover::after {
+    width: 60%; /* 宽度展开到 60% */
+}
+
+/* 主题切换按钮 */
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%; /* 圆形 */
+    background: transparent; /* 透明背景 */
+    border: none; /* 无边框 */
+    color: var(--nav-text); /* 图标颜色 */
+    cursor: pointer; /* 鼠标手型 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease; /* 为旋转和背景色添加过渡 */
+}
+
+/* 主题切换按钮悬停效果 */
+.theme-toggle:hover {
+    background: rgba(0, 0, 0, 0.05); /* 浅色背景 */
+    transform: rotate(90deg); /* 旋转 90 度 */
+}
+
+/* 暗色模式下主题切换按钮悬停效果 */
+.dark-theme .theme-toggle:hover {
+    background: rgba(255, 255, 255, 0.1); /* 亮色背景 */
+}
+/* 导航栏 CSS 结束 */
+
+
+/* 主要内容区域的包裹容器 */
+.wrap {
+    max-width: 800px; /* 内容最大宽度 */
+    margin: 80px auto 40px auto; /* 上 80px（为导航栏留出空间），左右 auto 居中，下 40px */
+    padding: 0 20px; /* 两侧留出内边距 */
+}
+
+/* 文章/卡片的基础样式 */
+article {
+    background: var(--card-bg); /* 使用变量设置背景色 */
+    border-radius: 16px; /* 圆角 */
+    padding: 24px; /* 内边距 */
+    margin-bottom: 28px; /* 距离下一个元素的下外边距 */
+    box-shadow: var(--card-shadow); /* 使用变量设置阴影 */
+    transition: all 0.3s ease; /* 为阴影和背景色添加过渡 */
+}
+
+/* 卡片内的 h2 标题 */
+article h2 {
+    margin-top: 0; /* 移除默认的上外边距 */
+    color: var(--text); /* 使用变量设置文本颜色 */
+    font-size: 22px; /* 字体大小 */
+}
+
+/* 卡片内的 p 段落 */
+article p {
+    margin: 12px 0; /* 上下外边距 */
+    color: var(--muted); /* 使用变量设置次要文本颜色 */
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center; /* 文本居中 */
+    color: var(--muted); /* 次要文本颜色 */
+    font-size: 14px; /* 字体大小 */
+    padding: 30px 10px; /* 内边距 */
+    border-top: 1px solid var(--border); /* 顶部边框 */
+    margin-top: 60px; /* 与上方内容的间距 */
+}
+
+/* =========================
+   8. 响应式适配 (Media Query)
+========================= */
+/* 当视口宽度小于等于 600px 时（通常是移动设备）应用以下样式 */
+@media (max-width: 600px) {
+    /* .card 在 message.html 中未使用，但保留此处的 .card 样式 */
+    /* 如果 message.html 中的 article 也需要响应式，应使用 article 选择器 */
+    .card { /* 这个 .card 可能是为其他页面（如 index）准备的 */
+        max-width: 90vw; /* 卡片最大宽度为视口宽度的 90% */
+        padding: 24px;
+        border-radius: 24px; /* 减小圆角 */
+    }
+    
+    /* 头像（在 message.html 中未使用） */
+    .avatar {
+        width: 90px;
+        height: 90px;
+    }
+    
+    /* 导航栏响应式调整 */
+    .navbar {
+        padding: 0 10px; /* 减小左右内边距 */
+        height: 48px; /* 减小高度 */
+    }
+    
+    /* 导航栏中间容器 */
+    .nav-center {
+        gap: 8px; /* 减小间距 */
+    }
+
+    /* 品牌文字（在 message.html 中未使用第二行） */
+    .brand div:first-of-type + div {
+        font-size: 11px; /* 减小移动端品牌名称字体 */
+    }
+    
+    /* 导航栏链接 */
+    .nav-link {
+        font-size: 11px; /* 减小字体 */
+        padding: 6px 6px; /* 减小内边距 */
+    }
+    
+    /* 状态消息（在 message.html 中未使用） */
+    .status-message h2 {
+        font-size: 18px; /* 减小字体 */
+    }
+    .status-message h3 {
+        font-size: 14px; /* 减小字体 */
+    }
+    
+    /* 页脚 */
+    footer {
+        font-size: 12px; /* 减小字体 */
+    }
+}
