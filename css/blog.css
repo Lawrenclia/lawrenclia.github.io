@@ -1,13 +1,9 @@
-/* =========================
-    css/blog.css
-    博客页面通用样式
-========================= */
 * { 
     box-sizing: border-box; 
 }
 :root {
     --accent: #ff6b9a;
-    --background: linear-gradient(90deg, #f5e8ff 0%, #ffe8f5 100%);
+    --background: #f5e8ff; 
     --text: #111;
     --card-bg: #fff;
     --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
@@ -265,7 +261,7 @@ article {
 }
 
 /* =========================
-    博客文章详情页样式
+    新：博客文章详情页样式
 ========================= */
 .blog-post {
     padding: 32px 40px; /* 内部留白 */
@@ -276,7 +272,7 @@ article {
     margin-bottom: 16px;
     color: var(--text);
 }
-
+/* 修改点：优化标题层级，将h3改为h2 */
 .blog-post h2 {
     font-size: 24px;
     margin-top: 32px;
@@ -285,7 +281,7 @@ article {
     border-bottom: 1px solid var(--border);
     padding-bottom: 8px;
 }
-
+/* 修改点：优化标题层级，将h4改为h3 */
 .blog-post h3 {
     font-size: 20px;
     margin-top: 24px;
@@ -319,7 +315,7 @@ article {
     margin-top: 0;
     margin-bottom: 1.2em;
 }
-
+/* 修改点：优化列表间距 */
 .blog-post-content ul,
 .blog-post-content ol {
     padding-left: 24px;
@@ -334,7 +330,7 @@ article {
     height: 1px;
     background-color: var(--border);
     margin: 32px 0;
-    clear: both; 
+    clear: both; /* <-- 修改点：清除浮动 */
 }
 
 .back-link {
@@ -350,7 +346,7 @@ article {
 }
 
 /* =========================
-    左侧浮动图片样式
+    新：左侧浮动图片样式
 ========================= */
 .image-float-left {
     float: left;
@@ -363,7 +359,7 @@ article {
 
 
 /* =========================
-    指南框样式
+    新：角色扮演指南框样式
 ========================= */
 .guide-container {
     background: #fdf8ff;
@@ -375,15 +371,15 @@ article {
 }
 
 .dark-theme .guide-container {
-    
+    /* 修改点：优化暗色模式下的阴影 */
     background: rgba(0,0,0,0.1);
     box-shadow: inset 0 2px 8px rgba(0,0,0,0.2);
 }
 
 .guide-container h1 {
-    font-size: 26px; 
+    font-size: 26px; /* 框内H1小一点 */
     margin-top: 0;
-    color: var(--accent); 
+    color: var(--accent); /* 突出颜色 */
     border-bottom: 1px solid var(--border);
     padding-bottom: 10px;
 }
@@ -391,21 +387,21 @@ article {
 .guide-container h2 {
     font-size: 20px;
     color: var(--text);
-    border-left: 3px solid var(--accent); 
+    border-left: 3px solid var(--accent); /* 框内H2样式 */
     padding-left: 10px;
     margin-top: 24px;
-    border-bottom: none; 
+    border-bottom: none; /* 确保框内h2没有文章h2的下划线 */
 }
 
 .guide-container h3 {
     font-size: 18px;
     color: var(--muted);
-    border-bottom: none; 
+    border-bottom: none; /* 框内H3无下划线 */
     margin-top: 20px;
 }
 
 /* =========================
-    折叠功能样式
+    新：折叠功能样式
 ========================= */
 .guide-container summary {
     cursor: pointer; /* 鼠标手型 */

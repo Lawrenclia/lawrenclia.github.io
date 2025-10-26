@@ -7,7 +7,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="css/common.css">
-  <link rel="stylesheet" href="css/blog.css">
 
   <style>
     :root {
@@ -16,7 +15,7 @@
 
     .blog-card {
         display: flex;
-        padding: 0; /* 移除 article 的内边距，以便图片可以贴合边缘 */
+        padding: 10px; 
         overflow: hidden; /* 确保图片圆角生效 */
     }
 
@@ -32,7 +31,7 @@
         display: block;
         transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加 box-shadow 过渡 */
         border-radius: 12px; /* 给图片添加圆角，与卡片整体风格更协调 */
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 默认阴影 */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* 默认阴影 */
     }
 
     /* 鼠标悬停时阴影效果更明显 */
@@ -99,6 +98,23 @@
         display: flex;
         align-items: center;
         gap: 6px; /* 图标和文字的间距 */
+    }
+
+    /* =========================
+        8. 响应式适配 - 优化移动端字体
+    ========================= */
+    @media (max-width: 600px) {
+        /* 新增的响应式样式 */
+        .blog-card {
+            flex-direction: column; /* 垂直堆叠 */
+        }
+        .blog-card-image {
+            width: 100%;
+            height: 180px; /* 在移动端给图片一个固定高度 */
+        }
+        .blog-card-content {
+            padding: 20px; /* 移动端内边距稍小 */
+        }
     }
 
   </style>
