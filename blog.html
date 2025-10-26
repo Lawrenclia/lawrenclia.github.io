@@ -13,7 +13,7 @@
     }
     :root {
       --accent: #ff6b9a;
-      --background: #fbfbfd; 
+      --background: #f5e8ff; 
       --text: #111;
       --card-bg: #fff;
       --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
@@ -221,11 +221,19 @@
     }
     
     .blog-card-image {
-        width: 220px; /* 图片宽度 */
-        height: 100%; /* 图片高度占满卡片 */
-        object-fit: cover; /* 裁剪图片以填充，不变形 */
+        width: 220px;
+        height: 100%;
+        object-fit: cover;
         display: block;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加 box-shadow 过渡 */
+        border-radius: 12px; /* 给图片添加圆角，与卡片整体风格更协调 */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* 默认阴影 */
+    }
+
+    /* 鼠标悬停时阴影效果更明显 */
+    .blog-card-image-link:hover .blog-card-image {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 鼠标悬停时更深的阴影 */
     }
     
     .blog-card-image-link:hover .blog-card-image {
