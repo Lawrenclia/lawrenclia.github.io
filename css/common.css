@@ -26,7 +26,7 @@
     --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
     /* --muted: 次要文本颜色（如页脚、描述文字） */
     --muted: #666;
-    /* --border: 边框颜色 */
+    /* --border: 边框颜色 (用于非 nav 元素) */
     --border: rgba(0,0,0,0.08);
     /* --link: 超链接颜色 */
     --link: #0066cc;
@@ -47,20 +47,17 @@
     /* --cancel-btn-hover: “取消”按钮悬停时的背景色 */
     --cancel-btn-hover: #e0e0e0;
 
-    /* === 修改：导航栏专属变量（亮色主题）- 液态玻璃 === */
-    --glass-bg-color: rgba(255, 255, 255, 0.25);
-    --nav-bg: var(--glass-bg-color); /* 导航栏背景 */
-    --border: rgba(255, 255, 255, 0.2); /* 边框：白色，20%透明度，用于玻璃卡片 */
+    /* === 修改：导航栏专属变量（亮色主题）- 新的液态玻璃 === */
     --nav-text: #1d1d1f; /* 导航栏文字：深灰色，确保在亮背景上可读 */
     --nav-link-hover-bg: rgba(0, 0, 0, 0.03); /* 导航栏链接悬停背景：近乎透明的黑色 */
     
-    --glass-outer-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
-    --nav-shadow: var(--glass-outer-shadow);
-    --nav-hover-shadow: var(--glass-outer-shadow); /* 悬停时阴影不变 */
-
-    --lg-highlight: rgba(255, 255, 255, 0.75); /* Liquid glass highlight color (bright) */
-    --lg-highlight-shadow: inset 1px 1px 0 var(--lg-highlight),
-                           inset 0 0 5px var(--lg-highlight);
+    /* === 新增：来自 .switcher 的新玻璃样式变量 (Light) === */
+    --c-glass: #bbbbbc;
+    --c-light: #fff;
+    --c-dark: #000;
+    --glass-reflex-dark: 1;
+    --glass-reflex-light: 1;
+    --saturation: 150%;
 }
 
 /* 深色主题变量 */
@@ -76,7 +73,7 @@
     --card-shadow: 0 6px 16px rgba(0,0,0,0.3);
     /* --muted: 次要文本颜色（暗色） */
     --muted: #bbb;
-    /* --border: 边框颜色（暗色） */
+    /* --border: 边框颜色（暗色） (用于非 nav 元素) */
     --border: rgba(255,255,255,0.1);
     /* --link: 超链接颜色（暗色） */
     --link: #66b2ff;
@@ -93,18 +90,17 @@
     --cancel-btn-text: #f0f0f0;
     --cancel-btn-hover: #4a4a4a;
 
-    /* === 修改：导航栏专属变量（暗色）- 液态玻璃 === */
-    --glass-bg-color: rgba(30, 30, 30, 0.7); /* 保持之前的暗色透明度 */
-    --nav-bg: var(--glass-bg-color);
-    --border: rgba(50, 50, 50, 0.5); /* 边框：深灰色，50%透明度 */
+    /* === 修改：导航栏专属变量（暗色）- 新的液态玻璃 === */
     --nav-text: #f0f0f0; /* 导航栏文字：浅灰色 */
     --nav-link-hover-bg: rgba(255, 255, 255, 0.05); /* 导航栏链接悬停背景：近乎透明的白色 */
     
-    --nav-shadow: var(--glass-outer-shadow);
-    --nav-hover-shadow: var(--glass-outer-shadow);
-
-    --lg-highlight: rgba(255, 255, 255, 0.15); /* Liquid glass highlight (dimmer for dark mode) */
-    --lg-highlight-shadow: inset 1px 1px 0px var(--lg-highlight);
+    /* === 新增：来自 .switcher 的新玻璃样式变量 (Dark) === */
+    --c-glass: #bbbbbc;
+    --c-light: #fff;
+    --c-dark: #000;
+    --glass-reflex-dark: 2;
+    --glass-reflex-light: 0.3;
+    --saturation: 150%;
 }
 
 /* 页面主体样式 */
@@ -123,7 +119,7 @@ body {
 }
 
 /* =========================
-   2. 顶部导航栏 (所有页面通用)
+   2. 顶部导航栏 (所有页面通用) - === 应用新样式 ===
 ========================= */
 
 /* 导航栏容器 */
@@ -139,40 +135,54 @@ body {
     z-index: 30; /* 确保导航栏在页面内容之上 */
     /* 宽度：最大 800px，最小为（视口宽度 - 40px），确保两侧总有 20px 边距 */
     width: min(800px, calc(100% - 40px));
-    background: var(--nav-bg); /* 使用变量设置背景（毛玻璃效果） */
     border-radius: 18px; /* 圆角 */
     padding: 0 28px; /* 内部左右内边距 */
-    
-    /* === 修改：应用液态玻璃滤镜 === */
-    backdrop-filter: url(#lg-dist); /* 关键：背景模糊（毛玻璃效果） */
-    -webkit-backdrop-filter: url(#lg-dist); /* 兼容 Safari */
-    
-    border: 1px solid var(--border); /* 细边框 */
-    
-    /* === 修改：应用液态玻璃阴影和高光 === */
-    box-shadow: var(--nav-shadow), var(--lg-highlight-shadow); /* 使用变量设置阴影 */
-    
-    transition: all 0.3s ease; /* 为所有变化（如阴影）添加过渡 */
     overflow: hidden; /* 隐藏内部溢出的内容 */
+
+    /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    
+    /* === 修改：移除 blur，保留液态畸变和饱和度 === */
+    /* 注意：这里使用了你HTML中的 #lg-dist 滤镜ID */
+    backdrop-filter: url(#lg-dist) saturate(var(--saturation));
+    -webkit-backdrop-filter: url(#lg-dist) saturate(var(--saturation));
+    
+    border: none; /* 新样式没有边框 */
+
+    box-shadow: 
+      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+      inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+      inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+      inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+      inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+      inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+      inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+      inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+      0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+      0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+    
+    /* === 修改：合并新的过渡和旧的过渡 === */
+    transition: 
+      background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+      box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+      transform 0.3s ease; /* 保留原来的 transform 过渡 */
 }
 
 /* 暗色模式下的导航栏（变量已在 .dark-theme 中定义，此处无需重复） */
 .dark-theme .navbar {
-    background: var(--nav-bg); /* 自动应用暗色模式的 --nav-bg 变量 */
+    /* 样式已由 .navbar 中的 CSS 变量自动处理 */
 }
 
 /* 导航栏悬停效果 */
 .navbar:hover {
-    /* === 修改：应用液态玻璃悬停阴影和高光 === */
-    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 悬停时使用更深的阴影 */
-    transform: translateX(-50%) scale(1.02); /* 悬停时变大 (从 index.css 借鉴) */
+    /* 阴影由变量自动控制，悬停时只改变 transform */
+    transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
 }
 
 /* 暗色模式下的导航栏悬停效果 */
 .dark-theme .navbar:hover {
-    /* === 修改：应用液态玻璃悬停阴影和高光 === */
-    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 自动应用暗色模式的 --nav-hover-shadow */
-    transform: translateX(-50%) scale(1.02); /* 悬停时变大 (从 index.css 借鉴) */
+    /* 阴影由变量自动控制，悬停时只改变 transform */
+    transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
 }
 
 /* 导航栏左侧容器 */
