@@ -345,54 +345,66 @@ footer {
 ========================= */
 /* 当视口宽度小于等于 600px 时（通常是移动设备）应用以下样式 */
 @media (max-width: 600px) {
-    /* .card 在 message.html 中未使用，但保留此处的 .card 样式 */
-    /* 如果 message.html 中的 article 也需要响应式，应使用 article 选择器 */
-    .card { /* 这个 .card 可能是为其他页面（如 index）准备的 */
-        max-width: 90vw; /* 卡片最大宽度为视口宽度的 90% */
+    /* .card is less relevant here, other pages use specific classes or inline styles */
+    .card { /* This might apply to 404.html, construct.html */
+        max-width: 90vw;
         padding: 24px;
-        border-radius: 24px; /* 减小圆角 */
+        border-radius: 24px;
+        /* === 确保移动端 .card 有 blur(3px) === */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
     }
-    
-    /* 头像（在 message.html 中未使用） */
+
+    /* 头像 */
     .avatar {
         width: 90px;
         height: 90px;
     }
-    
+
     /* 导航栏响应式调整 */
     .navbar {
-        padding: 0 10px; /* 减小左右内边距 */
-        height: 48px; /* 减小高度 */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    }
-    
-    /* 导航栏中间容器 */
-    .nav-center {
-        gap: 8px; /* 减小间距 */
+        padding: 0 10px;
+        height: 48px;
+        /* === 确保移动端导航栏有 blur(3px) === */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
     }
 
-    /* 品牌文字（在 message.html 中未使用第二行） */
-    .brand div:first-of-type + div {
-        font-size: 11px; /* 减小移动端品牌名称字体 */
+    /* 导航栏中间容器 */
+    .nav-center {
+        gap: 8px;
     }
-    
+
+    /* 品牌文字 */
+    .brand div:first-of-type + div {
+        font-size: 11px;
+    }
+
     /* 导航栏链接 */
     .nav-link {
-        font-size: 11px; /* 减小字体 */
-        padding: 6px 6px; /* 减小内边距 */
+        font-size: 11px;
+        padding: 6px 6px;
     }
-    
-    /* 状态消息（在 message.html 中未使用） */
+
+    /* 状态消息 */
     .status-message h2 {
-        font-size: 18px; /* 减小字体 */
+        font-size: 18px;
     }
     .status-message h3 {
-        font-size: 14px; /* 减小字体 */
+        font-size: 14px;
     }
-    
+
+    /* === 新增：确保移动端 message.html 元素有 blur(3px) === */
+    .message-item,
+    .modal-content {
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+    }
+     /* === /新增 === */
+
     /* 页脚 */
     footer {
-        font-size: 12px; /* 减小字体 */
+        font-size: 12px;
+        margin-top: 30px; /* Ensure footer spacing is adjusted */
     }
 }

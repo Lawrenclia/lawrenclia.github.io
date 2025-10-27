@@ -501,24 +501,29 @@ html, body {
         max-width: 90vw; /* 卡片最大宽度为视口宽度的 90% */
         padding: 24px;
         border-radius: 24px;
+        /* === 确保移动端卡片有 blur(3px) === */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
     }
     /* 减小头像尺寸 */
     .avatar {
         width: 90px;
         height: 90px;
+        /* Avatar maintains its own blur from previous edits */
     }
     /* 减小导航栏高度和内边距 */
     .navbar {
         padding: 0 10px;
         height: 48px;
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* === 确保移动端导航栏有 blur(3px) === */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
     }
     /* 减小导航栏中间间距 */
     .nav-center {
         gap: 8px;
     }
-    
+
     /* 减小品牌文字大小 */
     .brand div:first-of-type + div {
         font-size: 11px;
