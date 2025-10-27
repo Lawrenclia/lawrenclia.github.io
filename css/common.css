@@ -4,8 +4,8 @@
 
 /* 通用选择器，设置所有元素的盒模型为 border-box */
 /* 这意味着元素的 padding 和 border 不会增加其总宽度和高度 */
-* { 
-    box-sizing: border-box; 
+* {
+    box-sizing: border-box;
 }
 
 /* :root 选择器用于在 HTML 文档的根元素上声明全局 CSS 变量 */
@@ -14,32 +14,32 @@
     /* --accent: 主题强调色，用于按钮、链接悬停等 */
     --accent: #ff6b9a;
     /* --accent-light: 主题强调色的浅色变体，用于边框等 */
-    --accent-light: #ff8cae; 
+    --accent-light: #ff8cae;
     /* --shadow-color: 基于主题色的阴影颜色，用于留言项 */
-    --shadow-color: rgba(255, 107, 154, 0.15); 
-    
+    --shadow-color: rgba(255, 107, 154, 0.15);
+
     /* --text: 实体卡片（如留言板）中的主要文本颜色 */
     --text: #111;
     /* --card-bg: 实体卡片的背景色 */
     --card-bg: #fff;
     /* --card-shadow: 实体卡片的阴影 */
-    --card-shadow: 0 6px 16px rgba(16,24,40,0.06);
+    --card-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
     /* --muted: 次要文本颜色（如页脚、描述文字） */
     --muted: #666;
     /* --border: 边框颜色 (用于非 nav 元素) */
-    --border: rgba(0,0,0,0.08);
+    --border: rgba(0, 0, 0, 0.08);
     /* --link: 超链接颜色 */
     --link: #0066cc;
-    
+
     /* --disclaimer-bg: 留言板提示框的背景色 */
     --disclaimer-bg: #fffbe6;
     /* --disclaimer-border: 留言板提示框的边框色 */
     --disclaimer-border: #ffe58f;
     /* --disclaimer-text: 留言板提示框的文本颜色 */
     --disclaimer-text: #d46b08;
-    
+
     /* --modal-shadow: 弹出窗口（模态框）的阴影 */
-    --modal-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    --modal-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     /* --cancel-btn-bg: 弹出窗口中“取消”按钮的背景色 */
     --cancel-btn-bg: #f0f0f0;
     /* --cancel-btn-text: 弹出窗口中“取消”按钮的文本颜色 */
@@ -48,9 +48,11 @@
     --cancel-btn-hover: #e0e0e0;
 
     /* === 修改：导航栏专属变量（亮色主题）- 新的液态玻璃 === */
-    --nav-text: #1d1d1f; /* 导航栏文字：深灰色，确保在亮背景上可读 */
-    --nav-link-hover-bg: rgba(0, 0, 0, 0.03); /* 导航栏链接悬停背景：近乎透明的黑色 */
-    
+    --nav-text: #1d1d1f;
+    /* 导航栏文字：深灰色，确保在亮背景上可读 */
+    --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
+    /* 导航栏链接悬停背景：近乎透明的黑色 */
+
     /* === 新增：来自 .switcher 的新玻璃样式变量 (Light) === */
     --c-glass: #bbbbbc;
     --c-light: #fff;
@@ -70,30 +72,32 @@
     /* --card-bg: 实体卡片的背景色（暗色） */
     --card-bg: #2d2d2d;
     /* --card-shadow: 实体卡片的阴影（暗色） */
-    --card-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     /* --muted: 次要文本颜色（暗色） */
     --muted: #bbb;
     /* --border: 边框颜色（暗色） (用于非 nav 元素) */
-    --border: rgba(255,255,255,0.1);
+    --border: rgba(255, 255, 255, 0.1);
     /* --link: 超链接颜色（暗色） */
     --link: #66b2ff;
-    
+
     /* --disclaimer-*: 提示框的颜色（暗色） */
     --disclaimer-bg: #332d00;
     --disclaimer-border: #5c5000;
     --disclaimer-text: #ffd56b;
-    
+
     /* --modal-shadow: 弹出窗口阴影（暗色） */
-    --modal-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    --modal-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     /* --cancel-btn-*: “取消”按钮颜色（暗色） */
     --cancel-btn-bg: #3a3a3a;
     --cancel-btn-text: #f0f0f0;
     --cancel-btn-hover: #4a4a4a;
 
     /* === 修改：导航栏专属变量（暗色）- 新的液态玻璃 === */
-    --nav-text: #f0f0f0; /* 导航栏文字：浅灰色 */
-    --nav-link-hover-bg: rgba(255, 255, 255, 0.05); /* 导航栏链接悬停背景：近乎透明的白色 */
-    
+    --nav-text: #f0f0f0;
+    /* 导航栏文字：浅灰色 */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
+    /* 导航栏链接悬停背景：近乎透明的白色 */
+
     /* === 新增：来自 .switcher 的新玻璃样式变量 (Dark) === */
     --c-glass: #bbbbbc;
     --c-light: #fff;
@@ -105,7 +109,8 @@
 
 /* 页面主体样式 */
 body {
-    margin: 0; /* 移除默认的外边距 */
+    margin: 0;
+    /* 移除默认的外边距 */
     /* 设置字体栈：优先使用 Inter，然后是苹果系统字体，最后是无衬线字体 */
     font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     /* 使用变量设置背景色（默认为亮色，.dark-theme 下会变为暗色） */
@@ -124,80 +129,102 @@ body {
 
 /* 导航栏容器 */
 .navbar {
-    height: 54px; /* 固定高度 */
-    display: flex; /* 使用 Flexbox 布局 */
-    align-items: center; /* 垂直居中子元素 */
-    justify-content: center; /* 水平居中（主要用于内部左右两侧布局） */
-    position: fixed; /* 固定在视口顶部 */
-    top: 16px; /* 距离视口顶部 16px */
-    left: 50%; /* 水平居中定位 */
-    transform: translateX(-50%); /* 通过 transform 精确居中 */
-    z-index: 30; /* 确保导航栏在页面内容之上 */
+    height: 54px;
+    /* 固定高度 */
+    display: flex;
+    /* 使用 Flexbox 布局 */
+    align-items: center;
+    /* 垂直居中子元素 */
+    justify-content: center;
+    /* 水平居中（主要用于内部左右两侧布局） */
+    position: fixed;
+    /* 固定在视口顶部 */
+    top: 16px;
+    /* 距离视口顶部 16px */
+    left: 50%;
+    /* 水平居中定位 */
+    transform: translateX(-50%);
+    /* 通过 transform 精确居中 */
+    z-index: 30;
+    /* 确保导航栏在页面内容之上 */
     /* 宽度：最大 800px，最小为（视口宽度 - 40px），确保两侧总有 20px 边距 */
     width: min(800px, calc(100% - 40px));
-    border-radius: 18px; /* 圆角 */
-    padding: 0 28px; /* 内部左右内边距 */
-    overflow: hidden; /* 隐藏内部溢出的内容 */
+    border-radius: 18px;
+    /* 圆角 */
+    padding: 0 28px;
+    /* 内部左右内边距 */
+    overflow: hidden;
+    /* 隐藏内部溢出的内容 */
 
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    
+
     /* === 修改：添加 blur(3px) === */
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    border: none; /* 新样式没有边框 */
 
-    box-shadow: 
-      inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-      inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-      inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-      inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-      inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-      inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-      inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-      inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-      0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-      0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
+    border: none;
+    /* 新样式没有边框 */
+
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+
     /* === 修改：合并新的过渡和旧的过渡 === */
-    transition: 
-      background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-      box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-      transform 0.3s ease; /* 保留原来的 transform 过渡 */
+    transition:
+        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+        transform 0.3s ease;
+    /* 保留原来的 transform 过渡 */
 }
 
 /* 暗色模式下的导航栏（变量已在 .dark-theme 中定义，此处无需重复） */
 /* .dark-theme .navbar { */
-    /* 样式已由 .navbar 中的 CSS 变量自动处理 */
+/* 样式已由 .navbar 中的 CSS 变量自动处理 */
 /* } */
 
 /* 导航栏悬停效果 */
 .navbar:hover {
     /* 阴影由变量自动控制，悬停时只改变 transform */
-    transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
+    transform: translateX(-50%) scale(1.02);
+    /* 悬停时变大 */
 }
 
 /* 暗色模式下的导航栏悬停效果 */
 .dark-theme .navbar:hover {
     /* 阴影由变量自动控制，悬停时只改变 transform */
-    transform: translateX(-50%) scale(1.02); /* 悬停时变大 */
+    transform: translateX(-50%) scale(1.02);
+    /* 悬停时变大 */
 }
 
 /* 导航栏左侧容器 */
 .nav-left {
     display: flex;
     align-items: center;
-    gap: 12px; /* 子元素间距 */
-    margin-right: auto; /* 关键：将自身推到最左侧，将 .nav-right 推到最右侧 */
+    gap: 12px;
+    /* 子元素间距 */
+    margin-right: auto;
+    /* 关键：将自身推到最左侧，将 .nav-right 推到最右侧 */
 }
 
 /* 品牌 Logo 和文字 */
 .brand {
-    font-weight: 600; /* 字体加粗 */
-    font-size: 20px; /* 字体大小 */
-    letter-spacing: 0.2px; /* 字间距 */
-    color: var(--nav-text); /* 使用导航栏文本颜色 */
+    font-weight: 600;
+    /* 字体加粗 */
+    font-size: 20px;
+    /* 字体大小 */
+    letter-spacing: 0.2px;
+    /* 字间距 */
+    color: var(--nav-text);
+    /* 使用导航栏文本颜色 */
     display: flex;
     align-items: center;
     gap: 10px;
@@ -207,12 +234,17 @@ body {
 .brand .logo {
     width: 28px;
     height: 28px;
-    border-radius: 8px; /* 圆角矩形 */
-    background: var(--accent); /* 使用主题强调色 */
-    display: inline-grid; /* 另一种居中方式 */
-    place-items: center; /* 水平和垂直居中 */
+    border-radius: 8px;
+    /* 圆角矩形 */
+    background: var(--accent);
+    /* 使用主题强调色 */
+    display: inline-grid;
+    /* 另一种居中方式 */
+    place-items: center;
+    /* 水平和垂直居中 */
     font-weight: 600;
-    color: #fff; /* Logo 内文字为白色 */
+    color: #fff;
+    /* Logo 内文字为白色 */
     font-size: 14px;
     /* Logo 的阴影，使用主题色的半透明阴影 */
     box-shadow: 0 2px 10px rgba(255, 107, 154, 0.3);
@@ -227,116 +259,167 @@ body {
 
 /* 导航栏右侧容器（用于链接和主题切换按钮） */
 .nav-right {
-    margin-left: auto; /* 关键：将自身推到最右侧 */
+    margin-left: auto;
+    /* 关键：将自身推到最右侧 */
     display: flex;
     align-items: center;
-    gap: 8px; /* 链接和按钮之间的间距 */
+    gap: 8px;
+    /* 链接和按钮之间的间距 */
 }
 
 /* 导航栏链接 */
 .nav-link {
-    padding: 8px 12px; /* 内边距 */
-    border-radius: 10px; /* 圆角 */
+    padding: 8px 12px;
+    /* 内边距 */
+    border-radius: 10px;
+    /* 圆角 */
     font-weight: 400;
     font-size: 14px;
-    color: var(--nav-text); /* 文本颜色 */
-    text-decoration: none; /* 去除下划线 */
-    transition: all .2s ease; /* 过渡效果 */
-    position: relative; /* 为 ::after 伪元素定位 */
-    overflow: hidden; /* 隐藏溢出的 ::after 元素 */
+    color: var(--nav-text);
+    /* 文本颜色 */
+    text-decoration: none;
+    /* 去除下划线 */
+    transition: all .2s ease;
+    /* 过渡效果 */
+    position: relative;
+    /* 为 ::after 伪元素定位 */
+    overflow: hidden;
+    /* 隐藏溢出的 ::after 元素 */
 }
 
 /* 链接悬停效果 */
-.nav-link:hover { 
+.nav-link:hover {
     color: var(--nav-text);
-    background: var(--nav-link-hover-bg); /* 悬停时添加浅色背景 */
-    transform: translateY(-1px); /* 轻微上浮 */
+    background: var(--nav-link-hover-bg);
+    /* 悬停时添加浅色背景 */
+    transform: translateY(-1px);
+    /* 轻微上浮 */
 }
 
 /* 链接下方的装饰性线条（初始状态） */
 .nav-link::after {
-    content: ''; /* 伪元素必须有 content 属性 */
-    position: absolute; /* 绝对定位于 .nav-link 内部 */
-    bottom: 6px; /* 距离底部 6px */
-    left: 50%; /* 水平居中 */
-    width: 0; /* 初始宽度为 0 */
-    height: 2px; /* 高度 2px */
-    background: var(--accent); /* 使用主题色 */
-    transition: all 0.3s ease; /* 宽度变化过渡 */
-    transform: translateX(-50%); /* 精确居中 */
+    content: '';
+    /* 伪元素必须有 content 属性 */
+    position: absolute;
+    /* 绝对定位于 .nav-link 内部 */
+    bottom: 6px;
+    /* 距离底部 6px */
+    left: 50%;
+    /* 水平居中 */
+    width: 0;
+    /* 初始宽度为 0 */
+    height: 2px;
+    /* 高度 2px */
+    background: var(--accent);
+    /* 使用主题色 */
+    transition: all 0.3s ease;
+    /* 宽度变化过渡 */
+    transform: translateX(-50%);
+    /* 精确居中 */
 }
 
 /* 链接悬停时，装饰性线条的效果 */
 .nav-link:hover::after {
-    width: 60%; /* 宽度展开到 60% */
+    width: 60%;
+    /* 宽度展开到 60% */
 }
 
 /* 主题切换按钮 */
 .theme-toggle {
     width: 36px;
     height: 36px;
-    border-radius: 50%; /* 圆形 */
-    background: transparent; /* 透明背景 */
-    border: none; /* 无边框 */
-    color: var(--nav-text); /* 图标颜色 */
-    cursor: pointer; /* 鼠标手型 */
+    border-radius: 50%;
+    /* 圆形 */
+    background: transparent;
+    /* 透明背景 */
+    border: none;
+    /* 无边框 */
+    color: var(--nav-text);
+    /* 图标颜色 */
+    cursor: pointer;
+    /* 鼠标手型 */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease; /* 为旋转和背景色添加过渡 */
+    transition: all 0.3s ease;
+    /* 为旋转和背景色添加过渡 */
 }
 
 /* 主题切换按钮悬停效果 */
 .theme-toggle:hover {
-    background: rgba(0, 0, 0, 0.05); /* 浅色背景 */
-    transform: rotate(90deg); /* 旋转 90 度 */
+    background: rgba(0, 0, 0, 0.05);
+    /* 浅色背景 */
+    transform: rotate(90deg);
+    /* 旋转 90 度 */
 }
 
 /* 暗色模式下主题切换按钮悬停效果 */
 .dark-theme .theme-toggle:hover {
-    background: rgba(255, 255, 255, 0.1); /* 亮色背景 */
+    background: rgba(255, 255, 255, 0.1);
+    /* 亮色背景 */
 }
+
 /* 导航栏 CSS 结束 */
 
 
 /* 主要内容区域的包裹容器 */
 .wrap {
-    max-width: 800px; /* 内容最大宽度 */
-    margin: 100px auto 40px auto; /* 上 100px（为导航栏留出空间），左右 auto 居中，下 40px */
-    padding: 0 20px; /* 两侧留出内边距 */
+    max-width: 800px;
+    /* 内容最大宽度 */
+    margin: 100px auto 40px auto;
+    /* 上 100px（为导航栏留出空间），左右 auto 居中，下 40px */
+    padding: 0 20px;
+    /* 两侧留出内边距 */
 }
 
 /* 文章/卡片的基础样式 */
 article {
-    background: var(--card-bg); /* 使用变量设置背景色 */
-    border-radius: 16px; /* 圆角 */
-    padding: 24px; /* 内边距 */
-    margin-bottom: 28px; /* 距离下一个元素的下外边距 */
-    box-shadow: var(--card-shadow); /* 使用变量设置阴影 */
-    transition: all 0.3s ease; /* 为阴影和背景色添加过渡 */
+    background: var(--card-bg);
+    /* 使用变量设置背景色 */
+    border-radius: 16px;
+    /* 圆角 */
+    padding: 24px;
+    /* 内边距 */
+    margin-bottom: 28px;
+    /* 距离下一个元素的下外边距 */
+    box-shadow: var(--card-shadow);
+    /* 使用变量设置阴影 */
+    transition: all 0.3s ease;
+    /* 为阴影和背景色添加过渡 */
 }
 
 /* 卡片内的 h2 标题 */
 article h2 {
-    margin-top: 0; /* 移除默认的上外边距 */
-    color: var(--text); /* 使用变量设置文本颜色 */
-    font-size: 22px; /* 字体大小 */
+    margin-top: 0;
+    /* 移除默认的上外边距 */
+    color: var(--text);
+    /* 使用变量设置文本颜色 */
+    font-size: 22px;
+    /* 字体大小 */
 }
 
 /* 卡片内的 p 段落 */
 article p {
-    margin: 12px 0; /* 上下外边距 */
-    color: var(--muted); /* 使用变量设置次要文本颜色 */
+    margin: 12px 0;
+    /* 上下外边距 */
+    color: var(--muted);
+    /* 使用变量设置次要文本颜色 */
 }
 
 /* 页脚样式 */
 footer {
-    text-align: center; /* 文本居中 */
-    color: var(--muted); /* 次要文本颜色 */
-    font-size: 14px; /* 字体大小 */
-    padding: 30px 10px; /* 内边距 */
-    border-top: 1px solid var(--border); /* 顶部边框 */
-    margin-top: 60px; /* 与上方内容的间距 */
+    text-align: center;
+    /* 文本居中 */
+    color: var(--muted);
+    /* 次要文本颜色 */
+    font-size: 14px;
+    /* 字体大小 */
+    padding: 30px 10px;
+    /* 内边距 */
+    border-top: 1px solid var(--border);
+    /* 顶部边框 */
+    margin-top: 60px;
+    /* 与上方内容的间距 */
     background: var(--background);
 }
 
@@ -345,14 +428,18 @@ footer {
 ========================= */
 /* 当视口宽度小于等于 600px 时（通常是移动设备）应用以下样式 */
 @media (max-width: 600px) {
+
     /* .card is less relevant here, other pages use specific classes or inline styles */
-    .card { /* This might apply to 404.html, construct.html */
+    .card {
+        /* This might apply to 404.html, construct.html */
         max-width: 90vw;
         padding: 24px;
         border-radius: 24px;
         /* === 确保移动端 .card 有 blur(3px) === */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* Apply blur */
     }
 
     /* 头像 */
@@ -366,8 +453,10 @@ footer {
         padding: 0 10px;
         height: 48px;
         /* === 确保移动端导航栏有 blur(3px) === */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* Apply blur */
     }
 
     /* 导航栏中间容器 */
@@ -376,7 +465,7 @@ footer {
     }
 
     /* 品牌文字 */
-    .brand div:first-of-type + div {
+    .brand div:first-of-type+div {
         font-size: 11px;
     }
 
@@ -390,6 +479,7 @@ footer {
     .status-message h2 {
         font-size: 18px;
     }
+
     .status-message h3 {
         font-size: 14px;
     }
@@ -397,14 +487,18 @@ footer {
     /* === 新增：确保移动端 message.html 元素有 blur(3px) === */
     .message-item,
     .modal-content {
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); /* Apply blur */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* Apply blur */
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        /* Apply blur */
     }
-     /* === /新增 === */
+
+    /* === /新增 === */
 
     /* 页脚 */
     footer {
         font-size: 12px;
-        margin-top: 30px; /* Ensure footer spacing is adjusted */
+        margin-top: 30px;
+        /* Ensure footer spacing is adjusted */
     }
 }

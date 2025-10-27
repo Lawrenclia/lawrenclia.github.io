@@ -25,20 +25,45 @@
         color: var(--text);
         font-size: 24px;
     }
+    
     #leave-message-btn {
-        background: var(--accent);
-        color: #fff;
+        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
         border: none;
+        
+        box-shadow: 
+          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+        
+        transition: 
+          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          transform 0.3s ease;
+          
+        color: #fff; 
         padding: 10px 20px;
-        border-radius: 8px;
+        border-radius: 12px; 
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
-        transition: background 0.2s;
+        background: #ff6b9a;
     }
+    
     #leave-message-btn:hover {
-        background: #e65a88;
+        background-color: #ff4f87; 
+        transform: scale(1.03);
     }
+    
+    
     .disclaimer {
         background-color: var(--disclaimer-bg);
         border: 1px solid var(--disclaimer-border);
@@ -54,7 +79,6 @@
         gap: 16px;
     }
     .message-item {
-        /* === 修改：应用液态玻璃样式 === */
         background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
         backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
         -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
@@ -70,7 +94,6 @@
           inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
           0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
           0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-        /* === /液态玻璃样式 === */
 
         border-radius: 16px;
         padding: 20px;
@@ -85,7 +108,7 @@
     }
     
     .message-item:hover {
-        transform: scale(1.03); /* 添加放大效果 */
+        transform: scale(1.03); 
     }
 
     .message-number {
@@ -113,7 +136,6 @@
         font-size: 14px;
         font-weight: 600;
         padding: 5px 10px;
-        /* 修改：背景继承父元素（玻璃），或设为透明 */
         background: transparent; 
         border-radius: 8px 0 16px 0;
     }
@@ -125,7 +147,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.5);
+        /* background: rgba(0,0,0,0.5); */
         backdrop-filter: blur(5px);
         -webkit-backdrop-filter: blur(5px);
         display: flex;
@@ -140,9 +162,11 @@
         opacity: 1;
         visibility: visible;
     }
+    
+    /* === 本次修改：弹窗背景改为透明液态玻璃 === */
     .modal-content {
-        /* === 修改：应用液态玻璃样式 === */
-        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); /* 标准灰色玻璃 */
+        
         backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
         -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
         border: none;
@@ -157,7 +181,6 @@
           inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
           0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
           0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-        /* === /液态玻璃样式 === */
         
         border-radius: 16px;
         padding: 24px;
@@ -169,16 +192,19 @@
           background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
           box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
     }
+    /* === /修改结束 === */
+    
     .modal-overlay.visible .modal-content {
         transform: scale(1);
     }
+    
     .modal-content h3 {
         margin-top: 0;
         margin-bottom: 16px;
-        color: var(--text);
+        color: var(--accent); /* 标题保持粉色 */
     }
     
-    /* === 修改：调整输入框在玻璃上的样式 === */
+    /* 输入框样式 */
     .modal-content input[type="text"],
     .modal-content textarea {
         width: 100%;
@@ -187,14 +213,15 @@
         border-radius: 8px;
         border: 1px solid rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
-        background: rgba(255, 255, 255, 0.3); /* 亮色半透明背景 */
-        color: var(--text);
+        /* background: rgba(255, 255, 255, 0.3);  */
+        color: var(--text); 
     }
     
     .dark-theme .modal-content input[type="text"],
     .dark-theme .modal-content textarea {
-        background: rgba(0, 0, 0, 0.2); /* 暗色半透明背景 */
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        /* background: rgba(255, 107, 154, 0.1); 暗色模式下输入框保持粉色透明 */
+        border: 1px solid #ff6b9a; 
+        color: var(--text); 
     }
 
     .modal-content input[type="text"]::placeholder,
@@ -214,6 +241,8 @@
         justify-content: flex-end;
         gap: 12px;
     }
+    
+    /* 按钮通用液态玻璃样式 */
     .modal-actions button {
         border: none;
         padding: 10px 20px;
@@ -221,20 +250,50 @@
         font-size: 16px;
         font-weight: 500;
         cursor: pointer;
-        transition: background 0.2s;
+        
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        box-shadow: 
+          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+        
+        transition: 
+          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          transform 0.3s ease;
     }
-    #cancel-btn {
-        background: var(--cancel-btn-bg);
-        color: var(--cancel-btn-text);
-    }
-    #cancel-btn:hover {
-        background: var(--cancel-btn-hover);
-    }
-    #submit-btn {
-        background: var(--accent);
-        color: #fff;
+    
+    .modal-actions button:hover {
+        transform: scale(1.03); 
     }
 
+
+    /* 取消按钮（灰色玻璃）*/
+    #cancel-btn {
+        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+        color: var(--cancel-btn-text); 
+    }
+    #cancel-btn:hover {
+        transform: scale(1.03);
+    }
+    
+    /* 提交按钮（粉色玻璃）*/
+    #submit-btn {
+        background-color: #ff6b9a;
+        color: #fff; 
+    }
+    #submit-btn:hover {
+        background-color: #ff4f87; 
+        transform: scale(1.03);
+    }
 
   </style>
 </head>
@@ -457,7 +516,5 @@
       </filter>
     </svg>
 
-     <!-- <footer>Copyright © 2025 Lawrenclia. All rights reserved.</footer> -->
-      
-</body>
+     </body>
 </html>
