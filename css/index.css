@@ -337,9 +337,9 @@ html, body {
 }
 
 /* 暗色模式下的头像调整 */
-.dark-theme .avatar {
+/* .dark-theme .avatar {
     /* 样式由变量自动处理 */
-}
+/* } */ 
 
 .dark-theme .avatar img {
     filter: brightness(0.8); 

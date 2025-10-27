@@ -168,9 +168,9 @@ body {
 }
 
 /* 暗色模式下的导航栏（变量已在 .dark-theme 中定义，此处无需重复） */
-.dark-theme .navbar {
+/* .dark-theme .navbar { */
     /* 样式已由 .navbar 中的 CSS 变量自动处理 */
-}
+/* } */
 
 /* 导航栏悬停效果 */
 .navbar:hover {
