@@ -470,6 +470,8 @@ html, body {
     .navbar {
         padding: 0 10px;
         height: 48px;
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
     /* 减小导航栏中间间距 */
     .nav-center {

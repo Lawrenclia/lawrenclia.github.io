@@ -520,9 +520,24 @@ article {
 ========================= */
 @media (max-width: 600px) {
     /* ... (已有样式) ... */
-    .card { max-width: 90vw; padding: 24px; border-radius: 24px; }
-    .avatar { width: 90px; height: 90px; }
-    .navbar { padding: 0 10px; height: 48px; }
+    .card { 
+        max-width: 90vw; 
+        padding: 24px; 
+        border-radius: 24px; 
+    }
+
+    .avatar { 
+        width: 90px; 
+        height: 90px; 
+    }
+    
+    .navbar { 
+        padding: 0 10px; 
+        height: 48px; 
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+    
+    }
     .nav-center { gap: 8px; }
     .brand div:first-of-type + div { font-size: 11px; }
     .nav-link { font-size: 11px; padding: 6px 6px; }

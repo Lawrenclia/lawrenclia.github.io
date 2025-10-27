@@ -363,6 +363,8 @@ footer {
     .navbar {
         padding: 0 10px; /* 减小左右内边距 */
         height: 48px; /* 减小高度 */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
     
     /* 导航栏中间容器 */
