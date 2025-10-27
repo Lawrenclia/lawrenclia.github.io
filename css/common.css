@@ -47,17 +47,20 @@
     /* --cancel-btn-hover: “取消”按钮悬停时的背景色 */
     --cancel-btn-hover: #e0e0e0;
 
-    /* 导航栏专属变量（亮色主题） */
-    /* --nav-bg: 导航栏的毛玻璃背景色 */
-    --nav-bg: rgba(255, 255, 255, 0.6);
-    /* --nav-text: 导航栏的文本颜色 */
-    --nav-text: #1d1d1f;
-    /* --nav-link-hover-bg: 导航栏链接悬停时的背景色 */
-    --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
-    /* --nav-shadow: 导航栏的默认阴影 */
-    --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    /* --nav-hover-shadow: 导航栏悬停时的阴影 */
-    --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    /* === 修改：导航栏专属变量（亮色主题）- 液态玻璃 === */
+    --glass-bg-color: rgba(255, 255, 255, 0.25);
+    --nav-bg: var(--glass-bg-color); /* 导航栏背景 */
+    --border: rgba(255, 255, 255, 0.2); /* 边框：白色，20%透明度，用于玻璃卡片 */
+    --nav-text: #1d1d1f; /* 导航栏文字：深灰色，确保在亮背景上可读 */
+    --nav-link-hover-bg: rgba(0, 0, 0, 0.03); /* 导航栏链接悬停背景：近乎透明的黑色 */
+    
+    --glass-outer-shadow: 0 6px 6px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.1);
+    --nav-shadow: var(--glass-outer-shadow);
+    --nav-hover-shadow: var(--glass-outer-shadow); /* 悬停时阴影不变 */
+
+    --lg-highlight: rgba(255, 255, 255, 0.75); /* Liquid glass highlight color (bright) */
+    --lg-highlight-shadow: inset 1px 1px 0 var(--lg-highlight),
+                           inset 0 0 5px var(--lg-highlight);
 }
 
 /* 深色主题变量 */
@@ -90,12 +93,18 @@
     --cancel-btn-text: #f0f0f0;
     --cancel-btn-hover: #4a4a4a;
 
-    /* 导航栏专属变量（暗色） */
-    --nav-bg: rgba(30, 30, 30, 0.7);
-    --nav-text: #f0f0f0;
-    --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
-    --nav-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    --nav-hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    /* === 修改：导航栏专属变量（暗色）- 液态玻璃 === */
+    --glass-bg-color: rgba(30, 30, 30, 0.7); /* 保持之前的暗色透明度 */
+    --nav-bg: var(--glass-bg-color);
+    --border: rgba(50, 50, 50, 0.5); /* 边框：深灰色，50%透明度 */
+    --nav-text: #f0f0f0; /* 导航栏文字：浅灰色 */
+    --nav-link-hover-bg: rgba(255, 255, 255, 0.05); /* 导航栏链接悬停背景：近乎透明的白色 */
+    
+    --nav-shadow: var(--glass-outer-shadow);
+    --nav-hover-shadow: var(--glass-outer-shadow);
+
+    --lg-highlight: rgba(255, 255, 255, 0.15); /* Liquid glass highlight (dimmer for dark mode) */
+    --lg-highlight-shadow: inset 1px 1px 0px var(--lg-highlight);
 }
 
 /* 页面主体样式 */
@@ -133,10 +142,16 @@ body {
     background: var(--nav-bg); /* 使用变量设置背景（毛玻璃效果） */
     border-radius: 18px; /* 圆角 */
     padding: 0 28px; /* 内部左右内边距 */
-    backdrop-filter: blur(20px); /* 关键：背景模糊（毛玻璃效果） */
-    -webkit-backdrop-filter: blur(20px); /* 兼容 Safari */
+    
+    /* === 修改：应用液态玻璃滤镜 === */
+    backdrop-filter: url(#lg-dist); /* 关键：背景模糊（毛玻璃效果） */
+    -webkit-backdrop-filter: url(#lg-dist); /* 兼容 Safari */
+    
     border: 1px solid var(--border); /* 细边框 */
-    box-shadow: var(--nav-shadow); /* 使用变量设置阴影 */
+    
+    /* === 修改：应用液态玻璃阴影和高光 === */
+    box-shadow: var(--nav-shadow), var(--lg-highlight-shadow); /* 使用变量设置阴影 */
+    
     transition: all 0.3s ease; /* 为所有变化（如阴影）添加过渡 */
     overflow: hidden; /* 隐藏内部溢出的内容 */
 }
@@ -148,12 +163,16 @@ body {
 
 /* 导航栏悬停效果 */
 .navbar:hover {
-    box-shadow: var(--nav-hover-shadow); /* 悬停时使用更深的阴影 */
+    /* === 修改：应用液态玻璃悬停阴影和高光 === */
+    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 悬停时使用更深的阴影 */
+    transform: translateX(-50%) scale(1.02); /* 悬停时变大 (从 index.css 借鉴) */
 }
 
 /* 暗色模式下的导航栏悬停效果 */
 .dark-theme .navbar:hover {
-    box-shadow: var(--nav-hover-shadow); /* 自动应用暗色模式的 --nav-hover-shadow */
+    /* === 修改：应用液态玻璃悬停阴影和高光 === */
+    box-shadow: var(--nav-hover-shadow), var(--lg-highlight-shadow); /* 自动应用暗色模式的 --nav-hover-shadow */
+    transform: translateX(-50%) scale(1.02); /* 悬停时变大 (从 index.css 借鉴) */
 }
 
 /* 导航栏左侧容器 */
