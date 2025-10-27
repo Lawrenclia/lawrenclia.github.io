@@ -60,7 +60,7 @@
     
     #leave-message-btn:hover {
         background-color: #ff4f87; 
-        transform: scale(1.03);
+        transform: scale(1.07);
     }
     
     
@@ -163,7 +163,7 @@
         visibility: visible;
     }
     
-    /* === 本次修改：弹窗背景改为透明液态玻璃 === */
+    /* 弹窗背景改为透明液态玻璃 === */
     .modal-content {
         background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); /* 标准灰色玻璃 */
         
@@ -192,7 +192,6 @@
           background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
           box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
     }
-    /* === /修改结束 === */
     
     .modal-overlay.visible .modal-content {
         transform: scale(1);
@@ -213,13 +212,11 @@
         border-radius: 8px;
         border: 1px solid rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
-        /* background: rgba(255, 255, 255, 0.3);  */
         color: var(--text); 
     }
     
     .dark-theme .modal-content input[type="text"],
     .dark-theme .modal-content textarea {
-        /* background: rgba(255, 107, 154, 0.1); 暗色模式下输入框保持粉色透明 */
         border: 1px solid #ff6b9a; 
         color: var(--text); 
     }

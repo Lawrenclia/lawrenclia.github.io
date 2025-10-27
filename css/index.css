@@ -594,9 +594,9 @@ body {
         padding: 24px;
         border-radius: 24px;
         /* === 确保移动端卡片有 blur(3px) === */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
     }
 
@@ -612,9 +612,9 @@ body {
         padding: 0 10px;
         height: 48px;
         /* === 确保移动端导航栏有 blur(3px) === */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
     }
 

@@ -630,9 +630,9 @@ article {
         padding: 24px;
         border-radius: 24px;
         /* === 确保移动端 .card 有 blur(3px) === */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
     }
 
@@ -647,9 +647,9 @@ article {
         padding: 0 10px;
         height: 48px;
         /* === 确保移动端导航栏有 blur(3px) === */
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
     }
 
@@ -681,9 +681,9 @@ article {
     /* === 新增：确保移动端 message.html 元素有 blur(3px) === */
     .message-item,
     .modal-content {
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
         /* Apply blur */
     }
 
