@@ -122,10 +122,10 @@ html, body {
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     
-    /* === 修改：已移除 blur(8px) === */
-    backdrop-filter: url(#lg-dist) saturate(var(--saturation));
-    -webkit-backdrop-filter: url(#lg-dist) saturate(var(--saturation));
-    
+    /* === 修改：添加 blur(5px) === */
+    backdrop-filter: blur(5px) url(#lg-dist) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(5px) url(#lg-dist) saturate(var(--saturation));
+
     border: none; /* 新样式没有边框 */
 
     box-shadow: 
@@ -348,9 +348,9 @@ html, body {
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
 
-    /* === 修改：已移除 blur(8px) === */
-    backdrop-filter: url(#lg-dist) saturate(var(--saturation));
-    -webkit-backdrop-filter: url(#lg-dist) saturate(var(--saturation));
+    /* === 修改：添加 blur(3px) === */
+    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
 
     border: none; /* 新样式没有边框 */
     

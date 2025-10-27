@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>留言 · Lawrenclia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
   <link rel="stylesheet" href="css/common.css">
   
@@ -54,17 +54,40 @@
         gap: 16px;
     }
     .message-item {
-        background: var(--card-bg);
+        /* === 修改：应用液态玻璃样式 === */
+        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        border: none;
+        box-shadow: 
+          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+        /* === /液态玻璃样式 === */
+
         border-radius: 16px;
         padding: 20px;
-        border: 2px solid var(--accent-light);
-        box-shadow: 0 6px 16px var(--shadow-color);
         display: flex;
         gap: 15px;
         position: relative;
         padding-bottom: 40px;
-        transition: all 0.3s ease;
+        transition: 
+          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          transform 0.3s ease;
     }
+    
+    .message-item:hover {
+        transform: scale(1.03); /* 添加放大效果 */
+    }
+
     .message-number {
         font-size: 20px;
         font-weight: 700;
@@ -90,7 +113,8 @@
         font-size: 14px;
         font-weight: 600;
         padding: 5px 10px;
-        background: var(--card-bg);
+        /* 修改：背景继承父元素（玻璃），或设为透明 */
+        background: transparent; 
         border-radius: 8px 0 16px 0;
     }
 
@@ -117,14 +141,33 @@
         visibility: visible;
     }
     .modal-content {
-        background: var(--card-bg);
+        /* === 修改：应用液态玻璃样式 === */
+        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        border: none;
+        box-shadow: 
+          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+        /* === /液态玻璃样式 === */
+        
         border-radius: 16px;
         padding: 24px;
         width: 90%;
         max-width: 500px;
-        box-shadow: var(--modal-shadow);
         transform: scale(0.95);
-        transition: transform 0.3s;
+        transition: 
+          transform 0.3s,
+          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
     }
     .modal-overlay.visible .modal-content {
         transform: scale(1);
@@ -134,20 +177,30 @@
         margin-bottom: 16px;
         color: var(--text);
     }
+    
+    /* === 修改：调整输入框在玻璃上的样式 === */
     .modal-content input[type="text"],
     .modal-content textarea {
         width: 100%;
         padding: 10px;
         margin-bottom: 10px;
         border-radius: 8px;
-        border: 1px solid var(--border);
+        border: 1px solid rgba(0, 0, 0, 0.1);
         box-sizing: border-box;
-        background: var(--background);
+        background: rgba(255, 255, 255, 0.3); /* 亮色半透明背景 */
         color: var(--text);
     }
+    
+    .dark-theme .modal-content input[type="text"],
+    .dark-theme .modal-content textarea {
+        background: rgba(0, 0, 0, 0.2); /* 暗色半透明背景 */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
     .modal-content input[type="text"]::placeholder,
     .modal-content textarea::placeholder {
         color: var(--muted);
+        opacity: 0.8;
     }
     .modal-content textarea {
         min-height: 120px;
@@ -187,7 +240,6 @@
 </head>
 
 <body>
-  <!-- 顶部导航栏 -->
   <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
@@ -201,8 +253,6 @@
             <a class="nav-link" href="index.html">首页</a>
             <a class="nav-link" href="projects.html">项目</a>
             <a class="nav-link" href="blog.html">博客</a>
-            <!-- <a class="nav-link" href="construct.html">博客</a>
-            <a class="nav-link" href="construct.html">画廊</a> -->
             <a class="nav-link" href="about.html">关于</a>
             <button class="theme-toggle" aria-label="切换主题">
                 <i class="fas fa-moon"></i>

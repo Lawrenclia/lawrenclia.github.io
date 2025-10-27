@@ -13,11 +13,41 @@
         --background: linear-gradient(90deg, #f5e8ff 0%, #ffe8f5 100%);
     }
 
-    .blog-card {
+    /* === 新增：应用液态玻璃样式到博客卡片 === */
+    article.blog-card {
+        /* 覆盖 common.css 中的 article 样式 */
+        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        border: none;
+        box-shadow: 
+          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
+          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
+          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
+          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
+          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
+          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
+          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+        
+        transition: 
+          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
+          transform 0.3s ease;
+        
+        /* 保留原有的 flex 布局和 padding */
         display: flex;
         padding: 10px; 
-        overflow: hidden; /* 确保图片圆角生效 */
+        overflow: hidden;
     }
+    
+    article.blog-card:hover {
+        transform: scale(1.03); /* 添加放大效果 */
+    }
+    /* === /新增样式 === */
+
 
     .blog-card-image-link {
         flex-shrink: 0; /* 防止图片被压缩 */
@@ -56,7 +86,8 @@
     }
 
     .blog-card-content h2 a {
-        color: inherit; /* 继承父元素颜色 */
+        /* 修改：确保在玻璃上可读 */
+        color: var(--text); 
         text-decoration: none;
         transition: color 0.3s ease;
     }
@@ -84,6 +115,8 @@
     .blog-card-description {
         margin: 0 0 16px 0;
         flex-grow: 1; /* 占据多余空间，将元数据推到底部 */
+        /* 修改：确保在玻璃上可读 */
+        color: var(--muted);
     }
 
     .blog-card-meta {
@@ -142,7 +175,6 @@
 
   <div class="wrap">
 
-    <!-- blog2 -->
     <article class="blog-card">
 
       <a href="blogs/blog2.html" class="blog-card-image-link" aria-label="阅读文章：">
@@ -176,7 +208,6 @@
     </article>
 
     
-    <!-- blog1 -->
     <article class="blog-card">
       
       <a href="blogs/blog1.html" class="blog-card-image-link" aria-label="阅读文章：芝士博客">

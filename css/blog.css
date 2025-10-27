@@ -80,10 +80,9 @@ body{
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     
-    /* === 修改：移除 blur，保留液态畸变和饱和度 === */
-    /* 注意：这里使用了你HTML中的 #lg-dist 滤镜ID */
-    backdrop-filter: url(#lg-dist) saturate(var(--saturation));
-    -webkit-backdrop-filter: url(#lg-dist) saturate(var(--saturation));
+    /* === 修改：添加 blur(3px) === */
+    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
     border: none; /* 新样式没有边框 */
 
