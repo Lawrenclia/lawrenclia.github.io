@@ -159,7 +159,11 @@ body {
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
 
-    /* === 修改：添加 blur(3px) === */
+    /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
+    backdrop-filter: blur(3px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
+
+    /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
 
@@ -436,10 +440,13 @@ footer {
         padding: 24px;
         border-radius: 24px;
         /* === 确保移动端 .card 有 blur(3px) === */
+
+        /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
         backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
+        
+        /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
+        /* (注意：.card 样式在 index.css 中有 url(), 但 common.css 中没有, 这里的回退是安全的) */
     }
 
     /* 头像 */
@@ -453,10 +460,14 @@ footer {
         padding: 0 10px;
         height: 48px;
         /* === 确保移动端导航栏有 blur(3px) === */
+
+        /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
         backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
+        
+        /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
 
     /* 导航栏中间容器 */
@@ -487,10 +498,13 @@ footer {
     /* === 新增：确保移动端 message.html 元素有 blur(3px) === */
     .message-item,
     .modal-content {
+        /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
         backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
+        
+        /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
 
     /* === /新增 === */

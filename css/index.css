@@ -147,7 +147,11 @@ body {
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
 
-    /* === 修改：添加 blur(5px) === */
+    /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
+    backdrop-filter: blur(5px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(5px) saturate(var(--saturation));
+    
+    /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
     backdrop-filter: blur(5px) url(#lg-dist) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(5px) url(#lg-dist) saturate(var(--saturation));
 
@@ -361,9 +365,12 @@ body {
 
     /* === 应用类似卡片的玻璃背景和模糊 === */
     background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
+    
+    /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
+    /* (注意：.avatar 没有使用 #lg-dist, 保持原样) */
     backdrop-filter: blur(5px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(5px) saturate(var(--saturation));
-
+    
     /* === 修改：减小 padding 使边框变薄 === */
     padding: 4px;
     /* 从 6px 改为 4px */
@@ -461,7 +468,11 @@ body {
     /* === 修改：应用新的玻璃背景、滤镜和阴影 === */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
 
-    /* === 修改：添加 blur(3px) === */
+    /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
+    backdrop-filter: blur(3px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
+    
+    /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
 
@@ -594,10 +605,14 @@ body {
         padding: 24px;
         border-radius: 24px;
         /* === 确保移动端卡片有 blur(3px) === */
+        
+        /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
         backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
+        
+        /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
 
     /* 减小头像尺寸 */
@@ -612,10 +627,14 @@ body {
         padding: 0 10px;
         height: 48px;
         /* === 确保移动端导航栏有 blur(3px) === */
+        
+        /* --- 1. 为 iPad/iPhone 提供的“毛玻璃”回退 --- */
         backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        /* Apply blur */
+        
+        /* --- 2. 为桌面浏览器提供的“液态玻璃”增强 --- */
+        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
 
     /* 减小导航栏中间间距 */
@@ -674,8 +693,8 @@ body {
     }
 
     .icon-tag:active {
-        transform: scale(0.95);
-        /* 保持与hover一致的缩小效果 */
+        /* === ✨ 这是第二个修复：将触摸效果改为放大 === */
+        transform: scale(1.05); /* 修改：从 0.95 变为 1.05 */
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
