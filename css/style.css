@@ -16,7 +16,7 @@
     --accent-light: #ff8cae;
 
     /* 亮色主题 (Light Mode) */
-    --bg: #f5f5f7; 
+    --bg: #f5f5f7; /* (来自 index.css) */
     --text: #111;
     --muted: #666;
     --card-bg: #fff;
@@ -24,7 +24,7 @@
     --border: rgba(0, 0, 0, 0.08);
     --link: #0066cc;
 
-    /* 亮色 - 玻璃效果变量  */
+    /* 亮色 - 玻璃效果变量 (来自 index.css / common.css) */
     --c-glass: #bbbbbc;
     --c-light: #fff;
     --c-dark: #000;
@@ -50,7 +50,6 @@
     --index-radius: 32px;
     --random-bg-url: none;
 }
-
 
 body.dark-theme {
     /* 暗色主题 (Dark Mode) */
@@ -88,6 +87,7 @@ body.dark-theme {
 }
 
 /* 基础 HTML, Body 样式 */
+/* ✨ 修复: 拆分 html 和 body 规则 */
 html {
     height: 100%;
 }
@@ -127,10 +127,9 @@ body {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     
-    /* iPad 毛玻璃回退 */
     backdrop-filter: blur(3px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
 
@@ -217,6 +216,7 @@ body {
 }
 
 /* --- 页脚 (Footer) --- */
+/* (来自 index.css，现已全局化) */
 footer {
     text-align: center;
     font-size: 14px;
@@ -352,7 +352,6 @@ article p {
     justify-content: center;
     background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
     
-    /* ✨ FIX: iPad 毛玻璃回退 (无 url) */
     backdrop-filter: blur(5px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(5px) saturate(var(--saturation));
     
@@ -396,10 +395,9 @@ body.dark-theme.page-index .avatar img {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
 
-    /* iPad 毛玻璃回退 */
     backdrop-filter: blur(3px) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -483,10 +481,9 @@ body.dark-theme.page-index .icon-tag img {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     
-    /* iPad 毛玻璃回退 */
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -502,7 +499,6 @@ body.dark-theme.page-index .icon-tag img {
         0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
         0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
     
-    /* 确保文字颜色在玻璃上可读 (使用标准黑/白) */
     color: var(--text);
 }
 .page-about article h2, .page-about article h3 {
@@ -545,10 +541,9 @@ body.dark-theme.page-index .icon-tag img {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     
-    /* iPad 毛玻璃回退 */
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -573,13 +568,11 @@ body.dark-theme.page-index .icon-tag img {
     margin: 0;
     font-size: 18px;
     font-weight: bold;
-    /* 使用标准黑/白文字 */
     color: var(--text);
 }
 .page-projects .item p {
     margin-top: 10px;
     font-size: 14px;
-    /* 使用标准黑/白文字 */
     color: var(--muted);
 }
 
@@ -591,17 +584,15 @@ body.dark-theme.page-index .icon-tag img {
     display: flex;
     padding: 10px; 
     overflow: hidden;
-    /* 使用标准黑/白文字 */
     color: var(--text);
     
     /* 玻璃样式 (覆盖 article 基础样式) */
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     
-    /* iPad 毛玻璃回退 */
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -644,6 +635,7 @@ body.dark-theme.page-index .icon-tag img {
     margin-bottom: 8px;
 }
 .page-blog .blog-card-content h2 a {
+    /* ✨ 修复: 使用标准黑/白文字 */
     color: var(--text); 
     text-decoration: none;
     transition: color 0.3s ease;
@@ -651,13 +643,17 @@ body.dark-theme.page-index .icon-tag img {
 .page-blog .blog-card-content h2 a:hover {
     color: var(--accent);
 }
-.page-blog .blog-card-tags {
+
+/* ✨ 修复: 使 .blog-card-tags 样式全局化 */
+.page-blog .blog-card-tags,
+.page-blog-post .blog-card-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 16px;
+    margin-bottom: 16px; /* 默认 margin */
 }
-.page-blog .blog-card-tags span {
+.page-blog .blog-card-tags span,
+.page-blog-post .blog-card-tags span {
     background: rgba(255, 107, 154, 0.1);
     color: var(--accent);
     font-size: 12px;
@@ -665,10 +661,10 @@ body.dark-theme.page-index .icon-tag img {
     padding: 4px 10px;
     border-radius: 8px;
 }
+
 .page-blog .blog-card-description {
     margin: 0 0 16px 0;
     flex-grow: 1;
-    /* ✨ 修复: 使用标准黑/白文字 */
     color: var(--muted);
 }
 .page-blog .blog-card-meta {
@@ -676,7 +672,6 @@ body.dark-theme.page-index .icon-tag img {
     flex-wrap: wrap;
     gap: 16px;
     font-size: 13px;
-    /* ✨ 修复: 使用标准黑/白文字 */
     color: var(--muted);
 }
 .page-blog .blog-card-meta span {
@@ -720,22 +715,9 @@ body.dark-theme.page-blog-post {
     margin-bottom: 16px;
     color: var(--muted);
 }
-
-.page-blog-post .blog-card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px; 
+.page-blog-post .blog-post .blog-card-tags {
+    margin-bottom: 24px; /* 覆盖 page-blog-post 的 margin */
 }
-.page-blog-post .blog-card-tags span {
-    background: rgba(255, 107, 154, 0.1);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 8px;
-}
-
 .page-blog-post .blog-post-image {
     width: 100%;
     height: auto;
@@ -886,12 +868,12 @@ body.dark-theme.page-message {
     cursor: pointer;
     
     /* 恢复玻璃样式 */
-    background-color: color-mix(in srgb, var(--accent) 80%, transparent); 
+    background-color: color-mix(in srgb, var(--accent) 80%, transparent); /* 玻璃效果使用带透明度的粉色 */
     
-    /* iPad 毛玻璃回退 */
+
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -940,14 +922,12 @@ body.dark-theme.page-message {
     padding-bottom: 40px;
     color: var(--text);
 
-    /* 玻璃样式*/
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     
-    /* iPad 毛玻璃回退 */
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -963,7 +943,7 @@ body.dark-theme.page-message {
         0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
         0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
     
-    /* 为放大动画添加平滑过渡 */
+
     transition: 
         background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
         box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
@@ -981,6 +961,7 @@ body.dark-theme.page-message {
     position: relative;
 }
 .page-message .message-text {
+
     color: var(--text);
     white-space: pre-wrap;
     word-break: break-word;
@@ -1030,10 +1011,10 @@ body.dark-theme.page-message {
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     
-    /* iPad 毛玻璃回退 */
+
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -1102,10 +1083,10 @@ body.dark-theme .modal-content textarea {
     font-weight: 500;
     cursor: pointer;
     
-    /* iPad 毛玻璃回退 */
+
     backdrop-filter: blur(3px) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    /* 桌面液态玻璃 */
+
     backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
     -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
@@ -1240,9 +1221,8 @@ body.dark-theme .modal-content textarea {
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
     }
     
-    /* 图标点击放大 */
     .page-index .icon-tag:active {
-        transform: scale(1.05); 
+        transform: scale(1.05); /* 从 0.95 改为 1.05 */
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
     .page-index .icon-tag:active img {
@@ -1289,6 +1269,7 @@ body.dark-theme .modal-content textarea {
     }
     
     /* 首页, 404, Construct */
+    /* 将 :hover 效果应用到所有共享卡片 */
     .page-index .card:hover,
     .page-404 .card:hover,
     .page-construct .card:hover {
@@ -1319,11 +1300,9 @@ body.dark-theme .modal-content textarea {
         padding: 0 10px;
         height: 48px;
         
-        /* 确保移动端导航栏有毛玻璃 */
+        /* 移动端只保留 blur，删除 url() */
         backdrop-filter: blur(3px) saturate(var(--saturation));
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
     .nav-center {
         gap: 8px;
@@ -1337,7 +1316,10 @@ body.dark-theme .modal-content textarea {
     }
     
     /* 全局页脚 */
-    footer {
+    footer,
+    .page-index footer,
+    .page-404 footer,
+    .page-construct footer {
         font-size: 12px;
         margin-top: 30px;
     }
@@ -1351,11 +1333,9 @@ body.dark-theme .modal-content textarea {
         padding: 24px;
         border-radius: 24px;
         
-        /* 确保移动端卡片有毛玻璃 */
+        /* 移动端只保留 blur，删除 url() */
         backdrop-filter: blur(3px) saturate(var(--saturation));
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
     .page-index .avatar {
         width: 90px;
@@ -1396,10 +1376,8 @@ body.dark-theme .modal-content textarea {
     /* 留言板 */
     .page-message .message-item,
     .page-message .modal-content {
-        /* ✨ FIX: 确保移动端留言元素有毛玻璃 */
+        /* 移动端只保留 blur，删除 url() */
         backdrop-filter: blur(3px) saturate(var(--saturation));
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
     }
 }
