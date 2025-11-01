@@ -6,153 +6,10 @@
   <title>博客 · Lawrenclia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
 
-  <style>
-    :root {
-        --background: linear-gradient(90deg, #f5e8ff 0%, #ffe8f5 100%);
-    }
-
-    /* === 新增：应用液态玻璃样式到博客卡片 === */
-    article.blog-card {
-        /* 覆盖 common.css 中的 article 样式 */
-        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        border: none;
-        box-shadow: 
-          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-        
-        transition: 
-          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          transform 0.3s ease;
-        
-        /* 保留原有的 flex 布局和 padding */
-        display: flex;
-        padding: 10px; 
-        overflow: hidden;
-    }
-    
-    article.blog-card:hover {
-        transform: scale(1.03); /* 添加放大效果 */
-    }
-    /* === /新增样式 === */
-
-
-    .blog-card-image-link {
-        flex-shrink: 0; /* 防止图片被压缩 */
-        display: block;
-    }
-
-    .blog-card-image {
-        width: 220px;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        transition: transform 0.3s ease, box-shadow 0.3s ease; /* 添加 box-shadow 过渡 */
-        border-radius: 12px; /* 给图片添加圆角，与卡片整体风格更协调 */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* 默认阴影 */
-    }
-
-    /* 鼠标悬停时阴影效果更明显 */
-    .blog-card-image-link:hover .blog-card-image {
-        transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* 鼠标悬停时更深的阴影 */
-    }
-
-    .blog-card-image-link:hover .blog-card-image {
-        transform: scale(1.05); /* 鼠标悬停时图片放大 */
-    }
-
-    .blog-card-content {
-        display: flex;
-        flex-direction: column; /* 内部元素垂直排列 */
-        flex-grow: 1; /* 占据剩余空间 */
-        padding: 24px; /* 内容区的内边距 */
-    }
-
-    .blog-card-content h2 {
-        margin-bottom: 8px;
-    }
-
-    .blog-card-content h2 a {
-        /* 修改：确保在玻璃上可读 */
-        color: var(--text); 
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-
-    .blog-card-content h2 a:hover {
-        color: var(--accent); /* 鼠标悬停时变为主题色 */
-    }
-
-    .blog-card-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 16px;
-    }
-
-    .blog-card-tags span {
-        background: rgba(255, 107, 154, 0.1); /* 主题色的浅色背景 */
-        color: var(--accent);
-        font-size: 12px;
-        font-weight: 500;
-        padding: 4px 10px;
-        border-radius: 8px;
-    }
-
-    .blog-card-description {
-        margin: 0 0 16px 0;
-        flex-grow: 1; /* 占据多余空间，将元数据推到底部 */
-        /* 修改：确保在玻璃上可读 */
-        color: var(--muted);
-    }
-
-    .blog-card-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px; /* 元数据项之间的间距 */
-        font-size: 13px;
-        color: var(--muted);
-    }
-
-    .blog-card-meta span {
-        display: flex;
-        align-items: center;
-        gap: 6px; /* 图标和文字的间距 */
-    }
-
-    /* =========================
-        8. 响应式适配 - 优化移动端字体
-    ========================= */
-    @media (max-width: 600px) {
-        /* 新增的响应式样式 */
-        .blog-card {
-            flex-direction: column; /* 垂直堆叠 */
-        }
-        .blog-card-image {
-            width: 100%;
-            height: 180px; /* 在移动端给图片一个固定高度 */
-        }
-        .blog-card-content {
-            padding: 20px; /* 移动端内边距稍小 */
-        }
-    }
-
-  </style>
-</head>
-<body>
+  </head>
+<body class="page-blog">
   <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
@@ -161,7 +18,6 @@
                 </div>
             </div>
         </div>
-
         <div class="nav-right">
             <a class="nav-link" href="index.html">首页</a>
             <a class="nav-link" href="projects.html">项目</a>
@@ -174,26 +30,19 @@
     </header>
 
   <div class="wrap">
-
     <article class="blog-card">
-
       <a href="blogs/blog2.html" class="blog-card-image-link" aria-label="阅读文章：">
         <img src="images/blog2.jpg" alt="blog2" class="blog-card-image">
       </a>
-      
       <div class="blog-card-content">
-        
         <h2>
           <a href="blogs/blog2.html">QQ Bot搭建+提示词设计</a>
         </h2>
-        
         <div class="blog-card-tags">
           <span>个人</span>
           <span>Bot</span>
         </div>
-        
         <p class="blog-card-description">最近我给我的QQ小号接入了一个0d00 Bot，并对其提示词进行了研究。接入后的效果还不错，值得一试。</p>
-        
         <div class="blog-card-meta">
           <span>
             <i class="fas fa-user"></i>
@@ -207,26 +56,19 @@
       </div>
     </article>
 
-    
     <article class="blog-card">
-      
       <a href="blogs/blog1.html" class="blog-card-image-link" aria-label="阅读文章：芝士博客">
         <img src="images/blog1.jpg" alt="blog1" class="blog-card-image">
       </a>
-      
       <div class="blog-card-content">
-        
         <h2>
           <a href="blogs/blog1.html">芝士博客</a>
         </h2>
-        
         <div class="blog-card-tags">
           <span>个人</span>
           <span>随笔</span>
         </div>
-        
         <p class="blog-card-description">也许这个页面会一直鸽下去，等我有了想法再写吧。哦，对了，孩子们，AI真的太好用了。</p>
-        
         <div class="blog-card-meta">
           <span>
             <i class="fas fa-user"></i>
@@ -239,28 +81,20 @@
         </div>   
       </div>
     </article>
-
-
-    </div>
+  </div>
 
   <script>
-    // 主题切换功能
     const themeToggle = document.querySelector('.theme-toggle');
     const body = document.body;
     const icon = themeToggle.querySelector('i');
-    
-    // 检查本地存储中的主题偏好
     if (localStorage.getItem('theme') === 'dark' || 
         (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       body.classList.add('dark-theme');
       icon.classList.remove('fa-moon');
       icon.classList.add('fa-sun');
     }
-    
-    // 切换主题
     themeToggle.addEventListener('click', () => {
       body.classList.toggle('dark-theme');
-      
       if (body.classList.contains('dark-theme')) {
         localStorage.setItem('theme', 'dark');
         icon.classList.remove('fa-moon');
@@ -273,14 +107,14 @@
     });
   </script>
 
-<svg width="0" height="0" style="position: absolute;">
+  <div class="svg-filter-container" aria-hidden="true">
+    <svg width="0" height="0">
       <filter id="lg-dist">
         <feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" seed="2" stitchTiles="stitch" />
         <feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
       </filter>
     </svg>
+  </div>
 
-     <!-- <footer>Copyright © 2025 Lawrenclia. All rights reserved.</footer> -->
-      
-</body>
+  </body>
 </html>

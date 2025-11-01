@@ -7,295 +7,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script> 
-  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/style.css">
   
-  <style>
-    :root {
-        --background: linear-gradient(90deg, #efffe8 0%, #e6faff 100%);
-    }
-    /* 留言板专属样式 */
-    .guestbook-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-    .guestbook-header h2 {
-        margin: 0;
-        color: var(--text);
-        font-size: 24px;
-    }
-    
-    #leave-message-btn {
-        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        border: none;
-        
-        box-shadow: 
-          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-        
-        transition: 
-          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          transform 0.3s ease;
-          
-        color: #fff; 
-        padding: 10px 20px;
-        border-radius: 12px; 
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        background: #ff6b9a;
-    }
-    
-    #leave-message-btn:hover {
-        background-color: #ff4f87; 
-        transform: scale(1.07);
-    }
-    
-    
-    .disclaimer {
-        background-color: var(--disclaimer-bg);
-        border: 1px solid var(--disclaimer-border);
-        border-radius: 8px;
-        padding: 15px;
-        margin-bottom: 25px;
-        color: var(--disclaimer-text);
-        font-size: 14px;
-    }
-    .message-container {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-    .message-item {
-        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        border: none;
-        box-shadow: 
-          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-
-        border-radius: 16px;
-        padding: 20px;
-        display: flex;
-        gap: 15px;
-        position: relative;
-        padding-bottom: 40px;
-        transition: 
-          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          transform 0.3s ease;
-    }
-    
-    .message-item:hover {
-        transform: scale(1.03); 
-    }
-
-    .message-number {
-        font-size: 20px;
-        font-weight: 700;
-        color: var(--accent);
-        flex-shrink: 0;
-        line-height: 1;
-    }
-    .message-details {
-        flex-grow: 1;
-        position: relative;
-    }
-    .message-text {
-        color: var(--text);
-        white-space: pre-wrap;
-        word-break: break-word;
-        margin-top: 0;
-    }
-    .message-author {
-        position: absolute;
-        right: 0;
-        bottom: -5px;
-        color: var(--accent);
-        font-size: 14px;
-        font-weight: 600;
-        padding: 5px 10px;
-        background: transparent; 
-        border-radius: 8px 0 16px 0;
-    }
-
-    /* 弹窗样式 */
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        /* background: rgba(0,0,0,0.5); */
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 100;
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s, visibility 0.3s;
-    }
-    .modal-overlay.visible {
-        opacity: 1;
-        visibility: visible;
-    }
-    
-    /* 弹窗背景改为透明液态玻璃 === */
-    .modal-content {
-        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent); /* 标准灰色玻璃 */
-        
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        border: none;
-        box-shadow: 
-          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-        
-        border-radius: 16px;
-        padding: 24px;
-        width: 90%;
-        max-width: 500px;
-        transform: scale(0.95);
-        transition: 
-          transform 0.3s,
-          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
-    }
-    
-    .modal-overlay.visible .modal-content {
-        transform: scale(1);
-    }
-    
-    .modal-content h3 {
-        margin-top: 0;
-        margin-bottom: 16px;
-        color: var(--accent); /* 标题保持粉色 */
-    }
-    
-    /* 输入框样式 */
-    .modal-content input[type="text"],
-    .modal-content textarea {
-        width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        box-sizing: border-box;
-        color: var(--text); 
-    }
-    
-    .dark-theme .modal-content input[type="text"],
-    .dark-theme .modal-content textarea {
-        border: 1px solid #ff6b9a; 
-        color: var(--text); 
-    }
-
-    .modal-content input[type="text"]::placeholder,
-    .modal-content textarea::placeholder {
-        color: var(--muted);
-        opacity: 0.8;
-    }
-    .modal-content textarea {
-        min-height: 120px;
-        font-size: 16px;
-        font-family: inherit;
-        resize: vertical;
-    }
-    .modal-actions {
-        margin-top: 16px;
-        display: flex;
-        justify-content: flex-end;
-        gap: 12px;
-    }
-    
-    /* 按钮通用液态玻璃样式 */
-    .modal-actions button {
-        border: none;
-        padding: 10px 20px;
-        border-radius: 8px;
-        font-size: 16px;
-        font-weight: 500;
-        cursor: pointer;
-        
-        backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-        -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-        box-shadow: 
-          inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-          inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-          inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-          inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-          inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-          inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-          inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-          0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-        
-        transition: 
-          background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-          transform 0.3s ease;
-    }
-    
-    .modal-actions button:hover {
-        transform: scale(1.03); 
-    }
-
-
-    /* 取消按钮（灰色玻璃）*/
-    #cancel-btn {
-        background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-        color: var(--cancel-btn-text); 
-    }
-    #cancel-btn:hover {
-        transform: scale(1.03);
-    }
-    
-    /* 提交按钮（粉色玻璃）*/
-    #submit-btn {
-        background-color: #ff6b9a;
-        color: #fff; 
-    }
-    #submit-btn:hover {
-        background-color: #ff4f87; 
-        transform: scale(1.03);
-    }
-
-  </style>
-</head>
-
-<body>
+  </head>
+<body class="page-message">
   <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
@@ -304,7 +19,6 @@
                 </div>
             </div>
         </div>
-
         <div class="nav-right">
             <a class="nav-link" href="index.html">首页</a>
             <a class="nav-link" href="projects.html">项目</a>
@@ -344,13 +58,9 @@
   </div>
 
   <script>
-  // Supabase 配置
   const SUPABASE_URL = 'https://glphhykfjhuwltgfwqyw.supabase.co'; 
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdscGhoeWtmamh1d2x0Z2Z3cXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDA1NjEsImV4cCI6MjA3NDQ3NjU2MX0.QkatvzOsTZ0l9i_rS6MesgeOiS5Lw6eEjzS-INBCU-c';
-
-  // 初始化 Supabase 客户端
   const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
   document.addEventListener('DOMContentLoaded', () => {
     const leaveMessageBtn = document.getElementById('leave-message-btn');
     const modal = document.getElementById('message-modal');
@@ -359,14 +69,10 @@
     const authorInput = document.getElementById('author-input');
     const messageInput = document.getElementById('message-input');
     const messageList = document.getElementById('message-list');
-
-    // 初始化时加载留言
     loadMessages();
-
     leaveMessageBtn.addEventListener('click', () => {
       modal.classList.add('visible');
     });
-
     function closeModal() {
       modal.classList.remove('visible');
     }
@@ -376,23 +82,17 @@
         closeModal();
       }
     });
-
-    // 提交留言逻辑
     submitBtn.addEventListener('click', async () => {
       const authorName = authorInput.value.trim() || '匿名';
       const messageText = messageInput.value.trim();
-      
       if (messageText) {
         submitBtn.textContent = '提交中...';
         submitBtn.disabled = true;
-
         const { error } = await supabase
           .from('messages')
           .insert([{ author: authorName, content: messageText }]);
-
         submitBtn.textContent = '提交';
         submitBtn.disabled = false;
-
         if (error) {
           alert('提交失败: ' + error.message);
           console.error('Submission Error:', error);
@@ -406,40 +106,31 @@
         alert('留言内容不能为空！');
       }
     });
-
-    // 加载留言逻辑
     async function loadMessages() {
       messageList.innerHTML = '<div style="text-align:center; color:var(--muted);">留言加载中...</div>';
-
       const { data: messages, error } = await supabase
         .from('messages')
         .select('author, content, created_at')
         .order('created_at', { ascending: false });
-
       if (error) {
         console.error('Loading Error:', error);
         messageList.innerHTML = '<div style="text-align:center; color:var(--accent);">留言加载失败，请检查API配置。</div>';
         return;
       }
-
       messageList.innerHTML = '';
       if (messages.length === 0) {
         messageList.innerHTML = '<div style="text-align:center; color:var(--muted);">暂无留言，快来写下第一条吧！</div>';
         return;
       }
-
       messages.forEach((msg, index) => {
         const sequenceNumber = messages.length - index; 
         addMessage(sequenceNumber, msg.author, msg.content);
       });
     }
-
     function addMessage(sequenceNumber, author, text) {
       const messageId = String(sequenceNumber).padStart(3, '0');
-      
       const messageItem = document.createElement('div');
       messageItem.className = 'message-item';
-      
       messageItem.innerHTML = `
         <div class="message-number">#${messageId}</div>
         <div class="message-details">
@@ -449,7 +140,6 @@
       `;
       messageList.appendChild(messageItem);
     }
-
     function escapeHTML(str) {
       return str.replace(/[&<>"']/g, function(match) {
         return {
@@ -462,24 +152,17 @@
       });
     }
   });
-
-  // 主题切换功能
-    const themeToggle = document.querySelector('.theme-toggle');
+  const themeToggle = document.querySelector('.theme-toggle');
     const body = document.body;
     const icon = themeToggle.querySelector('i');
-    
-    // 检查本地存储中的主题偏好
     if (localStorage.getItem('theme') === 'dark' || 
         (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       body.classList.add('dark-theme');
       icon.classList.remove('fa-moon');
       icon.classList.add('fa-sun');
     }
-    
-    // 切换主题
     themeToggle.addEventListener('click', () => {
       body.classList.toggle('dark-theme');
-      
       if (body.classList.contains('dark-theme')) {
         localStorage.setItem('theme', 'dark');
         icon.classList.remove('fa-moon');
@@ -490,10 +173,8 @@
         icon.classList.add('fa-moon');
       }
     });
-
-    // 监听系统主题变化
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-      if (!localStorage.getItem('theme')) { // 只有在用户没有手动设置主题时才响应系统变化
+      if (!localStorage.getItem('theme')) {
         if (e.matches) {
           body.classList.add('dark-theme');
           icon.classList.remove('fa-moon');
@@ -506,12 +187,15 @@
       }
     });
 </script>
-<svg width="0" height="0" style="position: absolute;">
+
+  <div class="svg-filter-container" aria-hidden="true">
+    <svg width="0" height="0">
       <filter id="lg-dist">
         <feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" seed="2" stitchTiles="stitch" />
         <feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
       </filter>
     </svg>
+  </div>
 
-     </body>
+</body>
 </html>

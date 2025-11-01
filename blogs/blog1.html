@@ -6,10 +6,9 @@
   <title>博客 · Lawrenclia</title> 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="../css/blog.css">
-
+  <link rel="stylesheet" href="../css/style.css">
 </head>
-<body>
+<body class="page-blog-post">
   <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
@@ -18,7 +17,6 @@
                 </div>
             </div>
         </div>
-
         <div class="nav-right">
             <a class="nav-link" href="../index.html">首页</a>
             <a class="nav-link" href="../projects.html">项目</a>
@@ -31,57 +29,35 @@
     </header>
 
   <div class="wrap">
-    
     <article class="blog-post">
-        
         <h1>芝士博客</h1>
-
         <div class="blog-card-meta">
-          <span>
-            <i class="fas fa-user"></i>
-            Lawrenclia
-          </span>
-          <span>
-            <i class="fas fa-calendar-alt"></i>
-            10/2/2025
-          </span>
+          <span><i class="fas fa-user"></i> Lawrenclia</span>
+          <span><i class="fas fa-calendar-alt"></i> 10/2/2025</span>
         </div>
-
         <div class="blog-card-tags">
           <span>个人</span>
           <span>随笔</span>
         </div>
-
-       <!-- <img src="../images/blog1.jpg" alt="blog1" class="blog-card-image"> -->
-
         <div class="blog-post-content">
             <h2>咕咕嘎嘎</h2>
         </div>
-
         <a href="../blog.html" class="back-link">&larr; 返回博客列表</a>
-
     </article>
-
   </div>
 
   <script>
-    // 主题切换功能
     const themeToggle = document.querySelector('.theme-toggle');
     const body = document.body;
     const icon = themeToggle.querySelector('i');
-    
-    // 检查本地存储中的主题偏好
     if (localStorage.getItem('theme') === 'dark' || 
         (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       body.classList.add('dark-theme');
       icon.classList.remove('fa-moon');
       icon.classList.add('fa-sun');
     }
-    
-    // 切换主题
     themeToggle.addEventListener('click', () => {
       body.classList.toggle('dark-theme');
-      
       if (body.classList.contains('dark-theme')) {
         localStorage.setItem('theme', 'dark');
         icon.classList.remove('fa-moon');
@@ -94,7 +70,5 @@
     });
   </script>
 
-   <!-- <footer>Copyright © 2025 Lawrenclia. All rights reserved.</footer> -->
-    
-</body>
+  </body>
 </html>
