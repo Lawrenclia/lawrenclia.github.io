@@ -294,12 +294,37 @@ body.dark-theme.page-index .wrap::after {
     filter: brightness(0.6) saturate(1.05);
 }
 
-/* 首页遮罩层 */
+/* 首页遮罩层
 .page-index .wrap::before {
     content: '';
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.1);
+    z-index: 1;
+} */
+
+.page-index .wrap::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    
+    background: 
+        /* 1. 点阵图层 */
+        radial-gradient(
+            circle at 1px 1px, 
+            rgba(0, 0, 0, 0.15) 1px, /* 点的颜色和大小 */
+            transparent 0
+        ),
+        /* 2. 底层蒙版 (可选，如果你还想要之前的渐变) */
+        linear-gradient(
+            180deg, 
+            rgba(0, 0, 0, 0.0) 0%, 
+            rgba(0, 0, 0, 0.4) 100%
+        );
+    
+    /* 并且添加/修改 background-size 属性：*/
+    background-size: 5px 5px, 100%; /* 5px 5px 是点阵的间距 */
+
     z-index: 1;
 }
 
