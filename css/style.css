@@ -493,9 +493,7 @@ body.dark-theme.page-index .avatar img {
     filter: invert(100%);
     transition: all 0.2s ease;
 }
-body.dark-theme.page-index .icon-tag img {
-    /* 在暗色模式下，白色图标依然可读，无需改变 */
-}
+
 
 /* --- 4.2 关于 (page-about) --- */
 .page-about {
@@ -1025,6 +1023,7 @@ body.dark-theme.page-message {
     opacity: 1;
     visibility: visible;
 }
+
 .modal-content {
     border-radius: 16px;
     padding: 24px;
@@ -1063,6 +1062,14 @@ body.dark-theme.page-message {
 .modal-overlay.visible .modal-content {
     transform: scale(1);
 }
+
+body.dark-theme .modal-content input[type="text"],
+body.dark-theme .modal-content textarea {
+    border: 1px solid #ff6b9a; 
+    color: var(--text); 
+    background-color: var(--cancel-btn-bg); 
+}
+
 .modal-content h3 {
     margin-top: 0;
     margin-bottom: 16px;
