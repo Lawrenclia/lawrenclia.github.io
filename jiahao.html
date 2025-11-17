@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKER MAINFRAME v3.0</title>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #00FF00;
+            --dark-green: #008000;
+            --bg-black: #000000;
+            --panel-bg: rgba(0, 0, 0, 0.75);
+            --border-color: rgba(0, 255, 0, 0.3);
+            --alert-red: #FF0000;
+            --warn-yellow: #FFFF00;
+            --info-blue: #00FFFF;
+        }
+
+        /* Force override all elements */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto Mono', monospace;
+            color: var(--primary-green);
+            text-shadow: 0 0 5px var(--primary-green), 0 0 10px var(--primary-green);
+            border-radius: 0 !important; /* Force no rounded corners */
+        }
+
+        body {
+            background-color: var(--bg-black);
+            overflow: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>') 12 12, crosshair;
+        }
+
+        /* Dynamic Matrix Rain Background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        /* CRT Scanlines Overlay */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 100;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0) 50%,
+                rgba(0, 0, 0, 0.2) 51%
+            );
+            background-size: 100% 4px;
+            animation: flicker 0.15s infinite;
+        }
+
+        /* Text flicker animation */
+        @keyframes flicker {
+            0% { opacity: 0.9; }
+            50% { opacity: 1; }
+            100% { opacity: 0.9; }
+        }
+
+        .main-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+            padding: 1rem;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Panel base style */
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 15px var(--border-color) inset;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Left Nav Panel */
+        .nav-panel {
+            flex-basis: 250px;
+            flex-shrink: 0;
+        }
+
+        /* Right Content Panel */
+        .content-panel {
+            flex-grow: 1;
+        }
+
+        .panel-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        /* Nav Links */
+        .nav-links {
+            list-style: none;
+            flex-grow: 1;
+        }
+        .nav-links li {
+            margin-bottom: 0.75rem;
+        }
+        .nav-links a {
+            display: block;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        .nav-links a:hover, .nav-links a.active {
+            background: var(--primary-green);
+            color: var(--bg-black);
+            text-shadow: none;
+        }
+        .nav-links a:hover::before {
+            content: '[> ';
+            position: absolute;
+            left: -10px;
+        }
+        .nav-links a:hover::after {
+            content: ' <]';
+            position: absolute;
+            right: -10px;
+        }
+
+        /* System Status */
+        .system-status {
+            font-size: 0.9rem;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        .status-label {
+            color: var(--dark-green);
+        }
+        .status-value {
+            font-weight: 700;
+        }
+
+        /* Main Content Area */
+        #welcome-title {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #FFF; /* White for emphasis */
+            text-shadow: 0 0 10px var(--primary-green), 0 0 20px var(--primary-green);
+        }
+        /* Typewriter cursor */
+        #welcome-title::after {
+            content: '█';
+            animation: blink-cursor 0.7s infinite;
+        }
+        @keyframes blink-cursor {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Panel Grid Layout */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            height: calc(100% - 70px); /* Adjust for title height */
+        }
+
+        /* Log Window */
+        .log-window {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .log-title {
+            font-weight: 700;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        .log-content {
+            flex-grow: 1;
+            overflow-y: scroll; /* Allow scrolling */
+            font-size: 0.8rem;
+            line-height: 1.6;
+        }
+        /* Hide scrollbar */
+        .log-content::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+        .log-content span, .log-content div {
+            display: block;
+        }
+        .log-ok { color: var(--primary-green); }
+        .log-warn { color: var(--warn-yellow); text-shadow: 0 0 5px var(--warn-yellow); }
+        .log-error { color: var(--alert-red); text-shadow: 0 0 5px var(--alert-red); font-weight: 700; }
+        .log-info { color: var(--info-blue); text-shadow: 0 0 5px var(--info-blue); }
+        .log-alert {
+            color: var(--alert-red);
+            background: rgba(255, 0, 0, 0.3);
+            font-weight: 700;
+            font-size: 1.1em;
+            text-shadow: 0 0 8px var(--alert-red);
+            animation: pulse-red 1s infinite;
+        }
+        @keyframes pulse-red {
+            0%, 100% { background: rgba(255, 0, 0, 0.5); }
+            50% { background: rgba(255, 0, 0, 0.2); }
+        }
+
+        /* Terminal Input */
+        .terminal-prompt {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+        .terminal-prompt span {
+            color: var(--dark-green);
+        }
+        .terminal-input {
+            color: #FFF;
+            text-shadow: 0 0 5px #FFF;
+        }
+        .terminal-input::after {
+            content: '█';
+            animation: blink-cursor 0.7s infinite;
+            margin-left: 5px;
+        }
+        
+        /* Hidden Tab Content */
+        .tab-content {
+            display: none;
+            height: 100%;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ASCII World Map */
+        #ascii-map {
+            font-size: 8px; /* Tiny font to fit map */
+            line-height: 1;
+            white-space: pre;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--border-color);
+            background: rgba(0,0,0,0.5);
+            color: var(--dark-green); /* Map itself is dark */
+            text-shadow: none;
+        }
+        .map-node {
+            position: absolute;
+            color: var(--info-blue);
+            text-shadow: 0 0 5px var(--info-blue), 0 0 10px var(--info-blue);
+            font-weight: 700;
+            font-size: 12px;
+            animation: blink-cursor 0.5s infinite;
+        }
+
+        /* Hacker Form */
+        .hacker-form {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .hacker-input {
+            flex-grow: 1;
+            background: rgba(0,0,0,0.8);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+        }
+        .hacker-input:focus {
+            box-shadow: 0 0 10px var(--primary-green) inset;
+        }
+        .hacker-btn {
+            background: var(--dark-green);
+            border: 1px solid var(--primary-green);
+            padding: 0.5rem 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .hacker-btn:hover {
+            background: var(--primary-green);
+            color: var(--bg-black);
+            text-shadow: none;
+        }
+        
+        /* ASCII Art */
+        #ascii-art {
+            white-space: pre;
+            font-size: 0.7rem;
+            line-height: 1.1;
+            color: var(--dark-green);
+            text-shadow: 0 0 5px var(--dark-green);
+            overflow: auto; /* Just in case */
+        }
+        #ascii-art::-webkit-scrollbar {
+            width: 0;
+            background: transparent;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Scanlines Effect -->
+    <div class="scanlines"></div>
+
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix-bg"></canvas>
+
+    <!-- Main UI Container -->
+    <div class="main-container">
+
+        <!-- Left Nav Panel -->
+        <aside class="panel nav-panel">
+            <h2 class="panel-title">// STATUS_LINK</h2>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="nav-tab active" data-target="dashboard">DASHBOARD</a></li>
+                <li><a href="#" class="nav-tab" data-target="network">NETWORK</a></li>
+                <li><a href="#" class="nav-tab" data-target="security">SECURITY</a></li>
+                <li><a href="#" class="nav-tab" data-target="database">DATABASE</a></li>
+                <li><a href="#" class="nav-tab" data-target="tools">TOOLS</a></li> <!-- NEW FUN TAB -->
+            </ul>
+
+            <div class="system-status">
+                <h3 class="panel-title" style="margin-bottom: 0.5rem;">// SYS_INFO</h3>
+                <div class="status-item">
+                    <span class="status-label">USER:</span>
+                    <span class="status-value">root@mainframe</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">CPU:</span>
+                    <span id="status-cpu" class="status-value">...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">MEM:</span>
+                    <span id="status-mem" class="status-value">...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">NET:</span>
+                    <span id="status-net" class="status-value">...</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-label">UPTIME:</span>
+                    <span id="status-uptime" class="status-value">00:00:00</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Content Panel -->
+        <main class="panel content-panel">
+            
+            <!-- Dashboard (Default) -->
+            <div id="dashboard-content" class="tab-content active">
+                <h1 id="welcome-title"></h1> <!-- JS Populated -->
+                
+                <div class="content-grid">
+                    <!-- System Logs -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ system_logs ]</h3>
+                        <pre id="log-stream" class="log-content"></pre>
+                    </div>
+
+                    <!-- Mission Brief -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ mission_brief ]</h3>
+                        <div class="log-content" style="font-size: 1rem; padding: 5px;">
+                            <!-- TRANSLATED TO ENGLISH -->
+                            <p><span class="log-warn">// TARGET:</span> CYBERCORP DATAFORTH</p>
+                            <p><span class="log-warn">// STATUS:</span> <span class="log-ok">CONNECTED</span></p>
+                            <br>
+                            <p><span class="log-info">[1]</span> Bypass outer firewall (Complete)</p>
+                            <p><span class="log-info">[2]</span> Scan internal network (See /NET/)</p>
+                            <p><span class="log-info">[3]</span> Find security exploit (See /SEC/)</p>
+                            <p><span class="log-info">[4]</span> Infiltrate database (See /DB/)</p>
+                            <p><span class="log-info">[5]</span> Crack credentials (See /TOOLS/)</p>
+                            <br>
+                            <p class="log-error">!! MAINTAIN STEALTH. AVOID ALARMS !!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terminal Input -->
+                <div class="terminal-prompt">
+                    <span>[root@mainframe ~]$</span>
+                    <span class="terminal-input"></span>
+                </div>
+            </div>
+
+            <!-- Network (Hidden) -->
+            <div id="network-content" class="tab-content">
+                <h1 class="panel-title">// NETWORK_ANALYSIS</h1>
+                <div class="content-grid">
+                    <!-- ASCII World Map -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ global_node_activity ]</h3>
+                        <pre id="ascii-map"></pre> <!-- JS will populate map and nodes -->
+                    </div>
+
+                    <!-- Traceroute Utility -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ traceroute_utility ]</h3>
+                        <form id="traceroute-form" class="hacker-form">
+                            <input id="traceroute-ip" class="hacker-input" type="text" value="203.0.113.10">
+                            <button class="hacker-btn" type="submit">TRACE</button>
+                        </form>
+                        <pre id="traceroute-stream" class="log-content" style="margin-top: 1rem;"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security (Hidden) -->
+            <div id="security-content" class="tab-content">
+                <h1 class="panel-title">// SECURITY_PROTOCOLS</h1>
+                <div class="content-grid">
+                    <!-- Intrusion Detection System -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ intrusion_detection_system ]</h3>
+                        <pre id="ids-stream" class="log-content"></pre>
+                    </div>
+
+                    <!-- Firewall Log -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ firewall_log (live) ]</h3>
+                        <pre id="firewall-stream" class="log-content"></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Database (Hidden) -->
+            <div id="database-content" class="tab-content">
+                 <h1 class="panel-title">// DATABASE_MANAGEMENT</h1>
+                 <div class="content-grid">
+                    <!-- Live Query Monitor -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ live_query_monitor ]</h3>
+                        <pre id="query-stream" class="log-content"></pre>
+                    </div>
+
+                    <!-- Data Dump -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ data_dump_stream ]</h3>
+                        <pre id="dump-stream" class="log-content" style="font-size: 0.9rem; line-height: 1.2;"></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NEW: Tools (Hidden) -->
+            <div id="tools-content" class="tab-content">
+                 <h1 class="panel-title">// UTILITY_KIT</h1>
+                 <div class="content-grid">
+                    <!-- Brute-force Simulator -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ bruteforce_simulator ]</h3>
+                        <form id="crack-form" class="hacker-form">
+                            <input id="hash-input" class="hacker-input" type="text" value="a8f5f167f44f4964e6c998dee827110c">
+                            <button id="crack-btn" class="hacker-btn" type="submit">CRACK</button>
+                        </form>
+                        <pre id="crack-stream" class="log-content" style="margin-top: 1rem;"></pre>
+                    </div>
+
+                    <!-- ASCII Art -->
+                    <div class="log-window">
+                        <h3 class="log-title">[ /misc/art.txt ]</h3>
+                        <pre id="ascii-art" class="log-content">
+    
+                       ...
+                     ;::::;
+                   ;::::; :;
+                 ;:::::'   :;
+                ;:::::;     ;.
+               ,:::::'       ;           OOO\
+               ::::::;       ;          OOOOO\
+               ;:::::;       ;         OOOOOOOO
+              ,;::::::;     ;'         / OOOOOOO
+            ;:::::::::`. ,,,;.        /  / DOOOOOO
+          .';:::::::::::::::::;,     /  /     DOOOO
+         ,::::::;::::::;;;;::::;,   /  /        DOOO
+        ;`::::::`'::::::;;;::::: ,#/  /          DOOO
+        :`:::::::`;::::::;;::: ;::#  /            DOOO
+        ::`:::::::`;:::::::: ;::::# /              DOO
+        `:::`::::::::`;; ;:::::::::##                DO
+         `:::`::::::::;;::::::::;:::#                OO
+          `:::`::::::::;::::::::;::                   O
+            `:::`::::::::;::::::;
+               `:::`::::::::;
+                   `:::::
+                        `
+               </pre>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Matrix Rain Background
+            const canvas = document.getElementById('matrix-bg');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const alphabet = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + '0123456789';
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            const drops = Array.from({ length: columns }).fill(1);
+
+            function drawMatrix() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = 'rgba(0, 255, 0, 0.7)';
+                ctx.font = fontSize + 'px monospace';
+                for (let i = 0; i < drops.length; i++) {
+                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    drops[i]++;
+                }
+            }
+            setInterval(drawMatrix, 33);
+
+            // 2. Typewriter Effect
+            const titleEl = document.getElementById('welcome-title');
+            const titleText = "SYSTEM_ONLINE. ACCESS_GRANTED.";
+            let charIndex = 0;
+            (function typeWriter() {
+                if (charIndex < titleText.length) {
+                    titleEl.textContent += titleText.charAt(charIndex++);
+                    setTimeout(typeWriter, 100);
+                }
+            })();
+
+            // 3. Tab Switching
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            navTabs.forEach(tab => {
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = e.target.dataset.target;
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    e.target.classList.add('active');
+                    document.getElementById(target + '-content').classList.add('active');
+                });
+            });
+
+            // 4. Update System Status
+            const cpuEl = document.getElementById('status-cpu');
+            const memEl = document.getElementById('status-mem');
+            const netEl = document.getElementById('status-net');
+            const uptimeEl = document.getElementById('status-uptime');
+            let startTime = Date.now();
+            function updateStatus() {
+                const cpuLoad = (Math.random() * 20 + 70).toFixed(2);
+                cpuEl.textContent = `${cpuLoad}%`;
+                if (cpuLoad > 90) cpuEl.style.color = "var(--alert-red)";
+                else cpuEl.style.color = "var(--primary-green)";
+                memEl.textContent = `${(Math.random() * 30 + 50).toFixed(2)}%`;
+                netEl.textContent = `${(Math.random() * 50 + 80).toFixed(2)} MB/s`;
+                const uptime = new Date(Date.now() - startTime);
+                uptimeEl.textContent = `${String(uptime.getUTCHours()).padStart(2, '0')}:${String(uptime.getUTCMinutes()).padStart(2, '0')}:${String(uptime.getUTCSeconds()).padStart(2, '0')}`;
+            }
+            setInterval(updateStatus, 500);
+            updateStatus();
+
+            // 5. Log Streams
+            const logStream = document.getElementById('log-stream');
+            const firewallStream = document.getElementById('firewall-stream');
+            const idsStream = document.getElementById('ids-stream');
+            const queryStream = document.getElementById('query-stream');
+            const dumpStream = document.getElementById('dump-stream');
+            const ipPool = ['192.168.1.55', '10.0.5.120', '203.0.113.10', '172.16.33.9', '8.8.8.8', '101.44.1.200'];
+
+            const logTypes = [
+                '<span class="log-ok">[OK]</span> Boot sequence check...',
+                '<span class="log-ok">[OK]</span> Kernel module loaded.',
+                '<span class="log-info">[INFO]</span> Checking file integrity...',
+                '<span class="log-warn">[WARN]</span> Port 8080 already in use. Retrying...',
+                '<span class="log-ok">[OK]</span> Port 8081 bound successfully.',
+                '<span class="log-error">[ERROR]</span> FAILED to mount /dev/sdb1. Read-only file system.',
+                '<span class="log-info">[INFO]</span> Starting network daemon...',
+                '<span class="log-ok">[OK]</span> Firewall rules applied.',
+                '<span class="log-warn">[WARN]</span> High CPU temperature detected: 85°C'
+            ];
+            
+            const idsTypes = [
+                '<span class="log-ok">[SCAN]</span> Checking port 22 (SSH)... OK',
+                '<span class="log-ok">[SCAN]</span> Checking port 80 (HTTP)... OK',
+                '<span class="log-ok">[SCAN]</span> Checking port 443 (HTTPS)... OK',
+                '<span class="log-info">[INFO]</span> Monitoring user root@10.0.5.1...',
+                '<span class="log-ok">[SCAN]</span> Checking for rootkits... None found.',
+                '<span class="log-warn">[EVENT]</span> Failed login attempt from 101.44.1.200',
+                '<span class="log-alert">[ALERT]</span> MULTIPLE FAILED LOGINS FROM 101.44.1.200! IP BANNED.',
+                '<span class="log-ok">[SCAN]</span> File integrity check... OK',
+                '<span class="log-alert">[ALERT]</span> UNRECOGNIZED PROCESS DETECTED: /tmp/xK8s.sh',
+                '<span class="log-error">[ACTION]</span> Process /tmp/xK8s.sh terminated.'
+            ];
+            
+            const queryTypes = [
+                '<span class="log-info">[SELECT]</span> SELECT user, pass FROM users WHERE id=1',
+                '<span class="log-info">[SELECT]</span> SELECT * FROM logs LIMIT 50',
+                '<span class="log-warn">[UPDATE]</span> UPDATE settings SET value=\'off\' WHERE key=\'logging\'',
+                '<span class="log-ok">[INSERT]</span> INSERT INTO sessions (user_id, token) VALUES (...)',
+                '<span class="log-error">[ERROR]</span> SQL syntax error near \'--\'',
+                '<span class="log-info">[SELECT]</span> SELECT data FROM files WHERE filename=\'root.key\''
+            ];
+
+            function addLogEntry(streamEl, content, maxLines = 50) {
+                const entry = document.createElement('div');
+                entry.innerHTML = content;
+                streamEl.appendChild(entry);
+                if (streamEl.children.length > maxLines) {
+                    streamEl.removeChild(streamEl.firstChild);
+                }
+                streamEl.scrollTop = streamEl.scrollHeight;
+            }
+
+            function generateFirewallEntry() {
+                const src = ipPool[Math.floor(Math.random() * ipPool.length)];
+                const dest = ipPool[Math.floor(Math.random() * ipPool.length)];
+                const port = Math.floor(Math.random() * 5000) + 1024;
+                const action = Math.random() > 0.3 ? 'ACCEPT' : 'DENY';
+                const colorClass = action === 'ACCEPT' ? 'log-info' : 'log-warn';
+                return `<span class="${colorClass}">[${action}]</span> SRC:${src} -> DEST:${dest} PORT:${port}`;
+            }
+            
+            function generateDataDump() {
+                let line = `<span class="log-ok">${(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}:</span> `;
+                for(let i=0; i<16; i++) {
+                    line += Math.random().toString(16).slice(2, 4) + ' ';
+                }
+                return line;
+            }
+
+            setInterval(() => addLogEntry(logStream, logTypes[Math.floor(Math.random() * logTypes.length)]), 1000);
+            setInterval(() => addLogEntry(firewallStream, generateFirewallEntry()), 150);
+            setInterval(() => addLogEntry(idsStream, idsTypes[Math.floor(Math.random() * idsTypes.length)]), 2000);
+            setInterval(() => addLogEntry(queryStream, queryTypes[Math.floor(Math.random() * queryTypes.length)]), 700);
+            setInterval(() => addLogEntry(dumpStream, generateDataDump()), 50);
+
+            // 6. ASCII World Map
+            const mapEl = document.getElementById('ascii-map');
+            const mapText = [
+"                                                                                ",
+"    ._______________________... ...       ...__________________________._  _     ",
+"   /`                      ``..``..         ``..``                    ` .\\/`\\    ",
+"  /                ..     ....     ...        ...   ...    .            \\  /     ",
+" /             ..         ..                   ..              .         \\/      ",
+"|           ..             ..      ..                                     |     ",
+"|          ..               ..     ..                 ..                   |     ",
+"|         ..                 ..                       ..           .       |     ",
+"|________..                   ..       ..             ..           ._______|     ",
+"`       ``..                   ..       ..      ..     ..         ..``..```       ",
+" `        ``..                 ..       ..      ..     ..       ..``..`           ",
+"  `         ``..               ..       ..      ..     ..     ..``..`             ",
+"   `          ``..             ..       ..      ..     ..   ..``..`               ",
+"    `           ``..           ..       ..      ..     .. ..``..`                 ",
+"     `            ``..         ..       ..      ..     ....``..`                  ",
+"      `             ``..       ..       ..      ..   ....``..`                    ",
+"       `              ``..     ..       ..      ....``..``                       ",
+"        `               ``..   ..       ....``..``..`                           ",
+"         `                ``.. .. ....``..``..``                                ",
+"          `                 ``..``..``..``                                      ",
+"           `                  ````````                                          ",
+"            `                                                                   ",
+"             `                                                                  ",
+"              `                                                                 "
+            ];
+            mapEl.textContent = mapText.join('\n');
+            const mapNodes = [];
+            function updateMapNodes() {
+                if (mapNodes.length > 20) {
+                    const oldNode = mapNodes.shift();
+                    if(oldNode && oldNode.parentNode) mapEl.removeChild(oldNode);
+                }
+                const node = document.createElement('span');
+                node.textContent = '█';
+                node.className = 'map-node';
+                node.style.top = `${Math.floor(Math.random() * 90) + 5}%`;
+                node.style.left = `${Math.floor(Math.random() * 90) + 5}%`;
+                mapEl.appendChild(node);
+                mapNodes.push(node);
+            }
+            setInterval(updateMapNodes, 300);
+
+            // 7. Traceroute Utility
+            const traceForm = document.getElementById('traceroute-form');
+            const traceInput = document.getElementById('traceroute-ip');
+            const traceStream = document.getElementById('traceroute-stream');
+            traceForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const ip = traceInput.value;
+                if (!ip) return;
+                traceStream.innerHTML = ''; 
+                addLogEntry(traceStream, `TRACING ROUTE to ${ip} [${ipPool[Math.floor(Math.random() * ipPool.length)]}]...`);
+                let hop = 1;
+                const maxHops = 10;
+                function runTraceHop() {
+                    if (hop > maxHops) {
+                        addLogEntry(traceStream, `TRACE COMPLETE.`);
+                        return;
+                    }
+                    const latency = (Math.random() * 50 + 10).toFixed(2);
+                    const hopIp = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+                    let line = ` ${String(hop).padStart(2, ' ')}  ${latency} ms  ${hopIp}`;
+                    if (hop === maxHops) {
+                        line = ` ${String(hop).padStart(2, ' ')}  ${latency} ms  <span class="log-warn">${ip} [TARGET ACQUIRED]</span>`;
+                    }
+                    addLogEntry(traceStream, line);
+                    hop++;
+                    setTimeout(runTraceHop, 300);
+                }
+                runTraceHop();
+            });
+            
+            // 8. NEW: Password Cracker
+            const crackForm = document.getElementById('crack-form');
+            const crackInput = document.getElementById('hash-input');
+            const crackStream = document.getElementById('crack-stream');
+            let crackInterval;
+
+            crackForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const hash = crackInput.value;
+                if (!hash) return;
+                
+                clearInterval(crackInterval); // Clear previous attempts
+                crackStream.innerHTML = '';
+                addLogEntry(crackStream, `[INFO] Initializing dictionary attack on hash: ${hash.substring(0,10)}...`);
+                addLogEntry(crackStream, `[INFO] Using wordlist: /usr/share/wordlists/rockyou.txt`);
+                
+                let attempts = 0;
+                const commonPasswords = ['123456', 'password', 'admin', 'qwerty', 'monkey', 'dragon', 'bada55', 'shadow', 'matrix', 'p@ssword!'];
+                
+                crackInterval = setInterval(() => {
+                    if (attempts > 50) {
+                        clearInterval(crackInterval);
+                        addLogEntry(crackStream, `<span class="log-alert">[SUCCESS]</span> HASH CRACKED!`);
+                        addLogEntry(crackStream, `<span class="log-warn">Password:</span> 123_Password!_456`);
+                        addLogEntry(crackStream, `[INFO] Adding credentials to rootkit...`);
+                        return;
+                    }
+                    
+                    const randomPass = commonPasswords[Math.floor(Math.random() * commonPasswords.length)] + (Math.random()*100).toFixed(0);
+                    addLogEntry(crackStream, `[ATTEMPT] Trying: ${randomPass}`);
+                    attempts++;
+                }, 50); // Very fast simulation
+            });
+
+        });
+    </script>
+</body>
+</html>
