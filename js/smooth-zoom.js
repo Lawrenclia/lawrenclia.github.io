@@ -26,20 +26,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('zoomOverlay');
     let activeClone = null;
     let activeOriginal = null;
+    const ANIMATION_MS = 400;
+    let isOpening = false;
+    let isClosing = false;
 
-    // 为符合条件的图片绑定点击事件
+    // 为符合条件的图片绑定点击事件（若图片未加载完则等待 load 再绑定）
     const images = document.querySelectorAll(SELECTOR);
-    images.forEach(img => {
-        // 过滤掉太小的图片，或者已经有链接的图片（避免冲突）
+    images.forEach(bindImage);
+
+    function bindImage(img) {
+        if (img.dataset.zoomBound === '1') return; // 避免重复绑定
+        // 如果图片还没加载完，naturalWidth 可能为 0，等加载后再尝试
+        if (!img.complete || img.naturalWidth === 0) {
+            img.addEventListener('load', () => bindImage(img), { once: true });
+            return;
+        }
+        // 过滤掉太小的图片或带链接的图片
         if (img.naturalWidth < MIN_WIDTH || img.parentElement.tagName === 'A') return;
 
+        img.dataset.zoomBound = '1';
         img.style.cursor = 'zoom-in'; // 设置鼠标手势
         img.addEventListener('click', (e) => {
             // 阻止冒泡，防止触发可能存在的父级点击事件
             e.stopPropagation(); 
             openImage(e.target);
         });
-    });
+    }
 
     // 点击遮罩层关闭
     overlay.addEventListener('click', closeImage);
@@ -51,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function openImage(targetImg) {
-        if (activeClone) return;
+        if (activeClone || isOpening || isClosing) return;
+        isOpening = true;
         activeOriginal = targetImg;
 
         // 1. 获取原图位置
@@ -60,11 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. 创建克隆图
         const clone = targetImg.cloneNode();
         clone.classList.add('zoom-clone');
-        // 移除可能存在的内联样式，防止干扰
         clone.style.margin = '0';
         clone.style.padding = '0';
-        
-        // 3. 初始定位：重叠在原图上
         clone.style.top = `${rect.top}px`;
         clone.style.left = `${rect.left}px`;
         clone.style.width = `${rect.width}px`;
@@ -82,13 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 4. 计算放大后的位置
         const viewWidth = window.innerWidth;
         const viewHeight = window.innerHeight;
-        
-        // 计算缩放比例（留 5% 边距）
-        const scaleX = viewWidth / rect.width;
-        const scaleY = viewHeight / rect.height;
-        const scale = Math.min(scaleX, scaleY) * 0.95;
-
-        // 计算位移中心点
+        const scale = Math.min(viewWidth / rect.width, viewHeight / rect.height) * 0.95;
         const translateX = (viewWidth - rect.width) / 2 - rect.left;
         const translateY = (viewHeight - rect.height) / 2 - rect.top;
 
@@ -97,22 +101,52 @@ document.addEventListener('DOMContentLoaded', () => {
             clone.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
         });
 
+        // 6. 动画结束标记
+        let openHandled = false;
+        const handleOpenEnd = (event) => {
+            if (event && event.propertyName && !event.propertyName.includes('transform')) return;
+            if (openHandled) return;
+            openHandled = true;
+            isOpening = false;
+            clone.removeEventListener('transitionend', handleOpenEnd);
+        };
+        clone.addEventListener('transitionend', handleOpenEnd);
+        setTimeout(handleOpenEnd, ANIMATION_MS + 50);
+
+        // 7. 绑定关闭
         clone.addEventListener('click', closeImage);
     }
 
     function closeImage() {
-        if (!activeClone || !activeOriginal) return;
+        if (!activeClone || !activeOriginal || isClosing) return;
+        isClosing = true;
 
-        // 1. 复原位置
-        activeClone.style.transform = '';
+        const clone = activeClone;
+        const original = activeOriginal;
+
+        clone.style.pointerEvents = 'none';
+        clone.style.transform = '';
         overlay.classList.remove('active');
 
-        // 2. 动画结束后清理 DOM
-        setTimeout(() => {
-            if (activeOriginal) activeOriginal.classList.remove('post-img-zooming');
-            if (activeClone) activeClone.remove();
+        let cleaned = false;
+        const cleanup = () => {
+            if (cleaned) return;
+            cleaned = true;
+            original.classList.remove('post-img-zooming');
+            clone.remove();
             activeClone = null;
             activeOriginal = null;
-        }, 400); // 必须与 CSS transition 时间一致
+            isClosing = false;
+        };
+
+        const handleCloseEnd = (event) => {
+            if (event && event.propertyName && !event.propertyName.includes('transform')) return;
+            clone.removeEventListener('transitionend', handleCloseEnd);
+            cleanup();
+        };
+        clone.addEventListener('transitionend', handleCloseEnd);
+
+        // 兜底：防止 transitionend 未触发导致状态卡死
+        setTimeout(cleanup, ANIMATION_MS + 50);
     }
 });
