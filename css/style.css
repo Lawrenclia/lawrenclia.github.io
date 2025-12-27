@@ -1232,7 +1232,7 @@ body.dark-theme.page-mc {
     border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
-    padding: 10px;
+    padding: 6px;
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     box-shadow:
@@ -1254,7 +1254,7 @@ body.dark-theme.page-mc {
     height: auto;
     object-fit: cover;
     display: block;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
     border-radius: 12px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -1263,7 +1263,7 @@ body.dark-theme.page-mc {
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
 }
 .page-mc .mc-caption {
-    padding: 12px 14px 14px;
+    padding: 6px 10px 8px;
     margin: 0;
     font-size: 14px;
     color: var(--muted);
@@ -1629,15 +1629,16 @@ body.dark-theme.page-mc {
         grid-template-columns: 1fr;
     }
     .page-mc .mc-card {
-        padding: 8px;
+        padding: 5px;
         border-radius: 14px;
     }
     .page-mc .mc-image {
         min-height: 180px;
-        margin-bottom: 10px;
+        margin-bottom: 4px;
         border-radius: 10px;
     }
     .page-mc .mc-caption {
+        padding: 5px 9px 7px;
         font-size: 13px;
     }
 }
