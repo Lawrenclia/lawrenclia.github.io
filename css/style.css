@@ -1435,6 +1435,15 @@ body.dark-theme.page-mc {
     .navbar:active {
         transform: translateX(-50%) scale(1.02);
     }
+
+    /* 横屏移动端：加强导航玻璃效果防止丢失 */
+    @media (orientation: landscape) {
+        .navbar {
+            background-color: color-mix(in srgb, var(--c-glass) 14%, transparent);
+            backdrop-filter: blur(6px) saturate(var(--saturation));
+            -webkit-backdrop-filter: blur(6px) saturate(var(--saturation));
+        }
+    }
     
     /* 首页, 404, Construct */
     .page-index .card:active,
