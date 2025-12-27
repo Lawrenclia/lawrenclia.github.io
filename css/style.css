@@ -1462,6 +1462,14 @@ body.dark-theme.page-mc {
     body.dark-theme .theme-toggle:active {
         background: rgba(255, 255, 255, 0.1);
     }
+
+    /* MC 画廊触摸反馈 */
+    .page-mc .mc-image {
+        transition: transform 0.18s ease;
+    }
+    .page-mc .mc-image:active {
+        transform: scale(1.02);
+    }
 }
 
 
@@ -1606,7 +1614,16 @@ body.dark-theme.page-mc {
     .page-mc .mc-gallery {
         grid-template-columns: 1fr;
     }
+    .page-mc .mc-card {
+        padding: 8px;
+        border-radius: 14px;
+    }
     .page-mc .mc-image {
         min-height: 180px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+    }
+    .page-mc .mc-caption {
+        font-size: 13px;
     }
 }
