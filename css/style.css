@@ -333,7 +333,8 @@ body.dark-theme.page-index .wrap::after {
 .page-blog .wrap,
 .page-projects .wrap,
 .page-message .wrap,
-.page-blog-post .wrap {
+.page-blog-post .wrap,
+.page-mc .wrap {
     max-width: 800px;
     margin: 100px auto 40px auto;
     padding: 0 20px;
@@ -534,10 +535,20 @@ body.dark-theme.page-index .avatar img {
     color: var(--link);
 }
 /* 统一卡片悬停效果 */
+.page-about article,
+.page-projects .item,
+.page-blog .blog-card,
+.page-message .message-item,
+.page-mc .mc-card {
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
+                box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
+}
 .page-about article:hover,
 .page-projects .item:hover,
 .page-blog .blog-card:hover,
-.page-message .message-item:hover {
+.page-message .message-item:hover,
+.page-mc .mc-card:hover {
     transform: scale(1.03);
 }
 
@@ -1159,6 +1170,184 @@ body.dark-theme .modal-content textarea {
 }
 
 
+/* --- 4.9 Minecraft 画廊 (page-mc) --- */
+.page-mc {
+    --bg: linear-gradient(90deg, #e8f2ff 0%, #eaf8f1 100%);
+}
+body.dark-theme.page-mc {
+    --bg: #1a1a1a;
+}
+.page-mc .mc-hero {
+    position: relative;
+    overflow: hidden;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 24px;
+
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    border: none;
+    backdrop-filter: blur(3px) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
+    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+}
+.page-mc .mc-meta {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+.page-mc .mc-hero h1 {
+    margin: 8px 0 6px;
+    font-size: 26px;
+    color: var(--text);
+}
+.page-mc .mc-subtitle {
+    margin: 0;
+    color: var(--muted);
+}
+.page-mc .mc-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+}
+.page-mc .mc-card {
+    margin: 0;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    padding: 10px;
+    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    border: none;
+    box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
+        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+}
+.page-mc .mc-image {
+    width: 100%;
+    aspect-ratio: 2560 / 1300;
+    min-height: 200px; /* 保底高度，确保横向观感 */
+    height: auto;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 12px;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.page-mc .mc-image:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+}
+.page-mc .mc-caption {
+    padding: 12px 14px 14px;
+    margin: 0;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.mc-viewer {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 120;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+    padding: 20px;
+}
+.mc-viewer.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.mc-viewer-inner {
+    position: relative;
+    width: min(1100px, 96vw);
+    max-height: 90vh;
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 14px 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    transform: translateY(8px) scale(0.96);
+    opacity: 0;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease;
+}
+.mc-viewer.visible .mc-viewer-inner {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+}
+.mc-viewer img {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 10px;
+    background: #000;
+    opacity: 0;
+    transform: scale(0.985);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.mc-viewer.visible img {
+    opacity: 1;
+    transform: scale(1);
+}
+.mc-viewer-caption {
+    font-size: 14px;
+    color: var(--muted);
+}
+.mc-viewer-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: rgba(0,0,0,0.08);
+    color: var(--text);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+}
+.mc-viewer-close:hover {
+    transform: scale(1.08);
+    background: rgba(0,0,0,0.15);
+}
+.mc-viewer-close:focus-visible {
+    outline: 2px solid var(--accent);
+}
+
+
 /* --- 4.7 404 (page-404) --- */
 .page-404 .content-404 {
     text-align: center;
@@ -1411,5 +1600,13 @@ body.dark-theme .modal-content textarea {
         /* 移动端只保留 blur，删除 url() */
         backdrop-filter: blur(3px) saturate(var(--saturation));
         -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
+    }
+
+    /* MC 画廊 */
+    .page-mc .mc-gallery {
+        grid-template-columns: 1fr;
+    }
+    .page-mc .mc-image {
+        min-height: 180px;
     }
 }
