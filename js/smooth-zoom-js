@@ -1,0 +1,134 @@
+// smooth-zoom.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // =================================================================
+    // 配置区域
+    // =================================================================
+    // 【重要】请根据你的主题修改这里的选择器！
+    // 意思是：选择 "文章正文容器" 下面的所有 "img" 标签
+    // 常见示例：'.post-content img', '.article-entry img', '.markdown-body img'
+    const SELECTOR = '.mc-image'; 
+    
+    // 忽略过小的图片（比如表情包），避免放大很难看
+    const MIN_WIDTH = 50; 
+    // =================================================================
+
+
+    // 插入必要的 DOM 结构（遮罩层）
+    // 这样就不需要手动去改主题的 HTML 模板了
+    if (!document.getElementById('zoomOverlay')) {
+        const overlayDiv = document.createElement('div');
+        overlayDiv.className = 'zoom-overlay';
+        overlayDiv.id = 'zoomOverlay';
+        document.body.appendChild(overlayDiv);
+    }
+
+    const overlay = document.getElementById('zoomOverlay');
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    let bodyOverflow = '';
+    let activeClone = null;
+    let activeOriginal = null;
+
+    // 为符合条件的图片绑定点击事件
+    const images = document.querySelectorAll(SELECTOR);
+    images.forEach(img => {
+        // 过滤掉太小的图片，或者已经有链接的图片（避免冲突）
+        if (img.naturalWidth < MIN_WIDTH || img.parentElement.tagName === 'A') return;
+
+        img.style.cursor = 'zoom-in'; // 设置鼠标手势
+
+        const open = (e) => {
+            e.stopPropagation();
+            if (e.cancelable) e.preventDefault();
+            openImage(img);
+        };
+
+        img.addEventListener('click', open);
+        if (isTouch) {
+            img.addEventListener('touchend', open, { passive: false });
+        }
+    });
+
+    // 点击遮罩层关闭
+    overlay.addEventListener('click', closeImage);
+    // 滚动页面时关闭
+    window.addEventListener('scroll', closeImage);
+    // 按 ESC 键关闭
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeImage();
+    });
+
+    function openImage(targetImg) {
+        if (activeClone) return;
+        activeOriginal = targetImg;
+
+        // 1. 获取原图位置
+        const rect = targetImg.getBoundingClientRect();
+
+        // 2. 创建克隆图
+        const clone = targetImg.cloneNode();
+        clone.classList.add('zoom-clone');
+        // 移除可能存在的内联样式，防止干扰
+        clone.style.margin = '0';
+        clone.style.padding = '0';
+        
+        // 3. 初始定位：重叠在原图上
+        clone.style.top = `${rect.top}px`;
+        clone.style.left = `${rect.left}px`;
+        clone.style.width = `${rect.width}px`;
+        clone.style.height = `${rect.height}px`;
+
+        document.body.appendChild(clone);
+        activeClone = clone;
+
+        // 隐藏原图，锁定滚动
+        requestAnimationFrame(() => {
+            targetImg.classList.add('post-img-zooming');
+            overlay.classList.add('active');
+            bodyOverflow = document.body.style.overflow;
+            document.body.style.overflow = 'hidden';
+            document.body.style.touchAction = 'none';
+        });
+
+        // 4. 计算放大后的位置
+        const viewWidth = window.innerWidth;
+        const viewHeight = window.innerHeight;
+        
+        // 计算缩放比例（留 5% 边距）
+        const scaleX = viewWidth / rect.width;
+        const scaleY = viewHeight / rect.height;
+        const scale = Math.min(scaleX, scaleY) * 0.95;
+
+        // 计算位移中心点
+        const translateX = (viewWidth - rect.width) / 2 - rect.left;
+        const translateY = (viewHeight - rect.height) / 2 - rect.top;
+
+        // 5. 触发动画
+        requestAnimationFrame(() => {
+            clone.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        });
+
+        clone.addEventListener('click', closeImage);
+        if (isTouch) {
+            clone.addEventListener('touchend', (e) => { if (e.cancelable) e.preventDefault(); closeImage(); }, { passive: false });
+        }
+    }
+
+    function closeImage() {
+        if (!activeClone || !activeOriginal) return;
+
+        // 1. 复原位置
+        activeClone.style.transform = '';
+        overlay.classList.remove('active');
+
+        // 2. 动画结束后清理 DOM
+        setTimeout(() => {
+            if (activeOriginal) activeOriginal.classList.remove('post-img-zooming');
+            if (activeClone) activeClone.remove();
+            activeClone = null;
+            activeOriginal = null;
+            document.body.style.overflow = bodyOverflow;
+            document.body.style.touchAction = '';
+        }, 400); // 必须与 CSS transition 时间一致
+    }
+});

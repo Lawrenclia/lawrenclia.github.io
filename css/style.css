@@ -1184,6 +1184,8 @@ body.dark-theme.page-mc {
     padding: 24px;
     margin-bottom: 24px;
 
+    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
     background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
     border: none;
     backdrop-filter: blur(3px) saturate(var(--saturation));
@@ -1201,6 +1203,9 @@ body.dark-theme.page-mc {
         inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
         0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
         0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
+}
+.page-mc .mc-hero:hover {
+    transform: scale(1.02);
 }
 .page-mc .mc-meta {
     font-size: 12px;
