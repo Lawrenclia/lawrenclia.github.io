@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1" />
+	<title>简历 · Lawrenclia</title>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+		/* CV 页面专用样式（保持与全局风格一致） */
+		body.page-cv .wrap {
+			max-width: 1080px;
+			margin: 80px auto 60px;
+			padding: 0 26px;
+		}
+
+		.cv-layout {
+			display: grid;
+			grid-template-columns: 320px 1fr;
+			gap: 20px;
+			align-items: start;
+		}
+
+		.cv-main {
+			display: grid;
+			gap: 16px;
+		}
+
+		.cv-hero {
+			display: grid;
+			grid-template-columns: 1fr 1.4fr;
+			gap: 18px;
+			align-items: start;
+		}
+
+		.cv-profile {
+			border: 1px solid var(--border);
+			border-radius: 16px;
+			padding: 18px;
+			background: var(--card-bg);
+			box-shadow: var(--card-shadow);
+			display: grid;
+			gap: 12px;
+			justify-items: start;
+			position: sticky;
+			top: 24px;
+		}
+
+		.cv-avatar {
+			width: 148px;
+			height: 148px;
+			border-radius: 16px;
+			overflow: hidden;
+			box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+			border: 1px solid var(--border);
+		}
+
+		.cv-avatar img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+		}
+
+		.cv-pill {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 6px 10px;
+			border-radius: 999px;
+			font-size: 12px;
+			background: color-mix(in srgb, var(--accent) 12%, var(--card-bg));
+			border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+			color: var(--text);
+		}
+
+		.cv-contact {
+			list-style: none;
+			padding: 0;
+			margin: 4px 0 0;
+			display: grid;
+			gap: 8px;
+			color: var(--muted);
+			font-size: 14px;
+		}
+
+		.cv-contact li {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			word-break: break-all;
+		}
+
+		.cv-contact i { color: var(--accent); }
+
+		.cv-social {
+			display: flex;
+			gap: 10px;
+			flex-wrap: wrap;
+		}
+
+		.cv-social a {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 6px;
+			padding: 8px 12px;
+			border-radius: 10px;
+			border: 1px solid var(--border);
+			background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+			color: var(--text);
+			text-decoration: none;
+			font-size: 14px;
+			transition: transform 0.2s ease, box-shadow 0.2s ease;
+		}
+
+		.cv-social a:hover {
+			transform: translateY(-1px);
+			box-shadow: 0 8px 18px rgba(0,0,0,0.08);
+		}
+
+		.cv-affiliations {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin: 6px 0 4px;
+			padding: 0;
+			list-style: none;
+		}
+
+		.cv-badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			padding: 6px 10px;
+			border-radius: 999px;
+			font-size: 12px;
+			background: color-mix(in srgb, var(--accent) 10%, var(--card-bg));
+			border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--border));
+			color: var(--text);
+		}
+
+		.cv-quickstats {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+			gap: 10px;
+			margin-top: 10px;
+		}
+
+		.cv-stat {
+			border: 1px solid var(--border);
+			border-radius: 12px;
+			padding: 10px 12px;
+			background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+			color: var(--text);
+			font-weight: 600;
+		}
+
+		.cv-stat span {
+			display: block;
+			color: var(--muted);
+			font-size: 12px;
+			font-weight: 400;
+		}
+
+		.cv-name {
+			font-size: 32px;
+			font-weight: 700;
+			margin: 0 0 6px;
+			color: var(--text);
+			letter-spacing: 0.5px;
+		}
+
+		.cv-title {
+			font-size: 18px;
+			color: var(--muted);
+			margin: 0 0 14px;
+		}
+
+		.cv-tagline {
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 12px;
+			border-radius: 12px;
+			background: color-mix(in srgb, var(--accent) 10%, var(--card-bg));
+			color: var(--text);
+			font-weight: 600;
+			margin-bottom: 14px;
+		}
+
+		.cv-meta {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+			gap: 10px 14px;
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			color: var(--muted);
+			font-size: 14px;
+		}
+
+		.cv-meta li {
+			display: flex;
+			gap: 10px;
+			align-items: center;
+		}
+
+		.cv-meta i {
+			color: var(--accent);
+		}
+
+		.cv-panel {
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 18px;
+			background: color-mix(in srgb, var(--card-bg) 90%, transparent);
+		}
+
+		.cv-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 16px;
+		}
+
+		.cv-card {
+			border: 1px solid var(--border);
+			border-radius: 14px;
+			padding: 18px;
+			background: var(--card-bg);
+			box-shadow: var(--card-shadow);
+		}
+
+		.cv-section-title {
+			margin: 0 0 12px;
+			font-size: 18px;
+			color: var(--text);
+			display: flex;
+			gap: 8px;
+			align-items: center;
+		}
+
+		.cv-section-title i {
+			color: var(--accent);
+		}
+
+		.cv-list {
+			margin: 0;
+			padding-left: 18px;
+			color: var(--muted);
+		}
+
+		.cv-timeline {
+			display: grid;
+			gap: 14px;
+		}
+
+		.cv-item {
+			display: grid;
+			gap: 4px;
+			padding-bottom: 10px;
+			border-bottom: 1px solid var(--border);
+		}
+
+		.cv-item:last-child {
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+
+		.cv-item h4 {
+			margin: 0;
+			color: var(--text);
+			font-size: 16px;
+		}
+
+		.cv-item .cv-subtitle {
+			color: var(--muted);
+			font-size: 14px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.cv-tags {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-top: 6px;
+		}
+
+		.cv-tag {
+			font-size: 12px;
+			padding: 6px 10px;
+			border-radius: 999px;
+			background: color-mix(in srgb, var(--accent) 12%, var(--card-bg));
+			color: var(--text);
+			border: 1px solid color-mix(in srgb, var(--accent) 20%, var(--border));
+		}
+
+		.cv-columns {
+			display: grid;
+			grid-template-columns: 2fr 1.2fr;
+			gap: 16px;
+		}
+
+		.cv-note {
+			font-size: 13px;
+			color: var(--muted);
+			margin-top: 8px;
+		}
+
+		@media (max-width: 900px) {
+			.cv-layout { grid-template-columns: 1fr; }
+			.cv-columns { grid-template-columns: 1fr; }
+		}
+	</style>
+</head>
+<body class="page-cv">
+
+	<div class="wrap">
+		<div class="cv-layout">
+			<aside class="cv-profile">
+				<div class="cv-avatar">
+					<img src="images/avatar.png" alt="头像" loading="lazy">
+				</div>
+				<span class="cv-pill"><i class="fas fa-graduation-cap"></i> Assistant Professor (CS)</span>
+				<ul class="cv-contact" aria-label="联系方式">
+					<li><i class="fas fa-envelope"></i> you@example.com</li>
+					<li><i class="fas fa-phone"></i> +86 138-0000-0000</li>
+					<li><i class="fas fa-map-marker-alt"></i> 上海 / Shanghai</li>
+				</ul>
+				<div class="cv-social" aria-label="社交链接">
+					<a href="https://github.com/your-name" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+					<a href="https://scholar.google.com" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Google Scholar</a>
+					<a href="https://www.linkedin.com" target="_blank" rel="noopener"><i class="fab fa-linkedin"></i> LinkedIn</a>
+				</div>
+			</aside>
+
+			<div class="cv-main">
+				<article class="cv-card">
+					<div class="cv-tagline"><i class="fas fa-user-check"></i> Academic CV · 请替换为你的信息</div>
+					<h1 class="cv-name">张三 / San Zhang</h1>
+					<p class="cv-title">Assistant Professor, Department of Computer Science</p>
+					<ul class="cv-affiliations" aria-label="隶属与实验室">
+						<li class="cv-badge"><i class="fas fa-university"></i> XX University</li>
+						<li class="cv-badge"><i class="fas fa-flask"></i> Data & Systems Lab</li>
+					</ul>
+					<ul class="cv-meta" aria-label="基本信息">
+						<li><i class="fas fa-envelope"></i> you@example.com</li>
+						<li><i class="fas fa-link"></i> scholar.google.com/citations?user=xxxx</li>
+						<li><i class="fas fa-map-marker-alt"></i> 上海 / Shanghai</li>
+						<li><i class="fas fa-language"></i> 英语 C1；中文 母语</li>
+						<li><i class="fas fa-file-alt"></i> ORCID: 0000-0000-0000-0000</li>
+					</ul>
+					<div class="cv-quickstats" aria-label="统计信息">
+						<div class="cv-stat">25+ <span>公开论文 (含一作/通讯)</span></div>
+						<div class="cv-stat">1800+ <span>总引用 (Google Scholar)</span></div>
+						<div class="cv-stat">3 <span>已结题/在研项目</span></div>
+						<div class="cv-stat">PC / Reviewer <span>NeurIPS, ICML, AAAI, TKDE</span></div>
+					</div>
+					<div class="cv-panel">
+						<div class="cv-section-title"><i class="fas fa-info-circle"></i> 职业概况</div>
+						<p class="cv-note">研究兴趣：机器学习系统（MLOps）、可解释 AI、数据驱动软件工程；关注可复现性与工程落地。</p>
+						<div class="cv-tags" aria-label="亮点标签">
+							<span class="cv-tag">MLOps</span>
+							<span class="cv-tag">Model Interpretability</span>
+							<span class="cv-tag">Data-Centric AI</span>
+							<span class="cv-tag">Software Analytics</span>
+							<span class="cv-tag">Reproducibility</span>
+						</div>
+					</div>
+				</article>
+
+				<article class="cv-card">
+					<div class="cv-section-title"><i class="fas fa-lightbulb"></i> 研究兴趣</div>
+					<ul class="cv-list">
+						<li>机器学习系统：训练-推理流水线优化、可观测性、可复现性。</li>
+						<li>可解释与安全 AI：模型解释、鲁棒性评估、数据污染检测。</li>
+						<li>软件与数据工程：软件仓库挖掘、数据质量监测、自动化评审。</li>
+					</ul>
+				</article>
+
+				<article class="cv-card">
+					<div class="cv-section-title"><i class="fas fa-briefcase"></i> 学术任职 / 经历</div>
+					<div class="cv-timeline">
+						<div class="cv-item">
+							<h4>Assistant Professor · XX University</h4>
+							<div class="cv-subtitle">Department of Computer Science · 2023.09 - 至今</div>
+							<ul class="cv-list">
+								<li>带领 5 人团队，研究可解释机器学习与 MLOps 可观测性。</li>
+								<li>主持省部级项目 1 项；联合企业合作项目 1 项。</li>
+							</ul>
+						</div>
+						<div class="cv-item">
+							<h4>Research Scientist · XX Lab</h4>
+							<div class="cv-subtitle">Data & Systems Lab · 2021.07 - 2023.08</div>
+							<ul class="cv-list">
+								<li>聚焦大规模训练数据管线，设计质量度量与自动清洗策略。</li>
+								<li>共同一作论文发表于 NeurIPS / ICML 领域会议。</li>
+							</ul>
+						</div>
+					</div>
+				</article>
+
+				<article class="cv-card">
+					<div class="cv-section-title"><i class="fas fa-graduation-cap"></i> 教育背景</div>
+					<div class="cv-timeline">
+						<div class="cv-item">
+							<h4>Ph.D. in Computer Science</h4>
+							<div class="cv-subtitle">XX University · 2017 - 2021 · 导师：Prof. ABC</div>
+							<ul class="cv-list">
+								<li>论文主题：可解释机器学习与模型部署可靠性。</li>
+								<li>GPA 3.9/4.0；优秀博士论文奖（示例）。</li>
+							</ul>
+						</div>
+						<div class="cv-item">
+							<h4>B.S. in Software Engineering</h4>
+							<div class="cv-subtitle">YY University · 2013 - 2017</div>
+							<ul class="cv-list">
+								<li>主修：算法、分布式系统、数据库。</li>
+								<li>以第一作者发表本科阶段论文 1 篇。</li>
+							</ul>
+						</div>
+					</div>
+				</article>
+
+				<article class="cv-card">
+					<div class="cv-columns">
+						<div>
+							<div class="cv-section-title"><i class="fas fa-book"></i> 代表性论文（示例）</div>
+							<div class="cv-item">
+								<ul class="cv-list">
+									<li><strong>J. Zhang</strong>, X. Li, A. Chen. "Interpretable Pipelines for Large-Scale MLOps". <em>NeurIPS</em>, 2024.</li>
+									<li><strong>J. Zhang</strong>, B. Wang, Y. Zhao. "Data-Centric Debugging for Foundation Models". <em>ICML</em>, 2024.</li>
+									<li>J. Zhang, <strong>et al.</strong> "Reproducible ML Systems under Distribution Shift". <em>TKDE</em>, 2023.</li>
+									<li><strong>J. Zhang</strong>, L. Wu. "Practical Interpretability for Healthcare Models". <em>AAAI</em>, 2022.</li>
+								</ul>
+							</div>
+							<div class="cv-section-title"><i class="fas fa-file-alt"></i> 预印本 / 工作论文</div>
+							<div class="cv-item">
+								<ul class="cv-list">
+									<li><strong>J. Zhang</strong>. "Scaling Evaluations for Alignment". arXiv:2401.xxxx.</li>
+									<li><strong>J. Zhang</strong>, M. Doe. "Benchmarking Data Quality at Scale". Under review.</li>
+								</ul>
+							</div>
+						</div>
+						<div>
+							<div class="cv-section-title"><i class="fas fa-chalkboard-teacher"></i> 教学与指导</div>
+							<div class="cv-item">
+								<h4>课程</h4>
+								<ul class="cv-list">
+									<li>CS305: 机器学习系统（主讲，2024 春）。</li>
+									<li>CS210: 数据结构与算法（协同授课，2023 秋）。</li>
+								</ul>
+							</div>
+							<div class="cv-item">
+								<h4>学生指导</h4>
+								<ul class="cv-list">
+									<li>硕士生 3 名（1 人一作 NeurIPS'24），本科毕设 4 人。</li>
+									<li>每周组会 + 论文写作工作坊，强调可复现与开源发布。</li>
+								</ul>
+							</div>
+							<div class="cv-section-title" style="margin-top:14px;"><i class="fas fa-hands-helping"></i> 学术服务</div>
+							<div class="cv-item">
+								<ul class="cv-list">
+									<li>程序委员会 / 评审：NeurIPS, ICML, ICLR, AAAI, KDD, TKDE。</li>
+									<li>会议组织：NeurIPS 2024 Reproducibility Track（志愿副主席）。</li>
+									<li>开源：维护数据管线工具与可解释性评测套件。</li>
+								</ul>
+							</div>
+							<div class="cv-section-title" style="margin-top:14px;"><i class="fas fa-award"></i> 奖项</div>
+							<div class="cv-item">
+								<ul class="cv-list">
+									<li>Best Paper Award, XYZ Workshop @ NeurIPS 2024。</li>
+									<li>Outstanding Reviewer, ICLR 2024。</li>
+									<li>国家奖学金 / 校级三好学生（示例）。</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</article>
+
+				<article class="cv-card">
+					<div class="cv-section-title"><i class="fas fa-tools"></i> 技能与工具（科研相关）</div>
+					<ul class="cv-list">
+						<li>编程与框架：Python（PyTorch / JAX）、Bash、Go（数据服务）。</li>
+						<li>数据与训练：Weights & Biases、MLflow、Ray、Airflow、Docker/K8s。</li>
+						<li>评测与可解释：Captum、SHAP、LIME、自建鲁棒性评测基线。</li>
+						<li>复现与文档：LaTeX、Pandoc、GitHub Actions、pytest、ruff/black。</li>
+					</ul>
+					<p class="cv-note">使用提示：替换示例数据；导出 PDF 可用浏览器打印（关闭页眉页脚，边距 10-15mm）。</p>
+				</article>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		// 主题初始化（无导航与切换按钮时仅根据偏好和缓存设置）
+		const themeToggle = document.querySelector('.theme-toggle');
+		const body = document.body;
+		const icon = themeToggle ? themeToggle.querySelector('i') : null;
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+		const saved = localStorage.getItem('theme');
+		if (saved === 'dark' || (!saved && prefersDark)) {
+			body.classList.add('dark-theme');
+			if (icon) { icon.classList.replace('fa-moon', 'fa-sun'); }
+		}
+		if (themeToggle && icon) {
+			themeToggle.addEventListener('click', () => {
+				body.classList.toggle('dark-theme');
+				const isDark = body.classList.contains('dark-theme');
+				localStorage.setItem('theme', isDark ? 'dark' : 'light');
+				icon.classList.toggle('fa-sun', isDark);
+				icon.classList.toggle('fa-moon', !isDark);
+			});
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+				if (!localStorage.getItem('theme')) {
+					if (e.matches) {
+						body.classList.add('dark-theme');
+						icon.classList.replace('fa-moon', 'fa-sun');
+					} else {
+						body.classList.remove('dark-theme');
+						icon.classList.replace('fa-sun', 'fa-moon');
+					}
+				}
+			});
+		}
+	</script>
+
+	<div class="svg-filter-container" aria-hidden="true">
+		<svg width="0" height="0">
+			<filter id="lg-dist">
+				<feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" seed="2" stitchTiles="stitch" />
+				<feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
+			</filter>
+		</svg>
+	</div>
+</body>
+</html>
