@@ -1,1644 +1,427 @@
 /* =================================================================
-   Lawrenclia | 统一全局样式表 (style.css)
-================================================================= */
+   Lawrenclia | 统一全局样式表 (Refactored)
+   ================================================================= */
 
 /* =========================
-   1. 全局变量与基础样式
+   1. 全局变量与基础设置
 ========================= */
-
-* {
-    box-sizing: border-box;
-}
-
 :root {
-    /* 主题色 */
+    /* --- 核心颜色 --- */
     --accent: #ff6b9a;
     --accent-light: #ff8cae;
-
-    /* 亮色主题 (Light Mode) */
-    --bg: #f5f5f7; /* (来自 index.css) */
+    --link: #0066cc;
+    
+    /* --- 主题色 (Light Mode) --- */
+    --bg: #f5f5f7;
     --text: #111;
     --muted: #666;
     --card-bg: #fff;
-    --card-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
     --border: rgba(0, 0, 0, 0.08);
-    --link: #0066cc;
 
-    /* 亮色 - 玻璃效果变量 (来自 index.css / common.css) */
-    --c-glass: #bbbbbc;
-    --c-light: #fff;
-    --c-dark: #000;
-    --glass-reflex-dark: 1;
-    --glass-reflex-light: 1;
+    /* --- 玻璃拟态 (Glassmorphism) 核心变量 --- */
     --saturation: 150%;
-
-    /* 亮色 - 导航栏 */
-    --nav-text: #1d1d1f;
-    --nav-link-hover-bg: rgba(0, 0, 0, 0.03);
-
-    /* 亮色 - 留言板 */
-    --disclaimer-bg: #fffbe6;
-    --disclaimer-border: #ffe58f;
-    --disclaimer-text: #d46b08;
-    --cancel-btn-bg: #f0f0f0;
-    --cancel-btn-text: #333;
-    --cancel-btn-hover: #e0e0e0;
+    --glass-bg: color-mix(in srgb, #bbbbbc 12%, transparent);
+    --glass-filter: blur(3px) saturate(var(--saturation));
+    --glass-filter-url: blur(3px) url(#lg-dist) saturate(var(--saturation));
     
-    /* 首页专属变量 */
-    --index-text: #ffffff; /* 首页卡片文字 (白色) */
+    /* 这种复杂的内阴影用于模拟液态玻璃质感 */
+    --glass-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, #fff 10%, transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, #fff 90%, transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, #fff 80%, transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, #fff 60%, transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, #000 12%, transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, #000 20%, transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, #000 20%, transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, #000 10%, transparent),
+        0px 1px 5px 0px color-mix(in srgb, #000 10%, transparent),
+        0px 6px 16px 0px color-mix(in srgb, #000 8%, transparent);
+
+    /* --- 组件变量 --- */
+    --nav-text: #1d1d1f;
+    --nav-hover: rgba(0, 0, 0, 0.03);
+    --index-text: #ffffff;
     --index-muted: rgba(255, 255, 255, 0.8);
-    --index-radius: 32px;
     --random-bg-url: none;
 }
 
 body.dark-theme {
-    /* 暗色主题 (Dark Mode) */
+    /* --- 暗色主题覆盖 --- */
     --bg: #1a1a1a;
     --text: #f0f0f0;
     --muted: #bbb;
     --card-bg: #2d2d2d;
-    --card-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     --border: rgba(255, 255, 255, 0.1);
     --link: #66b2ff;
-
-    /* 暗色 - 玻璃效果变量 */
-    --c-glass: #bbbbbc;
-    --c-light: #fff;
-    --c-dark: #000;
-    --glass-reflex-dark: 2;
-    --glass-reflex-light: 0.3;
-    --saturation: 150%;
     
-    /* 暗色 - 导航栏 */
     --nav-text: #f0f0f0;
-    --nav-link-hover-bg: rgba(255, 255, 255, 0.05);
+    --nav-hover: rgba(255, 255, 255, 0.05);
     
-    /* 暗色 - 留言板 */
-    --disclaimer-bg: #332d00;
-    --disclaimer-border: #5c5000;
-    --disclaimer-text: #ffd56b;
-    --cancel-btn-bg: #3a3a3a;
-    --cancel-btn-text: #f0f0f0;
-    --cancel-btn-hover: #4a4a4a;
-    
-    /* 首页专属变量 (暗色) */
     --index-text: #f0f0f0;
     --index-muted: rgba(200, 200, 200, 0.7);
+
+    /* 暗色模式下的玻璃阴影调整 (加深阴影，减弱高光) */
+    --glass-shadow: 
+        inset 0 0 0 1px color-mix(in srgb, #fff 3%, transparent),
+        inset 1.8px 3px 0px -2px color-mix(in srgb, #fff 27%, transparent),
+        inset -2px -2px 0px -2px color-mix(in srgb, #fff 24%, transparent),
+        inset -3px -8px 1px -6px color-mix(in srgb, #fff 18%, transparent),
+        inset -0.3px -1px 4px 0px color-mix(in srgb, #000 24%, transparent),
+        inset -1.5px 2.5px 0px -2px color-mix(in srgb, #000 40%, transparent),
+        inset 0px 3px 4px -2px color-mix(in srgb, #000 40%, transparent),
+        inset 2px -6.5px 1px -4px color-mix(in srgb, #000 20%, transparent),
+        0px 1px 5px 0px color-mix(in srgb, #000 20%, transparent),
+        0px 6px 16px 0px color-mix(in srgb, #000 16%, transparent);
 }
 
-/* 基础 HTML, Body 样式 */
-/* ✨ 修复: 拆分 html 和 body 规则 */
-html {
-    height: 100%;
-}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
 body {
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: var(--bg); /* <-- 背景只在 body 上 */
-    color: var(--text); /* 默认为非首页的文字颜色 */
+    font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--text);
     line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
     transition: background-color 0.3s ease;
 }
 
 /* =========================
-   2. 共享组件 (Navbar, Footer, SVG)
+   2. 统一工具类 (Mixins & Utilities)
 ========================= */
 
-/* --- 导航栏 (Navbar) --- */
-.navbar {
-    height: 54px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 30;
-    width: min(800px, calc(100% - 40px));
-    border-radius: 18px;
-    padding: 0 28px;
-    overflow: hidden;
+/* 核心玻璃效果：应用到所有卡片、导航、按钮 */
+:is(
+    .navbar, 
+    .page-index .card, 
+    .page-404 .card, 
+    .page-construct .card,
+    .page-about article, 
+    .page-projects .item, 
+    .page-blog .blog-card, 
+    .page-message .message-item, 
+    .modal-content, 
+    .modal-actions button, 
+    #leave-message-btn,
+    .page-mc .mc-hero, 
+    .page-mc .mc-card,
+    .page-index .icon-tag
+) {
+    background-color: var(--glass-bg);
+    backdrop-filter: var(--glass-filter);
+    -webkit-backdrop-filter: var(--glass-filter);
     
-    /* 玻璃样式 */
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
+    /* 优先使用 SVG 滤镜产生液态效果，不支持则回退 */
+    backdrop-filter: var(--glass-filter-url); 
+    -webkit-backdrop-filter: var(--glass-filter-url);
+    
+    box-shadow: var(--glass-shadow);
     border: none;
     
-    backdrop-filter: blur(3px) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-    transition:
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s ease;
-}
-
-.nav-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-right: auto;
-}
-
-.brand {
-    font-weight: 600;
-    font-size: 20px;
-    letter-spacing: 0.2px;
-    color: var(--nav-text);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* 导航栏右侧 */
-.nav-right {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.nav-link {
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-weight: 400;
-    font-size: 14px;
-    color: var(--nav-text);
-    text-decoration: none;
-    transition: all .2s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 6px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background: var(--accent);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-/* 主题切换按钮 */
-.theme-toggle {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: transparent;
-    border: none;
-    color: var(--nav-text);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-}
-
-/* --- 页脚 (Footer) --- */
-/* (来自 index.css，现已全局化) */
-footer {
-    text-align: center;
-    font-size: 14px;
-    padding: 30px 10px;
-    border-top: 1px solid var(--border);
-    margin-top: 60px;
-    background: var(--bg);
-    color: var(--muted);
-    
-    /* 首页的页脚是透明的，位于 .wrap 内部 */
-    .page-index &,
-    .page-404 &,
-    .page-construct & {
-        margin-top: 30px;
-        color: var(--index-muted);
-        font-size: 13px;
-        text-align: center;
-        z-index: 2;
-        position: relative;
-        letter-spacing: 0.2px;
-        border: none; /* 首页页脚无边框 */
-        background: transparent; /* 首页页脚透明 */
-    }
-}
-
-
-/* --- SVG 滤镜 (隐藏) --- */
-.svg-filter-container {
-    width: 0;
-    height: 0;
-    position: absolute;
-    visibility: hidden;
-}
-
-/* =========================
-   3. 页面布局 (Layouts)
-========================= */
-
-/* --- 首页布局 (Index, 404, Construct) --- */
-.page-index body,
-.page-404 body,
-.page-construct body {
-    color: #1d1d1f; /* 首页默认文字颜色 */
-}
-
-.page-index .wrap,
-.page-404 .wrap,
-.page-construct .wrap {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 92px 36px 36px 36px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* 首页背景图层 */
-.page-index .wrap::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    background-image: var(--random-bg-url);
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    filter: brightness(0.8) saturate(1.05);
-    transform: scale(1.02);
-    transition: all 1.5s ease;
-}
-body.dark-theme.page-index .wrap::after {
-    filter: brightness(0.6) saturate(1.05);
-}
-
-/* 首页遮罩层
-.page-index .wrap::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.1);
-    z-index: 1;
-} */
-
-.page-index .wrap::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    
-    background: 
-        /* 1. 点阵图层 */
-        radial-gradient(
-            circle at 1px 1px, 
-            rgba(0, 0, 0, 0.15) 1px, /* 点的颜色和大小 */
-            transparent 0
-        ),
-        /* 2. 底层蒙版 (可选，如果你还想要之前的渐变) */
-        linear-gradient(
-            180deg, 
-            rgba(0, 0, 0, 0.0) 0%, 
-            rgba(0, 0, 0, 0.4) 100%
-        );
-    
-    /* 并且添加/修改 background-size 属性：*/
-    background-size: 5px 5px, 100%; /* 5px 5px 是点阵的间距 */
-
-    z-index: 1;
-}
-
-/* --- 内容页布局 (About, Blog, Projects, Message) --- */
-.page-about .wrap,
-.page-blog .wrap,
-.page-projects .wrap,
-.page-message .wrap,
-.page-blog-post .wrap,
-.page-mc .wrap {
-    max-width: 800px;
-    margin: 100px auto 40px auto;
-    padding: 0 20px;
-}
-
-/* 内容页 <article> 基础样式 (来自 common.css) */
-article {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 24px;
-    margin-bottom: 28px;
-    box-shadow: var(--card-shadow);
-    transition: all 0.3s ease;
-}
-
-article h2 {
-    margin-top: 0;
-    color: var(--text);
-    font-size: 22px;
-}
-
-article p {
-    margin: 12px 0;
-    color: var(--muted);
-}
-
-/* =========================
-   4. 页面专属样式
-========================= */
-
-/* --- 4.1 首页 (page-index) --- */
-.page-index .avatar {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    overflow: hidden;
-    position: relative;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: color-mix(in srgb, var(--c-glass) 15%, transparent);
-    
-    backdrop-filter: blur(5px) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(5px) saturate(var(--saturation));
-    
-    padding: 4px;
-    border: none;
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 20%), transparent),
-        inset 0 1px 2px 0 color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 40%), transparent),
-        inset 0 -1px 1px 0 color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent),
-        0 8px 25px rgba(0, 0, 0, 0.15);
-    transition:
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s ease;
-}
-.page-index .avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    transition: filter 0.3s ease;
-    filter: brightness(0.95);
-}
-body.dark-theme.page-index .avatar img {
-    filter: brightness(0.8);
-}
-
-.page-index .card,
-.page-404 .card,
-.page-construct .card {
-    width: 100%;
-    max-width: 420px;
-    border-radius: var(--index-radius);
-    padding: 25px;
-    margin-top: 20px;
-    position: relative;
-    z-index: 2;
-    color: var(--index-text); /* 首页使用白色文字 */
-    
-    /* 玻璃样式 */
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-
-    backdrop-filter: blur(3px) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-    transition:
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s ease;
-}
-
-.page-index .deco {
-    margin-top: -20px;
-}
-.page-index .status-message {
-    padding: 12px 16px;
-    line-height: 1.6;
-    text-align: center;
-}
-.page-index .status-message h2,
-.page-index .status-message h3 {
-    margin: 6px 0;
-    font-weight: 600;
-    line-height: 1.3;
-}
-.page-index .status-message h2 {
-    font-size: 22px;
-    letter-spacing: -0.3px;
-    color: var(--index-text);
-}
-.page-index .status-message h3 {
-    font-size: 16px;
-    color: var(--index-muted);
-    font-weight: 400;
-}
-.page-index .icon-tags {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    margin-top: -5px;
-}
-.page-index .icon-tag {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    /* 继承 .card 的液态背景，此处不设置滤镜 */
-    background: var(--glass);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-.page-index .icon-tag img {
-    width: 50%;
-    height: 50%;
-    filter: invert(100%);
-    transition: all 0.2s ease;
-}
-
-
-/* --- 4.2 关于 (page-about) --- */
-.page-about {
-    /* body specific background */
-    --bg: linear-gradient(90deg, #e8e8ff 0%, #e8fffb 100%);
-}
-.page-about article {
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-    color: var(--text);
-}
-.page-about article h2, .page-about article h3 {
-    color: var(--text);
-}
-.page-about article p {
-    color: var(--muted);
-}
-.page-about article a {
-    color: var(--link);
-}
-/* 统一卡片悬停效果 */
-.page-about article,
-.page-projects .item,
-.page-blog .blog-card,
-.page-message .message-item,
-.page-mc .mc-card {
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-                box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
-}
-.page-about article:hover,
-.page-projects .item:hover,
-.page-blog .blog-card:hover,
-.page-message .message-item:hover,
-.page-mc .mc-card:hover {
-    transform: scale(1.03);
-}
-
-/* --- 4.3 项目 (page-projects) --- */
-.page-projects {
-    --bg: linear-gradient(90deg, #e5feff 0%, #bde6ff 100%);
-}
-.page-projects .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-}
-.page-projects .item {
-    position: relative;
-    overflow: hidden;
-    border-radius: 24px;
-    text-align: center;
-    padding: 40px 20px;
-    text-decoration: none;
-    
-    color: var(--text);
-    
-    /* 玻璃样式 */
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
+    /* 统一过渡动画 */
     transition: 
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-.page-projects .item h3 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-    color: var(--text);
-}
-.page-projects .item p {
-    margin-top: 10px;
-    font-size: 14px;
-    color: var(--muted);
+        transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        background-color 400ms cubic-bezier(1, 0, 0.4, 1),
+        box-shadow 400ms cubic-bezier(1, 0, 0.4, 1);
 }
 
-/* --- 4.4 博客列表 (page-blog) --- */
-.page-blog {
-    --bg: linear-gradient(90deg, #f5e8ff 0%, #ffe8f5 100%);
-}
-.page-blog .blog-card {
-    display: flex;
-    padding: 10px; 
-    overflow: hidden;
-    color: var(--text);
-    
-    /* 玻璃样式 (覆盖 article 基础样式) */
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-}
-.page-blog .blog-card-image-link {
-    flex-shrink: 0;
-    display: block;
-}
-.page-blog .blog-card-image {
-    width: 220px;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 12px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-}
-.page-blog .blog-card-image-link:hover .blog-card-image {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-.page-blog .blog-card-content {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    padding: 24px;
-}
-.page-blog .blog-card-content h2 {
-    margin-bottom: 8px;
-}
-.page-blog .blog-card-content h2 a {
-    /* ✨ 修复: 使用标准黑/白文字 */
-    color: var(--text); 
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-.page-blog .blog-card-content h2 a:hover {
-    color: var(--accent);
-}
-
-/* ✨ 修复: 使 .blog-card-tags 样式全局化 */
-.page-blog .blog-card-tags,
-.page-blog-post .blog-card-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px; /* 默认 margin */
-}
-.page-blog .blog-card-tags span,
-.page-blog-post .blog-card-tags span {
-    background: rgba(255, 107, 154, 0.1);
-    color: var(--accent);
-    font-size: 12px;
-    font-weight: 500;
-    padding: 4px 10px;
-    border-radius: 8px;
-}
-
-.page-blog .blog-card-description {
-    margin: 0 0 16px 0;
-    flex-grow: 1;
-    color: var(--muted);
-}
-.page-blog .blog-card-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 13px;
-    color: var(--muted);
-}
-.page-blog .blog-card-meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* --- 4.5 博客文章 (page-blog-post) --- */
-.page-blog-post {
-    --bg: #f5e8ff; /* (来自 blog.css) */
-}
-body.dark-theme.page-blog-post {
-    --bg: #1a1a1a;
-}
-.page-blog-post .blog-post {
-    padding: 32px 40px;
-}
-.page-blog-post .blog-post h1 {
-    font-size: 32px;
-    margin-top: 0;
-    margin-bottom: 16px;
-    color: var(--text);
-}
-.page-blog-post .blog-post h2 {
-    font-size: 24px;
-    margin-top: 32px;
-    margin-bottom: 16px;
-    color: var(--text);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 8px;
-}
-.page-blog-post .blog-post h3 {
-    font-size: 20px;
-    margin-top: 24px;
-    margin-bottom: 12px;
-    color: var(--text);
-}
-.page-blog-post .blog-post .blog-card-meta {
-    font-size: 14px;
-    margin-bottom: 16px;
-    color: var(--muted);
-}
-.page-blog-post .blog-post .blog-card-tags {
-    margin-bottom: 24px; /* 覆盖 page-blog-post 的 margin */
-}
-.page-blog-post .blog-post-image {
-    width: 100%;
-    height: auto;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 24px;
-}
-.page-blog-post .blog-post-content {
-    font-size: 16px;
-    line-height: 1.7;
-    color: var(--text);
-}
-.page-blog-post .blog-post-content p {
-    margin-top: 0;
-    margin-bottom: 1.2em;
-}
-.page-blog-post .blog-post-content ul,
-.page-blog-post .blog-post-content ol {
-    padding-left: 24px;
-    margin-bottom: 1.2em;
-}
-.page-blog-post .blog-post-content li {
-    margin-bottom: 0.5em;
-}
-.page-blog-post .blog-post-content hr {
-    border: 0;
-    height: 1px;
-    background-color: var(--border);
-    margin: 32px 0;
-    clear: both;
-}
-.page-blog-post .back-link {
-    display: inline-block;
-    margin-top: 24px;
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 500;
-    transition: transform 0.2s ease;
-}
-.page-blog-post .back-link:hover {
-    transform: translateX(-4px);
-}
-.page-blog-post .image-float-left {
-    float: left;
-    width: 200px;
-    margin-right: 24px;
-    margin-bottom: 16px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-.page-blog-post .guide-container {
-    background: #fdf8ff;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 24px 32px;
-    margin-top: 32px;
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-body.dark-theme.page-blog-post .guide-container {
-    background: rgba(0, 0, 0, 0.1);
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-.page-blog-post .guide-container h1 {
-    font-size: 26px;
-    margin-top: 0;
-    color: var(--accent);
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 10px;
-}
-.page-blog-post .guide-container h2 {
-    font-size: 20px;
-    color: var(--text);
-    border-left: 3px solid var(--accent);
-    padding-left: 10px;
-    margin-top: 24px;
-    border-bottom: none;
-}
-.page-blog-post .guide-container h3 {
-    font-size: 18px;
-    color: var(--muted);
-    border-bottom: none;
-    margin-top: 20px;
-}
-.page-blog-post .guide-container summary {
-    cursor: pointer;
-    list-style: none;
-    outline: none;
-}
-.page-blog-post .guide-container summary::-webkit-details-marker {
-    display: none;
-}
-.page-blog-post .guide-container summary h1 {
-    margin-bottom: 0;
-    transition: margin 0.3s ease;
-}
-.page-blog-post .guide-container details[open] summary {
-    margin-bottom: 24px;
-}
-.page-blog-post .guide-container ul {
-    padding-left: 20px;
-}
-.page-blog-post .warning-box {
-    background: rgba(255, 107, 154, 0.05);
-    border: 1px solid rgba(255, 107, 154, 0.3);
-    border-radius: 8px;
-    padding: 16px 24px;
-    margin-top: 24px;
-}
-.page-blog-post .warning-box h2 {
-    color: var(--accent);
-    margin-top: 0;
-    border-left: none;
-    padding-left: 0;
-    border-bottom: none;
-}
-body.dark-theme.page-blog-post .warning-box {
-    background: rgba(255, 107, 154, 0.1);
-}
-
-
-/* --- 4.6 留言 (page-message) --- */
-.page-message {
-    --bg: linear-gradient(90deg, #efffe8 0%, #e6faff 100%);
-}
-body.dark-theme.page-message {
-    --bg: #1a1a1a;
-}
-.page-message .guestbook-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-.page-message .guestbook-header h2 {
-    margin: 0;
-    color: var(--text);
-    font-size: 24px;
-}
-
-#leave-message-btn {
-    border: none;
-    color: #fff; 
-    padding: 10px 20px;
-    border-radius: 12px; 
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    
-    /* 恢复玻璃样式 */
-    background-color: color-mix(in srgb, var(--accent) 80%, transparent); /* 玻璃效果使用带透明度的粉色 */
-    
-
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-    transition: 
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s ease;
-}
-#leave-message-btn:hover {
-    background-color: color-mix(in srgb, #ff4f87 80%, transparent); /* 悬停时颜色变深 */
-    transform: scale(1.07);
-}
-
-.page-message .disclaimer {
-    background-color: var(--disclaimer-bg);
-    border: 1px solid var(--disclaimer-border);
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 25px;
-    color: var(--disclaimer-text);
-    font-size: 14px;
-}
-.page-message .message-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.page-message .message-item {
-    border-radius: 16px;
-    padding: 20px;
-    display: flex;
-    gap: 15px;
-    position: relative;
-    padding-bottom: 40px;
-    color: var(--text);
-
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-
-    transition: 
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s ease;
-}
-.page-message .message-number {
-    font-size: 20px;
-    font-weight: 700;
-    color: var(--accent);
-    flex-shrink: 0;
-    line-height: 1;
-}
-.page-message .message-details {
-    flex-grow: 1;
-    position: relative;
-}
-.page-message .message-text {
-
-    color: var(--text);
-    white-space: pre-wrap;
-    word-break: break-word;
-    margin-top: 0;
-}
-.page-message .message-author {
-    position: absolute;
-    right: 0;
-    bottom: -5px;
-    color: var(--accent);
-    font-size: 14px;
-    font-weight: 600;
-    padding: 5px 10px;
-    background: transparent; 
-    border-radius: 8px 0 16px 0;
-}
-
-/* 留言弹窗 */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-}
-.modal-overlay.visible {
-    opacity: 1;
-    visibility: visible;
-}
-
-.modal-content {
-    border-radius: 16px;
-    padding: 24px;
-    width: 90%;
-    max-width: 500px;
-    transform: scale(0.95);
-    
-    /* 玻璃样式 */
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    
-
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-    transition: 
-        transform 0.3s,
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1);
-}
-.modal-overlay.visible .modal-content {
-    transform: scale(1);
-}
-
-body.dark-theme .modal-content input[type="text"],
-body.dark-theme .modal-content textarea {
-    border: 1px solid #ff6b9a; 
-    color: var(--text); 
-    background-color: var(--cancel-btn-bg); 
-}
-
-.modal-content h3 {
-    margin-top: 0;
-    margin-bottom: 16px;
-    color: var(--accent);
-}
-.modal-content input[type="text"],
-.modal-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-sizing: border-box;
-    color: var(--text); 
-}
-body.dark-theme .modal-content input[type="text"],
-body.dark-theme .modal-content textarea {
-    border: 1px solid #ff6b9a; 
-    color: var(--text); 
-}
-.modal-content input[type="text"]::placeholder,
-.modal-content textarea::placeholder {
-    color: var(--muted);
-    opacity: 0.8;
-}
-.modal-content textarea {
-    min-height: 120px;
-    font-size: 16px;
-    font-family: inherit;
-    resize: vertical;
-}
-.modal-actions {
-    margin-top: 16px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-}
-.modal-actions button {
-    border: none;
-    padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    
-
-    backdrop-filter: blur(3px) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation)); 
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    
-    box-shadow: 
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent), 
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent), 
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent), 
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent), 
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent), 
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent), 
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-    
-    transition: 
-        background-color 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        box-shadow 400ms cubic-bezier(1, 0.0, 0.4, 1),
-        transform 0.3s ease;
-}
-.modal-actions button:hover {
-    transform: scale(1.03); 
-}
-#cancel-btn {
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    color: var(--cancel-btn-text); 
-}
-#cancel-btn:hover {
-    transform: scale(1.03);
-}
-#submit-btn {
-    background-color: #ff6b9a;
-    color: #fff; 
-}
-#submit-btn:hover {
-    background-color: #ff4f87; 
-    transform: scale(1.03);
-}
-
-
-/* --- 4.9 Minecraft 画廊 (page-mc) --- */
-.page-mc {
-    --bg: linear-gradient(90deg, #e8f2ff 0%, #eaf8f1 100%);
-}
-body.dark-theme.page-mc {
-    --bg: #1a1a1a;
-}
-.page-mc .mc-hero {
-    position: relative;
-    overflow: hidden;
-    border-radius: 18px;
-    padding: 24px;
-    margin-bottom: 24px;
-
-    transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    backdrop-filter: blur(3px) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    -webkit-backdrop-filter: blur(3px) url(#lg-dist) saturate(var(--saturation));
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-}
-.page-mc .mc-hero:hover {
-    transform: scale(1.02);
-}
-.page-mc .mc-meta {
-    font-size: 12px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--muted);
-}
-.page-mc .mc-hero h1 {
-    margin: 8px 0 6px;
-    font-size: 26px;
-    color: var(--text);
-}
-.page-mc .mc-subtitle {
-    margin: 0;
-    color: var(--muted);
-}
-.page-mc .mc-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-}
-.page-mc .mc-card {
-    margin: 0;
-    border-radius: 16px;
-    overflow: hidden;
-    cursor: pointer;
-    padding: 6px;
-    background-color: color-mix(in srgb, var(--c-glass) 12%, transparent);
-    border: none;
-    box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 10%), transparent),
-        inset 1.8px 3px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 90%), transparent),
-        inset -2px -2px 0px -2px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 80%), transparent),
-        inset -3px -8px 1px -6px color-mix(in srgb, var(--c-light) calc(var(--glass-reflex-light) * 60%), transparent),
-        inset -0.3px -1px 4px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 12%), transparent),
-        inset -1.5px 2.5px 0px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 0px 3px 4px -2px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 20%), transparent),
-        inset 2px -6.5px 1px -4px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 1px 5px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 10%), transparent),
-        0px 6px 16px 0px color-mix(in srgb, var(--c-dark) calc(var(--glass-reflex-dark) * 8%), transparent);
-}
-.page-mc .mc-image {
-    width: 100%;
-    aspect-ratio: 2560 / 1300;
-    min-height: 200px; /* 保底高度，确保横向观感 */
-    height: auto;
-    object-fit: cover;
-    display: block;
-    margin-bottom: 6px;
-    border-radius: 12px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.page-mc .mc-image:hover {
-    transform: scale(1.03);
-    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
-}
-.page-mc .mc-caption {
-    padding: 6px 10px 8px;
-    margin: 0;
-    font-size: 14px;
-    color: var(--muted);
-}
-
-.mc-viewer {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    z-index: 120;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.25s ease, visibility 0.25s ease;
-    padding: 20px;
-}
-.mc-viewer.visible {
-    opacity: 1;
-    visibility: visible;
-}
-.mc-viewer-inner {
-    position: relative;
-    width: min(1100px, 96vw);
-    max-height: 90vh;
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 14px 14px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-    transform: translateY(8px) scale(0.96);
-    opacity: 0;
-    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.28s ease;
-}
-.mc-viewer.visible .mc-viewer-inner {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-}
-.mc-viewer img {
-    width: 100%;
-    height: auto;
-    max-height: 70vh;
-    object-fit: contain;
-    border-radius: 10px;
-    background: #000;
-    opacity: 0;
-    transform: scale(0.985);
-    transition: opacity 0.22s ease, transform 0.22s ease;
-}
-.mc-viewer.visible img {
-    opacity: 1;
-    transform: scale(1);
-}
-.mc-viewer-caption {
-    font-size: 14px;
-    color: var(--muted);
-}
-.mc-viewer-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    border: none;
-    background: rgba(0,0,0,0.08);
-    color: var(--text);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-size: 18px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.2s ease, background 0.2s ease;
-}
-.mc-viewer-close:hover {
-    transform: scale(1.08);
-    background: rgba(0,0,0,0.15);
-}
-.mc-viewer-close:focus-visible {
-    outline: 2px solid var(--accent);
-}
-
-
-/* --- 4.7 404 (page-404) --- */
-.page-404 .content-404 {
-    text-align: center;
-    padding: 20px 10px;
-}
-.page-404 .content-404 h1 {
-    font-size: 80px;
-    margin: 0;
-    font-weight: 700;
-    color: var(--index-text);
-    line-height: 1.1;
-}
-.page-404 .content-404 p {
-    margin: 10px 0 30px;
-    font-size: 20px;
-    color: var(--index-muted);
-    font-weight: 400;
-}
-.page-404 .content-404 a {
-    display: inline-block;
-    padding: 12px 24px;
-    background: var(--accent);
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-.page-404 .content-404 a:hover {
-    background: #ff4a83;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* --- 4.8 施工中 (page-construct) --- */
-.page-construct .content-construct {
-    text-align: center;
-    padding: 20px 10px;
-}
-.page-construct .content-construct .icon {
-    font-size: 60px;
-    color: var(--accent);
-    margin-bottom: 20px;
-}
-.page-construct .content-construct h1 {
-    font-size: 40px;
-    margin: 0 0 10px 0;
-    font-weight: 700;
-    color: var(--index-text);
-    line-height: 1.2;
-}
-.page-construct .content-construct p {
-    margin: 10px 0 30px;
-    font-size: 18px;
-    color: var(--index-muted);
-    font-weight: 400;
-}
-.page-construct .content-construct a {
-    display: inline-block;
-    padding: 12px 24px;
-    background: var(--accent);
-    color: white;
-    text-decoration: none;
-    border-radius: 12px;
-    font-weight: 500;
-    transition: all 0.2s ease;
-}
-.page-construct .content-construct a:hover {
-    background: #ff4a83;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-/* =========================
-   5. 响应式适配 (Media Queries)
-========================= */
-
-/* --- 5.1 触摸设备 (Touch Devices) --- */
-@media (hover: none) and (pointer: coarse) {
-    .navbar:active {
-        transform: translateX(-50%) scale(1.02);
-    }
-
-    /* 横屏移动端：加强导航玻璃效果防止丢失 */
-    @media (orientation: landscape) {
-        .navbar {
-            background-color: color-mix(in srgb, var(--c-glass) 14%, transparent);
-            backdrop-filter: blur(6px) saturate(var(--saturation));
-            -webkit-backdrop-filter: blur(6px) saturate(var(--saturation));
-        }
-    }
-    
-    /* 首页, 404, Construct */
-    .page-index .card:active,
-    .page-404 .card:active,
-    .page-construct .card:active {
+/* 统一悬停放大效果 */
+@media (hover: hover) {
+    :is(
+        .page-about article, 
+        .page-projects .item, 
+        .page-blog .blog-card, 
+        .page-message .message-item, 
+        .page-mc .mc-card,
+        .page-mc .mc-hero,
+        #leave-message-btn,
+        .modal-actions button,
+        .page-index .card,
+        .page-404 .card,
+    ):hover {
         transform: scale(1.03);
     }
-    .page-index .avatar:active {
-        transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    }
     
-    .page-index .icon-tag:active {
-        transform: scale(1.05); /* 从 0.95 改为 1.05 */
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-    .page-index .icon-tag:active img {
-        filter: invert(0%);
-    }
+    /* 图标标签反向缩放 */
+    .page-index .icon-tag:hover { transform: scale(0.95); }
+}
 
-    .nav-link:active {
-        color: var(--nav-text);
-        background: var(--nav-link-hover-bg);
-        transform: translateY(-1px);
-    }
-    .theme-toggle:active {
-        background: rgba(0, 0, 0, 0.05);
-        transform: rotate(90deg);
-    }
-    body.dark-theme .theme-toggle:active {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* MC 画廊触摸反馈 */
-    .page-mc .mc-image {
-        transition: transform 0.18s ease;
-    }
-    .page-mc .mc-image:active {
+/* 触摸设备按压效果 */
+@media (hover: none) {
+    :is(.navbar, .page-index .card, .page-mc .mc-image):active {
         transform: scale(1.02);
     }
 }
 
+/* =========================
+   3. 布局与共享组件
+========================= */
 
-/* --- 5.2 桌面设备 (Hover Devices) --- */
-@media (hover: hover) and (pointer: fine) {
-    .navbar:hover {
-        transform: translateX(-50%) scale(1.02);
-    }
-    body.dark-theme .navbar:hover {
-        transform: translateX(-50%) scale(1.02);
-    }
-    .nav-link:hover {
-        color: var(--nav-text);
-        background: var(--nav-link-hover-bg);
-        transform: translateY(-1px);
-    }
-    .nav-link:hover::after {
-        width: 60%;
-    }
-    .theme-toggle:hover {
-        background: rgba(0, 0, 0, 0.05);
-        transform: rotate(90deg);
-    }
-    body.dark-theme .theme-toggle:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-    
-    /* 首页, 404, Construct */
-    /* 将 :hover 效果应用到所有共享卡片 */
-    .page-index .card:hover,
-    .page-404 .card:hover,
-    .page-construct .card:hover {
-        transform: scale(1.03);
-    }
-    .page-index .wrap:hover::after {
-        transform: scale(1.03);
-    }
-    .page-index .avatar:hover {
-        transform: translateY(-5px) scale(1.03);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-    }
-    .page-index .icon-tag:hover {
-        transform: scale(0.95);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    }
-    .page-index .icon-tag:hover img {
-        filter: invert(0%);
-    }
+/* --- 导航栏 --- */
+.navbar {
+    height: 54px;
+    width: min(800px, calc(100% - 40px));
+    position: fixed;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    border-radius: 18px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    /* Navbar 特有的 transform 需要单独写，防止覆盖 */
+    transition: transform 0.3s ease, background-color 400ms ease, box-shadow 400ms ease; 
 }
 
+.nav-left, .nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-right { margin-left: auto; gap: 8px; }
 
-/* --- 5.3 移动端小屏幕 (Small Screens) --- */
+.brand { font-weight: 600; font-size: 18px; color: var(--nav-text); }
+
+.nav-link {
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: var(--nav-text);
+    text-decoration: none;
+    position: relative;
+    transition: all .2s ease;
+}
+.nav-link:hover { background: var(--nav-hover); }
+.nav-link::after {
+    content: ''; position: absolute; bottom: 6px; left: 50%; width: 0; height: 2px;
+    background: var(--accent); transition: 0.3s; transform: translateX(-50%);
+}
+@media (hover: hover) { .nav-link:hover::after { width: 60%; } }
+
+.theme-toggle {
+    width: 36px; height: 36px;
+    border-radius: 50%; border: none; background: transparent;
+    color: var(--nav-text); cursor: pointer;
+    display: flex; justify-content: center; align-items: center;
+    transition: transform 0.3s ease, background 0.3s;
+}
+.theme-toggle:hover { background: var(--nav-hover); transform: rotate(90deg); }
+
+/* --- 通用容器 (.wrap) --- */
+.wrap {
+    max-width: 800px;
+    margin: 100px auto 40px;
+    padding: 0 20px;
+}
+/* 首页类特殊布局 */
+:is(.page-index, .page-404, .page-construct) .wrap {
+    min-height: 100vh;
+    max-width: none;
+    margin: 0;
+    padding: 92px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* 首页背景处理 */
+:is(.page-index, .page-404, .page-construct) .wrap::after {
+    content: ''; position: absolute; inset: 0; z-index: 0;
+    background-image: var(--random-bg-url);
+    background-position: center; background-size: cover;
+    filter: brightness(0.8) saturate(1.05);
+    transform: scale(1.02); transition: 1.5s ease;
+}
+body.dark-theme:is(.page-index, .page-404, .page-construct) .wrap::after {
+    filter: brightness(0.6) saturate(1.05);
+}
+:is(.page-index, .page-404, .page-construct) .wrap::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.15) 1px, transparent 0),
+                linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%);
+    background-size: 5px 5px, 100%;
+}
+
+/* --- SVG 滤镜容器 (隐藏) --- */
+.svg-filter-container { width: 0; height: 0; position: absolute; visibility: hidden; }
+
+/* =========================
+   4. 页面特定样式
+========================= */
+
+/* --- 首页 / 404 / Construction --- */
+.page-index .avatar {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    z-index: 3;
+    display: flex; justify-content: center; align-items: center;
+    background-color: color-mix(in srgb, #bbbbbc 15%, transparent);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    padding: 4px;
+    transition: 0.3s;
+}
+.page-index .avatar img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; }
+
+:is(.page-index, .page-404, .page-construct) .card {
+    width: 100%; 
+    max-width: 420px;
+    border-radius: 32px;
+    padding: 5px 20px 20px; 
+    margin-top: 20px;
+    position: relative; z-index: 2;
+    color: var(--index-text);
+}
+
+.status-message { text-align: center; padding: 12px 16px; }
+.status-message h2 { font-size: 22px; margin: 6px 0; color: var(--index-text); }
+.status-message h3 { font-size: 16px; font-weight: 400; color: var(--index-muted); margin: 6px 0; }
+
+.icon-tags { display: flex; gap: 14px; justify-content: center; margin-top: -5px; }
+.icon-tag {
+    width: 44px; height: 44px; border-radius: 12px;
+    display: flex; justify-content: center; align-items: center;
+    border: 1px solid rgba(255,255,255,0.4);
+}
+.icon-tag img { width: 50%; filter: invert(100%); }
+
+/* 404 & Construct 内容 */
+.content-404, .content-construct { text-align: center; color: var(--index-text); }
+.content-404 h1 { font-size: 80px; margin: 0; line-height: 1.1; }
+.content-construct .icon { font-size: 60px; color: var(--accent); margin-bottom: 20px; }
+.content-404 a, .content-construct a {
+    display: inline-block; padding: 12px 24px;
+    background: var(--accent); color: #fff;
+    border-radius: 12px; text-decoration: none;
+    margin-top: 20px; transition: 0.2s;
+}
+
+/* --- 页面背景色定义 --- */
+.page-about { --bg: linear-gradient(90deg, #e8e8ff 0%, #e8fffb 100%); }
+.page-projects { --bg: linear-gradient(90deg, #e5feff 0%, #bde6ff 100%); }
+.page-blog { --bg: linear-gradient(90deg, #f5e8ff 0%, #ffe8f5 100%); }
+.page-message { --bg: linear-gradient(90deg, #efffe8 0%, #e6faff 100%); }
+.page-mc { --bg: linear-gradient(90deg, #e8f2ff 0%, #eaf8f1 100%); }
+.page-blog-post { --bg: #f5e8ff; }
+/* 暗色背景统一 */
+body.dark-theme:is(.page-about, .page-projects, .page-blog, .page-message, .page-mc, .page-blog-post) {
+    --bg: #1a1a1a;
+}
+
+/* --- 关于 (About) --- */
+.page-about article { padding: 24px; border-radius: 16px; color: var(--text); }
+.page-about h2, .page-about h3 { margin-top: 0; color: var(--text); }
+
+/* --- 项目 (Projects) --- */
+.page-projects .grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px;
+}
+.page-projects .item {
+    border-radius: 24px; 
+    padding: 15px 15px; 
+    text-align: center;
+    text-decoration: none; color: var(--text); display: block;
+}
+
+/* --- 博客 (Blog List) --- */
+.page-blog .blog-card {
+    display: flex; 
+    padding: 10px; 
+    border-radius: 16px; 
+    color: var(--text); 
+    margin-bottom: 28px; 
+    overflow: hidden;
+}
+.blog-card-image {
+    width: 220px; 
+    height: 220px; 
+    object-fit: cover;
+    border-radius: 12px; 
+    transition: 0.3s;
+}
+.blog-card-content { 
+    padding: 0 10px 10px 10px; 
+    display: flex; 
+    flex-direction: column; 
+    flex-grow: 1; 
+}
+.blog-card-tags span {
+    background: rgba(255, 107, 154, 0.1); color: var(--accent);
+    font-size: 12px; padding: 4px 10px; border-radius: 8px; margin-right: 8px;
+}
+.blog-card h2 a { 
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-decoration: none; 
+    padding: 0px;
+    color: var(--text); 
+}
+.blog-card-meta { color: var(--muted); font-size: 13px; margin-top: auto; display: flex; gap: 16px; }
+
+/* --- 博客文章详情 (Post) --- */
+.page-blog-post .blog-post { padding: 32px 40px; background: var(--card-bg); border-radius: 16px; }
+.page-blog-post .blog-post-content { color: var(--text); font-size: 16px; }
+.page-blog-post img { max-width: 100%; border-radius: 12px; }
+.guide-container { background: #fdf8ff; border: 1px solid var(--border); padding: 24px; border-radius: 12px; margin-top: 30px; }
+body.dark-theme .guide-container { background: rgba(0,0,0,0.2); }
+
+/* --- 留言板 (Message) --- */
+.page-message .guestbook-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+#leave-message-btn {
+    /* 玻璃效果已在上面统一应用，这里只写特有属性 */
+    color: #fff; padding: 10px 20px; border-radius: 12px; cursor: pointer;
+    background-color: color-mix(in srgb, var(--accent) 80%, transparent);
+}
+#leave-message-btn:hover { background-color: color-mix(in srgb, #ff4f87 80%, transparent); }
+
+.disclaimer { background: #fffbe6; color: #d46b08; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 14px; }
+body.dark-theme .disclaimer { background: #332d00; color: #ffd56b; }
+
+.message-container { display: flex; flex-direction: column; gap: 16px; }
+.message-item { padding: 20px; border-radius: 16px; display: flex; gap: 15px; }
+.message-number { font-size: 20px; color: var(--accent); font-weight: 700; }
+.message-text { color: var(--text); white-space: pre-wrap; }
+.message-author { margin-left: auto; color: var(--accent); font-size: 14px; font-weight: 600; }
+
+/* 弹窗 */
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.1); backdrop-filter: blur(5px);
+    display: flex; justify-content: center; align-items: center; z-index: 100;
+    opacity: 0; visibility: hidden; transition: 0.3s;
+}
+.modal-overlay.visible { opacity: 1; visibility: visible; }
+.modal-content { width: 90%; max-width: 500px; padding: 24px; border-radius: 16px; transform: scale(0.95); transition: 0.3s; }
+.modal-overlay.visible .modal-content { transform: scale(1); }
+
+.modal-content input, .modal-content textarea {
+    width: 100%; padding: 10px; margin-bottom: 10px; border-radius: 8px;
+    border: 1px solid var(--border); background: var(--card-bg); color: var(--text);
+}
+.modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 16px; }
+.modal-actions button { padding: 10px 20px; border-radius: 8px; cursor: pointer; color: var(--text); }
+#submit-btn { background-color: var(--accent); color: #fff; }
+
+/* --- MC 画廊 --- */
+.page-mc .mc-hero { padding: 20px 24px 10px; margin-bottom: 20px; border-radius: 18px; color: var(--text); }
+.page-mc .mc-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.page-mc .mc-card { padding: 6px; border-radius: 16px; margin: 0; cursor: pointer; }
+.page-mc .mc-image { width: 100%; border-radius: 12px; display: block; aspect-ratio: 16/9; object-fit: cover; }
+.page-mc .mc-caption { padding: 6px 10px; color: var(--muted); font-size: 14px; }
+
+/* =========================
+   5. 响应式适配
+========================= */
 @media (max-width: 600px) {
+    .navbar { padding: 0 10px; height: 48px; }
+    .nav-link { font-size: 11px; padding: 6px; }
     
-    /* 全局导航栏 */
-    .navbar {
-        padding: 0 10px;
-        height: 48px;
-        
-        /* 移动端只保留 blur，删除 url() */
-        backdrop-filter: blur(3px) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
+    /* 移动端去除液态背景图，只保留模糊，提升性能 */
+    :is(.navbar, .card, .item, .blog-card, .message-item) {
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
-    .nav-center {
-        gap: 8px;
-    }
-    .brand div:first-of-type+div {
-        font-size: 11px;
-    }
-    .nav-link {
-        font-size: 11px;
-        padding: 6px 6px;
-    }
+
+    .page-index .card { max-width: 90vw; padding: 24px; }
     
-    /* 全局页脚 */
-    footer,
-    .page-index footer,
-    .page-404 footer,
-    .page-construct footer {
-        font-size: 12px;
-        margin-top: 30px;
-    }
-
-    /* 首页 (及 404, Construct) */
-    /* 将响应式效果应用到所有共享卡片 */
-    .page-index .card,
-    .page-404 .card,
-    .page-construct .card {
-        max-width: 90vw;
-        padding: 24px;
-        border-radius: 24px;
-        
-        /* 移动端只保留 blur，删除 url() */
-        backdrop-filter: blur(3px) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    }
-    .page-index .avatar {
-        width: 90px;
-        height: 90px;
-    }
-    .page-index .status-message h2 {
-        font-size: 18px;
-    }
-    .page-index .status-message h3 {
-        font-size: 14px;
-    }
+    .page-blog .blog-card { flex-direction: column; }
+    .blog-card-image { width: 100%; height: 180px; }
     
-    /* 博客列表 */
-    .page-blog .blog-card {
-        flex-direction: column; /* 垂直堆叠 */
-    }
-    .page-blog .blog-card-image {
-        width: 100%;
-        height: 180px;
-    }
-    .page-blog .blog-card-content {
-        padding: 20px;
-    }
-
-    /* 博客文章 */
-    .page-blog-post .blog-post {
-        padding: 20px; /* 移动端文章内边距减小 */
-    }
-    .page-blog-post .image-float-left {
-        float: none; /* 移动端取消浮动 */
-        width: 100%; /* 图片占满宽度 */
-        margin-right: 0;
-    }
-    .page-blog-post .guide-container {
-        padding: 20px; /* 移动端提示框内边距减小 */
-    }
-
-    /* 留言板 */
-    .page-message .message-item,
-    .page-message .modal-content {
-        /* 移动端只保留 blur，删除 url() */
-        backdrop-filter: blur(3px) saturate(var(--saturation));
-        -webkit-backdrop-filter: blur(3px) saturate(var(--saturation));
-    }
-
-    /* MC 画廊 */
-    .page-mc .mc-gallery {
-        grid-template-columns: 1fr;
-    }
-    .page-mc .mc-card {
-        padding: 5px;
-        border-radius: 14px;
-    }
-    .page-mc .mc-image {
-        min-height: 180px;
-        margin-bottom: 4px;
-        border-radius: 10px;
-    }
-    .page-mc .mc-caption {
-        padding: 5px 9px 7px;
-        font-size: 13px;
-    }
+    .page-mc .mc-gallery { grid-template-columns: 1fr; }
 }

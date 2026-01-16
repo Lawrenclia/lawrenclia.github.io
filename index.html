@@ -13,16 +13,14 @@
     <header class="navbar" role="navigation" aria-label="主导航">
         <div class="nav-left">
             <div class="brand" aria-hidden>
-                <div style="display:flex;flex-direction:column;line-height:1;">
-                    <div style="font-size:16px;font-weight:600">首页 · Lawrenclia</div>
-                </div>
+                首页 · Lawrenclia
             </div>
         </div>
         <div class="nav-right">
             <a class="nav-link" href="projects.html">项目</a>
             <a class="nav-link" href="blog.html">博客</a>
             <a class="nav-link" href="mc.html"> MC </a>
-            <a class="nav-link" href="message.html">留言</a>
+            <!-- <a class="nav-link" href="message.html">留言</a> -->
             <a class="nav-link" href="about.html">关于</a>
             <button class="theme-toggle" aria-label="切换主题">
                 <i class="fas fa-moon"></i>
@@ -50,7 +48,7 @@
                     <a class="icon-tag" href="https://space.bilibili.com/1334003335" title="Bilibili" target="_blank" rel="noopener">
                         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/bilibili.svg" alt="Bilibili">
                     </a>
-                    <a class="icon-tag" href="https://v.douyin.com/75IGq8XG3r4/ 9@3.com" title="Douyin" target="_blank" rel="noopener">
+                    <a class="icon-tag" href="https://v.douyin.com/75IGq8XG3r4/" title="Douyin" target="_blank" rel="noopener">
                         <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tiktok.svg" alt="Douyin">
                     </a>
                     <a class="icon-tag" href="https://x.com/LeoakyX" title="X" target="_blank" rel="noopener">
@@ -59,24 +57,24 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
     <script>
         function isMobile(){
-        return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+            return /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
         }
         async function fetchRandomBackground(){
-        const pcSources = [
-            'https://www.loliapi.com/acg/?t=',
-            'https://api.mtyqx.cn/tapi/random.php?=',
-            'http://www.dmoe.cc/random.php?=',  
-        ];
-        const mobileSources = [
-            'https://www.loliapi.com/acg/?t=',
-        ];
-        const sources = isMobile()? mobileSources : pcSources;
-        const idx = Math.floor(Math.random()*sources.length);
-        return sources[idx] + Date.now();
+            const pcSources = [
+                'https://www.loliapi.com/acg/?t=',
+                'https://api.mtyqx.cn/tapi/random.php?=',
+                'http://www.dmoe.cc/random.php?=',  
+            ];
+            const mobileSources = [
+                'https://www.loliapi.com/acg/?t=',
+            ];
+            const sources = isMobile()? mobileSources : pcSources;
+            const idx = Math.floor(Math.random()*sources.length);
+            return sources[idx] + Date.now();
         }
         async function setPageBackground() {
             const imageUrl = await fetchRandomBackground();
@@ -88,39 +86,40 @@
             wrapElement.style.setProperty('--random-bg-url', `url('${imageUrl}')`);
         }
         setPageBackground();
+
         const themeToggle = document.querySelector('.theme-toggle');
         const body = document.body;
         const icon = themeToggle.querySelector('i');
+        
+        function updateThemeIcon() {
+            if (body.classList.contains('dark-theme')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        }
+
+        // 初始化主题
         if (localStorage.getItem('theme') === 'dark' || 
             (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          body.classList.add('dark-theme');
-          icon.classList.remove('fa-moon');
-          icon.classList.add('fa-sun');
+            body.classList.add('dark-theme');
         }
+        updateThemeIcon();
+
         themeToggle.addEventListener('click', () => {
-          body.classList.toggle('dark-theme');
-          if (body.classList.contains('dark-theme')) {
-            localStorage.setItem('theme', 'dark');
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-          } else {
-            localStorage.setItem('theme', 'light');
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-          }
+            body.classList.toggle('dark-theme');
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+            updateThemeIcon();
         });
+
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-          if (!localStorage.getItem('theme')) {
-            if (e.matches) {
-              body.classList.add('dark-theme');
-              icon.classList.remove('fa-moon');
-              icon.classList.add('fa-sun');
-            } else {
-              body.classList.remove('dark-theme');
-              icon.classList.remove('fa-sun');
-              icon.classList.add('fa-moon');
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) body.classList.add('dark-theme');
+                else body.classList.remove('dark-theme');
+                updateThemeIcon();
             }
-          }
         });
     </script>
 
