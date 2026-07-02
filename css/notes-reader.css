@@ -31,34 +31,38 @@ a { color: inherit; }
 
 .layout {
   display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 28px;
-  width: min(1320px, calc(100% - 40px));
-  margin: 108px auto 64px;
+  grid-template-columns: 224px minmax(0, 1fr);
+  gap: 24px;
+  width: min(1220px, calc(100% - 40px));
+  margin: 112px auto 72px;
   align-items: start;
 }
 
 aside {
   position: sticky;
   top: 96px;
-  max-height: calc(100vh - 120px);
-  overflow: auto;
-  padding: 24px 15px;
+  max-height: calc(100svh - 120px);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 18px 14px;
+  overflow: hidden;
   background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--reader-radius);
-  box-shadow: var(--reader-shadow);
+  box-shadow: 0 10px 28px rgba(31, 27, 22, 0.05);
 }
 
 aside h1 {
-  margin: 0 8px 5px;
+  margin: 0 0 4px;
   color: var(--ink);
-  font-size: 19px;
+  font-size: 15px;
   line-height: 1.35;
+  font-weight: 700;
 }
 
 aside p {
-  margin: 0 8px 18px;
+  margin: 0;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.55;
@@ -67,23 +71,38 @@ aside p {
 .site-links,
 nav {
   display: grid;
-  gap: 1px;
+  gap: 2px;
+  min-width: 0;
+  overflow: auto;
+  padding: 0;
+  scrollbar-width: thin;
+}
+
+aside nav {
+  margin-top: 14px;
+  min-height: 0;
+  padding-right: 2px;
 }
 
 nav ul {
   display: grid;
-  gap: 1px;
+  gap: 2px;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
 nav ul ul {
-  margin: 2px 0 4px 10px;
+  display: grid;
+  gap: 1px;
+  margin: 3px 0 5px 8px;
+  padding-left: 8px;
+  border-left: 1px solid var(--separator);
 }
 
 nav li {
   margin: 0;
+  min-width: 0;
 }
 
 .site-links {
@@ -94,24 +113,31 @@ nav li {
 
 .site-links a,
 nav a {
-  padding: 7px 9px;
+  display: block;
+  padding: 6px 8px;
   color: var(--muted);
-  border-left: 2px solid transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 12.5px;
   line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 nav ul ul a {
-  font-size: 11px;
-  padding: 5px 8px;
+  font-size: 11.5px;
+  padding: 5px 7px;
 }
 
 .site-links a:hover,
 nav a:hover {
   color: var(--accent-strong);
   background: var(--accent-soft);
-  border-left-color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 24%, var(--line));
 }
 
 main {
@@ -127,7 +153,7 @@ main {
 
 .hero,
 section {
-  scroll-margin-top: 22px;
+  scroll-margin-top: 116px;
   padding: 0 0 44px;
   margin: 0 0 44px;
   border-bottom: 1px solid var(--line);
@@ -205,6 +231,10 @@ pre code {
   padding: 0;
   background: transparent;
   border-radius: 0;
+}
+
+mjx-container {
+  max-width: 100%;
 }
 
 blockquote {
@@ -320,10 +350,16 @@ figcaption {
 
   aside {
     position: static;
-    height: auto;
     max-height: none;
+    display: block;
+    overflow: hidden;
     margin-bottom: 14px;
-    padding: 18px 16px;
+    padding: 14px;
+  }
+
+  aside nav {
+    margin-top: 10px;
+    padding-right: 0;
   }
 
   .site-links,
@@ -334,8 +370,44 @@ figcaption {
     padding-bottom: 8px;
   }
 
+  nav ul {
+    display: flex;
+    gap: 8px;
+    width: max-content;
+  }
+
+  nav ul ul {
+    display: none;
+  }
+
+  nav li {
+    flex: 0 0 auto;
+  }
+
+  .site-links a,
+  nav a {
+    max-width: 230px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface-muted);
+  }
+
   main {
     padding: 28px 18px 56px;
+  }
+
+  p,
+  li {
+    overflow-wrap: anywhere;
+  }
+
+  .math.inline,
+  mjx-container[jax="SVG"] {
+    display: inline-block;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    vertical-align: middle;
   }
 
   .hero,

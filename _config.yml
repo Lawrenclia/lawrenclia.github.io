@@ -1,0 +1,7 @@
+exclude:
+  - files/notes/abstract-algebra.md
+  - files/notes/algorithm-design-analysis-exam-manual.md
+  - files/notes/computer-organization-review.md
+  - files/notes/information-theory-review.md
+  - files/notes/linear-algebra-ii-review.md
+  - files/notes/quantum-physics-review.md

@@ -201,22 +201,19 @@ img { max-width: 100%; }
 }
 
 .page-index .wrap {
-    display: grid;
-    grid-template-columns: 136px minmax(0, 620px);
-    gap: 34px;
-    align-content: center;
-    justify-content: center;
+    width: min(760px, calc(100% - 40px));
+    display: block;
 }
 
 .page-index .avatar {
-    width: 112px;
-    height: 112px;
+    width: 108px;
+    height: 108px;
     border-radius: 50%;
     border: 1px solid var(--border);
-    background: var(--surface);
-    box-shadow: var(--card-shadow);
+    background: var(--surface-muted);
+    box-shadow: 0 12px 30px rgba(31, 27, 22, 0.10);
     padding: 4px;
-    justify-self: end;
+    flex: 0 0 auto;
 }
 
 .page-index .avatar img {
@@ -236,22 +233,32 @@ img { max-width: 100%; }
 }
 
 .page-index .card {
+    max-width: none;
     background: var(--surface);
     border: 1px solid var(--border);
     box-shadow: var(--card-shadow);
 }
 
+.page-index .deco {
+    display: grid;
+    grid-template-columns: 108px minmax(0, 1fr);
+    gap: 28px;
+    align-items: center;
+}
+
 .status-message {
     text-align: left;
     padding: 0;
+    min-width: 0;
 }
 
 .status-message h2 {
-    font-size: 40px;
-    line-height: 1.12;
+    font-size: clamp(34px, 4vw, 46px);
+    line-height: 1.08;
     margin: 0 0 14px;
     color: var(--index-text);
     font-weight: 650;
+    text-wrap: balance;
 }
 
 .status-message h3 {
@@ -262,6 +269,7 @@ img { max-width: 100%; }
 }
 
 .icon-tags {
+    grid-column: 2;
     display: flex;
     gap: 10px;
     justify-content: flex-start;
@@ -873,10 +881,16 @@ body.page-cv .cv-tag {
         gap: 16px;
     }
 
+    .page-index .deco {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 18px;
+    }
+
     .page-index .avatar {
         justify-self: auto;
-        width: 104px;
-        height: 104px;
+        width: 96px;
+        height: 96px;
     }
 
     :is(.page-index, .page-404, .page-construct) .card,
@@ -907,6 +921,7 @@ body.page-cv .cv-tag {
     }
 
     .icon-tags {
+        grid-column: 1;
         justify-content: center;
     }
 
