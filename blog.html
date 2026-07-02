@@ -19,8 +19,7 @@
         <div class="nav-right">
             <a class="nav-link" href="index.html">首页</a>
             <a class="nav-link" href="projects.html">项目</a>
-            <a class="nav-link" href="mc.html"> MC </a>
-            <!-- <a class="nav-link" href="message.html">留言</a> -->
+            <a class="nav-link" href="notes.html">笔记</a>
             <a class="nav-link" href="about.html">关于</a>
             <button class="theme-toggle" aria-label="切换主题">
                 <i class="fas fa-moon"></i>
@@ -132,24 +131,6 @@
       }
     });
   </script>
-
-  <div class="svg-filter-container" aria-hidden="true">
-    <svg width="0" height="0">
-      <filter id="lg-dist">
-        <feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" seed="2" stitchTiles="stitch" />
-        <feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
-      </filter>
-    </svg>
-  </div>
-
-    <div class="svg-filter-container" aria-hidden="true" style="width:0; height:0; position:absolute; visibility:hidden; overflow:hidden;">
-      <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
-        <filter id="lg-dist">
-          <feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" seed="2" stitchTiles="stitch" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-      </svg>
-  </div>
 
   </body>
 </html>

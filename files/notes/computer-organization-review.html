@@ -1,0 +1,2236 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>计算机组成复习笔记 · Lawrenclia Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/notes-reader.css">
+  <script>
+    const mathDollar = String.fromCharCode(36);
+    window.MathJax = {
+      tex: {
+        inlineMath: [[mathDollar, mathDollar], ['\\(', '\\)']],
+        displayMath: [[mathDollar + mathDollar, mathDollar + mathDollar], ['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'ams'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="navbar" role="navigation" aria-label="主导航">
+    <div class="nav-left">
+      <div class="brand" aria-hidden>
+        笔记 · Lawrenclia
+      </div>
+    </div>
+    <div class="nav-right">
+      <a class="nav-link" href="../../index.html">首页</a>
+      <a class="nav-link" href="../../projects.html">项目</a>
+      <a class="nav-link" href="../../notes.html">笔记</a>
+      <a class="nav-link" href="../../about.html">关于</a>
+      <button class="theme-toggle" aria-label="切换主题">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <h1>计算机组成复习笔记</h1>
+      <p>课程笔记</p>
+      <nav>
+<ul>
+<li><a href="#计算机组成复习笔记"
+id="toc-计算机组成复习笔记">计算机组成复习笔记</a>
+<ul>
+<li><a href="#典型综合题" id="toc-典型综合题">典型综合题</a></li>
+</ul></li>
+<li><a href="#1-计算机抽象与技术" id="toc-1-计算机抽象与技术">1.
+计算机抽象与技术</a>
+<ul>
+<li><a href="#11-抽象层次和-isa" id="toc-11-抽象层次和-isa">1.1
+抽象层次和 ISA</a></li>
+<li><a href="#12-性能公式" id="toc-12-性能公式">1.2 性能公式</a></li>
+<li><a href="#13-响应时间吞吐率和加速比"
+id="toc-13-响应时间吞吐率和加速比">1.3 响应时间、吞吐率和加速比</a></li>
+<li><a href="#14-功耗墙" id="toc-14-功耗墙">1.4 功耗墙</a></li>
+</ul></li>
+<li><a href="#2-指令计算机的语言" id="toc-2-指令计算机的语言">2.
+指令：计算机的语言</a>
+<ul>
+<li><a href="#21-risc-v-基本原则" id="toc-21-risc-v-基本原则">2.1 RISC-V
+基本原则</a></li>
+<li><a href="#22-寄存器和调用约定" id="toc-22-寄存器和调用约定">2.2
+寄存器和调用约定</a></li>
+<li><a href="#23-指令格式" id="toc-23-指令格式">2.3 指令格式</a></li>
+<li><a href="#24-数的表示和小端" id="toc-24-数的表示和小端">2.4
+数的表示和小端</a></li>
+<li><a href="#25-分支循环和寻址" id="toc-25-分支循环和寻址">2.5
+分支、循环和寻址</a></li>
+<li><a href="#26-翻译链接和装载" id="toc-26-翻译链接和装载">2.6
+翻译、链接和装载</a></li>
+</ul></li>
+<li><a href="#3-计算机的算术运算" id="toc-3-计算机的算术运算">3.
+计算机的算术运算</a>
+<ul>
+<li><a href="#31-整数加减和溢出" id="toc-31-整数加减和溢出">3.1
+整数加减和溢出</a></li>
+<li><a href="#32-乘法和除法" id="toc-32-乘法和除法">3.2
+乘法和除法</a></li>
+<li><a href="#33-浮点表示" id="toc-33-浮点表示">3.3 浮点表示</a></li>
+<li><a href="#34-浮点运算步骤" id="toc-34-浮点运算步骤">3.4
+浮点运算步骤</a></li>
+</ul></li>
+<li><a href="#4-处理器" id="toc-4-处理器">4. 处理器</a>
+<ul>
+<li><a href="#41-单周期数据通路" id="toc-41-单周期数据通路">4.1
+单周期数据通路</a></li>
+<li><a href="#42-控制信号" id="toc-42-控制信号">4.2 控制信号</a></li>
+<li><a href="#43-样题程序的数据通路分析"
+id="toc-43-样题程序的数据通路分析">4.3 样题程序的数据通路分析</a></li>
+<li><a href="#44-流水线" id="toc-44-流水线">4.4 流水线</a></li>
+<li><a href="#45-数据冒险旁路和阻塞" id="toc-45-数据冒险旁路和阻塞">4.5
+数据冒险、旁路和阻塞</a></li>
+<li><a href="#46-控制冒险" id="toc-46-控制冒险">4.6 控制冒险</a></li>
+<li><a href="#47-异常和中断" id="toc-47-异常和中断">4.7
+异常和中断</a></li>
+</ul></li>
+<li><a href="#5-存储器层次结构" id="toc-5-存储器层次结构">5.
+存储器层次结构</a>
+<ul>
+<li><a href="#51-局部性和层次结构" id="toc-51-局部性和层次结构">5.1
+局部性和层次结构</a></li>
+<li><a href="#52-cache-地址分解" id="toc-52-cache-地址分解">5.2 Cache
+地址分解</a></li>
+<li><a href="#53-cache-写策略" id="toc-53-cache-写策略">5.3 Cache
+写策略</a></li>
+<li><a href="#54-amat-和性能" id="toc-54-amat-和性能">5.4 AMAT
+和性能</a></li>
+<li><a href="#55-缺失类型" id="toc-55-缺失类型">5.5 缺失类型</a></li>
+<li><a href="#56-虚拟存储和-tlb" id="toc-56-虚拟存储和-tlb">5.6
+虚拟存储和 TLB</a></li>
+<li><a href="#57-cache-一致性和存储器一致性"
+id="toc-57-cache-一致性和存储器一致性">5.7 Cache
+一致性和存储器一致性</a></li>
+<li><a href="#58-可靠性和校验" id="toc-58-可靠性和校验">5.8
+可靠性和校验</a></li>
+</ul></li>
+<li><a href="#6-并行处理器" id="toc-6-并行处理器">6. 并行处理器</a>
+<ul>
+<li><a href="#61-amdahl-定律" id="toc-61-amdahl-定律">6.1 Amdahl
+定律</a></li>
+<li><a href="#62-simd向量和多线程" id="toc-62-simd向量和多线程">6.2
+SIMD、向量和多线程</a></li>
+<li><a href="#63-gpu-和共享内存" id="toc-63-gpu-和共享内存">6.3 GPU
+和共享内存</a></li>
+<li><a href="#64-roofline-模型" id="toc-64-roofline-模型">6.4 Roofline
+模型</a></li>
+</ul></li>
+<li><a href="#7-常见题型模板" id="toc-7-常见题型模板">7.
+常见题型模板</a>
+<ul>
+<li><a href="#71-选择题速记" id="toc-71-选择题速记">7.1
+选择题速记</a></li>
+<li><a href="#72-简答题模板" id="toc-72-简答题模板">7.2
+简答题模板</a></li>
+<li><a href="#73-综合题解题顺序" id="toc-73-综合题解题顺序">7.3
+综合题解题顺序</a></li>
+</ul></li>
+<li><a href="#8-完整例题" id="toc-8-完整例题">8. 完整例题</a>
+<ul>
+<li><a href="#81-一条-c-语句怎样变成硬件动作"
+id="toc-81-一条-c-语句怎样变成硬件动作">8.1 一条 C
+语句怎样变成硬件动作</a></li>
+<li><a href="#82-性能题从零推导" id="toc-82-性能题从零推导">8.2
+性能题从零推导</a></li>
+<li><a href="#83-补码小端和符号扩展彻底讲清楚"
+id="toc-83-补码小端和符号扩展彻底讲清楚">8.3
+补码、小端和符号扩展彻底讲清楚</a></li>
+<li><a href="#84-risc-v-做题先把指令翻译成人话"
+id="toc-84-risc-v-做题先把指令翻译成人话">8.4 RISC-V
+做题：先把指令翻译成人话</a></li>
+<li><a href="#85-指令格式和立即数不要死背要按用途理解"
+id="toc-85-指令格式和立即数不要死背要按用途理解">8.5
+指令格式和立即数：不要死背，要按用途理解</a></li>
+<li><a href="#86-浮点数一眼拆出-sef" id="toc-86-浮点数一眼拆出-sef">8.6
+浮点数：一眼拆出 S、E、F</a></li>
+<li><a href="#87-单周期数据通路按部件走一遍"
+id="toc-87-单周期数据通路按部件走一遍">8.7
+单周期数据通路：按部件走一遍</a></li>
+<li><a href="#88-为什么单周期-cpu-慢流水线又为什么麻烦"
+id="toc-88-为什么单周期-cpu-慢流水线又为什么麻烦">8.8 为什么单周期 CPU
+慢，流水线又为什么麻烦</a></li>
+<li><a href="#89-流水线题完整演练" id="toc-89-流水线题完整演练">8.9
+流水线题完整演练</a></li>
+<li><a href="#810-cache-地址分解完整演练"
+id="toc-810-cache-地址分解完整演练">8.10 Cache 地址分解完整演练</a></li>
+<li><a href="#811-amat-和多级-cache-完整演练"
+id="toc-811-amat-和多级-cache-完整演练">8.11 AMAT 和多级 Cache
+完整演练</a></li>
+<li><a href="#812-虚拟存储从地址翻译开始理解"
+id="toc-812-虚拟存储从地址翻译开始理解">8.12
+虚拟存储从地址翻译开始理解</a></li>
+<li><a href="#813-cache-一致性用一个故事理解"
+id="toc-813-cache-一致性用一个故事理解">8.13 Cache
+一致性用一个故事理解</a></li>
+<li><a href="#814-哈佛结构题怎样答得完整"
+id="toc-814-哈佛结构题怎样答得完整">8.14 哈佛结构题怎样答得完整</a></li>
+<li><a href="#815-并行处理题从-amdahl-到-roofline"
+id="toc-815-并行处理题从-amdahl-到-roofline">8.15 并行处理题从 Amdahl 到
+Roofline</a></li>
+<li><a href="#816-一套综合题从头做到尾"
+id="toc-816-一套综合题从头做到尾">8.16 一套综合题从头做到尾</a></li>
+</ul></li>
+<li><a href="#9-补充考点" id="toc-9-补充考点">9. 补充考点</a>
+<ul>
+<li><a href="#91-spec基准测试和性能陷阱"
+id="toc-91-spec基准测试和性能陷阱">9.1 SPEC、基准测试和性能陷阱</a></li>
+<li><a href="#92-同步原子操作和-lrsc"
+id="toc-92-同步原子操作和-lrsc">9.2 同步、原子操作和
+<code>lr/sc</code></a></li>
+<li><a href="#93-多发射动态调度和寄存器重命名"
+id="toc-93-多发射动态调度和寄存器重命名">9.3
+多发射、动态调度和寄存器重命名</a></li>
+<li><a href="#94-dramflash磁盘raid-和-io"
+id="toc-94-dramflash磁盘raid-和-io">9.4 DRAM、Flash、磁盘、RAID 和
+I/O</a></li>
+<li><a href="#95-汉明距离ecc-和可靠性"
+id="toc-95-汉明距离ecc-和可靠性">9.5 汉明距离、ECC 和可靠性</a></li>
+<li><a href="#96-虚拟机和虚拟机监视器"
+id="toc-96-虚拟机和虚拟机监视器">9.6 虚拟机和虚拟机监视器</a></li>
+<li><a href="#97-消息传递互联网络和并行陷阱"
+id="toc-97-消息传递互联网络和并行陷阱">9.7
+消息传递、互联网络和并行陷阱</a></li>
+<li><a href="#98-常见陷阱和谬误" id="toc-98-常见陷阱和谬误">9.8
+常见陷阱和谬误</a></li>
+</ul></li>
+</ul>
+      </nav>
+    </aside>
+    <main>
+      <div class="hero">
+        <h1>计算机组成复习笔记</h1>
+      </div>
+<h1 id="计算机组成复习笔记">计算机组成复习笔记</h1>
+<h2 id="典型综合题">典型综合题</h2>
+<p><img src="assets/computer-organization/exam_single_cycle_sample.png"
+alt="样题：单周期数据通路综合题" /></p>
+<p>程序：</p>
+<p>addi x5,x0,10 addi x6,x0,20 add x7,x5,x6 lw x8,0(x7) sw x8,4(x7)</p>
+<p>结论：</p>
+<ul>
+<li><p><code>x5 = 10</code>，<code>x6 = 20</code>，<code>x7 = 30</code>。</p></li>
+<li><p>若只问 <code>add x7,x5,x6</code>：ALU 输入是 <code>x5</code> 和
+<code>x6</code> 的读出值，即 <code>10</code> 和 <code>20</code>；ALU
+操作是加法；结果写回 <code>x7</code>。</p></li>
+<li><p>单周期 CPU 中每条指令 1 个周期。若时钟频率为
+<code>1 GHz</code>，周期为 <code>1 ns</code>，这 5 条指令理想执行时间为
+<code>5 ns</code>。</p></li>
+</ul>
+<p><img src="assets/computer-organization/exam_harvard_cache_sample.png"
+alt="样题：哈佛结构和 Cache 简答题" /></p>
+<p>简答题模板：</p>
+<ul>
+<li><p>哈佛结构：指令存储器和数据存储器分开，取指和访存可并行，结构清晰，带宽高；缺点是资源分开后灵活性差，容量难共享，软硬件设计更复杂。</p></li>
+<li><p>冯诺依曼结构：指令和数据共用存储器，统一地址空间，简单灵活；缺点是取指和数据访问争用同一通路，形成冯诺依曼瓶颈。</p></li>
+<li><p>现代处理器常用“改进哈佛结构”：L1 I-Cache 和 D-Cache
+分开，降低取指/访存冲突；更下层 Cache
+或主存统一，兼顾灵活性和性能。</p></li>
+<li><p>多核 Cache
+的问题：多个核可能缓存同一内存块，写入后副本不一致。解决：监听式无效化协议、更新协议、目录协议、MESI/MOESI
+状态、内存屏障和一致性模型。</p></li>
+</ul>
+<h1 id="1-计算机抽象与技术">1. 计算机抽象与技术</h1>
+<p>本章要会把“快不快”说清楚：性能公式、影响因素、功耗墙和抽象层次是核心。</p>
+<h2 id="11-抽象层次和-isa">1.1 抽象层次和 ISA</h2>
+<p>计算机系统从上到下可以看成多层抽象：</p>
+<ul>
+<li><p>应用程序</p></li>
+<li><p>高级语言</p></li>
+<li><p>汇编语言</p></li>
+<li><p>指令集体系结构 ISA</p></li>
+<li><p>微体系结构：数据通路、控制器、流水线、Cache</p></li>
+<li><p>数字逻辑</p></li>
+<li><p>器件和半导体工艺</p></li>
+</ul>
+<p>ISA 是硬件/软件接口。软件只要遵守
+ISA，就不必关心底层到底是单周期、多周期、流水线还是乱序执行。硬件只要实现同一个
+ISA，就能运行同一类二进制程序。</p>
+<h2 id="12-性能公式">1.2 性能公式</h2>
+<p><img src="assets/computer-organization/ch01_cpu_time_formula.png"
+alt="CPU 时间公式" /></p>
+<p>最核心公式：</p>
+<p><span class="math display">\[CPU\ Time = Instruction\ Count \times
+CPI \times Clock\ Cycle\ Time\]</span></p>
+<p>也可以写成：</p>
+<p><span class="math display">\[CPU\ Time = \frac{Instruction\ Count
+\times CPI}{Clock\ Rate}\]</span></p>
+<p>含义：</p>
+<ul>
+<li><p>指令数 IC 受算法、编程语言、编译器、ISA 影响。</p></li>
+<li><p>CPI 受程序指令组合、微体系结构、Cache、流水线冒险影响。</p></li>
+<li><p>时钟周期受工艺、数据通路关键路径、设计复杂度影响。</p></li>
+</ul>
+<p>常见陷阱：</p>
+<ul>
+<li><p>只看时钟频率不等于性能好。频率高但 CPI 大，可能更慢。</p></li>
+<li><p>只看指令数不等于性能好。复杂指令可能条数少但周期长。</p></li>
+<li><p>MIPS 不适合跨 ISA 比较，因为不同 ISA 的指令工作量不同。</p></li>
+</ul>
+<h2 id="13-响应时间吞吐率和加速比">1.3 响应时间、吞吐率和加速比</h2>
+<ul>
+<li><p>响应时间：一个任务从开始到完成的时间。单个程序性能主要看它。</p></li>
+<li><p>吞吐率：单位时间完成多少任务。服务器、批处理系统常看它。</p></li>
+<li><p>相对性能：</p></li>
+</ul>
+<p><span class="math display">\[Performance = \frac{1}{Execution\
+Time}\]</span></p>
+<p>若 A 比 B 快：</p>
+<p><span class="math display">\[\frac{Performance_A}{Performance_B} =
+\frac{Execution\ Time_B}{Execution\ Time_A}\]</span></p>
+<h2 id="14-功耗墙">1.4 功耗墙</h2>
+<p>动态功耗近似：</p>
+<p><span class="math display">\[Power \propto Capacitive\ Load \times
+Voltage^2 \times Frequency\]</span></p>
+<p>降低电压能显著降功耗，但电压不能无限降；频率也不能无限升。因此现代性能提升更多依赖并行、流水线、Cache、向量化和专用加速器。</p>
+<h1 id="2-指令计算机的语言">2. 指令：计算机的语言</h1>
+<p>本章核心是 RISC-V 的“规整性”：寄存器操作、load/store
+架构、固定长度编码、少量格式组合出所有指令。</p>
+<h2 id="21-risc-v-基本原则">2.1 RISC-V 基本原则</h2>
+<p>核心设计原则：</p>
+<ul>
+<li><p>简单源于规整：例如大多数指令是 32 位定长。</p></li>
+<li><p>越小越快：寄存器数量有限，寄存器访问比内存快。</p></li>
+<li><p>加速大概率事件：常用路径要快。</p></li>
+<li><p>好设计需要折中：编码空间、硬件复杂度、程序长度之间要平衡。</p></li>
+</ul>
+<p>RISC-V 是 load/store 架构：</p>
+<ul>
+<li><p>算术逻辑运算只在寄存器之间做。</p></li>
+<li><p>内存数据必须先用 <code>lw</code> 等 load
+指令读入寄存器。</p></li>
+<li><p>结果写回内存必须用 <code>sw</code> 等 store 指令。</p></li>
+</ul>
+<h2 id="22-寄存器和调用约定">2.2 寄存器和调用约定</h2>
+<p><img src="assets/computer-organization/ch02_register_convention.png"
+alt="RISC-V 寄存器用法" /></p>
+<p>常用寄存器：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">寄存器</th>
+<th style="text-align: left;">ABI 名</th>
+<th style="text-align: left;">用途</th>
+<th style="text-align: left;">保存责任</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>x0</code></td>
+<td style="text-align: left;"><code>zero</code></td>
+<td style="text-align: left;">恒为 0</td>
+<td style="text-align: left;">不可改</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x1</code></td>
+<td style="text-align: left;"><code>ra</code></td>
+<td style="text-align: left;">返回地址</td>
+<td style="text-align: left;">调用者按需保存</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x2</code></td>
+<td style="text-align: left;"><code>sp</code></td>
+<td style="text-align: left;">栈指针</td>
+<td style="text-align: left;">被调用者维护</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x5-x7</code>,
+<code>x28-x31</code></td>
+<td style="text-align: left;"><code>t0-t6</code></td>
+<td style="text-align: left;">临时寄存器</td>
+<td style="text-align: left;">调用者保存</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x8-x9</code>,
+<code>x18-x27</code></td>
+<td style="text-align: left;"><code>s0-s11</code></td>
+<td style="text-align: left;">保存寄存器</td>
+<td style="text-align: left;">被调用者保存</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>x10-x17</code></td>
+<td style="text-align: left;"><code>a0-a7</code></td>
+<td style="text-align: left;">参数和返回值</td>
+<td style="text-align: left;">调用者保存</td>
+</tr>
+</tbody>
+</table>
+<p>过程调用要点：</p>
+<ul>
+<li><p><code>jal rd,label</code>：跳转，并把返回地址写入
+<code>rd</code>，通常 <code>rd = x1/ra</code>。</p></li>
+<li><p><code>jalr x0,0(ra)</code>：返回调用者。</p></li>
+<li><p>非叶子过程要保存
+<code>ra</code>，因为它还会调用其他过程。</p></li>
+<li><p>栈向低地址增长。进入函数常见操作是
+<code>addi sp,sp,-frame_size</code>，退出时恢复。</p></li>
+</ul>
+<h2 id="23-指令格式">2.3 指令格式</h2>
+<p><img src="assets/computer-organization/ch02_riscv_formats.png"
+alt="RISC-V 指令格式" /></p>
+<p>常考格式：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">格式</th>
+<th style="text-align: left;">典型指令</th>
+<th style="text-align: left;">关键字段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">R 型</td>
+<td style="text-align: left;"><code>add</code>, <code>sub</code>,
+<code>and</code>, <code>or</code></td>
+<td
+style="text-align: left;"><code>funct7 rs2 rs1 funct3 rd opcode</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">I 型</td>
+<td style="text-align: left;"><code>addi</code>, <code>lw</code>,
+<code>jalr</code></td>
+<td
+style="text-align: left;"><code>imm``[``11:0``]`` rs1 funct3 rd opcode</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">S 型</td>
+<td style="text-align: left;"><code>sw</code></td>
+<td
+style="text-align: left;"><code>imm``[``11:5``]`` rs2 rs1 funct3 imm``[``4:0``]`` opcode</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">B 型</td>
+<td style="text-align: left;"><code>beq</code>, <code>bne</code>,
+<code>blt</code></td>
+<td style="text-align: left;">分支立即数被拆散存放，目标地址 PC
+相对</td>
+</tr>
+<tr>
+<td style="text-align: left;">U 型</td>
+<td style="text-align: left;"><code>lui</code>, <code>auipc</code></td>
+<td style="text-align: left;">高 20 位立即数</td>
+</tr>
+<tr>
+<td style="text-align: left;">J 型</td>
+<td style="text-align: left;"><code>jal</code></td>
+<td style="text-align: left;">跳转立即数被拆散存放，目标地址 PC
+相对</td>
+</tr>
+</tbody>
+</table>
+<p>答题时先判断“读几个寄存器、写不写寄存器、访不访存、改不改 PC”。</p>
+<h2 id="24-数的表示和小端">2.4 数的表示和小端</h2>
+<p>n 位无符号数范围：</p>
+<p><span class="math display">\[0 \sim 2^n - 1\]</span></p>
+<p>n 位补码范围：</p>
+<p><span class="math display">\[-2^{n-1} \sim 2^{n-1}-1\]</span></p>
+<p>负数补码求法：绝对值二进制取反加一。例如 32 位 <code>-6</code>：</p>
+<p>6 = 0x00000006 -6 = 0xFFFFFFFA</p>
+<p>小端存储：低地址放最低有效字节。所以 <code>0xFFFFFFFA</code>
+从低地址到高地址依次是：</p>
+<p>FA FF FF FF</p>
+<p>这类题的正确判断是 <code>0xFA, 0xFF, 0xFF, 0xFF</code>。</p>
+<p>符号扩展：把最高符号位复制到新增高位。例如 8 位 <code>11111010</code>
+扩展到 32 位是 <code>11111111 11111111 11111111 11111010</code>。</p>
+<p>零扩展：高位补 0，常用于无符号数或逻辑立即数。</p>
+<h2 id="25-分支循环和寻址">2.5 分支、循环和寻址</h2>
+<p>条件分支：</p>
+<ul>
+<li><p><code>beq rs1,rs2,label</code>：相等跳转。</p></li>
+<li><p><code>bne rs1,rs2,label</code>：不等跳转。</p></li>
+<li><p><code>blt</code>, <code>bge</code>：有符号比较。</p></li>
+<li><p><code>bltu</code>, <code>bgeu</code>：无符号比较。</p></li>
+</ul>
+<p>循环翻译套路：</p>
+<p><strong>while</strong> (i &lt; n) { sum += a[i]; i++; }</p>
+<p>对应汇编思路：</p>
+<ol type="1">
+<li><p>比较 <code>i</code> 和 <code>n</code>，不满足就跳出。</p></li>
+<li><p>计算地址 <code>base + i * element_size</code>。</p></li>
+<li><p><code>lw</code> 取数组元素。</p></li>
+<li><p>累加。</p></li>
+<li><p><code>i++</code> 后跳回循环头。</p></li>
+</ol>
+<p>数组访问常考点：</p>
+<ul>
+<li><p><code>int</code> 通常 4 字节，索引 <code>i</code> 要左移 2
+位得到字节偏移。</p></li>
+<li><p>RISC-V 的 <code>lw rd,offset(rs1)</code> 地址是
+<code>rs1 + sign_extend(offset)</code>。</p></li>
+<li><p><code>sw rs2,offset(rs1)</code> 写入内存地址
+<code>rs1 + offset</code>，写入值来自 <code>rs2</code>。</p></li>
+</ul>
+<h2 id="26-翻译链接和装载">2.6 翻译、链接和装载</h2>
+<p>从 C 程序到运行：</p>
+<p>C 源程序 -&gt; 编译器 -&gt; 汇编程序 -&gt; 汇编器 -&gt; 目标文件
+-&gt; 链接器 -&gt; 可执行文件 -&gt; 装载器 -&gt; 内存中运行</p>
+<p>要点：</p>
+<ul>
+<li><p>编译器生成汇编代码。</p></li>
+<li><p>汇编器生成目标模块，包含机器码、符号表、重定位信息。</p></li>
+<li><p>链接器合并目标模块和库，解析外部符号。</p></li>
+<li><p>装载器把程序放入内存，初始化寄存器和栈，然后跳到入口。</p></li>
+</ul>
+<h1 id="3-计算机的算术运算">3. 计算机的算术运算</h1>
+<p>本章不是只背公式，更要知道每一串位要按哪种“解释方式”理解。相同位串按无符号、补码、浮点解释会得到不同值。</p>
+<h2 id="31-整数加减和溢出">3.1 整数加减和溢出</h2>
+<p>补码加法直接按二进制相加，丢弃最高进位。溢出判断：</p>
+<ul>
+<li><p>两个正数相加得到负数，溢出。</p></li>
+<li><p>两个负数相加得到正数，溢出。</p></li>
+<li><p>一正一负相加不会溢出。</p></li>
+</ul>
+<p>无符号加法溢出看最高进位；有符号补码溢出看符号是否异常。</p>
+<p>减法可以转成加法：</p>
+<p><span class="math display">\[a - b = a + (-b)\]</span></p>
+<h2 id="32-乘法和除法">3.2 乘法和除法</h2>
+<p>乘法硬件基本思想：</p>
+<ul>
+<li><p>被乘数按乘数每一位决定是否加到积中。</p></li>
+<li><p>每轮移位，类似手算二进制乘法。</p></li>
+<li><p>优化乘法器通过并行加法树或 Booth 编码减少周期。</p></li>
+</ul>
+<p>除法硬件基本思想：</p>
+<ul>
+<li><p>试减除数，若结果非负则商位为 1，否则恢复。</p></li>
+<li><p>每轮移位，类似长除法。</p></li>
+</ul>
+<p>RISC-V 中乘除法通常由 M 扩展提供：</p>
+<ul>
+<li><p><code>mul</code>：低位乘积。</p></li>
+<li><p><code>mulh</code>, <code>mulhu</code>,
+<code>mulhsu</code>：高位乘积，区分有符号/无符号。</p></li>
+<li><p><code>div</code>, <code>divu</code>：除法。</p></li>
+<li><p><code>rem</code>, <code>remu</code>：余数。</p></li>
+</ul>
+<h2 id="33-浮点表示">3.3 浮点表示</h2>
+<p>IEEE 754 规格化浮点数：</p>
+<p><span class="math display">\[x = (-1)^s \times (1.fraction) \times
+2^{E-bias}\]</span></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: right;">总位数</th>
+<th style="text-align: right;">符号位</th>
+<th style="text-align: right;">指数位</th>
+<th style="text-align: right;">尾数位</th>
+<th style="text-align: right;">偏置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">单精度 float</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">127</td>
+</tr>
+<tr>
+<td style="text-align: left;">双精度 double</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">1023</td>
+</tr>
+</tbody>
+</table>
+<p><img
+src="assets/computer-organization/ch03_float_encoding_example.png"
+alt="浮点编码例题" /></p>
+<p>特殊值：</p>
+<ul>
+<li><p>指数全 0，尾数全 0：正负 0。</p></li>
+<li><p>指数全 0，尾数非 0：非规格化数，用于表示更接近 0 的数。</p></li>
+<li><p>指数全 1，尾数全 0：正负无穷。</p></li>
+<li><p>指数全 1，尾数非 0：NaN。</p></li>
+</ul>
+<p><img src="assets/computer-organization/ch03_ieee754_format.png"
+alt="单精度范围" /></p>
+<h2 id="34-浮点运算步骤">3.4 浮点运算步骤</h2>
+<p>浮点加法常见步骤：</p>
+<ol type="1">
+<li><p>对阶：让两个数指数相同，小指数尾数右移。</p></li>
+<li><p>尾数加减。</p></li>
+<li><p>规格化：调整尾数到 <code>1.xxxx</code>
+形式，并修正指数。</p></li>
+<li><p>舍入。</p></li>
+<li><p>检查溢出、下溢和特殊值。</p></li>
+</ol>
+<p>浮点陷阱：</p>
+<ul>
+<li><p>浮点数不能精确表示所有十进制小数。</p></li>
+<li><p>加法不满足严格结合律：<code>(a+b)+c</code> 可能不等于
+<code>a+(b+c)</code>。</p></li>
+<li><p>大数加小数时，小数可能因对阶右移而丢失。</p></li>
+</ul>
+<h1 id="4-处理器">4. 处理器</h1>
+<p>第 4
+章是全课最像综合题的部分。答题要从“某条指令经过哪些部件、控制信号怎么设、结果写到哪里”入手。</p>
+<h2 id="41-单周期数据通路">4.1 单周期数据通路</h2>
+<p><img
+src="assets/computer-organization/ch04_single_cycle_datapath.png"
+alt="完整的数据通路" /></p>
+<p>单周期 CPU 每条指令在一个时钟周期内完成，CPI =
+1，但时钟周期必须足够长，能容纳最慢指令的路径。</p>
+<p>五个常用阶段：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">阶段</th>
+<th style="text-align: left;">动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">IF</td>
+<td style="text-align: left;">根据 PC 取指令，同时计算
+<code>PC + 4</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">ID</td>
+<td style="text-align: left;">译码，读寄存器，立即数扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">EX</td>
+<td style="text-align: left;">ALU 运算，计算地址，比较分支条件</td>
+</tr>
+<tr>
+<td style="text-align: left;">MEM</td>
+<td style="text-align: left;">访问数据存储器，load 或 store</td>
+</tr>
+<tr>
+<td style="text-align: left;">WB</td>
+<td style="text-align: left;">写回寄存器</td>
+</tr>
+</tbody>
+</table>
+<p>虽然单周期不是流水线，但分析单条指令时也常按这五步说。</p>
+<h2 id="42-控制信号">4.2 控制信号</h2>
+<p><img
+src="assets/computer-organization/ch04_datapath_with_control.png"
+alt="包含控制的数据通路" /></p>
+<p>常见指令控制信号：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><p>指令</p>
+</th>
+<th style="text-align: left;"><p>RegWrite</p>
+</th>
+<th style="text-align: left;"><p>ALUSrc</p>
+</th>
+<th style="text-align: left;"><p>MemRead</p>
+</th>
+<th style="text-align: left;"><p>MemWrite</p>
+</th>
+<th style="text-align: left;"><p>MemtoReg</p>
+</th>
+<th style="text-align: left;"><p>Branch</p>
+</th>
+<th style="text-align: left;"><p>ALU 操作</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">R 型 <code>add/sub</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">由 funct 字段决定</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>addi</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">加法</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>lw</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">地址加法</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sw</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">地址加法</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>beq</code></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">减法/比较</td>
+</tr>
+</tbody>
+</table>
+
+<p>答综合题时按下面模板：</p>
+<ol type="1">
+<li><p>指令类型：R/I/S/B/J。</p></li>
+<li><p>读寄存器：<code>rs1</code>、<code>rs2</code> 分别是谁。</p></li>
+<li><p>ALU 输入：第一个通常来自 <code>rs1</code>，第二个来自
+<code>rs2</code> 或立即数。</p></li>
+<li><p>ALU 操作：加、减、与、或、比较、地址计算。</p></li>
+<li><p>访存：是否读/写数据存储器，地址是什么，数据是什么。</p></li>
+<li><p>写回：是否写寄存器，写哪个寄存器，写 ALU
+结果还是内存数据。</p></li>
+<li><p>PC：<code>PC+4</code>、分支目标还是跳转目标。</p></li>
+</ol>
+<h2 id="43-样题程序的数据通路分析">4.3 样题程序的数据通路分析</h2>
+<p>addi x5,x0,10 addi x6,x0,20 add x7,x5,x6 lw x8,0(x7) sw x8,4(x7)</p>
+<p>逐条结果：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指令</th>
+<th style="text-align: left;">ALU 输入</th>
+<th style="text-align: left;">ALU 操作</th>
+<th style="text-align: left;">访存</th>
+<th style="text-align: left;">写回</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>addi x5,x0,10</code></td>
+<td style="text-align: left;"><code>0</code>, <code>10</code></td>
+<td style="text-align: left;">加</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;"><code>x5 = 10</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>addi x6,x0,20</code></td>
+<td style="text-align: left;"><code>0</code>, <code>20</code></td>
+<td style="text-align: left;">加</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;"><code>x6 = 20</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>add x7,x5,x6</code></td>
+<td style="text-align: left;"><code>10</code>, <code>20</code></td>
+<td style="text-align: left;">加</td>
+<td style="text-align: left;">无</td>
+<td style="text-align: left;"><code>x7 = 30</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>lw x8,0(x7)</code></td>
+<td style="text-align: left;"><code>30</code>, <code>0</code></td>
+<td style="text-align: left;">地址加法</td>
+<td style="text-align: left;">读 <code>Mem``[``30``]</code></td>
+<td style="text-align: left;"><code>x8 = Mem``[``30``]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sw x8,4(x7)</code></td>
+<td style="text-align: left;"><code>30</code>, <code>4</code></td>
+<td style="text-align: left;">地址加法</td>
+<td style="text-align: left;">写 <code>Mem``[``34``]`` = x8</code></td>
+<td style="text-align: left;">无</td>
+</tr>
+</tbody>
+</table>
+<p>注意：如果题目没有给出 <code>Mem``[``30``]</code> 的初值，就不能给出
+<code>x8</code> 的具体数值，只能写 <code>x8 = Mem``[``30``]</code>。</p>
+<h2 id="44-流水线">4.4 流水线</h2>
+<p>理想五级流水线：</p>
+<p>IF -&gt; ID -&gt; EX -&gt; MEM -&gt; WB</p>
+<p>流水线提高的是吞吐率，不减少单条指令延迟。理想情况下，k 级流水线执行
+n 条指令需要：</p>
+<p><span class="math display">\[n + k - 1\]</span></p>
+<p>个周期。n 很大时，理想加速比接近 k。</p>
+<p>本章小结里的核心句：</p>
+<ul>
+<li><p>流水线通过并行执行多条指令提高吞吐率。</p></li>
+<li><p>每条指令的延迟基本不变。</p></li>
+<li><p>性能受结构冒险、数据冒险、控制冒险制约。</p></li>
+<li><p>ISA 会影响流水线实现复杂度。</p></li>
+</ul>
+<h2 id="45-数据冒险旁路和阻塞">4.5 数据冒险、旁路和阻塞</h2>
+<p>数据冒险：后一条指令需要前一条尚未写回的结果。</p>
+<p>常见 RAW 相关：</p>
+<p>add x1,x2,x3 sub x4,x1,x5</p>
+<p><code>sub</code> 在 ID/EX 阶段需要 <code>x1</code>，但
+<code>add</code> 的结果还没写回。解决办法：</p>
+<ul>
+<li><p>旁路/前递：从 EX/MEM 或 MEM/WB 直接把结果送到 ALU 输入。</p></li>
+<li><p>阻塞：插入气泡，等数据可用。</p></li>
+<li><p>编译器调度：重排无关指令填空。</p></li>
+</ul>
+<p><img src="assets/computer-organization/ch04_forwarding_datapath.png"
+alt="带旁路的数据通路" /></p>
+<p>旁路判断条件常见写法：</p>
+<p>EX hazard: EX/MEM.RegWrite and EX/MEM.Rd != 0 and EX/MEM.Rd ==
+ID/EX.Rs1 or Rs2</p>
+<p>MEM hazard: MEM/WB.RegWrite and MEM/WB.Rd != 0 and MEM/WB.Rd ==
+ID/EX.Rs1 or Rs2</p>
+<p>取数-使用型冒险 load-use：</p>
+<p>lw x1,0(x2) add x3,x1,x4</p>
+<p>即使有旁路也通常要阻塞 1 个周期，因为 load 数据到 MEM
+末尾才出来，下一条的 EX 阶段太早。</p>
+<p><img
+src="assets/computer-organization/ch04_hazard_detection_datapath.png"
+alt="带冒险检测的数据通路" /></p>
+<p>load-use 阻塞条件：</p>
+<p>ID/EX.MemRead and (ID/EX.Rd == IF/ID.Rs1 or ID/EX.Rd ==
+IF/ID.Rs2)</p>
+<p>阻塞动作：</p>
+<ul>
+<li><p>PC 不更新。</p></li>
+<li><p>IF/ID 寄存器不更新。</p></li>
+<li><p>ID/EX 控制信号清 0，插入 bubble。</p></li>
+</ul>
+<h2 id="46-控制冒险">4.6 控制冒险</h2>
+<p>控制冒险来自分支和跳转。若分支结果晚到，处理器可能已经取了错误路径上的指令。</p>
+<p>解决办法：</p>
+<ul>
+<li><p>阻塞到分支结果确定。</p></li>
+<li><p>提前在 ID 阶段比较寄存器并计算目标地址。</p></li>
+<li><p>静态预测：总是假设不跳或总是假设跳。</p></li>
+<li><p>动态预测：用分支历史表、1 位/2 位预测器。</p></li>
+<li><p>预测错误时 flush 错误路径指令。</p></li>
+</ul>
+<p>答题关键词：flush、stall、branch penalty、prediction accuracy。</p>
+<h2 id="47-异常和中断">4.7 异常和中断</h2>
+<p>异常来自当前指令内部，例如非法指令、算术溢出、缺页。中断通常来自外部设备。</p>
+<p>处理流程：</p>
+<ol type="1">
+<li><p>保存异常 PC。</p></li>
+<li><p>记录异常原因。</p></li>
+<li><p>跳转到异常处理程序。</p></li>
+<li><p>处理后返回或终止程序。</p></li>
+</ol>
+<p>流水线中理想目标是精确异常：异常发生时，看起来像前面的指令都完成、后面的指令都没执行。</p>
+<h1 id="5-存储器层次结构">5. 存储器层次结构</h1>
+<p>第 5 章公式多、概念也多：Cache 地址分解、命中/缺失、AMAT、多核 Cache
+一致性都要会。</p>
+<h2 id="51-局部性和层次结构">5.1 局部性和层次结构</h2>
+<p>局部性原理：</p>
+<ul>
+<li><p>时间局部性：刚访问过的数据/指令，很可能很快再次访问。</p></li>
+<li><p>空间局部性：访问了某地址，附近地址很可能也会访问。</p></li>
+</ul>
+<p>存储层次从快到慢、从小到大大致是：</p>
+<p>寄存器 -&gt; L1 Cache -&gt; L2 Cache -&gt; L3 Cache -&gt; DRAM -&gt;
+SSD/HDD</p>
+<p>选择题中“访问速度最快”通常选高速缓存
+Cache，而不是内存、硬盘或光盘。</p>
+<h2 id="52-cache-地址分解">5.2 Cache 地址分解</h2>
+<p><img src="assets/computer-organization/ch05_cache_address_fields.png"
+alt="Cache 地址分解" /></p>
+<p>核心公式：</p>
+<p>块内偏移位数 = log2(块大小，单位字节) 组索引位数 = log2(组数) 组数 =
+Cache 容量 / (块大小 × 相联度) 标记位数 = 地址位数 - 组索引位数 -
+块内偏移位数</p>
+<p>直接映射是 1 路组相联。全相联没有索引位，任意块可放任意位置。</p>
+<p>查找流程：</p>
+<ol type="1">
+<li><p>用 index 找到组。</p></li>
+<li><p>比较 tag。</p></li>
+<li><p>valid 位为 1 且 tag 匹配，则命中。</p></li>
+<li><p>用 offset 选择块内字节/字。</p></li>
+</ol>
+<p><img src="assets/computer-organization/ch05_cache_associativity.png"
+alt="Cache 相联度" /></p>
+<p>相联度权衡：</p>
+<ul>
+<li><p>直接映射：硬件简单，命中时间短，但冲突缺失多。</p></li>
+<li><p>组相联：减少冲突缺失，但比较器更多，命中时间可能变长。</p></li>
+<li><p>全相联：冲突最少，但硬件最复杂。</p></li>
+</ul>
+<h2 id="53-cache-写策略">5.3 Cache 写策略</h2>
+<p>写命中策略：</p>
+<ul>
+<li><p>写直达 write-through：同时写 Cache
+和下一级存储器。实现简单，下层数据新，但写流量大，常配写缓冲。</p></li>
+<li><p>写回 write-back：只写 Cache，置 dirty
+位，替换时再写回。写流量小，但一致性更复杂。</p></li>
+</ul>
+<p>写缺失策略：</p>
+<ul>
+<li><p>写分配 write-allocate：缺失时把块调入 Cache 再写。</p></li>
+<li><p>非写分配 no-write-allocate：缺失时直接写下一级，不调入
+Cache。</p></li>
+</ul>
+<p>常见组合：</p>
+<ul>
+<li><p>写回 + 写分配。</p></li>
+<li><p>写直达 + 非写分配。</p></li>
+</ul>
+<h2 id="54-amat-和性能">5.4 AMAT 和性能</h2>
+<p>平均访问时间：</p>
+<p><span class="math display">\[AMAT = Hit\ Time + Miss\ Rate \times
+Miss\ Penalty\]</span></p>
+<p>多级 Cache：</p>
+<p><span class="math display">\[AMAT = L1HitTime + L1MissRate \times
+(L2HitTime + L2MissRate \times MemoryPenalty)\]</span></p>
+<p>内存阻塞周期：</p>
+<p><span class="math display">\[Memory\ Stall\ Cycles = Memory\ Accesses
+\times Miss\ Rate \times Miss\ Penalty\]</span></p>
+<p>若按每条指令算：</p>
+<p><span class="math display">\[Memory\ Stall\ Cycles/Instruction =
+Accesses/Instruction \times Miss\ Rate \times Miss\ Penalty\]</span></p>
+<p>本章小结强调：CPU 越快，Cache miss 的相对代价越大。只优化 CPU 而忽视
+Cache，整体性能可能上不去。</p>
+<h2 id="55-缺失类型">5.5 缺失类型</h2>
+<p>3C 模型：</p>
+<ul>
+<li><p>强制缺失 compulsory miss：第一次访问某块，Cache
+中不可能有。</p></li>
+<li><p>容量缺失 capacity miss：Cache 太小，放不下工作集。</p></li>
+<li><p>冲突缺失 conflict miss：相联度不够，多个块竞争同一位置。</p></li>
+</ul>
+<p>优化方向：</p>
+<ul>
+<li><p>增大块大小：利用空间局部性，但太大会增加缺失代价和污染。</p></li>
+<li><p>增大 Cache：降低容量缺失，但可能增加命中时间。</p></li>
+<li><p>增大相联度：降低冲突缺失，但硬件复杂。</p></li>
+<li><p>多级 Cache：兼顾 L1 快和低层容量大。</p></li>
+</ul>
+<h2 id="56-虚拟存储和-tlb">5.6 虚拟存储和 TLB</h2>
+<p>虚拟地址分为：</p>
+<p>Virtual Page Number | Page Offset</p>
+<p>页内偏移不变，虚拟页号通过页表翻译成物理页号。</p>
+<p>TLB 是页表项的 Cache：</p>
+<ul>
+<li><p>TLB 命中：直接得到物理页号。</p></li>
+<li><p>TLB 缺失：查页表，把页表项装入 TLB。</p></li>
+<li><p>页表项无效：发生缺页异常，从磁盘调页。</p></li>
+</ul>
+<p><img src="assets/computer-organization/ch05_tlb_access.png"
+alt="TLB 缺失处理程序" /></p>
+<p>缺页代价很大，所以页面通常很大，替换策略也更谨慎。虚拟存储的好处：</p>
+<ul>
+<li><p>给每个程序独立地址空间。</p></li>
+<li><p>支持保护。</p></li>
+<li><p>让程序认为自己有连续大内存。</p></li>
+<li><p>只把活跃页面装入内存。</p></li>
+</ul>
+<h2 id="57-cache-一致性和存储器一致性">5.7 Cache
+一致性和存储器一致性</h2>
+<p>多核中，每个核有自己的 Cache。若多个 Cache
+持有同一块，某核写入后其他核的旧副本会导致不一致。</p>
+<p><img src="assets/computer-organization/ch05_coherence_protocol.png"
+alt="无效化监听协议" /></p>
+<p>一致性需要保证：</p>
+<ul>
+<li><p>写传播：一个核的写最终能被其他核看到。</p></li>
+<li><p>写串行化：所有核看到同一地址的写入顺序一致。</p></li>
+</ul>
+<p>常见协议：</p>
+<ul>
+<li><p>监听式 snooping：所有 Cache 监听总线事务。</p></li>
+<li><p>无效化 invalidation：写前让其他副本失效。</p></li>
+<li><p>更新 update：写后把新值发给其他副本。</p></li>
+<li><p>目录式 directory：由目录记录哪些 Cache
+持有某块，适合大规模多处理器。</p></li>
+</ul>
+<p>简答题要区分：</p>
+<ul>
+<li><p>Cache coherence：同一地址的多个缓存副本是否一致。</p></li>
+<li><p>Memory
+consistency：不同地址的读写在多处理器中按什么顺序可见。</p></li>
+</ul>
+<h2 id="58-可靠性和校验">5.8 可靠性和校验</h2>
+<p>常见术语：</p>
+<ul>
+<li><p>MTTF：平均无故障时间。</p></li>
+<li><p>MTTR：平均修复时间。</p></li>
+<li><p>可用性：</p></li>
+</ul>
+<p><span class="math display">\[Availability = \frac{MTTF}{MTTF +
+MTTR}\]</span></p>
+<p>ECC：</p>
+<ul>
+<li><p>奇偶校验能发现单比特错误，但不能纠正。</p></li>
+<li><p>SEC：single error correction，可纠正 1 位错误。</p></li>
+<li><p>DED：double error detection，可发现 2 位错误。</p></li>
+<li><p>SEC/DED 常用于内存可靠性。</p></li>
+</ul>
+<h1 id="6-并行处理器">6. 并行处理器</h1>
+<p>第 6
+章多为概念题和公式题。核心是：并行能提高性能，但受串行部分、通信、同步、内存带宽和编程难度限制。</p>
+<h2 id="61-amdahl-定律">6.1 Amdahl 定律</h2>
+<p><img src="assets/computer-organization/ch06_amdahl_law.png"
+alt="Amdahl 定律" /></p>
+<p>若程序中比例为 <code>F</code> 的部分被加速 <code>S</code>
+倍，总加速比：</p>
+<p><span class="math display">\[Speedup =
+\frac{1}{(1-F)+\frac{F}{S}}\]</span></p>
+<p>极限：当 <code>S</code> 无限大时，</p>
+<p><span class="math display">\[Speedup_{max} =
+\frac{1}{1-F}\]</span></p>
+<p>含义：串行部分会限制总加速比。想靠更多处理器获得接近线性的加速，串行部分必须极小。</p>
+<p>强比例缩放和弱比例缩放：</p>
+<ul>
+<li><p>强比例缩放：问题规模固定，处理器更多，运行时间应下降。</p></li>
+<li><p>弱比例缩放：每个处理器负载固定，处理器更多，问题规模同步变大。</p></li>
+</ul>
+<h2 id="62-simd向量和多线程">6.2 SIMD、向量和多线程</h2>
+<p>Flynn 分类：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">类型</th>
+<th style="text-align: left;">指令流</th>
+<th style="text-align: left;">数据流</th>
+<th style="text-align: left;">例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SISD</td>
+<td style="text-align: left;">单</td>
+<td style="text-align: left;">单</td>
+<td style="text-align: left;">传统单核顺序处理</td>
+</tr>
+<tr>
+<td style="text-align: left;">SIMD</td>
+<td style="text-align: left;">单</td>
+<td style="text-align: left;">多</td>
+<td style="text-align: left;">向量处理器、GPU warp、媒体扩展</td>
+</tr>
+<tr>
+<td style="text-align: left;">MIMD</td>
+<td style="text-align: left;">多</td>
+<td style="text-align: left;">多</td>
+<td style="text-align: left;">多核、多处理器、集群</td>
+</tr>
+<tr>
+<td style="text-align: left;">MISD</td>
+<td style="text-align: left;">多</td>
+<td style="text-align: left;">单</td>
+<td style="text-align: left;">少见</td>
+</tr>
+</tbody>
+</table>
+<p>SIMD
+适合规则数据并行，例如数组加法、矩阵运算、图像处理。缺点是分支发散和数据不规则会降低效率。</p>
+<p>多线程：</p>
+<ul>
+<li><p>细粒度多线程：每周期切换线程，隐藏延迟。</p></li>
+<li><p>粗粒度多线程：遇到长延迟事件才切换。</p></li>
+<li><p>同时多线程
+SMT：同一周期发射多个线程的指令，提高硬件利用率。</p></li>
+</ul>
+<h2 id="63-gpu-和共享内存">6.3 GPU 和共享内存</h2>
+<p>GPU 特点：</p>
+<ul>
+<li><p>大量简单计算核心。</p></li>
+<li><p>高吞吐，适合数据并行。</p></li>
+<li><p>内存层次复杂，带宽高但延迟也高。</p></li>
+<li><p>分支发散、非合并访存会拖慢性能。</p></li>
+</ul>
+<p>共享内存多处理器：</p>
+<ul>
+<li><p>多个处理器共享同一地址空间。</p></li>
+<li><p>程序员通过锁、信号量、原子操作同步。</p></li>
+<li><p>难点是竞争、死锁、负载均衡和 Cache 一致性。</p></li>
+</ul>
+<p>消息传递：</p>
+<ul>
+<li><p>每个节点有独立地址空间。</p></li>
+<li><p>通过 send/receive 通信。</p></li>
+<li><p>适合集群，但通信开销和数据划分很关键。</p></li>
+</ul>
+<h2 id="64-roofline-模型">6.4 Roofline 模型</h2>
+<p><img src="assets/computer-organization/ch06_roofline_model.png"
+alt="Roofline 模型" /></p>
+<p>Roofline 用两个瓶颈估计性能：</p>
+<p><span class="math display">\[Attainable\ Performance = \min(Peak\
+Compute,\ Memory\ Bandwidth \times Operational\ Intensity)\]</span></p>
+<p>其中 operational intensity 是：</p>
+<p><span class="math display">\[\frac{Operations}{Bytes\
+Transferred}\]</span></p>
+<p>判断：</p>
+<ul>
+<li><p>若算术强度低，性能受内存带宽限制。</p></li>
+<li><p>若算术强度高，性能受峰值计算能力限制。</p></li>
+</ul>
+<h1 id="7-常见题型模板">7. 常见题型模板</h1>
+<h2 id="71-选择题速记">7.1 选择题速记</h2>
+<ul>
+<li><p>访问速度：寄存器最快，其次
+Cache，再次主存，磁盘/光盘最慢。若选项是 Cache、内存、硬盘、光盘，选
+Cache。</p></li>
+<li><p>小端：低地址放低有效字节。<code>0x12345678</code>
+低地址到高地址是 <code>78 56 34 12</code>。</p></li>
+<li><p>补码：负数不是反码存储，而是补码存储。</p></li>
+<li><p>流水线：提高吞吐率，不降低单条指令延迟。</p></li>
+<li><p>Cache miss 代价会随 CPU 变快而更明显。</p></li>
+<li><p><code>x0</code> 永远是 0，写 <code>x0</code> 无效。</p></li>
+<li><p><code>lw</code> 写寄存器，<code>sw</code> 不写寄存器。</p></li>
+<li><p><code>beq</code> 通常不写寄存器，只可能改变 PC。</p></li>
+</ul>
+<h2 id="72-简答题模板">7.2 简答题模板</h2>
+<p>答结构比较题：</p>
+<p>先定义 A 和 B。 再分别写 A 的优点、缺点。 再写 B 的优点、缺点。
+最后写现代系统如何折中使用。</p>
+<p>答 Cache/流水线问题：</p>
+<p>先说明问题是什么。 再说明问题为什么会发生。 再给硬件方案。
+再给软件/编译器方案。 最后补一句性能权衡。</p>
+<h2 id="73-综合题解题顺序">7.3 综合题解题顺序</h2>
+<p>RISC-V 程序执行：</p>
+<ol type="1">
+<li><p>写出每条指令的语义。</p></li>
+<li><p>更新寄存器。</p></li>
+<li><p>load/store 若内存值未知，保留符号表达式。</p></li>
+<li><p>分支/跳转要更新 PC。</p></li>
+<li><p>最后按题目问的寄存器或内存地址给答案。</p></li>
+</ol>
+<p>单周期数据通路：</p>
+<ol type="1">
+<li><p>判断指令类型。</p></li>
+<li><p>找 <code>rs1</code>、<code>rs2</code>、<code>rd</code>
+和立即数。</p></li>
+<li><p>写 ALU 两个输入。</p></li>
+<li><p>写 ALU 操作。</p></li>
+<li><p>写是否访问数据存储器。</p></li>
+<li><p>写写回来源和目标寄存器。</p></li>
+<li><p>写 PC 选择。</p></li>
+</ol>
+<p>Cache 题：</p>
+<ol type="1">
+<li><p>算块大小对应的 offset 位。</p></li>
+<li><p>算组数和 index 位。</p></li>
+<li><p>剩下是 tag 位。</p></li>
+<li><p>对每个地址分解 tag/index/offset。</p></li>
+<li><p>根据 valid、tag、替换规则判断 hit/miss。</p></li>
+<li><p>用 AMAT 或 miss penalty 算性能。</p></li>
+</ol>
+<p>流水线题：</p>
+<ol type="1">
+<li><p>画 IF/ID/EX/MEM/WB 时间表。</p></li>
+<li><p>找 RAW 相关。</p></li>
+<li><p>看能否旁路。</p></li>
+<li><p>load-use 通常插 1 个 bubble。</p></li>
+<li><p>分支按题目设定处理：阻塞、预测或 flush。</p></li>
+</ol>
+<h1 id="8-完整例题">8. 完整例题</h1>
+<p>本章把前面的知识点串成完整推理过程。</p>
+<h2 id="81-一条-c-语句怎样变成硬件动作">8.1 一条 C
+语句怎样变成硬件动作</h2>
+<p>先用一条简单语句建立全局图景：</p>
+<p>c = a + b;</p>
+<p>如果 <code>a</code>、<code>b</code>、<code>c</code>
+都在内存里，处理器不能直接让内存和内存相加。RISC-V 是 load/store
+架构，所以必须先把内存数据取到寄存器：</p>
+<p>lw x5, 0(x10) # x5 = a lw x6, 0(x11) # x6 = b add x7, x5, x6 # x7 = a
++ b sw x7, 0(x12) # c = x7</p>
+<p>这段程序串起几个核心环节：</p>
+<ul>
+<li><p>指令系统回答“软件怎样命令硬件”：<code>lw</code>、<code>add</code>、<code>sw</code>
+是 ISA 的一部分。</p></li>
+<li><p>数据表示回答“位串是什么意思”：<code>x5</code> 里的 32/64
+位按补码、无符号或浮点解释会得到不同值。</p></li>
+<li><p>处理器回答“一条指令怎样执行”：取指、译码、读寄存器、ALU、访存、写回。</p></li>
+<li><p>存储系统回答“内存为什么看起来够快”：大多数 <code>lw/sw</code>
+先访问 Cache，不是每次都去 DRAM。</p></li>
+<li><p>并行处理回答“怎样进一步变快”：多个核心、SIMD、GPU、流水线同时工作，但会遇到依赖、通信和一致性问题。</p></li>
+</ul>
+<p>因此做题时要先定位题目属于哪一层：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">题目问法</th>
+<th style="text-align: left;">所属层次</th>
+<th style="text-align: left;">第一反应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">某寄存器最后是多少</td>
+<td style="text-align: left;">ISA/程序执行</td>
+<td style="text-align: left;">逐条写语义，更新寄存器</td>
+</tr>
+<tr>
+<td style="text-align: left;">ALU 输入是什么</td>
+<td style="text-align: left;">数据通路</td>
+<td style="text-align: left;">找
+<code>rs1</code>、<code>rs2/imm</code>，看 <code>ALUSrc</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">是否命中 Cache</td>
+<td style="text-align: left;">存储层次</td>
+<td style="text-align: left;">分解地址：tag/index/offset</td>
+</tr>
+<tr>
+<td style="text-align: left;">流水线停几个周期</td>
+<td style="text-align: left;">微体系结构</td>
+<td style="text-align: left;">找 RAW、load-use、分支</td>
+</tr>
+<tr>
+<td style="text-align: left;">加速比是多少</td>
+<td style="text-align: left;">性能/并行</td>
+<td style="text-align: left;">套 CPU 时间或 Amdahl 公式</td>
+</tr>
+</tbody>
+</table>
+<h2 id="82-性能题从零推导">8.2 性能题从零推导</h2>
+<p>性能题不要上来就套一个公式，先问自己“题目给的是时间、频率、CPI
+还是指令数”。</p>
+<p>核心关系只有一个：</p>
+<p><span class="math display">\[CPU\ Time = Instruction\ Count \times
+CPI \times Clock\ Cycle\ Time\]</span></p>
+<p>由于：</p>
+<p><span class="math display">\[Clock\ Cycle\ Time = \frac{1}{Clock\
+Rate}\]</span></p>
+<p>所以：</p>
+<p><span class="math display">\[CPU\ Time = \frac{Instruction\ Count
+\times CPI}{Clock\ Rate}\]</span></p>
+<h3 id="例题-1比较两台机器">例题 1：比较两台机器</h3>
+<p>机器 A：指令数 <code>10^9</code>，CPI = 2，频率 2 GHz。</p>
+<p>机器 B：指令数 <code>1.2 × 10^9</code>，CPI = 1.5，频率 1.5 GHz。</p>
+<p>计算：</p>
+<p>A 时间 = 10^9 × 2 / (2 × 10^9) = 1 s B 时间 = 1.2 × 10^9 × 1.5 / (1.5
+× 10^9) = 1.2 s</p>
+<p>所以 A 更快。A 相对 B 的性能比：</p>
+<p><span
+class="math display">\[\frac{Performance_A}{Performance_B}=\frac{Time_B}{Time_A}=1.2\]</span></p>
+<p>即 A 快 20%。</p>
+<h3 id="例题-2cpi-由指令组合决定">例题 2：CPI 由指令组合决定</h3>
+<p>某程序有三类指令：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指令类型</th>
+<th style="text-align: right;">比例</th>
+<th style="text-align: right;">CPI</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ALU</td>
+<td style="text-align: right;">50%</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Load/Store</td>
+<td style="text-align: right;">30%</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Branch</td>
+<td style="text-align: right;">20%</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p>平均 CPI：</p>
+<p><span class="math display">\[CPI = 0.5 \times 1 + 0.3 \times 2 + 0.2
+\times 3 = 1.7\]</span></p>
+<p>如果指令数是 <code>2 × 10^9</code>，频率是 2 GHz：</p>
+<p><span class="math display">\[CPU\ Time = \frac{2 \times 10^9 \times
+1.7}{2 \times 10^9}=1.7s\]</span></p>
+<p>易错点：</p>
+<ul>
+<li><p>平均 CPI 是加权平均，不是简单平均。</p></li>
+<li><p>指令比例要按动态执行次数算，不是按程序源码行数算。</p></li>
+<li><p>优化某类指令要看它占比。很少出现的指令即使加速很多，总体收益也有限。</p></li>
+</ul>
+<h3 id="例题-3amdahl-思想也适用于普通优化">例题 3：Amdahl
+思想也适用于普通优化</h3>
+<p>程序 40% 时间花在乘法上。现在把乘法加速 4 倍。总加速比：</p>
+<p><span
+class="math display">\[Speedup=\frac{1}{(1-0.4)+0.4/4}=\frac{1}{0.6+0.1}=1.43\]</span></p>
+<p>不是 4 倍，因为只有 40% 的时间被优化了。</p>
+<h2 id="83-补码小端和符号扩展彻底讲清楚">8.3
+补码、小端和符号扩展彻底讲清楚</h2>
+<p>二进制位本身没有“正负”的含义，关键看指令怎样解释它。</p>
+<p>同一个 8 位位串：</p>
+<p>1111 1010</p>
+<p>如果按无符号解释：</p>
+<p><span class="math display">\[250\]</span></p>
+<p>如果按补码解释：</p>
+<p>最高位是 1，表示负数。求值方法之一：</p>
+<p>1111 1010 取反 -&gt; 0000 0101 加 1 -&gt; 0000 0110 = 6 所以原数是
+-6</p>
+<p>所以 <code>11111010</code> 是 8 位补码 <code>-6</code>。</p>
+<h3 id="32-位--6-的小端存储">32 位 -6 的小端存储</h3>
+<p>32 位 <code>+6</code>：</p>
+<p>0x00000006</p>
+<p>取反加一得到 <code>-6</code>：</p>
+<p>0xFFFFFFFA</p>
+<p>按字节拆开：</p>
+<p>FF FF FF FA</p>
+<p>这是“从高有效字节到低有效字节”的书写顺序。小端存储要把最低有效字节放低地址，所以内存从低地址到高地址是：</p>
+<p>FA FF FF FF</p>
+<p>这就是示例里选 <code>0xFA, 0xFF, 0xFF, 0xFF</code> 的原因。</p>
+<h3 id="符号扩展为什么复制最高位">符号扩展为什么复制最高位</h3>
+<p>8 位 <code>-6</code>：</p>
+<p>1111 1010</p>
+<p>扩展到 32 位：</p>
+<p>11111111 11111111 11111111 11111010</p>
+<p>如果高位补 0，会变成：</p>
+<p>00000000 00000000 00000000 11111010 = 250</p>
+<p>值就错了。补码符号扩展复制符号位，才能保持数值不变。</p>
+<h3 id="溢出判断口诀">溢出判断口诀</h3>
+<p>有符号加法：</p>
+<ul>
+<li><p>正 + 正 = 负，溢出。</p></li>
+<li><p>负 + 负 = 正，溢出。</p></li>
+<li><p>正 + 负，不会溢出。</p></li>
+</ul>
+<p>例：8 位补码 <code>100 + 60</code>：</p>
+<p>0110 0100 = 100 + 0011 1100 = 60 = 1010 0000</p>
+<p>结果最高位是 1，按 8
+位补码是负数，但两个正数相加不可能得到负数，所以溢出。</p>
+<h2 id="84-risc-v-做题先把指令翻译成人话">8.4 RISC-V
+做题：先把指令翻译成人话</h2>
+<p>看到 RISC-V 代码，不要急着画数据通路。先逐条翻译。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">指令</th>
+<th style="text-align: left;">人话语义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>add rd,rs1,rs2</code></td>
+<td style="text-align: left;"><code>rd = rs1 + rs2</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sub rd,rs1,rs2</code></td>
+<td style="text-align: left;"><code>rd = rs1 - rs2</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>addi rd,rs1,imm</code></td>
+<td
+style="text-align: left;"><code>rd = rs1 + sign_extend(imm)</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>lw rd,offset(rs1)</code></td>
+<td
+style="text-align: left;"><code>rd = Mem``[``rs1 + offset``]</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>sw rs2,offset(rs1)</code></td>
+<td
+style="text-align: left;"><code>Mem``[``rs1 + offset``]`` = rs2</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>beq rs1,rs2,L</code></td>
+<td style="text-align: left;">如果 <code>rs1 == rs2</code>，跳到 L</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>bne rs1,rs2,L</code></td>
+<td style="text-align: left;">如果 <code>rs1 != rs2</code>，跳到 L</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>jal rd,L</code></td>
+<td style="text-align: left;"><code>rd = PC + 4</code>，然后跳到 L</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>jalr rd,offset(rs1)</code></td>
+<td style="text-align: left;"><code>rd = PC + 4</code>，然后跳到
+<code>rs1 + offset</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="例题数组求和的汇编骨架">例题：数组求和的汇编骨架</h3>
+<p>C 代码：</p>
+<p>int sum = 0; <strong>for</strong> (int i = 0; i &lt; n; i++) { sum +=
+a[i]; }</p>
+<p>设：</p>
+<ul>
+<li><p><code>x10</code> 是数组首地址 <code>a</code></p></li>
+<li><p><code>x11</code> 是 <code>n</code></p></li>
+<li><p><code>x5</code> 是 <code>i</code></p></li>
+<li><p><code>x6</code> 是 <code>sum</code></p></li>
+<li><p><code>x7</code> 临时保存偏移/地址</p></li>
+<li><p><code>x8</code> 临时保存数组元素</p></li>
+</ul>
+<p>汇编思路：</p>
+<p>addi x5, x0, 0 # i = 0 addi x6, x0, 0 # sum = 0 loop: bge x5, x11,
+done # i &gt;= n 则结束 slli x7, x5, 2 # int 是 4 字节，偏移 = i * 4 add
+x7, x10, x7 # 地址 = a + i*4 lw x8, 0(x7) # x8 = a[i] add x6, x6, x8 #
+sum += a[i] addi x5, x5, 1 # i++ jal x0, loop # 无条件跳回 done:</p>
+<p>做这类题的关键不是背代码，而是理解三步：</p>
+<ol type="1">
+<li><p>比较循环条件。</p></li>
+<li><p>计算数组元素地址。</p></li>
+<li><p>load 元素并更新累加变量。</p></li>
+</ol>
+<h3 id="函数调用为什么要用栈">函数调用为什么要用栈</h3>
+<p>函数调用至少要处理三件事：</p>
+<ul>
+<li><p>参数怎样传进去。</p></li>
+<li><p>返回值怎样传出来。</p></li>
+<li><p>调用完怎样回到原位置。</p></li>
+</ul>
+<p>RISC-V 常用约定：</p>
+<ul>
+<li><p><code>a0-a7</code> 传参数和返回值。</p></li>
+<li><p><code>ra</code> 保存返回地址。</p></li>
+<li><p><code>sp</code> 指向栈顶。</p></li>
+<li><p><code>s0-s11</code> 是被调用者保存寄存器。</p></li>
+<li><p><code>t0-t6</code> 是调用者保存寄存器。</p></li>
+</ul>
+<p>非叶子过程会调用别的函数，所以它自己的 <code>ra</code> 会被新的
+<code>jal</code> 覆盖。进入函数时必须把旧 <code>ra</code> 存到栈里：</p>
+<p>addi <strong>sp</strong>, <strong>sp</strong>, -16 sw ra,
+12(<strong>sp</strong>) sw s0, 8(<strong>sp</strong>)</p>
+<p># 函数体，可能调用别的函数</p>
+<p>lw s0, 8(<strong>sp</strong>) lw ra, 12(<strong>sp</strong>) addi
+<strong>sp</strong>, <strong>sp</strong>, 16 jalr x0, 0(ra)</p>
+<p>栈帧的直觉：</p>
+<p>高地址 | 调用者的数据 | | 保存的 ra | | 保存的 s0 | | 局部变量 |
+&lt;- sp 低地址</p>
+<p>栈通常向低地址增长，所以分配栈帧是 <code>sp</code> 减小，释放栈帧是
+<code>sp</code> 增大。</p>
+<h2 id="85-指令格式和立即数不要死背要按用途理解">8.5
+指令格式和立即数：不要死背，要按用途理解</h2>
+<p>RISC-V 把常用指令做成固定 32
+位，是为了让取指和译码简单。不同格式本质上是为了容纳不同数量的寄存器和立即数。</p>
+<p>R 型需要三个寄存器：</p>
+<p>add rd, rs1, rs2</p>
+<p>所以格式里要有
+<code>rd</code>、<code>rs1</code>、<code>rs2</code>。</p>
+<p>I 型需要两个寄存器和一个立即数：</p>
+<p>addi rd, rs1, imm lw rd, imm(rs1)</p>
+<p>所以格式里有 <code>rd</code>、<code>rs1</code> 和 12 位立即数。</p>
+<p>S 型是 store：</p>
+<p>sw rs2, imm(rs1)</p>
+<p>它不写寄存器，所以没有 <code>rd</code>。但是要读两个寄存器：</p>
+<ul>
+<li><p><code>rs1</code> 作为基地址。</p></li>
+<li><p><code>rs2</code> 作为要写入内存的数据。</p></li>
+</ul>
+<p>B 型是 branch：</p>
+<p>beq rs1, rs2, label</p>
+<p>它不写寄存器，所以没有
+<code>rd</code>；需要两个源寄存器做比较，还需要 PC 相对偏移。</p>
+<p>J 型是 jump：</p>
+<p>jal rd, label</p>
+<p>它需要写 <code>rd = PC + 4</code>，还需要比较大的跳转偏移。</p>
+<p>做编码题时先写字段，不要先写二进制：</p>
+<p>opcode 是哪类指令 rd 是谁 funct3/funct7 决定具体操作 rs1/rs2 是谁 imm
+如何拆分</p>
+<h2 id="86-浮点数一眼拆出-sef">8.6 浮点数：一眼拆出 S、E、F</h2>
+<p>单精度浮点格式：</p>
+<p>S | Exponent(8 bits) | Fraction(23 bits)</p>
+<p>规格化数：</p>
+<p><span class="math display">\[(-1)^S \times (1.F) \times
+2^{E-127}\]</span></p>
+<p>双精度只是位数变大：</p>
+<p>S | Exponent(11 bits) | Fraction(52 bits)</p>
+<p>规格化数：</p>
+<p><span class="math display">\[(-1)^S \times (1.F) \times
+2^{E-1023}\]</span></p>
+<h3 id="例题把--50-编成单精度">例题：把 -5.0 编成单精度</h3>
+<p>先写成二进制科学计数法：</p>
+<p>5.0 = 101.0_2 = 1.01_2 × 2^2 -5.0 = (-1)^1 × 1.01_2 × 2^2</p>
+<p>所以：</p>
+<p>S = 1 实际指数 = 2 存储指数 E = 2 + 127 = 129 = 10000001_2 尾数 F =
+0100000...0</p>
+<p>最终：</p>
+<p>1 10000001 01000000000000000000000</p>
+<p>这正好对应浮点例题。</p>
+<h3 id="例题给定位串求值">例题：给定位串求值</h3>
+<p>位串：</p>
+<p>0 10000010 11000000000000000000000</p>
+<p>拆：</p>
+<p>S = 0 E = 10000010_2 = 130 F = .110000...</p>
+<p>实际指数：</p>
+<p>130 - 127 = 3</p>
+<p>有效数：</p>
+<p>1.11_2 = 1 + 1/2 + 1/4 = 1.75</p>
+<p>值：</p>
+<p>(+1) × 1.75 × 2^3 = 14</p>
+<h3 id="浮点加法为什么会丢精度">浮点加法为什么会丢精度</h3>
+<p>比如：</p>
+<p>1.0 × 2^20 + 1.0 × 2^0</p>
+<p>对阶时，第二个数要右移 20
+位才能和第一个数相加。若尾数位数有限，小数可能完全被移没，结果近似还是第一个大数。</p>
+<p>所以浮点不是“实数”，只是有限位宽下的近似。</p>
+<h2 id="87-单周期数据通路按部件走一遍">8.7
+单周期数据通路：按部件走一遍</h2>
+<p>单周期数据通路的关键部件：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">部件</th>
+<th style="text-align: left;">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">PC</td>
+<td style="text-align: left;">保存当前指令地址</td>
+</tr>
+<tr>
+<td style="text-align: left;">指令存储器</td>
+<td style="text-align: left;">根据 PC 取出指令</td>
+</tr>
+<tr>
+<td style="text-align: left;">寄存器堆</td>
+<td style="text-align: left;">读 <code>rs1/rs2</code>，写
+<code>rd</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">立即数生成器</td>
+<td style="text-align: left;">从指令字段取出并符号扩展立即数</td>
+</tr>
+<tr>
+<td style="text-align: left;">ALU</td>
+<td style="text-align: left;">算术逻辑运算、地址计算、比较</td>
+</tr>
+<tr>
+<td style="text-align: left;">数据存储器</td>
+<td style="text-align: left;">执行 <code>lw/sw</code></td>
+</tr>
+<tr>
+<td style="text-align: left;">加法器</td>
+<td style="text-align: left;">计算 <code>PC+4</code> 和分支目标</td>
+</tr>
+<tr>
+<td style="text-align: left;">多路选择器</td>
+<td style="text-align: left;">在多个输入中选一个</td>
+</tr>
+<tr>
+<td style="text-align: left;">控制器</td>
+<td style="text-align: left;">根据 opcode/funct 产生控制信号</td>
+</tr>
+</tbody>
+</table>
+<h3 id="add-x7x5x6-怎么走"><code>add x7,x5,x6</code> 怎么走</h3>
+<p>IF: PC 送入指令存储器，取出 add 指令；同时算 PC+4 ID: 译码，读 x5 和
+x6 EX: ALU 做加法，输入是 x5 的值和 x6 的值 MEM: 不访问数据存储器 WB:
+ALU 结果写回 x7 PC: 选择 PC+4</p>
+<p>控制信号：</p>
+<p>RegWrite = 1 ALUSrc = 0 MemRead = 0 MemWrite = 0 MemtoReg = 0 Branch
+= 0 ALUOp = R 型，由 funct3/funct7 决定 add</p>
+<h3 id="lw-x80x7-怎么走"><code>lw x8,0(x7)</code> 怎么走</h3>
+<p>IF: 取指令 ID: 读 x7，生成立即数 0 EX: ALU 计算地址 x7 + 0 MEM: 读取
+DataMemory[x7 + 0] WB: 把内存读出的数据写回 x8 PC: PC+4</p>
+<p>控制信号：</p>
+<p>RegWrite = 1 ALUSrc = 1 MemRead = 1 MemWrite = 0 MemtoReg = 1 Branch
+= 0 ALUOp = 加法</p>
+<h3 id="sw-x84x7-怎么走"><code>sw x8,4(x7)</code> 怎么走</h3>
+<p>IF: 取指令 ID: 读 x7 和 x8，生成立即数 4 EX: ALU 计算地址 x7 + 4 MEM:
+把 x8 的值写到 DataMemory[x7 + 4] WB: 不写寄存器 PC: PC+4</p>
+<p>控制信号：</p>
+<p>RegWrite = 0 ALUSrc = 1 MemRead = 0 MemWrite = 1 MemtoReg = x Branch
+= 0 ALUOp = 加法</p>
+<h3 id="beq-x5x6l-怎么走"><code>beq x5,x6,L</code> 怎么走</h3>
+<p>IF: 取指令，算 PC+4 ID: 读 x5 和 x6，生成分支立即数 EX: ALU 比较 x5
+和 x6，常用减法判断 Zero MEM: 不访问数据存储器 WB: 不写寄存器 PC: 如果
+Branch 且 Zero，则选分支目标，否则选 PC+4</p>
+<p>答题时最容易漏的是 PC 选择。分支题一定写出：</p>
+<p>PCSrc = Branch and Zero</p>
+<h2 id="88-为什么单周期-cpu-慢流水线又为什么麻烦">8.8 为什么单周期 CPU
+慢，流水线又为什么麻烦</h2>
+<p>单周期 CPU 的 CPI 是 1，看起来很好，但周期必须按最慢指令设置。通常
+<code>lw</code> 最慢，因为它要：</p>
+<p>取指 -&gt; 读寄存器 -&gt; ALU 算地址 -&gt; 读数据存储器 -&gt;
+写回</p>
+<p>即使 <code>add</code>
+不需要访问数据存储器，也必须等同样长的时钟周期。这就是单周期的浪费。</p>
+<p>流水线把一条指令拆成 5 段：</p>
+<p>IF ID EX MEM WB</p>
+<p>不同指令可以错开执行。</p>
+<p><img
+src="assets/computer-organization/ch04_pipeline_timing_multicycle.png"
+alt="多周期流水线图" /></p>
+<p><img
+src="assets/computer-organization/ch04_pipeline_timing_singlecycle.png"
+alt="单周期流水线图" /></p>
+<p>理想情况下，5 级流水线完成 n 条指令需要：</p>
+<p>n + 4 个周期</p>
+<p>而不是：</p>
+<p>5n 个周期</p>
+<p>但流水线会出现冒险。</p>
+<h3 id="结构冒险">结构冒险</h3>
+<p>硬件资源冲突。例如同一个周期里：</p>
+<ul>
+<li><p>一条指令在 IF 阶段要读指令存储器。</p></li>
+<li><p>另一条指令在 MEM 阶段要读/写数据。</p></li>
+</ul>
+<p>如果指令和数据共用一个存储器，就冲突。解决方案：</p>
+<ul>
+<li><p>指令存储器和数据存储器分开。</p></li>
+<li><p>或者让流水线暂停。</p></li>
+</ul>
+<p>这也解释了为什么现代处理器常把 L1 I-Cache 和 L1 D-Cache 分开。</p>
+<h3 id="数据冒险">数据冒险</h3>
+<p>后一条指令要用前一条指令的结果：</p>
+<p>add x1,x2,x3 sub x4,x1,x5</p>
+<p><code>sub</code> 在 EX 阶段需要 <code>x1</code>，但 <code>add</code>
+要到 WB 才写回。如果等 WB，会浪费周期。旁路把 ALU 结果直接送给后续指令的
+ALU 输入。</p>
+<p>时间表直觉：</p>
+<p>cycle: 1 2 3 4 5 add: IF ID EX MEM WB sub: IF ID EX MEM WB</p>
+<p><code>sub</code> 的 EX 在 cycle 4，而 <code>add</code> 的结果在 cycle
+3 EX 末尾已经算出，可以从 EX/MEM 旁路过去。</p>
+<h3 id="load-use-为什么旁路还不够">load-use 为什么旁路还不够</h3>
+<p>lw x1,0(x2) add x3,x1,x4</p>
+<p>时间表：</p>
+<p>cycle: 1 2 3 4 5 lw: IF ID EX MEM WB add: IF ID EX MEM WB</p>
+<p><code>add</code> 的 EX 在 cycle 4 一开始需要 <code>x1</code>，但
+<code>lw</code> 的数据要到 cycle 4 的 MEM
+末尾才从数据存储器出来。太晚了，所以必须插入 1 个 bubble：</p>
+<p>cycle: 1 2 3 4 5 6 lw: IF ID EX MEM WB add: IF ID ID EX MEM WB</p>
+<p>第二个 <code>ID</code> 表示 <code>add</code> 在译码级保持 1
+拍，同时向 EX 级插入一个 bubble。硬件动作是：</p>
+<ul>
+<li><p>PC 不更新。</p></li>
+<li><p>IF/ID 不更新。</p></li>
+<li><p>ID/EX 控制信号清 0，形成 bubble。</p></li>
+</ul>
+<h3 id="控制冒险">控制冒险</h3>
+<p>分支是否跳转要等比较结果出来。若处理器已经取了下一条顺序指令，结果发现分支要跳，就要清掉错误路径的指令。</p>
+<p>降低控制冒险代价的方法：</p>
+<ul>
+<li><p>提前在 ID 阶段计算分支。</p></li>
+<li><p>分支预测。</p></li>
+<li><p>预测错就 flush。</p></li>
+<li><p>编译器把有用指令放到分支延迟槽，部分 ISA
+使用过这种设计。</p></li>
+</ul>
+<h2 id="89-流水线题完整演练">8.9 流水线题完整演练</h2>
+<p>题目：</p>
+<p>lw x1,0(x2) add x3,x1,x4 sub x5,x3,x6 and x7,x5,x8</p>
+<p>假设有完整旁路，但 load-use 需要停 1 个周期。画流水线。</p>
+<p>第一步找依赖：</p>
+<p>lw -&gt; add: x1，load-use，需要停 1 周期 add -&gt; sub: x3，ALU
+结果，可旁路 sub -&gt; and: x5，ALU 结果，可旁路</p>
+<p>时间表：</p>
+<p>cycle: 1 2 3 4 5 6 7 8 9 lw: IF ID EX MEM WB add: IF ID ID EX MEM WB
+sub: IF IF ID EX MEM WB and: IF ID EX MEM WB</p>
+<p>解释：</p>
+<ul>
+<li><p><code>add</code> 因为要等 <code>lw</code> 的数据，在 ID 级保持 1
+周期；这一拍 EX 级插入 bubble。</p></li>
+<li><p>停顿时 PC 和 IF/ID 寄存器冻结，所以 <code>sub</code> 仍停在
+IF；下一条 <code>and</code> 不能在第 4 周期取指，必须到第 5 周期才
+IF。</p></li>
+<li><p><code>add -&gt; sub</code> 和 <code>sub -&gt; and</code>
+都靠旁路解决，不再额外停顿。</p></li>
+</ul>
+<p>若只问“停几个周期”，答 1 个 load-use
+停顿即可；若要求画图，要把后续指令也整体后移。</p>
+<h2 id="810-cache-地址分解完整演练">8.10 Cache 地址分解完整演练</h2>
+<p>题目：32 位地址，Cache 容量 4 KiB，块大小 16 B，直接映射。问
+tag/index/offset 各几位。</p>
+<p>第一步：块内偏移。</p>
+<p>块大小 16 B = 2^4 B offset = 4 位</p>
+<p>第二步：Cache 有多少块。直接映射相联度为 1。</p>
+<p>块数 = 4 KiB / 16 B = 4096 / 16 = 256 = 2^8 index = 8 位</p>
+<p>第三步：剩余是 tag。</p>
+<p>tag = 32 - 8 - 4 = 20 位</p>
+<p>所以地址格式：</p>
+<p>| tag 20 | index 8 | offset 4 |</p>
+<p><img
+src="assets/computer-organization/ch05_cache_trace_example_1.png"
+alt="Cache 例题 1" /></p>
+<p><img
+src="assets/computer-organization/ch05_cache_trace_example_2.png"
+alt="Cache 例题 2" /></p>
+<h3 id="组相联版本">组相联版本</h3>
+<p>如果同样 4 KiB、块大小 16 B，但 4 路组相联：</p>
+<p>总块数 = 4096 / 16 = 256 组数 = 256 / 4 = 64 = 2^6 offset = 4 位
+index = 6 位 tag = 32 - 6 - 4 = 22 位</p>
+<p>结论：相联度越高，组数越少，index 位越少，tag 位越多。</p>
+<h3 id="访问一个地址">访问一个地址</h3>
+<p>假设直接映射，地址：</p>
+<p>0x0000_1234</p>
+<p>offset 是低 4 位：</p>
+<p>offset = 0x4</p>
+<p>index 是再往上的 8 位：</p>
+<p>0x1234 &gt;&gt; 4 = 0x123 index = 0x23</p>
+<p>tag 是剩下高位：</p>
+<p>tag = 0x00001</p>
+<p>访问流程：</p>
+<ol type="1">
+<li><p>用 index <code>0x23</code> 找到 Cache 中那一行。</p></li>
+<li><p>看 valid 是否为 1。</p></li>
+<li><p>比较 tag 是否等于 <code>0x00001</code>。</p></li>
+<li><p>若匹配，用 offset <code>0x4</code> 取块内对应字节。</p></li>
+<li><p>若不匹配，发生 miss，把内存块调入这一行，并更新 tag 和
+valid。</p></li>
+</ol>
+<h3 id="命中率题怎么做">命中率题怎么做</h3>
+<p>地址序列：</p>
+<p>0, 4, 8, 12, 16, 0</p>
+<p>块大小 16 B，直接映射 Cache 足够大。块划分：</p>
+<p>地址 0,4,8,12 属于块 0 地址 16 属于块 1</p>
+<p>从空 Cache 开始：</p>
+<p>0 : miss，调入块 0 4 : hit 8 : hit 12 : hit 16 : miss，调入块 1 0 :
+hit，块 0 仍在</p>
+<p>命中 4 次，缺失 2 次，命中率 <code>4/6</code>，缺失率
+<code>2/6</code>。</p>
+<p>如果 Cache 只有 1 块，访问 16 会替换块 0，最后访问 0 又
+miss。题目一定要看 Cache 容量和映射方式。</p>
+<h2 id="811-amat-和多级-cache-完整演练">8.11 AMAT 和多级 Cache
+完整演练</h2>
+<p>题目：</p>
+<ul>
+<li><p>L1 命中时间 1 cycle。</p></li>
+<li><p>L1 缺失率 5%。</p></li>
+<li><p>L2 命中时间 10 cycles。</p></li>
+<li><p>L2 缺失率 20%。</p></li>
+<li><p>主存代价 100 cycles。</p></li>
+</ul>
+<p>多级 AMAT：</p>
+<p><span class="math display">\[AMAT = L1HitTime + L1MissRate \times
+(L2HitTime + L2MissRate \times MemoryPenalty)\]</span></p>
+<p>代入：</p>
+<p>AMAT = 1 + 0.05 × (10 + 0.20 × 100) = 1 + 0.05 × (10 + 20) = 1 + 1.5
+= 2.5 cycles</p>
+<p>注意这里的 L2 缺失率通常指“局部缺失率”：在已经 L1 miss
+的访问中，有多少又 L2 miss。</p>
+<p>如果题目给全局 L2 缺失率，要小心不要重复乘 L1 miss
+rate。读题时看它写的是：</p>
+<ul>
+<li><p>local miss rate：局部缺失率。</p></li>
+<li><p>global miss rate：全局缺失率。</p></li>
+</ul>
+<h2 id="812-虚拟存储从地址翻译开始理解">8.12
+虚拟存储从地址翻译开始理解</h2>
+<p>虚拟存储的核心是“程序看到的是虚拟地址，硬件最终要访问物理地址”。</p>
+<p>虚拟地址：</p>
+<p>| VPN | page offset |</p>
+<p>物理地址：</p>
+<p>| PPN | page offset |</p>
+<p>页内偏移不变，因为虚拟页和物理页大小一样。需要翻译的是页号：</p>
+<p>VPN -&gt; PPN</p>
+<p><img
+src="assets/computer-organization/ch05_page_table_translation.png"
+alt="页表地址转换" /></p>
+<h3 id="例题页大小-4-kib">例题：页大小 4 KiB</h3>
+<p>页大小 4 KiB：</p>
+<p>4 KiB = 4096 B = 2^12 B page offset = 12 位</p>
+<p>32 位虚拟地址中：</p>
+<p>VPN = 高 20 位 offset = 低 12 位</p>
+<p>若虚拟地址是：</p>
+<p>0x12345ABC</p>
+<p>则：</p>
+<p>VPN = 0x12345 offset = 0xABC</p>
+<p>查页表发现：</p>
+<p>VPN 0x12345 -&gt; PPN 0x00F00</p>
+<p>则物理地址：</p>
+<p>0x00F00ABC</p>
+<h3 id="tlb-为什么必要">TLB 为什么必要</h3>
+<p>如果每次访存都先查页表，那么一次 load 可能变成：</p>
+<p>访问页表 + 访问真正数据</p>
+<p>访存次数翻倍。TLB 就是页表项的 Cache。</p>
+<p><img src="assets/computer-organization/ch05_tlb_principle.png"
+alt="TLB 原理" /></p>
+<p>TLB 命中：</p>
+<p>虚拟地址 -&gt; TLB 找到 PPN -&gt; 拼接 offset -&gt; 物理地址 -&gt;
+Cache/内存</p>
+<p>TLB 缺失但页在内存：</p>
+<p>查页表 -&gt; 把页表项装入 TLB -&gt; 重新翻译</p>
+<p>页表项无效：</p>
+<p>缺页异常 -&gt; 操作系统从磁盘调页 -&gt; 更新页表 -&gt;
+重新执行指令</p>
+<p>易错点：</p>
+<ul>
+<li><p>TLB miss 不等于 page fault。TLB miss 只是 TLB 里没有页表项；page
+fault 是页表项说这个页不在内存。</p></li>
+<li><p>Cache miss 不等于 page fault。Cache miss
+通常从下一级存储器取块；page fault 可能要访问磁盘，代价大得多。</p></li>
+</ul>
+<h2 id="813-cache-一致性用一个故事理解">8.13 Cache
+一致性用一个故事理解</h2>
+<p>假设两个 CPU 核都有自己的 Cache，内存中 <code>X = 0</code>。</p>
+<p>第一步：</p>
+<p>CPU A 读 X，把 X=0 放入 A 的 Cache CPU B 读 X，把 X=0 放入 B 的
+Cache</p>
+<p>第二步：</p>
+<p>CPU A 写 X=1</p>
+<p>如果没有一致性协议，CPU B 的 Cache 里还留着旧值
+<code>X=0</code>。接下来 CPU B 读 X，会读到 0，这就错了。</p>
+<p>无效化协议的做法：</p>
+<p>CPU A 写 X 前，广播“我要写 X” CPU B 监听到后，把自己 Cache 里的 X
+标记为 invalid CPU A 写 X=1 CPU B 下次读 X 时 miss，再去拿新值</p>
+<p>一致性通常要求：</p>
+<ul>
+<li><p>同一个处理器自己的读写顺序要合理。</p></li>
+<li><p>一个处理器写入某地址后，其他处理器最终能看到。</p></li>
+<li><p>对同一地址的写，所有处理器看到的顺序一致。</p></li>
+</ul>
+<p>简答题答法：</p>
+<p>问题：多核私有 Cache 可能保存同一内存块的多个副本。
+后果：一个核心写入后，其他核心可能读到旧值。
+硬件方案：监听式协议或目录协议；常用无效化或更新策略。
+状态机制：用有效位、脏位以及 MESI 类状态记录块是否独占、共享、修改。
+软件配合：锁、原子操作、内存屏障保证同步语义。</p>
+<h2 id="814-哈佛结构题怎样答得完整">8.14 哈佛结构题怎样答得完整</h2>
+<p>题目通常问“哈佛结构和冯诺依曼结构相比有什么优缺点，现代处理器如何结合”。</p>
+<p>先定义：</p>
+<p>冯诺依曼结构：指令和数据放在同一个存储器/地址空间中。
+哈佛结构：指令存储和数据存储分开。</p>
+<p>再比较：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><p>结构</p>
+</th>
+<th style="text-align: left;"><p>优点</p>
+</th>
+<th style="text-align: left;"><p>缺点</p>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">冯诺依曼</td>
+<td style="text-align: left;">统一地址空间，程序和数据都能用同一套机制处理，灵活，成本低</td>
+<td style="text-align: left;">取指和访存争用通路，可能形成瓶颈</td>
+</tr>
+<tr>
+<td style="text-align: left;">哈佛</td>
+<td style="text-align: left;">取指和数据访问可并行，带宽更高，适合流水线</td>
+<td style="text-align: left;">指令/数据空间分开，容量不易动态共享，系统复杂</td>
+</tr>
+</tbody>
+</table>
+
+<p>现代折中：</p>
+<p>L1 I-Cache 和 L1 D-Cache 分开，像哈佛结构。 L2/L3 Cache
+和主存统一，像冯诺依曼结构。</p>
+<p>这样做的原因：</p>
+<ul>
+<li><p>流水线每周期都要取指，同时 load/store 也要访存。分离
+I-Cache/D-Cache 可减少结构冒险。</p></li>
+<li><p>更低层统一可简化内存管理，并允许代码和数据共享同一主存空间。</p></li>
+</ul>
+<p>如果题目还问多核 Cache 问题，就接一致性：</p>
+<p>多核中每个核心可能有私有 L1 Cache，同一数据块存在多个副本。
+写入会造成副本不一致，需要 Cache coherence 协议。</p>
+<h2 id="815-并行处理题从-amdahl-到-roofline">8.15 并行处理题从 Amdahl 到
+Roofline</h2>
+<h3 id="amdahl-完整例题">Amdahl 完整例题</h3>
+<p>题目：程序 90% 可并行，使用 8 个处理器，理想并行部分加速 8
+倍。总加速比是多少？</p>
+<p><span
+class="math display">\[Speedup=\frac{1}{(1-0.9)+0.9/8}\]</span></p>
+<p>计算：</p>
+<p>= 1 / (0.1 + 0.1125) = 1 / 0.2125 = 4.706</p>
+<p>所以不是 8 倍。原因是 10% 串行部分完全没有加速。</p>
+<p>若处理器无限多：</p>
+<p><span
+class="math display">\[Speedup_{max}=\frac{1}{0.1}=10\]</span></p>
+<p>这说明串行部分决定上限。</p>
+<h3 id="roofline-完整例题">Roofline 完整例题</h3>
+<p>题目：</p>
+<ul>
+<li><p>峰值计算能力 100 GFLOP/s。</p></li>
+<li><p>内存带宽 20 GB/s。</p></li>
+<li><p>某程序算术强度 2 FLOP/Byte。</p></li>
+</ul>
+<p>可达到性能：</p>
+<p><span class="math display">\[\min(100,\ 20 \times 2)=\min(100,\
+40)=40\ GFLOP/s\]</span></p>
+<p>因为 40 小于峰值计算 100，所以它是内存带宽受限。</p>
+<p>若算术强度提高到 8 FLOP/Byte：</p>
+<p><span class="math display">\[\min(100,\ 20 \times 8)=\min(100,\
+160)=100\ GFLOP/s\]</span></p>
+<p>此时受计算峰值限制。</p>
+<p>优化方向：</p>
+<ul>
+<li><p>内存受限：提高局部性、分块、减少访存、合并访存。</p></li>
+<li><p>计算受限：向量化、提高并行度、使用更快计算单元。</p></li>
+</ul>
+<h2 id="816-一套综合题从头做到尾">8.16 一套综合题从头做到尾</h2>
+<p>题目：</p>
+<p>addi x5,x0,10 addi x6,x0,20 add x7,x5,x6 lw x8,0(x7) sw x8,4(x7)</p>
+<p>已知单周期处理器，频率 1 GHz。问：</p>
+<ol type="1">
+<li><p>程序执行完 <code>x5,x6,x7</code> 是多少。</p></li>
+<li><p><code>add x7,x5,x6</code> 的 ALU 输入、ALU
+操作、写回寄存器。</p></li>
+<li><p>若 <code>Mem``[``30``]``=99</code>，执行后 <code>x8</code> 和
+<code>Mem``[``34``]</code> 是多少。</p></li>
+<li><p>程序理想执行时间。</p></li>
+</ol>
+<p>逐条执行：</p>
+<p>addi x5,x0,10 -&gt; x5 = 0 + 10 = 10 addi x6,x0,20 -&gt; x6 = 0 + 20
+= 20 add x7,x5,x6 -&gt; x7 = 10 + 20 = 30 lw x8,0(x7) -&gt; x8 = Mem[30]
+sw x8,4(x7) -&gt; Mem[34] = x8</p>
+<p>若 <code>Mem``[``30``]``=99</code>：</p>
+<p>x8 = 99 Mem[34] = 99</p>
+<p>第 2 问：</p>
+<p>ALU 输入：x5 的值 10，x6 的值 20 ALU 操作：加法 写回寄存器：x7
+写回值：30</p>
+<p>第 4 问：</p>
+<p>频率 1 GHz -&gt; 周期 1 ns 单周期 CPU 每条指令 1 周期 5 条指令 -&gt;
+5 ns</p>
+<p>如果换成流水线处理器，不考虑冒险，5 级流水线执行 5 条指令需要：</p>
+<p>5 + 4 = 9 个周期</p>
+<p>但这段代码有依赖：</p>
+<p>addi x5 -&gt; add 使用 x5 addi x6 -&gt; add 使用 x6 add x7 -&gt;
+lw/sw 使用 x7 lw x8 -&gt; sw 使用 x8</p>
+<p>如果有完整旁路，ALU 结果依赖可前递；<code>lw -&gt; sw</code>
+是否停顿取决于数据存储器写入数据的旁路设计。题目若没说明，不要擅自加复杂假设，按题目给定流水线规则判断。</p>
+<h1 id="9-补充考点">9. 补充考点</h1>
+<p>本章补充容易出短问的概念。</p>
+<h2 id="91-spec基准测试和性能陷阱">9.1 SPEC、基准测试和性能陷阱</h2>
+<p>SPEC 是标准性能评测组织，常见基准包括：</p>
+<ul>
+<li><p>SPEC CPU：偏 CPU 计算性能，尽量减少
+I/O、网络等因素影响。</p></li>
+<li><p>SPECpower：关注单位功耗下的性能，体现能耗比。</p></li>
+</ul>
+<p>基准测试的意义：</p>
+<ul>
+<li><p>用标准程序集合比较机器性能。</p></li>
+<li><p>避免只用单个小程序造成片面结论。</p></li>
+<li><p>区分响应时间和吞吐率。</p></li>
+</ul>
+<p>常见陷阱/谬误：</p>
+<ul>
+<li><p><strong>只看时钟频率</strong>：频率高但 CPI
+或指令数更大，程序可能更慢。</p></li>
+<li><p><strong>只看 MIPS</strong>：不同 ISA
+的一条指令完成的工作不同，MIPS 不适合跨 ISA 比较。</p></li>
+<li><p><strong>只看峰值性能</strong>：峰值是理想上限，真实程序受
+Cache、分支、I/O、并行效率影响。</p></li>
+<li><p><strong>空闲功耗不重要</strong>：服务器和移动设备大量时间可能处于低负载，空闲功耗会显著影响总能耗。</p></li>
+<li><p><strong>优化局部就等于整体快</strong>：Amdahl
+定律说明，被优化部分占比小，总收益也小。</p></li>
+</ul>
+<p>看到“最可靠性能度量”，通常选执行时间；看到“能耗相关”，要想到功耗墙和性能/瓦。</p>
+<h2 id="92-同步原子操作和-lrsc">9.2 同步、原子操作和
+<code>lr/sc</code></h2>
+<p>多处理器程序会出现数据竞争。例如两个线程同时执行：</p>
+<p>x = x + 1;</p>
+<p>这不是一个不可分割动作，实际包含：</p>
+<p>读 x -&gt; 加 1 -&gt; 写 x</p>
+<p>如果两个核心都读到旧值，再分别写回，就会丢失一次更新。</p>
+<p>原子操作的目标：让“读-改-写”看起来不可分割。</p>
+<p>RISC-V 可用 <code>lr/sc</code> 实现原子交换：</p>
+<ul>
+<li><p><code>lr.d rd,(rs1)</code>：load-reserved，读取地址
+<code>rs1</code> 的值，并对该地址建立保留。</p></li>
+<li><p><code>sc.d rd,rs2,(rs1)</code>：store-conditional，若保留仍有效，就把
+<code>rs2</code> 写入 <code>rs1</code> 指向的地址。</p></li>
+<li><p><code>sc.d</code> 成功时通常返回 0，失败时返回非
+0，失败需要重试。</p></li>
+</ul>
+<p>典型自旋锁思路：</p>
+<p>again: lr.d t0, (lock) # 读锁 bne t0, x0, again # 锁不是
+0，说明有人占用 addi t1, x0, 1 sc.d t2, t1, (lock) # 尝试写 1 bne t2,
+x0, again # 写失败，重试</p>
+<p>为什么需要 <code>lr/sc</code>：</p>
+<ul>
+<li><p>普通 <code>lw/sw</code> 之间可能被其他核心插入写入。</p></li>
+<li><p><code>lr/sc</code>
+能检测这段时间内该地址是否被别人改过。</p></li>
+<li><p>这为锁、信号量、原子计数器提供硬件基础。</p></li>
+</ul>
+<p>简答题关键词：数据竞争、临界区、原子读改写、锁、内存一致性、同步开销。</p>
+<h2 id="93-多发射动态调度和寄存器重命名">9.3
+多发射、动态调度和寄存器重命名</h2>
+<p>流水线每周期发射 1
+条指令。多发射希望每周期发射多条指令，提高指令级并行 ILP。</p>
+<p>静态多发射：</p>
+<ul>
+<li><p>编译器决定哪些指令同一周期发射。</p></li>
+<li><p>硬件较简单。</p></li>
+<li><p>编译器必须避开结构、数据和控制冒险。</p></li>
+<li><p>如果找不到可并行指令，发射槽会空着。</p></li>
+</ul>
+<p>动态多发射：</p>
+<ul>
+<li><p>硬件在运行时决定发射哪些指令。</p></li>
+<li><p>可利用运行时信息，调度更灵活。</p></li>
+<li><p>硬件复杂，功耗高。</p></li>
+</ul>
+<p>动态调度的核心思想：</p>
+<p>只要操作数准备好，即使前面的指令还没完成，也可以先执行后面的独立指令。</p>
+<p>它需要处理三类相关：</p>
+<ul>
+<li><p>RAW：read after write，真数据相关，不能乱。</p></li>
+<li><p>WAR：write after
+read，名字相关，可通过寄存器重命名消除。</p></li>
+<li><p>WAW：write after
+write，名字相关，可通过寄存器重命名消除。</p></li>
+</ul>
+<p>寄存器重命名：</p>
+<ul>
+<li><p>架构寄存器数量固定，例如 <code>x1</code>。</p></li>
+<li><p>硬件内部有更多物理寄存器。</p></li>
+<li><p>不同指令写同一个架构寄存器时，可映射到不同物理寄存器，消除假相关。</p></li>
+</ul>
+<p>推测执行：</p>
+<ul>
+<li><p>分支结果未确定时，按预测路径先执行。</p></li>
+<li><p>预测正确就提交结果。</p></li>
+<li><p>预测错误就撤销推测路径。</p></li>
+</ul>
+<p>为什么这部分常出概念题：</p>
+<ul>
+<li><p>多发射和动态调度可以提升 ILP。</p></li>
+<li><p>但依赖关系、分支、Cache miss、功耗和复杂性限制收益。</p></li>
+<li><p>复杂性会带来功耗墙。</p></li>
+</ul>
+<h2 id="94-dramflash磁盘raid-和-io">9.4 DRAM、Flash、磁盘、RAID 和
+I/O</h2>
+<p>存储介质比较：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">介质</th>
+<th style="text-align: right;">速度</th>
+<th style="text-align: right;">容量/成本</th>
+<th style="text-align: left;">典型用途</th>
+<th style="text-align: left;">关键特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SRAM</td>
+<td style="text-align: right;">最快</td>
+<td style="text-align: right;">贵、容量小</td>
+<td style="text-align: left;">Cache</td>
+<td style="text-align: left;">不需刷新</td>
+</tr>
+<tr>
+<td style="text-align: left;">DRAM</td>
+<td style="text-align: right;">较快</td>
+<td style="text-align: right;">主存级容量</td>
+<td style="text-align: left;">主存</td>
+<td style="text-align: left;">需要刷新</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flash</td>
+<td style="text-align: right;">比磁盘快</td>
+<td style="text-align: right;">介于 DRAM 和磁盘</td>
+<td style="text-align: left;">SSD、U 盘</td>
+<td style="text-align: left;">擦写次数有限</td>
+</tr>
+<tr>
+<td style="text-align: left;">磁盘 HDD</td>
+<td style="text-align: right;">慢</td>
+<td style="text-align: right;">容量大、便宜</td>
+<td style="text-align: left;">二级存储</td>
+<td style="text-align: left;">机械寻道和旋转延迟</td>
+</tr>
+</tbody>
+</table>
+<p>DRAM 为什么需要刷新：</p>
+<ul>
+<li><p>DRAM 用电容存储位。</p></li>
+<li><p>电容会漏电。</p></li>
+<li><p>必须周期性刷新，否则数据丢失。</p></li>
+</ul>
+<p>磁盘访问时间：</p>
+<p>磁盘访问时间 = 寻道时间 + 旋转延迟 + 传输时间 + 控制器开销</p>
+<p>其中：</p>
+<ul>
+<li><p>寻道时间：磁头移动到目标磁道。</p></li>
+<li><p>旋转延迟：等待目标扇区转到磁头下。</p></li>
+<li><p>传输时间：真正读写数据。</p></li>
+</ul>
+<p>选择题常见判断：</p>
+<ul>
+<li><p>顺序访问磁盘比随机访问快很多，因为寻道/旋转开销少。</p></li>
+<li><p>SSD 没有机械寻道，但仍有擦写粒度和寿命问题。</p></li>
+<li><p>Flash 写入前通常需要擦除，擦除块比读写页大。</p></li>
+</ul>
+<p>RAID 的核心目标：</p>
+<ul>
+<li><p>提高可靠性。</p></li>
+<li><p>提高吞吐率。</p></li>
+<li><p>用多个廉价磁盘组合出更好的存储系统。</p></li>
+</ul>
+<p>常见 RAID：</p>
+<ul>
+<li><p>RAID 0：条带化，无冗余，性能高但可靠性差。</p></li>
+<li><p>RAID 1：镜像，可靠性高，容量利用率低。</p></li>
+<li><p>RAID 5：分布式奇偶校验，可容忍一个磁盘故障。</p></li>
+</ul>
+<p>I/O 系统要点：</p>
+<ul>
+<li><p>设备控制器负责和具体设备通信。</p></li>
+<li><p>操作系统提供统一接口，隐藏设备差异。</p></li>
+<li><p>中断让 CPU 不必一直轮询设备。</p></li>
+<li><p>DMA 可让设备直接和内存传输数据，减少 CPU 搬运负担。</p></li>
+</ul>
+<h2 id="95-汉明距离ecc-和可靠性">9.5 汉明距离、ECC 和可靠性</h2>
+<p>汉明距离：两个码字对应位不同的个数。</p>
+<p>例如：</p>
+<p>101100 100110</p>
+<p>不同位有 2 个，所以汉明距离为 2。</p>
+<p>码字集合的最小汉明距离决定检错/纠错能力：</p>
+<ul>
+<li><p>检测 <code>d</code> 位错误：最小距离至少
+<code>d + 1</code>。</p></li>
+<li><p>纠正 <code>d</code> 位错误：最小距离至少
+<code>2d + 1</code>。</p></li>
+</ul>
+<p>因此：</p>
+<ul>
+<li><p>奇偶校验可以检测 1 位错误，但不能定位并纠正。</p></li>
+<li><p>SEC 需要能纠正 1 位错误，要求最小距离至少 3。</p></li>
+<li><p>SEC/DED 可纠正 1 位并检测 2 位错误，常用于 ECC DRAM。</p></li>
+</ul>
+<p>可靠性指标：</p>
+<p><span class="math display">\[Availability = \frac{MTTF}{MTTF +
+MTTR}\]</span></p>
+<p>提高可用性有两个方向：</p>
+<ul>
+<li><p>增大 MTTF：减少故障。</p></li>
+<li><p>减小 MTTR：故障后更快修复。</p></li>
+</ul>
+<h2 id="96-虚拟机和虚拟机监视器">9.6 虚拟机和虚拟机监视器</h2>
+<p>虚拟机 VM：让一个物理机器上运行多个隔离的系统环境。</p>
+<p>虚拟机监视器 VMM/Hypervisor 的职责：</p>
+<ul>
+<li><p>分配和隔离 CPU、内存、I/O 设备。</p></li>
+<li><p>捕获敏感指令或特权操作。</p></li>
+<li><p>管理客户机操作系统看到的虚拟硬件。</p></li>
+<li><p>处理虚拟中断、虚拟 I/O、虚拟内存映射。</p></li>
+</ul>
+<p>虚拟机和普通进程的区别：</p>
+<ul>
+<li><p>普通进程共享同一个操作系统内核。</p></li>
+<li><p>虚拟机通常运行自己的客户机操作系统。</p></li>
+</ul>
+<p>虚拟机优点：</p>
+<ul>
+<li><p>隔离性好。</p></li>
+<li><p>便于服务器整合。</p></li>
+<li><p>便于迁移、快照和恢复。</p></li>
+<li><p>不同操作系统可运行在同一物理机上。</p></li>
+</ul>
+<p>代价：</p>
+<ul>
+<li><p>VMM 带来额外开销。</p></li>
+<li><p>I/O 虚拟化复杂。</p></li>
+<li><p>内存地址转换可能多一层，例如客户机虚拟地址到客户机物理地址，再到宿主机物理地址。</p></li>
+</ul>
+<h2 id="97-消息传递互联网络和并行陷阱">9.7
+消息传递、互联网络和并行陷阱</h2>
+<p>共享内存并行：</p>
+<ul>
+<li><p>多个处理器看到同一地址空间。</p></li>
+<li><p>通过 load/store 共享数据。</p></li>
+<li><p>需要锁、原子操作、Cache 一致性和内存一致性。</p></li>
+</ul>
+<p>消息传递并行：</p>
+<ul>
+<li><p>每个节点有独立地址空间。</p></li>
+<li><p>节点之间通过 send/receive 通信。</p></li>
+<li><p>常见于集群和分布式系统。</p></li>
+</ul>
+<p>消息传递优点：</p>
+<ul>
+<li><p>扩展性好。</p></li>
+<li><p>每个节点相对独立。</p></li>
+<li><p>不需要硬件维护全局 Cache 一致性。</p></li>
+</ul>
+<p>消息传递缺点：</p>
+<ul>
+<li><p>程序员需要显式划分数据和通信。</p></li>
+<li><p>通信延迟和带宽成为瓶颈。</p></li>
+<li><p>负载均衡困难。</p></li>
+</ul>
+<p>互联网络常见指标：</p>
+<ul>
+<li><p>延迟 latency：一条消息从源到目的的时间。</p></li>
+<li><p>带宽 bandwidth：单位时间能传多少数据。</p></li>
+<li><p>拓扑 topology：节点怎样连接。</p></li>
+<li><p>二分带宽 bisection
+bandwidth：把网络切成两半时，跨切口可用带宽。</p></li>
+</ul>
+<p>并行处理常见陷阱：</p>
+<ul>
+<li><p>认为处理器数翻倍，性能就翻倍。实际受串行部分、通信和同步限制。</p></li>
+<li><p>忽视负载均衡。最慢的线程会拖住整体。</p></li>
+<li><p>忽视内存带宽。核心越多，访存压力越大。</p></li>
+<li><p>忽视数据一致性。共享变量没有同步会出错。</p></li>
+<li><p>把 GPU 当万能加速器。分支发散、随机访存、小规模任务都可能让 GPU
+不划算。</p></li>
+</ul>
+<h2 id="98-常见陷阱和谬误">9.8 常见陷阱和谬误</h2>
+<p>这些不是大计算题，但很适合出选择题：</p>
+<ul>
+<li><p>执行时间通常比 MIPS/MFLOPS 更可靠。</p></li>
+<li><p>性能不能只看频率。</p></li>
+<li><p>指令数少不一定快，CPI 和时钟周期也重要。</p></li>
+<li><p>流水线提高吞吐率，不缩短单条指令延迟。</p></li>
+<li><p>旁路不能解决所有数据冒险，load-use 通常仍需阻塞。</p></li>
+<li><p>分支预测错误需要清空错误路径指令。</p></li>
+<li><p>Cache 块越大不一定越好，太大会增加缺失代价和污染。</p></li>
+<li><p>相联度越高不一定越好，可能增加命中时间和硬件复杂度。</p></li>
+<li><p>平均访问时间必须把 miss penalty 算进去。</p></li>
+<li><p>TLB miss 不等于缺页。</p></li>
+<li><p>Cache coherence 不等于 memory consistency。</p></li>
+<li><p>多核性能受通信、同步、串行部分和内存带宽限制。</p></li>
+<li><p>GPU 适合规则数据并行，不适合所有程序。</p></li>
+</ul>
+    </main>
+  </div>
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+
+    function updateThemeIcon() {
+      if (body.classList.contains('dark-theme')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-theme');
+    }
+    updateThemeIcon();
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-theme');
+      localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+      updateThemeIcon();
+    });
+  </script>
+</body>
+</html>

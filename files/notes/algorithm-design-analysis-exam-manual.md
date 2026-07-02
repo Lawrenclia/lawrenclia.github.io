@@ -1,0 +1,2138 @@
+# 算法设计与分析考试手册
+## Divide and Conquer
+主定理
+$$T(n)=aT(n/b)+O(n^d),\qquad a\ge 1,\ b>1.$$
+情形 结论 直觉
+$a<b^d$：$T(n)=O(n^d)$，每层总代价递减，根层主导。
+$a=b^d$：$T(n)=O(n^d\log n)$，每层总代价相同。
+$a>b^d$：$T(n)=O(n^{\log_b a})$，叶子数量主导。
+分治题模板
+分解问题，递归求解子问题，证明合并步骤不会漏掉跨子问题的最优解，最后用递归式分析复杂度。
+典型题：Merge Sort 与逆序对。重点说明跨左右两部分的逆序对如何在线性合并时一次统计。
+Karatsuba、Strassen 与递归复杂度
+整数乘法的分治
+设两个 n 位数以基数 B = 10n/2 拆成：
+$$x = aB + b, y = cB + d.$$
+直接分治会计算 ac, ad, bc, bd 四个半规模乘法：
+$$xy=acB^2+(ad+bc)B+bd.$$
+递归式是 $T(n)=4T(n/2)+O(n)$，仍为 $O(n^2)$，没有击败小学乘法。
+Karatsuba 技巧
+Karatsuba 的核心是只算三次乘法：
+$$p=ac,\qquad q=bd,\qquad r=(a+b)(c+d).$$
+然后用：
+$$ad+bc=r-p-q.$$
+于是：
+$$xy=pB^2+(r-p-q)B+q.$$
+复杂度递归式为：
+$$T(n)=3T(n/2)+O(n)=O(n^{\log_2 3}).$$
+关键点：加减法仍是线性，真正决定指数的是递归子问题数量从 4 变成 3。
+
+Strassen 矩阵乘法
+普通矩阵乘法 $O(n^{3})$。块矩阵分治如果仍计算 8 个半规模乘法：
+$$T(n)=8T(n/2)+O(n^2)=O(n^3).$$
+Strassen 用 7 个精心构造的块乘法配合加减法得到同样结果：
+$$T(n)=7T(n/2)+O(n^2)=O(n^{\log_2 7})\approx O(n^{2.81}).$$
+这类题的证明通常不要求背全部 7 个式子，但要说清思想：乘法比加法贵，减少乘法次数会改变主定理中的 a。
+例子
+Karatsuba 算一遍：1234 × 5678
+取 B = 100，x = 12B + 34，y = 56B + 78。普通分治要算 12 · 56, 12 · 78, 34 · 56, 34 · 78 四次乘法。Karatsuba 只算三次：
+$$p=12\cdot56=672,\qquad q=34\cdot78=2652,\qquad r=(12+34)(56+78)=46\cdot134=6164.$$
+中间项为 ad + bc = r − p − q = 6164 − 672 − 2652 = 2840，所以：
+1234 · 5678 = 672 · 1002 + 2840 · 100 + 2652 = 7006652.
+这个例子体现典型主旨：不是“递归”本身带来加速，而是把 4 个半规模乘法降成 3 个。
+Merge Sort 与逆序对计数
+Merge Sort
+Merge Sort 把数组分成两半，递归排序，再用线性时间合并两个有序数组。合并时维护两个指针，每次取较小元素放入输
+出。正确性来自归纳：如果左右子数组已排序，merge 输出的每个前缀都是两边剩余元素中最小者按顺序取出，因此最终
+有序。
+$$T(n)=2T(n/2)+O(n)=O(n\log n).$$
+逆序对定义
+数组 A 中一对下标 (i, j) 是逆序对，如果 i < j 且 A[i] > A[j]。它常用于衡量两个排序或偏好列表的差异。
+分治计数
+把逆序对分成三类：
+1. 两个元素都在左半部分。
+2. 两个元素都在右半部分。
+3. 第一个在左半，第二个在右半。
+前两类递归解决。第三类在 merge 时统计。设左半和右半均已排序，若当前 R[j] < L[i]，则 L[i], L[i + 1], . . . 都大于 R[j]，
+一次增加左半剩余元素个数。
+
+countSplit(L, R):
+$$i = j = 0$$
+$$ans = 0$$
+while i < len(L) and j < len(R):
+if L[i] <= R[j]: output L[i]; i += 1
+else:
+output R[j]
+$$ans += len(L) - i$$
+$$j += 1$$
+append remaining elements
+return ans
+复杂度仍是 merge sort 的递归式 $O(n \log n)$。
+例子
+Merge 例子
+例如用两个已排序列表演示双指针合并：
+$$L = [1, 5, 10, 26], R = [2, 3, 4, 4, 16].$$
+输出顺序是 [1, 2, 3, 4, 4, 5, 10, 16, 26]。每一步只比较两个指针指向的元素，较小者出队，某一边空了以后把另一边剩余元素
+整体接上。
+跨列表逆序对例子
+如果原数组左半为 [1, 5, 10, 26]，右半为 [2, 3, 4, 4, 16]，跨左右逆序对数为 13：1 贡献 0，5 贡献 4，10 贡献 4，26 贡献 5。
+Merge-and-count 的意义就是在合并时一次性得到这些贡献，而不是每个左元素都扫描整个右表。
+选择问题的 Partition 基础
+问题定义
+Selection 问题：输入 n 个数和整数 k，输出第 k 小元素。排序后取第 k 个是 $O(n \log n)$，但排序做了过多工作。
+Partition 思想
+选一个 pivot p，把元素分成：
+$$L=\{x:x<p\},\qquad M=\{x:x=p\},\qquad R=\{x:x>p\}.$$
+若 $k\le |L|$，递归在 L 中找第 k 小；若 $k\le |L|+|M|$，答案就是 p；否则在 R 中找第 $k-|L|-|M|$ 小。一次 partition 是
+线性时间。
+例子
+Quick Selection 例子
+数组 A = [1, 2, 5, 3, 1, 3, 4, 0]，要找第 k = 4 小。若 pivot 取 3，则：
+$$L = [1, 2, 1, 0], M = [3, 3], R = [5, 4].$$
+因为 k = 4 ≤ |L|，递归到 L。把 L 排序只是为了看答案：[0, 1, 1, 2]，第 4 小为 2，所以原问题输出 2。
+
+作业题分析：Assignment 1：递归式与分治算法
+1. 带对数项的主定理
+题目给出：
+$$T(n)=aT(n/b)+n^d\log^w n.$$
+切入点：画递归树，不要直接套普通 Master Theorem。第 i 层有 ai 个规模 n/bi 的子问题，所以该层合并成本为：
+$$
+a^i\left(\frac{n}{b^i}\right)^d\log^w\left(\frac{n}{b^i}\right)
+=n^d\left(\frac{a}{b^d}\right)^i(\log n-i\log b)^w.
+$$
+令 $r=a/b^d$：
+• $r<1$：靠近根的层主导，$T(n)=O(n^d\log^w n)$；
+• $r>1$：叶子一侧主导，换元 $j=\log_b n-i$ 后得到 $T(n)=O(n^{\log_b a})$；
+• $r=1$：各层没有几何衰减，求和 $\sum_{j=1}^{\log_b n}j^w$，得到 $O(n^d\log^{w+1} n)$。
+易错点：$a>b^d$ 时不能粗暴地把每层对数项都上界为 $\log^w n$，否则会多出不必要的对数因子；应从叶子向上换元。
+3. 一维与二维局部最小值
+一维。检查中点 m。若它比两邻居小就返回；若左邻居更小，左半必存在局部最小值，否则递归右半。递推 $T(n)=T(n/2)+O(1)=O(\log n)$。
+正方形。扫描中间列，取该列全局最小元素 x。由于 x 已不大于上下邻居，只需比较左右邻居；若某侧更小，就递归该侧
+半个矩形：
+$$T(n)=T(n/2)+O(n)=O(n).$$
+一般 n × m。总是沿较长维度对半切，扫描较短维度的中线。若 n ≥ m，前 $O(\log(n/m))$ 层每层花 $O(m)$；尺寸接近后，
+中线长度按几何级数下降。因此：
+$$T(n,m)=O\left(\min(n,m)\left(1+\log\frac{\max(n,m)}{\min(n,m)}\right)\right).$$
+它在 m = 1 时退化为 $O(\log n)$，在 m = n 时为 $O(n)$，正好“平滑插值”。
+4. Tournament 中的 Hamiltonian Path
+Tournament 每对顶点之间恰有一个方向。向已有路径 v → · · · → v 插入新点 u：找到第一个满足 u → v 的位置；若存
+1 k i
+在，则前一个点必满足 v i−1 → u，把 u 插在中间。若不存在，就放在路径末尾。扫描一次是 $O(k)$。
+分治版本把顶点分成两半，递归得到两条有向 Hamiltonian path，再像 merge 一样比较两条路径当前端点：若 a → b 就
+i j
+输出 a ，否则输出 b 。每次输出后都保证上一点指向下一候选点。递推：
+i j
+$$T(n)=2T(n/2)+O(n)=O(n\log n).$$
+完整伪代码
+
+竖式整数乘法
+SchoolbookMultiply(x[0..n-1], y[0..m-1]):
+$$z[0..n+m-1] = 0$$
+for i = 0 to n - 1:
+for j = 0 to m - 1:
+$$z[i+j] = z[i+j] + x[i] * y[j]$$
+propagate carries in z
+return z
+每对数位相乘一次，时间 $O(nm)$，等长时为 $O(n^2)$。
+四次递归的分治乘法
+DivideMultiply(x, y):
+if x and y have one digit: return x * y
+split x = a * 10^m + b
+split y = c * 10^m + d
+$$ac = DivideMultiply(a, c)$$
+$$ad = DivideMultiply(a, d)$$
+$$bc = DivideMultiply(b, c)$$
+$$bd = \operatorname{DivideMultiply}(b,d)$$
+return ac * 10^(2m) + (ad + bc) * 10^m + bd
+$T(n)=4T(n/2)+O(n)=O(n^2)$，单纯分治尚未加速；Karatsuba 的关键就是把 4 次递归乘法压到 3 次。
+Karatsuba 整数乘法
+令 $x=a\cdot10^m+b$、$y=c\cdot10^m+d$，其中 $m=\lfloor n/2\rfloor$。可采用 $z=(a-b)(d-c)$，于是中间项 $ad+bc=z+ac+bd$。
+Karatsuba(x, y):
+$$n=\max(\operatorname{digits}(x),\operatorname{digits}(y))$$
+if n <= 1:
+return x * y
+$$m=\lfloor n/2\rfloor$$
+$$a, b = split x into high and low m digits$$
+$$c, d = split y into high and low m digits$$
+$$ac=\operatorname{Karatsuba}(a,c)$$
+$$bd=\operatorname{Karatsuba}(b,d)$$
+$$z=\operatorname{Karatsuba}(a-b,d-c)$$
+return ac * 10^(2m) + (z + ac + bd) * 10^m + bd
+递推 $T(n)=3T(n/2)+O(n)$，所以 $T(n)=O(n^{\log_2 3})$。
+Strassen 矩阵乘法
+把 A, B 各分成四个 n/2 × n/2 子矩阵，用 7 次递归乘法替代普通分块乘法的 8 次。
+
+Strassen(A, B):
+if A is 1 x 1:
+return A * B
+split A into A11, A12, A21, A22
+split B into B11, B12, B21, B22
+$$M1 = Strassen(A11 + A22, B11 + B22)$$
+$$M2 = Strassen(A21 + A22, B11)$$
+$$M3 = Strassen(A11, B12 - B22)$$
+$$M4 = Strassen(A22, B21 - B11)$$
+$$M5 = Strassen(A11 + A12, B22)$$
+$$M6 = Strassen(A21 - A11, B11 + B12)$$
+$$M7 = Strassen(A12 - A22, B21 + B22)$$
+$$C11 = M1 + M4 - M5 + M7$$
+$$C12 = M3 + M5$$
+$$C21 = M2 + M4$$
+$$C22 = M1 - M2 + M3 + M6$$
+return combine(C11, C12, C21, C22)
+递推 $T(n)=7T(n/2)+O(n^2)$，所以 $T(n)=O(n^{\log_2 7})$。
+Insertion Sort
+InsertionSort(A):
+for i = 2 to n:
+$$key = A[i]$$
+$$j = i - 1$$
+while j >= 1 and A[j] > key:
+$$A[j+1] = A[j]$$
+$$j = j - 1$$
+$$A[j+1] = key$$
+return A
+第 i 轮后前缀 A[1..i] 有序；最坏时间 $O(n^{2})$。
+Merge 两个有序数组
+Merge(L, R):
+$$i = 1, j = 1$$
+$$C = empty list$$
+while i <= |L| and j <= |R|:
+if L[i] <= R[j]:
+append L[i] to C
+$$i = i + 1$$
+else:
+append R[j] to C
+$$j = j + 1$$
+append L[i..|L|] and R[j..|R|] to C
+return C
+两个指针都只向右移动，时间 $O(|L| + |R|)$。
+
+Merge Sort
+MergeSort(A, l, r):
+if r - l <= 1:
+return
+$$m = floor((l + r) / 2)$$
+MergeSort(A, l, m)
+MergeSort(A, m, r)
+Merge(A, l, m, r)
+复杂度递推为 $T(n)=2T(n/2)+O(n)$，所以 $T(n)=O(n\log n)$。
+Count Inversions
+CountInv(A, l, r):
+if r - l <= 1:
+return 0
+$$m = floor((l + r) / 2)$$
+$$ans = CountInv(A, l, m) + CountInv(A, m, r)$$
+$$i = l, j = m$$
+$$B = empty array$$
+while i < m and j < r:
+if A[i] <= A[j]:
+append A[i] to B
+$$i = i + 1$$
+else:
+append A[j] to B
+$$ans = ans + (m - i)$$
+$$j = j + 1$$
+append remaining elements to B
+copy B back to A[l..r)
+return ans
+关键句是 ans=ans+(m-i)：右半元素先出时，它比左半剩余所有元素都小。
+作业完整伪代码
+Assignment 1：一维局部最小值
+LocalMin1D(A, l, r):
+$$m = floor((l + r) / 2)$$
+if A[m] <= A[m-1] and A[m] <= A[m+1]:
+return m
+if A[m-1] < A[m]:
+return LocalMin1D(A, l, m-1)
+return LocalMin1D(A, m+1, r)
+边界外视为 +∞。每轮只递归一半，时间 $O(\log n)$。
+
+Assignment 1：二维矩形局部最小值
+LocalMin2D(A, top, bottom, left, right):
+if number of rows > number of columns:
+choose middle row r
+$$c = column of minimum element on row r$$
+compare A[r][c] with its upper and lower neighbors
+if neither neighbor is smaller: return (r,c)
+recurse into the half containing the smaller neighbor
+else:
+choose middle column c
+$$r = row of minimum element in column c$$
+compare A[r][c] with its left and right neighbors
+if neither neighbor is smaller: return (r,c)
+recurse into the half containing the smaller neighbor
+每轮沿较短维扫描并把较长维减半，可得到 $O(m+n)$；只固定切列会得到 $O(m\log n)$，未必达到题目要求。
+Assignment 1：Tournament Hamiltonian Path
+TournamentPath(V):
+if |V| == 1:
+return the single vertex
+split V into V1 and V2
+$$P=\operatorname{TournamentPath}(V_1)$$
+$$Q=\operatorname{TournamentPath}(V_2)$$
+return MergeTournamentPaths(P, Q)
+MergeTournamentPaths(P, Q):
+$$i = 1, j = 1, R = empty list$$
+while i <= |P| and j <= |Q|:
+if edge P[i] -> Q[j] exists:
+append P[i]; i = i + 1
+else:
+append Q[j]; j = j + 1
+append all remaining vertices
+return R
+合并为线性时间，递推 $T(n)=2T(n/2)+O(n)=O(n\log n)$。
+## Graph
+DFS、拓扑排序与强连通分量
+图表示
+邻接矩阵适合稠密图，判断一条边是否存在是 $O(1)$，空间 $O(V^{2})$。邻接表适合稀疏图，空间 $O(V + E)$，遍历所有边自然
+是 $O(V + E)$。后续复杂度多数默认邻接表。
+DFS 与边分类
+DFS 从一个点出发尽可能深入，回溯后再探索其他分支。每个顶点被第一次发现时标记，每条出边在扫描邻接表时被看一
+次，因此复杂度 $O(V + E)$。
+在有向图中，DFS 边可分为 tree edge、forward edge、back edge、cross edge。DAG 中没有 back edge；若 DFS 发现指
+向递归栈中祖先的边，则存在有向环。
+
+拓扑排序
+DAG 的拓扑序要求每条边 (u, v) 中 u 排在 v 前面。用 DFS 完成时间降序排列顶点即可得到拓扑序。证明要点：若有边
+u → v，在 DFS 中不可能出现 v 完成后又导致 u 必须排在后面的矛盾；DAG 中没有 back edge，完成时间顺序与依赖方
+向一致。
+强连通分量和 Kosaraju
+强连通分量 SCC 是有向图中互相可达的最大顶点集合。把每个 SCC 缩成一个点得到 SCC DAG。
+Kosaraju 算法：
+1. 在反图 GR 上运行 DFS，记录每个点完成时间。
+2. 按完成时间从大到小，在原图 G 上依次 DFS。
+3. 每次从尚未访问点开始的 DFS 正好得到一个 SCC。
+直觉：反图上的完成时间把 SCC DAG 的“源/汇”关系反过来排序，使第二遍 DFS 不会越过还没被分离的分量边界。
+例子
+DFS 边和 SCC 小例子
+有向图 a → b → c → a，再加一条 c → d。DFS 若从 a 开始，会发现 c → a 指向递归栈中的祖先，这是 back edge，也说
+明存在有向环。强连通分量为 {a, b, c} 和 {d}，缩点以后只有一条边 {a, b, c} → {d}，得到 SCC DAG。
+拓扑排序例子
+若有依赖“算法导论 → 图论 → 网络流”，拓扑序必须把算法导论排在图论前、图论排在网络流前。DFS 完成时间降序就
+是把“更依赖前置内容”的点放到后面。
+BFS、Dijkstra 与堆优化
+BFS
+无权图中每条边长度为 1。BFS 从源点 s 出发，按层探索：
+L = {s}, L = {v : ∃u ∈ L , (u, v) ∈ E, v 未被发现}.
+0 i+1 i
+队列保证先发现距离小的点。若一个点第一次出现在第 i 层，则存在长度 i 的路径；若存在更短路径，它应在更早层被发
+现，矛盾。因此 BFS 给出无权最短路。
+Dijkstra
+对非负权图，Dijkstra 维护已确定最短距离的集合 S。对每个未确定点 v，维护当前候选距离 dist[v]。每轮选取 dist 最小
+的点加入 S，并松弛其出边。
+Dijkstra(G, s):
+$$dist[s] = 0, dist[v] = infinity for v != s$$
+$$Q = all vertices keyed by dist$$
+while Q is not empty:
+$$u = extract-min(Q)$$
+for each edge (u, v):
+if dist[v] > dist[u] + w(u, v):
+$$dist[v] = dist[u] + w(u, v)$$
+decrease-key(Q, v)
+正确性核心：设 u 是当前候选距离最小的未确定点。如果有一条更短的 s 到 u 路径，它从 S 第一次走到外部的边会到达
+某个未确定点 y。由于边权非负，dist[y] 不会大于这条更短路径到 u 的长度，从而应比 u 更早被选，矛盾。
+
+实现复杂度
+实现 Extract-min Decrease-key 总复杂度
+数组实现：Extract-min 为 $O(V)$，Decrease-key 为 $O(1)$，总复杂度 $O(V^2+E)$。
+二叉堆实现：Extract-min 和 Decrease-key 均为 $O(\log V)$，总复杂度 $O((V+E)\log V)$。
+例子
+Dijkstra 跑一遍
+图中有边 s → a = 2，s → b = 5，a → b = 1，a → c = 4，b → c = 1。Dijkstra 初始选 s，松弛得 dist[a] = 2, dist[b] = 5；
+再选 a，把 dist[b] 改成 3，把 dist[c] 改成 6；再选 b，把 dist[c] 改成 4；最后选 c。最终距离为 0, 2, 3, 4。
+这个例子也说明 decrease-key 为什么重要：b 和 c 的候选距离都被后来的边改小了。
+负权最短路与 Bellman-Ford
+Dijkstra 为什么会失败
+Dijkstra 一旦把某个点加入 S，就认为它的距离最终确定。负边会破坏这个结论：一个当前距离较大的点可能通过负边把
+已确定点的距离进一步降低。典型典型反例是 1 → 3 权重 3，1 → 2 权重 5，2 → 3 权重 -3。Dijkstra 会先确定 3 的
+距离为 3，但真实最短路是 1 → 2 → 3，长度 2。
+Bellman-Ford 的 DP 解释
+令 $D_k[v]$ 表示从 s 到 v、最多使用 k 条边的最短路径长度。递推为：
+$$D_k[v]=\min\left(D_{k-1}[v],\min_{(u,v)\in E}\{D_{k-1}[u]+w(u,v)\}\right).$$
+如果图中没有从 s 可达且能到达目标的负环，则最短路可以取为简单路径，最多 V − 1 条边。因此做 V − 1 轮全边松弛
+即可。
+Bellman-Ford(G, s):
+$$dist[s] = 0, dist[v] = infinity for v != s$$
+repeat |V|-1 times:
+for each edge (u, v):
+$$dist[v] = min(dist[v], dist[u] + w(u, v))$$
+for each edge (u, v):
+if dist[v] > dist[u] + w(u, v):
+report a reachable negative cycle
+复杂度是 $O(V E)$。若第 V 轮仍能松弛，说明存在一条使用至少 V 条边还更短的路径，其中必含环；能继续变短的环只能
+是负环。
+例子
+Dijkstra 负边反例
+典型小图可以写成：
+1 → 3 = 3, 1 → 2 = 5, 2 → 3 = −3.
+从 1 出发，Dijkstra 会先认为 3 的候选距离 3 小于 2 的候选距离 5，于是把 3 固定。但真实最短路是 1 → 2 → 3，长度
+5 − 3 = 2。错在“已选点距离不会再变”这个贪心证明依赖非负边，一旦有负边，后面的路径可以回头把它变小。
+负环检测例子
+
+若 a → b = 1, b → c = −3, c → a = 1，环总权重为 -1。绕这个环一次距离就少 1，没有有限最短路。Bellman-Ford 第 $|V|$
+轮仍可松弛，就是在捕捉这种现象。
+作业题分析：Assignment 2：DFS、SCC 与桥
+1. SCC 算法正确性
+把 SCC 缩点后得到 DAG。关键不是背“两遍 DFS”，而是证明完成时间能找出当前 head/tail SCC。
+• 若在 $G^R$ 中 v 能到达 u，且二者属于不同 SCC，则无论谁先被发现，都有 $finish[v]>finish[u]$。
+• 第一遍在 GR 求完成时间；第二遍在 G 按完成时间递减启动 DFS。
+• 每次启动点位于尚未处理部分的 head SCC，因此 DFS 恰好收集一个 SCC，不会越界进入另一个未处理分量。
+写证明时应分别说明“同一 SCC 全部能搜到”和“不会多搜其他 SCC”。
+2. 有向图判环
+使用三色 DFS：WHITE 未访问，GRAY 在递归栈，BLACK 已完成。发现边 u → v 且 v 为 GRAY，就得到祖先 v ⇝ u
+加回边 u → v 的有向环。
+反向证明：若存在有向环，从 DFS 第一个进入该环的点出发，在它变 BLACK 前一定会沿环遇到仍为 GRAY 的祖先。复
+杂度 $O(V + E)$。
+3. 每个顶点可达的最大奖励
+同一 SCC 中的顶点具有完全相同的可达 SCC 集合。先求 SCC 并缩成 DAG，令：
+$$w(C) = max r ,$$
+v
+v∈C
+按逆拓扑序计算：
+( )
+$$dp(C) = max w(C), max dp(D).$$
+$$C\toD$$
+最后把 dp(C) 回填给 SCC 内所有顶点。SCC、缩图和 DAG DP 均为线性，总复杂度 $O(V + E)$。
+4. DFS 定向与桥
+树边从父亲指向孩子，back edge 从后代指向祖先。所得有向图强连通，当且仅当原无向图没有桥。
+找桥用：
+• disc[u]：发现时间；
+• low[u]：从 u 子树通过树边和至多一条 back edge 能到达的最小发现时间。
+对 DFS 树边 (u, v)：
+$low[v] > disc[u]$ ⇐⇒ (u, v) 是桥.
+因为该不等式说明 v 的整棵子树没有任何 back edge 能回到 u 或更高祖先。复杂度 $O(V + E)$。
+5. Good Graph 判断题
+• 无向图同时拥有同一棵 BFS/DFS 树，当且仅当它本身是一棵树。
+• 对 good DAG，可以构造同时按 BFS 距离非降、又满足拓扑顺序的排列。
+• 反命题不成立。菱形 DAG s → a, s → b, a → t, b → t 有兼容的距离/拓扑序，但不存在同一棵树同时作为 BFS 和
+DFS 树。
+这类判断题必须给完整反例，并逐条验证“满足前件、违反结论”。
+
+完整伪代码
+Explore 与完整 DFS
+Explore(G, v):
+$$marked[v] = true$$
+for each edge v -> u in G:
+if not marked[u]:
+Explore(G, u)
+DFS(G):
+$$marked[v] = false for every vertex v$$
+for each vertex v in V:
+if not marked[v]:
+Explore(G, v)
+一次 Explore 找到从起点可达的部分；外层循环保证非连通图中的每个连通块都会被访问。总时间 $O(V + E)$。
+删除尾点的拓扑排序（例题最初版本）
+TopoByDeletingTails(G):
+order[1..|V|]
+for pos = |V| down to 1:
+$$v = any vertex with outdegree 0$$
+if no such v exists:
+report "not a DAG"
+$$order[pos] = v$$
+remove v and its incident edges from G
+return order
+若每轮线性寻找尾点，时间 $O(V^{2})$；用出度计数和队列可降至 $O(V + E)$。下面是另一种 DFS 版本。
+DFS finish time 拓扑排序
+TopologicalSort(G):
+$$visited[v] = false for all v$$
+$$order = empty list$$
+DFS(v):
+$$visited[v] = true$$
+for each edge v -> u:
+if not visited[u]:
+DFS(u)
+append v to order
+for each vertex v:
+if not visited[v]:
+DFS(v)
+reverse(order)
+return order
+DAG 上成立；若三色 DFS 发现指向灰色祖先的回边，说明图不是 DAG。
+
+Kosaraju SCC
+Kosaraju(G):
+build reversed graph G_rev
+$$order = vertices ordered by decreasing finish time in DFS(G_rev)$$
+$$visited[v] = false for all v$$
+$$components = empty list$$
+for v in order:
+if not visited[v]:
+$$C = DFS_collect(G, v)$$
+append C to components
+return components
+这是常用方向：先在 GR 上求 finish time，再在 G 上按递减顺序收集 SCC。把 G 与 GR 全部对调也等价，总时间
+$O(V + E)$。
+BFS 与最短无权路
+BFS(G, s):
+for each vertex v:
+$$dist[v] = infinity$$
+$$parent[v] = nil$$
+$$dist[s] = 0$$
+$$Q = empty queue$$
+enqueue(Q, s)
+while Q is not empty:
+$$v = dequeue(Q)$$
+for each edge v -> u:
+if dist[u] == infinity:
+$$dist[u] = dist[v] + 1$$
+$$parent[u] = v$$
+enqueue(Q, u)
+return dist, parent
+队列按层探索，第一次发现顶点时即得到最少边数距离，时间 $O(V + E)$。
+
+Dijkstra
+Dijkstra(G, s):
+$$dist[v] = infinity for all v$$
+$$dist[s] = 0$$
+$$parent[v] = nil for all v$$
+$$PQ = priority queue containing (0, s)$$
+while PQ is not empty:
+$$(d, v) = extract-min(PQ)$$
+if d != dist[v]:
+continue
+for each edge v -> u with weight w:
+if dist[u] > dist[v] + w:
+$$dist[u] = dist[v] + w$$
+$$parent[u] = v$$
+insert or decrease-key (dist[u], u)
+return dist, parent
+适用条件是所有边权非负。若有负边，extract-min 后距离不一定已经最终确定。
+Bellman-Ford
+BellmanFord(G, s):
+$$dist[v] = infinity for all v$$
+$$dist[s] = 0$$
+$$parent[v] = nil for all v$$
+repeat |V| - 1 times:
+for each edge u -> v with weight w:
+if dist[v] > dist[u] + w:
+$$dist[v] = dist[u] + w$$
+$$parent[v] = u$$
+for each edge u -> v with weight w:
+if dist[v] > dist[u] + w:
+report negative cycle reachable from s
+return dist, parent
+若第 $|V|$ 轮还能松弛，说明存在可达负环。
+也可写成“直到某轮没有更新”为止的早停版本：
+repeat:
+$$changed = false$$
+for each edge u -> v with weight w:
+if dist[v] > dist[u] + w:
+$$dist[v] = dist[u] + w$$
+$$changed = true$$
+$$until changed == false$$
+若要可靠检测负环，仍应限制前 $|V|$ − 1 轮并额外检查第 $|V|$ 轮。
+作业完整伪代码
+
+Assignment 2：三色 DFS 判有向环
+HasDirectedCycle(G):
+$$color[v] = WHITE for all v$$
+DFS(v):
+$$color[v] = GRAY$$
+for each edge v -> u:
+if color[u] == GRAY: return true
+if color[u] == WHITE and DFS(u): return true
+$$color[v] = BLACK$$
+return false
+for each vertex v:
+if color[v] == WHITE and DFS(v): return true
+return false
+灰色表示仍在递归栈；指向灰色点的边恰是回边。
+Assignment 2：SCC 缩点后的最大可达奖励
+ReachableMaximumReward(G, reward):
+$$comp = Kosaraju(G)$$
+build condensation DAG H
+$$own[C] = max reward[v] over vertices v in component C$$
+$$order = reverse topological order of H$$
+for C in order:
+$$dp[C] = own[C]$$
+for each edge C -> D in H:
+$$dp[C] = max(dp[C], dp[D])$$
+for each original vertex v:
+$$answer[v] = dp[comp[v]]$$
+return answer
+SCC 缩点图必为 DAG，总时间 $O(V + E)$。
+Assignment 2：Tarjan Bridge
+FindBridges(G):
+$$timer = 0$$
+DFS(v, parentEdge):
+$$disc[v] = low[v] = ++timer$$
+for each edge e=(v,u):
+if e == parentEdge: continue
+if disc[u] == 0:
+DFS(u, e)
+$$low[v] = min(low[v], low[u])$$
+if $low[u] > disc[v]$: output e as a bridge
+else:
+$$low[v] = min(low[v], disc[u])$$
+run DFS from every unvisited vertex
+多重边图中必须按“父边编号”跳过，不能简单跳过父顶点，否则会误判平行边。
+
+Assignment 2：无向 Good Graph 判定
+IsGoodUndirectedGraph(G):
+if G is not connected: return false
+return $|E|$ == |V| - 1
+作业证明了无向图存在同一棵 DFS/BFS 树当且仅当原图本身是一棵树。
+## Greedy
+贪心题模板
+先证明存在一个最优解包含贪心选择，再把问题缩小为同类子问题。
+常见证明语言是 exchange argument：拿任意最优解，如果它没有采用贪心选择，就交换其中某个元素，使目标值不变差，
+同时包含贪心选择。MST 用 cut property，活动选择用最早结束活动替换，Huffman 用两个最小频率字符在最深层互为
+兄弟。
+贪心证明、EDF、Prim 与 Kruskal
+Earliest Deadline First
+单机调度中，每个任务有处理时间和截止时间，问是否存在一个可行顺序使所有任务按时完成。EDF 按截止时间从早到
+晚排。若 EDF 在某个任务 j 的截止时间 d 前失败，说明所有 deadline 不晚于 d 的任务总处理时间已经超过 d ，任何
+j j j
+调度都不可能在 d 前完成它们。因此 EDF 的失败可作为不可行证明。
+j
+MST 与 cut property
+给定无向连通加权图，最小生成树 MST 是连接所有顶点且总权重最小的树。Cut property：
+对任意割 (S, V \ S)，跨越该割的最小权边属于某棵 MST；若最小权边唯一，则属于所有 MST。
+证明采用 exchange argument。取任意 MST T 。如果跨割最小边 e 不在 T 中，把 e 加入 T 会形成一个环。这个环中必有
+另一条跨同一割的边 f 。删去 f 后仍是生成树，且 w(e) ≤ w(f )，所以不更差。
+Prim
+Prim 从一个顶点开始维护已连接集合 S，每次选择跨越 (S, V \ S) 的最小边加入。由 cut property，每次选择都是安全的；
+二叉堆实现通常写 $O(E\log V )$。
+Kruskal
+Kruskal 把边按权重从小到大尝试加入：连接不同连通分量就加入，否则跳过。要会用 Find 判断是否成环、用
+Union 合并分量；排序主导复杂度 $O(E\log E)$。
+注意 MST 允许负权边；负权不破坏 cut property，因为 MST 只关心边权相对大小和无环连接。
+例子
+EDF 失败证书
+两个作业 A = (p = 2, d = 2)，B = (p = 2, d = 3)。EDF 先做 A，再做 B，到时间 4 才完成 B，错过 deadline 3。这个失
+败不是 EDF 的锅：所有 deadline 不超过 3 的作业总处理时间是 2 + 2 = 4 > 3，任何顺序都不可能按时完成。
+MST cut 例子
+设割为 S = {a, b} 与外部，跨割边权分别为 2、5、7。权重 2 的边是 cut 上最轻边。若某棵生成树没选它，把这条边加进
+去会形成环，环里必有另一条跨同一割的边；删掉那条更重或等重的边，生成树不变差。
+
+更多贪心：活动选择、Huffman 与 Makespan
+Activity Selection
+给定若干区间活动，选择最多个互不重叠活动。贪心规则是每次选结束时间最早的活动，然后删除与它冲突的活动。
+正确性：设 a 是最早结束活动，取某个最优解中的第一个活动 b。因为 a 结束不晚于 b，用 a 替换 b 不会影响后续活动可
+行性，活动数不减少。因此存在包含 a 的最优解，递归成立。
+Huffman 编码
+前缀码可以表示为二叉树，字符在叶子上，编码长度等于深度。总代价为：
+$$\sum_c f(c)\operatorname{depth}(c).$$
+Huffman 每次取频率最低的两个字符或子树合并为一个新节点，频率为二者之和，再放回优先队列。
+关键结构引理：存在某个最优前缀码，其中频率最低的两个字符在最深层且互为兄弟。否则可以把更深的高频字符与低频
+字符交换，使代价不增。合并这两个兄弟后得到规模少一的同类问题，所以贪心递归正确。
+实现用最小堆，每次 extract-min 两次、insert 一次，总复杂度 $O(n \log n)$。若初始频率已排序，可用两个队列做到排序后
+线性合并。
+Huffman 的适用范围。它在给定字符频率下，对二元、逐字符、前缀码最优。信息论给出的平均码长下界是熵 $H(X)$，
+Huffman 平均码长满足 $H(X)\le L < H(X)+1$。如果允许三个码字符，应使用三叉 Huffman；如果允许对长消息整体编
+码，算术编码等方法可以更接近熵。因此“Huffman 最优”必须连同编码模型一起说。
+Makespan Scheduling
+有 m 台相同机器，任务处理时间为 p ，目标最小化最大完工时间 C 。List scheduling 每次把新任务放到当前负载最小
+j max
+机器。
+设最后完成的任务为 j，它开始前那台机器负载为 L。因为算法选负载最小机器，所有机器在该时刻负载至少 L，所以总
+处理量至少 mL，得到 L ≤ OPT 。同时 p ≤ OPT 。因此：
+j
+$$ALG = L + p \le 2OPT.$$
+j
+LPT 先按任务时长从大到小排序再 list scheduling。经典保证是 4/3 − 1/(3m)，证明可记成 4/3：若导致最终
+makespan 的任务很大，则每台机器至多容纳少量大任务，LPT 实际上已排得很好；若该任务不大，则用 p ≤ OPT /3 配
+j
+合平均负载下界，把 ALG 压到 4OPT /3。这里重点是近似算法的证明方式：找下界，再把算法输出压到下界的常数倍内。
+例子
+Huffman 频率树
+典型字符频率为 a : 3, i : 3, m : 8, d : 10, o : 12, g : 15, l : 20。Huffman 自底向上合并：
+3 + 3 = 6, 6 + 8 = 14, 10 + 12 = 22, 14 + 15 = 29, 20 + 22 = 42, 29 + 42 = 71.
+每次合并两个最小节点，含义是让这两个子树的所有叶子深度都加 1，并且这次增加的总代价就是两个频率之和。
+Makespan 的紧例子
+有 m 台机器，先来 m(m − 1) 个长度为 1 的小作业，再来一个长度为 m 的大作业。List scheduling 会先把所有机器都堆
+到负载 m − 1，最后大作业放到某台机器上，得到 2m − 1。最优调度把大作业单独放一台机器，其余小作业分到其他机器，
+makespan 为 m。所以简单贪心的近似比会趋近 2。
+
+作业题分析：Assignment 3：贪心、近似与 Matroid
+1. 权重为 2 的幂时贪心最优
+任务的耗时和收益都等于 w ，容量为 T 。贪心每次选择当前能放下的最大任务。一般背包这样做不对，但 powers of two
+i
+提供整除结构。
+交换证明：假设当前贪心选到大小 2k 的任务，而某最优解没选它。最优解剩余的小任务总量至少为 2k；由于所有大小都
+是 2 的幂，可从中找出总和恰为 2k 的一组任务，用当前任务替换，总收益和容量都不变。重复交换后得到包含全部贪心
+选择的最优解。
+2. 一般权重下的近似比
+设简单贪心结果为 G，停止时剩余空间 r。若还有未选任务 j，则 r < w ≤ G，所以：
+j
+$$T = G + r < 2G, OPT \le T < 2G.$$
+因此 G ≥ OPT /2。紧例：容量 2k，任务大小 k + 1, k, k；贪心得 k + 1，最优为 2k，比例趋近 1/2。
+若每轮可同时加入一个或两个任务，题目要求证明 2/3-approximation。证明思路仍是交换/归纳：第一次选中集合 A 后，
+从最优解中删除总重不超过 3w(A)/2 的冲突部分，使剩余最优解对后续实例可行，再用归纳得到：
+( )
+2 3 2
+$$ALG \ge w(A) + OPT - w(A) = OPT.$$
+3 2 3
+3. Matroid 为什么恰好支持贪心
+Matroid 的 hereditary property 保证独立集的子集仍独立；exchange property 保证较小独立集总能从较大独立集吸收一
+个元素。
+• 所有 maximal independent set 大小相同：否则 exchange 可继续扩张较小者，矛盾。
+• 图中无环边集构成 graphic matroid，maximal independent set 是生成森林；连通图中就是生成树。
+• 按权重递减扫描，能加入就加入。用 exchange argument 把贪心当前元素换入某个最优基，权重不减，归纳得全局最
+优。
+• 线性无关向量集合构成 linear matroid，因此按权重递减并用高斯消元判断独立性，就能求最大权线性无关集。
+关键点： Kruskal 不是偶然正确，它就是 graphic matroid 上的加权贪心。
+完整伪代码
+Earliest Deadline First
+EDF(jobs):
+sort jobs by nondecreasing deadline d[j]
+$$time = 0$$
+for each job j in sorted order:
+schedule j on interval [time, time + size[j])
+$$time = time + size[j]$$
+if time > d[j]:
+return "no feasible schedule"
+return the schedule
+若 EDF 都错过某个 deadline，则不存在能让所有作业准时完成的顺序。排序后扫描，时间 $O(n \log n)$。
+
+Prim MST
+Prim(G, s):
+$$key[v] = infinity for all v$$
+$$parent[v] = nil for all v$$
+$$key[s] = 0$$
+$$PQ = all vertices keyed by key[v]$$
+while PQ is not empty:
+$$v = extract-min(PQ)$$
+for each edge v - u with weight w:
+if u is in PQ and w < key[u]:
+$$key[u] = w$$
+$$parent[u] = v$$
+decrease-key(PQ, u, w)
+return parent
+每一步选当前割上的最轻边。
+Kruskal MST
+Kruskal(G):
+sort edges by increasing weight
+make-set(v) for each vertex v
+$$T = empty set$$
+for each edge (u, v) in sorted order:
+if find(u) != find(v):
+add (u, v) to T
+union(u, v)
+return T
+正确性来自 cut property；集合代表操作只负责判断加入一条边是否成环。
+Activity Selection
+ActivitySelection(intervals):
+sort intervals by increasing finish time
+$$ans = empty list$$
+$$last_finish = -infinity$$
+for each interval (s, f) in sorted order:
+if s >= last_finish:
+append interval to ans
+$$last_finish = f$$
+return ans
+证明通常写“最早结束的活动可以出现在某个最优解中”，再递归处理剩余活动。
+
+Huffman Coding
+Huffman(characters with frequencies):
+$$PQ = leaves keyed by frequency$$
+while PQ has more than one node:
+$$x = extract-min(PQ)$$
+$$y = extract-min(PQ)$$
+$$z = new internal node$$
+$$z.left = x$$
+$$z.right = y$$
+$$z.freq = x.freq + y.freq$$
+insert z into PQ
+return the only node in PQ as root
+每次合并两个最低频率字符，等价于把它们安排为最深层兄弟，再递归压缩问题。
+已排序频率上的双队列 Huffman
+若叶子频率已排序，可用两个 FIFO 队列把建树降到 $O(n)$。
+HuffmanTwoQueues(sorted leaves):
+$$Q1 = queue of leaves in nondecreasing frequency$$
+$$Q2 = empty queue$$
+Repeat n - 1 times:
+$$x = pop the smaller front among Q1 and Q2$$
+$$y = pop the smaller front among Q1 and Q2$$
+$$z = new node with children x, y and freq[x] + freq[y]$$
+push z to Q2
+return the only remaining node
+新生成节点的频率单调不降，因此 Q2 始终有序。
+List Scheduling 与 LPT
+ListScheduling(jobs, m):
+$$load[1..m] = 0$$
+for job j in the given order:
+$$machine = argmin_i load[i]$$
+assign j to machine
+$$load[machine] = load[machine] + p[j]$$
+return assignment, max_i load[i]
+LPT(jobs, m):
+sort jobs by nonincreasing processing time p[j]
+return ListScheduling(jobs, m)
+朴素 list scheduling 是 2-approximation；LPT 利用“大作业先排”得到更强保证。用最小堆维护机器负载，时间 $O(n log m)$。
+
+## Dynamic Programming
+Matroid 最大权独立集贪心
+WeightedMatroidGreedy(U, independent, weight):
+sort U by nonincreasing weight
+$$S = empty set$$
+for x in U:
+if independent(S union {x}):
+$$S = S union {x}$$
+return S
+只有当可行集合构成 matroid 时，这个“按权从大到小且保持独立”的策略才对所有非负权重都最优。
+作业完整伪代码
+Assignment 3：最大可行重量贪心及双元素版本
+LargestFeasibleGreedy(weights, T):
+$$S = empty set, used = 0$$
+while exists unchosen item i with used + w[i] <= T:
+choose feasible i with maximum w[i]
+add i to S; used = used + w[i]
+return S
+PairGreedy(weights, T):
+$$S = empty set, used = 0$$
+while exists feasible A with 1 <= |A| <= 2:
+choose feasible A of maximum total weight
+$$S = S union A; used = used + weight(A)$$
+return S
+权重全为 2 的幂时第一个算法最优；一般权重保证 1/2，允许每轮取至多两个物品可证明 2/3。
+DP 题模板
+状态含义要完整，转移只依赖已求状态，答案从状态表中读出。
+写 DP 时一定交代四件事：状态、边界、转移、计算顺序。复杂度通常是“状态数 × 每个状态转移枚举量”。如果权重 W
+出现在复杂度里，要判断是不是伪多项式。
+动态规划基础：DAG、LIS、编辑距离、背包
+DP 与分治的区别
+分治的子问题通常不重叠；DP 的子问题大量重叠。记忆化递归是自顶向下，填表是自底向上。两者本质上都在子问题
+DAG 上计算。
+DAG Shortest Path
+在 DAG 中可按拓扑序求单源最短路，即使有负边也可以。转移为：
+$$dist[v]=\min_{(u,v)\in E}\{dist[u]+w(u,v)\}.$$
+因为拓扑序保证所有前驱已经计算完，复杂度 $O(V + E)$。
+
+Longest Increasing Subsequence
+令 $L[i]$ 为以 $a_i$ 结尾的最长递增子序列长度：
+$$L[i] = 1 + \max\{L[j] : j < i,\ a_j < a_i\}.$$
+若没有合法 $j$，则 $L[i] = 1$。答案为 $\max_i L[i]$，复杂度 $O(n^{2})$。
+Edit Distance
+令 dp[i][j] 为 x 的前 i 个字符变成 y 的前 j 个字符的最少操作数。边界：
+$$dp[i][0] = i, dp[0][j] = j.$$
+转移：
+$$
+dp[i][j] =
+\min\begin{cases}
+dp[i - 1][j] + 1, & \text{delete},\\
+dp[i][j - 1] + 1, & \text{insert},\\
+dp[i - 1][j - 1] + [x_i \ne y_j], & \text{substitute or match}.
+\end{cases}
+$$
+复杂度 $O(mn)$。
+Knapsack
+0/1 背包：每个物品最多选一次，容量 $W$。令 $F[i][b]$ 为只看前 $i$ 个物品、容量 $b$ 的最大价值：
+$$F[i][b] = \max(F[i - 1][b], F[i - 1][b - w_i] + v_i).$$
+Unbounded knapsack 允许同类物品重复选，转移可写成：
+$$F[i][b] = \max(F[i - 1][b], F[i][b - w_i] + v_i).$$
+$O(nW)$ 是伪多项式，因为 W 的数值大小可能远大于它的二进制输入长度。
+例子
+背包里 ratio greedy 为什么会坏
+典型物品表是：
+物品 价值 花费
+iPhone 8888 8888
+Algorithm Book 10000 500
+Laptop 8888 8500
+Hermès / QieGao 90000 100000
+当 W = 10000 时，按价值/花费比选 Algorithm Book 再选 Laptop 看起来很好。但当 W = 100000 时，ratio greedy 会先
+拿书、电脑、手机，剩余容量装不下 Hermès/QieGao，价值远小于直接选择价值 90000 的大物品。问题在于 0/1 背包物
+品不可分割，局部性价比不保证全局最优。
+编辑距离例子
+把 kitten 变成 sitting 的经典路径是 kitten → sitten，sitten → sittin，sittin → sitting，共 3 步。DP 表就是系统地
+比较“删、插、替换/匹配”三种最后一步。
+
+动态规划优化：单调队列、LIS 二分、凸包优化、Knuth
+Sliding Window Maximum
+维护一个双端队列，队列中保存候选下标，并保证对应值单调递减。新元素进来时，把队尾所有不大于它的元素弹出；窗
+口左端移动时，把过期下标从队首弹出。队首就是当前窗口最大值。
+每个元素最多入队一次、出队一次，因此全部队列操作的总复杂度为 $O(n)$。
+LIS 的 $O(n \log n)$ 解法
+维护 tail[ℓ]：长度为 ℓ 的递增子序列所能拥有的最小结尾值。扫描 a 时，用二分找到第一个 tail[ℓ] ≥ a 的位置并替换。
+i i
+tail 数组单调递增。它不一定对应同一个真实子序列，但它保留了“未来扩展能力最强”的代表。答案是最大的有效 ℓ。严
+格递增用 lower_bound；非严格递增要根据题意改成 upper_bound。
+Convex Hull Optimization
+许多 DP 可变形为：
+$$dp[j] = min{A x + B } + C.$$
+i j i j
+i
+每个历史状态 i 对应一条直线 y = A x + B ，求 dp[j] 就是在 x 处查询最低直线。若斜率和查询点都单调，可用凸包队
+i i j
+列在线性时间维护下凸壳。
+典型 manufacturing/printing 类问题通常通过前缀和展开平方项，把 i 相关项和 j 相关项分离。例如 S 是前缀和时，
+j
+(S − S )2 展开后会出现 −2S S ，其中 S 是查询点，−2S 是斜率。
+j i i j j i
+矩阵链和 Knuth 优化
+区间 DP 常见形式：
+$$dp[i][j] = w(i, j) + min {dp[i][k] + dp[k + 1][j]}.$$
+$$i\lek<j$$
+朴素枚举区间长度、左端点和分割点，复杂度 $O(n^{3})$。若满足四边形不等式和决策单调性，则最优分割点 K[i][j] 满足：
+$$K[i][j - 1] \le K[i][j] \le K[i + 1][j].$$
+于是搜索 k 的范围从整个区间缩小到相邻两个最优点之间，复杂度可降为 $O(n^{2})$。至少要能说明
+优化依赖“最优决策点单调”。
+例子
+Sliding Window Maximum
+数组 [2, 1, 3, 4, 6, 3, 8, 9, 10, 12, 56]，窗口大小 k = 4。窗口最大值序列为 [4, 6, 6, 8, 9, 10, 12, 56]。单调队列保存“还可能成
+为最大值”的下标，遇到 6 时，队尾所有不大于 6 的旧元素都可以删掉，因为它们既更小又更早过期。
+LIS tail 数组例子
+扫描 [2, 5, 3, 7, 11, 8, 10, 13, 6] 时，tail 会不断保存每个长度的最小结尾。读到 3 时，它替换长度 2 的结尾 5，因为以 3 结
+尾比以 5 结尾更容易继续接后面的数。这个替换不表示真实 LIS 被改写，只表示保留更强的代表状态。
+图上的 DP：Floyd、树 DP 与 Treewidth
+Floyd-Warshall
+令 D(k)[i][j] 表示从 i 到 j 的最短路，且中间点只允许来自集合 {1, 2, . . . , k}。当允许第 k 个点时，要么最短路不用 k，要
+么经过 k：
+
+$$D^{(k)}[i][j]=\min\left(D^{(k-1)}[i][j],D^{(k-1)}[i][k]+D^{(k-1)}[k][j]\right).$$
+初始化 D(0) 为边权矩阵，自己到自己为 0。三重循环复杂度 $O(V^{3})$，可用二维数组原地更新。
+树上最大独立集
+对树根化后，用两个状态最清楚：
+$$in[v]=1+\sum_{u\in child(v)}out[u],\qquad out[v]=\sum_{u\in child(v)}\max(in[u],out[u]).$$
+答案为 max(in[root], out[root])，复杂度 $O(n)$。例题也可写成“选根则不能选孩子，只能接孙子；不选根则孩子可自由选
+择”。
+也可用叶子贪心视角：任取叶子 v 及其父亲 p，总存在某个最大独立集包含 v。若一个最优解选了 p，可删去 p、加
+入 v，大小不减且仍独立。因此可以选入一个叶子，删除叶子和父亲后递归。它和上面的 DP 都是线性时间，但 DP 更容
+易推广到带权版本。
+Treewidth
+Tree decomposition 把图分解成一棵 bag 树，满足：每个原图顶点出现在某些 bag 中；每条边的两个端点共同出现在至少
+一个 bag 中；包含同一顶点的 bag 在分解树上连通。宽度为最大 bag 大小减 1。
+树的 treewidth 为 1，环为 2，团 K 为 n − 1。许多一般图上的困难问题，在 treewidth 为 k 的图上可用 2kpoly(n) 或类
+n
+似复杂度求解。这体现了参数化算法思想：指数只落在结构参数上。
+例子
+Floyd-Warshall 更新例子
+若 A → B = 3，B → C = −2，而 A → C = 10。当允许 B 作为中间点时：
+$$D[A][C] = min(10, D[A][B] + D[B][C]) = min(10, 3 - 2) = 1.$$
+这就是“允许的中间点集合扩大一位”的具体含义。
+树上独立集例子
+星形树中心连 3 个叶子。若选中心，收益为 1，所有叶子都不能选；若不选中心，可以选 3 个叶子，收益为 3。两状态 DP
+的 in/out 正是把这两种选择分开算。
+作业题分析：Assignment 4：动态规划设计与优化
+1. (L, R)-Step Subsequence
+令 dp[i] 为以 a 结尾的最大收益：
+i
+( )
+$$dp[i] = a + max 0, max dp[j].$$
+i
+$$i-R\lej\lei-L$$
+• L = R = 1 时退化成连续最大子段：$dp[i] = max(a , dp[i - 1] + a )$，$O(n)$。
+i i
+• 直接枚举窗口内所有 j 是 $O(n^{2})$。
+• 用单调队列维护滑动窗口 [i − R, i − L] 中最大 dp[j]，每个下标只进出队一次，降到 $O(n)$。
+易错点：新下标 i − L 进入窗口，旧下标小于 i − R 才过期；入队和出队边界很容易写反。
+
+2. Optimal BST
+令 $dp[i][j]$ 为单词 $a_i,\ldots,a_j$ 构成子树、根层数按 1 计算时的最小加权比较次数，$W(i,j)=\sum_{t=i}^j w_t$。枚举根 $a_k$：
+$$dp[i][j]=\min_{i\le k\le j}\{dp[i][k-1]+dp[k+1][j]+W(i,j)\}.$$
+$W(i,j)$ 表示左右子树挂到新根下面后，区间内每个单词深度都增加 1。前缀和使 W 为 $O(1)$；$O(n^2)$ 个区间、每个枚举
+$O(n)$ 根，总时间 $O(n^{3})$。
+3. 树上优先约束背包
+选节点必须选祖先。基础树 DP：dp[u][k] 表示在 u 子树恰选 k 点且选了 u 的最大价值。对子树逐个做 knapsack merge，
+枚举容量分配 i + j，总时间 $O(nW 2)$。
+优化到 $O(nW)$：DFS preorder 下每棵子树是连续区间，记 next[u] 为子树后的第一个位置。状态 f [i][w] 有两种选择：
+$$f[i][w] = max{f[next[i]][w], v + f[i + 1][w - 1]}.$$
+i
+跳过节点时必须跳过整棵子树；选择节点后才允许继续考虑其后代。状态数 $O(nW)$。
+完整伪代码
+Fibonacci：递归、记忆化与自底向上
+FibRecursive(n):
+if n <= 1:
+return 1
+return FibRecursive(n - 1) + FibRecursive(n - 2)
+FibMem$o(n)$:
+if memo contains n:
+return memo[n]
+if n <= 1:
+$$memo[n] = 1$$
+else:
+$$memo[n] = FibMemo(n - 1) + FibMemo(n - 2)$$
+return memo[n]
+FibBottomUp(n):
+$$fib[0] = fib[1] = 1$$
+for i = 2 to n:
+$$fib[i] = fib[i - 1] + fib[i - 2]$$
+return fib[n]
+三者分别体现重复子问题、memoization 和按依赖拓扑序填表；时间依次为指数级、$O(n)$、$O(n)$。
+
+DAG Shortest Path
+DAGShortestPath(G, s):
+$$order = TopologicalSort(G)$$
+$$dist[v] = infinity for all v$$
+$$dist[s] = 0$$
+for v in order:
+for each edge v -> u with weight w:
+$$dist[u] = min(dist[u], dist[v] + w)$$
+return dist
+拓扑序保证每个状态在使用前已经被算完。
+Longest Increasing Subsequence, $O(n^2)$
+LIS(A):
+$$L[i] = 1 for all i$$
+$$parent[i] = nil for all i$$
+for i = 1 to n:
+for j = 1 to i - 1:
+if A[j] < A[i] and L[i] < L[j] + 1:
+$$L[i] = L[j] + 1$$
+$$parent[i] = j$$
+return max_i L[i]
+状态含义是“以 A[i] 结尾的最长递增子序列长度”。
+Edit Distance
+EditDistance(x[1..m], y[1..n]):
+$$dp[0][j] = j for j = 0..n$$
+$$dp[i][0] = i for i = 0..m$$
+for i = 1 to m:
+for j = 1 to n:
+$$cost = 0 if x[i] == y[j] else 1$$
+$$
+dp[i][j]=\min\{dp[i-1][j]+1,\ dp[i][j-1]+1,\ dp[i-1][j-1]+cost\}
+$$
+return dp[m][n]
+二维 DP 的核心是最后一步操作：删、增、改/匹配。
+
+0/1 Knapsack
+Knapsack(items, W):
+$$dp[0][w] = 0 for w = 0..W$$
+for i = 1 to n:
+for w = 0 to W:
+$$dp[i][w] = dp[i-1][w]$$
+if weight[i] <= w:
+$$dp[i][w] = max(dp[i][w],$$
+dp[i-1][w-weight[i]] + value[i])
+return dp[n][W]
+若压成一维，容量 w 必须从大到小循环，避免同一件物品被重复选。
+完全背包（Surplus Supply）二维版本
+UnboundedKnapsack2D(items, W):
+$$dp[0][w] = 0 for w = 0..W$$
+for i = 1 to n:
+for w = 0 to W:
+$$dp[i][w] = dp[i-1][w]$$
+if weight[i] <= w:
+$$dp[i][w] = max(dp[i][w],$$
+dp[i][w-weight[i]] + value[i])
+return dp[n][W]
+注意第二项仍在第 i 行，因此同一种物品可重复购买。
+完全背包一维版本
+UnboundedKnapsack1D(items, W):
+$$dp[0..W] = 0$$
+for w = 0 to W:
+for i = 1 to n:
+if weight[i] <= w:
+$$dp[w] = max(dp[w], dp[w-weight[i]] + value[i])$$
+return dp[W]
+完全背包容量从小到大；这与 0/1 背包的一维倒序循环正好相反。
+
+Sliding Window Maximum：单调队列
+SlidingWindowMaximum(A, k):
+Q = empty deque // 存下标，A[Q] 单调递减
+for i = 1 to n:
+if Q is not empty and Q.front <= i - k:
+pop_front(Q)
+while Q is not empty and A[Q.back] <= A[i]:
+pop_back(Q)
+push_back(Q, i)
+if i >= k:
+output A[Q.front]
+每个下标至多进队、出队各一次，总时间 $O(n)$。
+LIS：$O(n \log n)$ 的 tail/sm 数组
+FastLIS(A):
+$$len = 0$$
+$$tail[1..n] = infinity$$
+for x in A:
+p = lower_bound(tail[1..len], x) // 第一个 >= x 的位置
+if p does not exist:
+$$len = len + 1$$
+$$tail[len] = x$$
+else:
+$$tail[p] = x$$
+return len
+tail[l] 表示长度为 l 的递增子序列能达到的最小末尾值。严格递增用 lower_bound；非降子序列改用 upper_bound。
+制造成本 DP：$O(n^{2})$ 基线
+设前缀和 $S[i]=\sum_{k=1}^i a_k$，状态转移为
+$$dp[i]=\min_{0\le j<i}\{dp[j]+C+(S[i]-S[j])^2\}.$$
+ManufacturingDP(A, C):
+$$S[0] = 0$$
+for i = 1 to n:
+$$S[i] = S[i-1] + A[i]$$
+$$dp[0] = 0$$
+for i = 1 to n:
+$$dp[i] = infinity$$
+for j = 0 to i - 1:
+$$dp[i] = min(dp[i], dp[j] + C + (S[i] - S[j])^2)$$
+return dp[n]
+制造成本 DP：单调凸包优化
+Break(a,b) 表示候选 b 开始优于 a 的横坐标，Value(j,x)=dp[j]+C+(x-S[j])^2。在 A[i] ≥ 0、查询横坐标 S[i]
+单调时可用双端队列。
+
+ManufacturingCHT(A, C):
+compute prefix sums S
+$$dp[0] = 0$$
+$$Q = deque containing candidate 0$$
+for i = 1 to n:
+while |Q| >= 2 and Break(Q[0], Q[1]) <= S[i]:
+pop_front(Q)
+$$j = Q.front$$
+$$dp[i] = Value(j, S[i])$$
+while |Q| >= 2 and Break(Q[-2], Q[-1]) >= Break(Q[-1], i):
+pop_back(Q)
+push_back(Q, i)
+return dp[n]
+这里把“弹出队首查询最优 j”和“弹出队尾维护凸包”分成两个伪代码；这里按实际执行顺序合并。每个候选最多进出
+一次，总时间 $O(n)$。
+区间 DP：集合乘积/矩阵链基线
+IntervalProductDP(size[1..n]):
+$$cost[i][i] = 0 for all i$$
+for length = 2 to n:
+for i = 1 to n - length + 1:
+$$j = i + length - 1$$
+$$cost[i][j] = infinity$$
+for k = i to j - 1:
+$$candidate = cost[i][k] + cost[k+1][j] + W(i, j)$$
+if candidate < cost[i][j]:
+$$cost[i][j] = candidate$$
+$$opt[i][j] = k$$
+return cost[1][n]
+典型集合乘积代价写成 W (i, j) = m m · · · m ；三重循环为 $O(n^{3})$。
+i i+1 j
+Knuth 优化区间 DP
+当 W 满足四边形不等式和单调性时，最优断点满足 opt[i][j − 1] ≤ opt[i][j] ≤ opt[i + 1][j]。
+
+KnuthDP(n):
+for i = 1 to n:
+$$cost[i][i] = 0$$
+$$opt[i][i] = i$$
+for delta = 1 to n - 1:
+for i = 1 to n - delta:
+$$j = i + delta$$
+$$cost[i][j] = infinity$$
+$$left = opt[i][j-1]$$
+$$right = min(j-1, opt[i+1][j])$$
+for k = left to right:
+$$candidate = cost[i][k] + cost[k+1][j] + W(i, j)$$
+if candidate < cost[i][j]:
+$$cost[i][j] = candidate$$
+$$opt[i][j] = k$$
+return cost[1][n]
+搜索区间整体望远镜求和后为 $O(n^{2})$，不能只记单调性而忘记验证 W 的条件。
+Floyd-Warshall 三维定义版
+FloydWarshall3D(W):
+$$dist[0][i][j] = W[i][j]$$
+$$dist[0][i][i] = 0$$
+for k = 1 to n:
+for i = 1 to n:
+for j = 1 to n:
+$$dist[k][i][j] = min($$
+dist[k-1][i][j],
+dist[k-1][i][k] + dist[k-1][k][j]
+)
+return dist[n]
+这个版本最清楚地对应状态定义，但空间为 $O(n^{3})$。
+Floyd-Warshall 二维压缩版
+FloydWarshall(W):
+$$dist = W$$
+$$dist[i][i] = 0 for every i$$
+for k = 1 to n:
+for i = 1 to n:
+for j = 1 to n:
+$$dist[i][j] = min(dist[i][j],$$
+dist[i][k] + dist[k][j])
+return dist
+状态含义：处理完第 k 轮后，最短路只允许使用编号不超过 k 的中间点。
+
+树上最大独立集：二状态 DP
+TreeMIS(G, root):
+DFS(v, parent):
+$$take[v] = 1$$
+$$skip[v] = 0$$
+for each neighbor u != parent:
+DFS(u, v)
+$$take[v] = take[v] + skip[u]$$
+$$skip[v] = skip[v] + max(take[u], skip[u])$$
+DFS(root, nil)
+return max(take[root], skip[root])
+take[v] 选 v，子节点只能不选；skip[v] 不选 v，每个子节点可自由取较优状态。时间 $O(n)$。
+树上最大独立集：叶子贪心
+TreeMISGreedy(T):
+root T arbitrarily
+$$S = empty set$$
+while T is not empty:
+if T has only one vertex v:
+add v to S
+break
+$$L = all current non-root leaves$$
+add every vertex in L to S
+remove every leaf in L and every parent of a leaf in L
+return S
+在树上可以把某个最优解交换成包含全部当前叶子，因此递归删除叶子及其父节点仍保持最优；不要把这个算法直接用于
+一般图。
+Tree Decomposition 上的 MIS DP
+TreewidthMIS(decomposition T with bags B[u]):
+process bags u in postorder
+for each independent subset S of B[u]:
+$$dp[u][S] = |S|$$
+for each child c of u:
+$$best = -infinity$$
+for each independent subset X of B[c]:
+if X intersect B[u] == S intersect B[c]:
+$$best = max(best, dp[c][X] - |S intersect B[c]|)$$
+$$dp[u][S] = dp[u][S] + best$$
+return max_S dp[root][S]
+边界交集必须一致；减去交集大小是为了避免父子 bag 重复计数。常用的粗略复杂度为 $O(4kn)$，其中最大 bag 大小
+为 k。
+作业完整伪代码
+
+Assignment 4：(L, R)-Step Subsequence
+StepSubsequenceQuadratic(A, L, R):
+for i = 1 to n:
+$$dp[i] = A[i]$$
+for j = max(1, i-R) to i-L:
+$$dp[i] = max(dp[i], A[i] + dp[j])$$
+return max_i dp[i]
+StepSubsequence(A, L, R):
+Q = empty deque // 按 dp 值递减存下标
+for i = 1 to n:
+$$enter = i - L$$
+if enter >= 1:
+while Q not empty and dp[Q.back] <= dp[enter]: pop_back(Q)
+push_back(Q, enter)
+while Q not empty and Q.front < i - R: pop_front(Q)
+$$best = 0 if Q empty else max(0, dp[Q.front])$$
+$$dp[i] = A[i] + best$$
+return max_i dp[i]
+队列维护合法前驱区间 [i − R, i − L] 的最大 dp，时间 $O(n)$；直接枚举前驱是 $O(n^{2})$。
+Assignment 4：Optimal BST
+OptimalBST(weight[1..n]):
+prefix sums allow W(i,j) in $O(1)$
+$$dp[i][i-1] = 0 for all i$$
+for length = 1 to n:
+for i = 1 to n - length + 1:
+$$j = i + length - 1$$
+$$dp[i][j] = infinity$$
+for root = i to j:
+$$candidate = dp[i][root-1] + dp[root+1][j] + W(i,j)$$
+if candidate < dp[i][j]:
+$$dp[i][j] = candidate$$
+$$choice[i][j] = root$$
+return dp[1][n], choice
+时间 $O(n^{3})$、空间 $O(n^{2})$；choice 可恢复整棵 BST。
+Assignment 4：树上先修约束背包
+TreeKnapsack(u):
+$$dp[u][1] = value[u]$$
+$$all other states = -infinity$$
+for each child c of u:
+TreeKnapsack(c)
+next = dp[u] // j=0：不选 c 子树
+for i = 1 to W:
+for j = 1 to W - i:
+$$next[i+j] = max(next[i+j], dp[u][i] + dp[c][j])$$
+$$dp[u] = next$$
+答案为 max(0, max k≤W dp[root][k])，时间 $O(nW 2)$。作业的 preorder 优化如下：
+
+## Max-Flow
+PreorderTreeKnapsack():
+number vertices by DFS preorder
+$$next[i] = first index after the subtree of i$$
+$$dp[n+1][w] = 0 for every w$$
+$$dp[i][0] = 0 for every i$$
+for i = n down to 1:
+for w = 0 to W:
+$dp[i][w] = dp[next[i]][w] // 跳过整棵子树$
+if w > 0:
+$$dp[i][w] = max(dp[i][w], value[i] + dp[i+1][w-1])$$
+return dp[1][W]
+选择节点后继续到 preorder 的下一个点；跳过节点则必须跳过其整棵子树。时间 $O(nW)$。
+流与 LP 题模板
+网络流正确性题围绕 residual graph：有增广路则当前流非最优；无增广路时，从 s 可达点集得到一个 cut，且该 cut 容
+量等于当前流值。LP 题围绕 primal/dual：弱对偶给所有可行解的界，强对偶说明界可达到，relaxation 则用 fractional
+optimum 和 rounding 比较。
+网络流：残量网络、Ford-Fulkerson 与最大流最小割
+流的定义
+网络包含源点 s、汇点 t 和每条边容量 c(u, v)。流 f (u, v) 满足容量约束：
+$$0 \le f (u, v) \le c(u, v),$$
+以及除 s, t 外每个点的流量守恒：
+$$\sum_u f(u,v)=\sum_w f(v,w).$$
+流值 $|f|$ 是从 s 流出的净流量。
+残量网络
+残量网络 G 表示在当前流 f 上还可以怎样调整。对原边 (u, v)，若还有空余容量，加入 forward residual edge，容量
+f
+c(u, v) − f (u, v)；若当前有正流量，加入 backward residual edge (v, u)，容量 f (u, v)。反向边表示可以撤销之前经过 (u, v)
+的一部分流。
+Ford-Fulkerson
+从零流开始，只要残量网络中存在 s 到 t 的路径，就沿路径按 bottleneck 容量增广。整数容量时，每次至少增加 1，因此
+增广次数至多为最大流值 $|f^*|$，复杂度可写为 $O(E|f^*|)$。这是伪多项式，因为 $|f^*|$ 可能与容量数值有关，而非输入位长。
+最大流最小割
+任意割 (S, T ) 满足 s ∈ S, t ∈ T ，容量为：
+$$c(S,T)=\sum_{u\in S,v\in T}c(u,v).$$
+
+对任意流和任意割都有：
+$$|f| \le c(S, T ).$$
+这叫弱对偶式的上界：任何割容量都是最大流的上界。
+若 Ford-Fulkerson 结束，残量网络中没有 s 到 t 路径。令 S 为残量网络中从 s 可达的点集，T = V \ S。从 S 到 T 的
+原图边必须全部饱和，否则残量网络还有 forward edge 可越过割；从 T 到 S 的原图边流量必须为 0，否则残量网络有
+backward edge 可越过割。因此：
+$$|f| = c(S, T ).$$
+于是当前流达到某个割上界，必为最大流；该割也为最小割。
+应用
+二分图匹配可归约为最大流：源点连左部每个点，容量 1；左部到右部按原边连接，容量 1 或无穷；右部连汇点，容量 1。
+整数流保证每条匹配边取 0/1，最大流值等于最大匹配大小。Hall 定理也可用 max-flow min-cut 证明：左部全集可完全匹
+配当且仅当任意 X ⊆ L 满足 $|N(X)| \ge |X|$。
+终止性、整数性和最小割证书
+• 整数容量：每次 bottleneck 是正整数，流值至少加 1，所以 Ford-Fulkerson 一定终止，并输出整数流。
+• 有理容量：乘所有分母的最小公倍数，缩放成整数容量，因此也终止，但运行时间仍可能很大。
+• 无理容量：随意选增广路的 Ford-Fulkerson 甚至可能无限运行且不收敛到最大流，所以它更准确地说是一种 method。
+• 找最小割：最大流结束后，在残量网络从 s 做 DFS/BFS；可达集合 S 与其余点 T 就是最小割，不需要再跑一个新
+算法。
+Hall 婚姻定理的流证明
+二分图 G = (L ∪ R, E) 存在覆盖全部左部点的匹配，当且仅当：
+$$\forallX \subseteq L, |N(X)| \ge |X|.$$
+必要性很直观：X 中每个点都要匹配到不同邻居，所以邻居不能少于 X。充分性用单位容量流网络证明。若最大流小于
+|L|，最小割容量也小于 |L|；分析最小割可推出某个 X 满足 $|N(X)| < |X|$，与条件矛盾。因此最大流为 |L|，由整数性得
+到完整匹配。
+比赛淘汰问题怎样建流
+典型球队例子属于 baseball elimination：想判断目标队是否还有可能夺冠。先假设目标队赢下自己所有剩余比赛，得到
+它可能达到的最高胜场 W 。对其他队之间尚未进行的每场比赛建“比赛节点”：
+• s → 比赛节点，容量等于两队剩余交手次数；
+• 比赛节点分别连向两支球队，容量为无穷，表示胜场分给谁；
+• 球队节点 i → t，容量为 W − w ，限制该队最终不能超过目标队。
+i
+若所有源点到比赛节点的容量都能流满，就存在一种剩余比赛结果让目标队不被淘汰；否则最小割给出不可能的证书。
+例子
+为什么普通贪心流会卡住
+考虑网络：s → a = 10，s → b = 10，a → t = 10，b → t = 10，再加一条 a → b = 1。如果一开始贪心选路径 s → a → b → t，
+只能送 1 单位，并占用了 a → b。之后直接走 s → a → t 和 s → b → t 可能只得到 19。残量网络中的反向边 b → a 允许
+把这 1 单位“退回来”，再改走 a → t，最终达到 20。
+所以 Ford-Fulkerson 的本质不是“找一条路就灌满”这么简单，而是始终在残量网络里允许撤销和重排。
+
+网络流运行时间：Edmonds-Karp、Dinic、Hopcroft-Karp
+Edmonds-Karp
+Edmonds-Karp 是 Ford-Fulkerson 的特例：每次在残量网络中用 BFS 找边数最少的增广路。关键性质是残量网络中从 s
+到任意点的最短距离不会下降。
+一条边在某次增广中成为 critical edge，表示它被增广到残量容量 0。若同一条边之后再次成为 critical edge，中间必须通
+过反向边把它恢复，而这会使其尾端距离至少增加 2。因此每条边成为 critical edge 的次数是 $O(V)$。总增广次数 $O(V E)$，
+每次 BFS 和更新 $O(E)$，得到：
+$O(V E^{2})$.
+这个界不依赖容量大小，因此适用于有理或实数容量的多项式时间保证。
+Dinic
+Dinic 每个 phase 先在残量网络中 BFS 建立 level graph，只保留从第 i 层指向第 i + 1 层的边。然后在 level graph 中找
+blocking flow，使每条从 s 到 t 的层次路径至少有一条边被堵住。完成一个 phase 后，s 到 t 的最短距离严格增加，因此
+phase 数至多 V 。
+一般图中，blocking flow 可在 $O(V E)$ 内求得，总复杂度：
+$O(V 2E)$.
+Hopcroft-Karp-Karzanov
+二分图最大匹配可看成单位容量网络。Dinic 在这类网络上的 blocking flow 更快，且短增广路长度增加带来更强相位数界。
+最终得到 Hopcroft-Karp 复杂度：
+$O(E V )$.
+核心图像：一次不是只找一条增广路，而是在最短长度层次图中同时找一批 vertex-disjoint 或 edge-disjoint 的
+增广结构。
+例子
+Edmonds-Karp 的“最短路”选择
+Ford-Fulkerson 如果总选很绕的增广路，可能反复推翻之前选择。Edmonds-Karp 固定用 BFS 选边数最少的增广路，使残
+量图中从 s 到各点的层数单调不降。一个边被堵住后，若以后还要再次成为瓶颈，它必须先通过反向边恢复，而这会让相
+关端点层数至少增加 2。
+二分图匹配中的 blocking flow
+在二分图匹配里，一轮 Hopcroft-Karp 不是找一条最短增广路，而是在所有最短增广路组成的层次图里尽量同时增广。比
+如有两条互不相交的最短增广路，单条增广要两轮，而 blocking flow 一轮就吃掉它们。
+作业题分析：Assignment 5 流与 Dinic
+1. System of Distinct Representatives
+单个集合族 A = {A , . . . , A }：左侧为集合节点，右侧为元素节点，若 u ∈ A 就连边。存在 SDR 当且仅当最大匹配大
+1 k i
+小为 k，也等价于单位容量最大流值为 k。
+两个集合族的 common SDR 建五层网络：
+$$s \to A \to u \to u \to B \to t.$$
+i L R j
+
+所有容量为 1，尤其 u → u 限制元素 u 最多使用一次。整数流值为 k 当且仅当同一组 k 个不同元素既能代表 A，又能
+L R
+代表 B。
+2. 单位容量网络上的 Dinic
+每个 phase 的 blocking flow 可在 $O(E)$ 完成。
+$O(E^{3/2})$ 证明。前 $\sqrt E$ 个 phase 后，最短增广路长度大于 $\sqrt E$。剩余流可分解为边不交增广路，每条使用超过 $\sqrt E$ 条边，所以最多还有 $O(\sqrt E)$ 单位流。总 phase 数 $O(\sqrt E)$，时间 $O(E^{3/2})$。
+$O(V^{2/3}E)$ 证明。运行约 $2V^{2/3}$ 个 phase 后考察 BFS 层 $D_i$。前 $2V^{2/3}$ 层中必有相邻层满足：
+$$|D_i\cup D_{i+1}|\le V^{1/3}.$$
+取前缀层为割，跨割边数至多 $|D_i||D_{i+1}|\le V^{2/3}$，因此残余最大流至多 $V^{2/3}$，再多至多这么多个 phase。总时间 $O(V^{2/3}E)$。
+完整伪代码
+构造残量网络
+BuildResidual(G, capacity c, flow f):
+Gf has the same vertices as G
+for each original edge object e = (u, v):
+if c[e] - f[e] > 0:
+add forward residual arc (u, v, edge=e,
+$$residual=c[e]-f[e])$$
+if f[e] > 0:
+add reverse residual arc (v, u, edge=e,
+$$residual=f[e])$$
+return Gf
+实现时正向弧与撤销弧必须保存对应的原边对象；若原图同时含 (u, v) 与 (v, u)，只看端点会混淆两种含义。
+Ford-Fulkerson
+FordFulkerson(G, s, t):
+$$f(e) = 0 for all edges$$
+build residual graph G_f
+while there exists an s-t path P in G_f:
+$$bottleneck = min residual capacity on P$$
+for each edge on P:
+augment flow by bottleneck
+update residual graph G_f
+return f
+若容量为整数，每次至少增加 1，复杂度为 $O(E|f^*|)$。若路径用 BFS 选，就得到 Edmonds-Karp。
+
+从最大流提取最小割
+MinCut(G, s, t):
+$$f = MaxFlow(G, s, t)$$
+$$Gf = BuildResidual(G, c, f)$$
+$$L = vertices reachable from s in Gf by DFS or BFS$$
+$$R = V - L$$
+return (L, R)
+最大流结束后 t 不可达，跨越 (L, R) 的原边都已饱和，反向流为零，因此该割容量恰等于流值。
+Edmonds-Karp
+EdmondsKarp(G, s, t):
+$$f(e) = 0 for all edges$$
+while BFS in residual graph finds an s-t path P:
+$$bottleneck = min residual capacity on P$$
+augment along P by bottleneck
+update residual graph
+return f
+和 Ford-Fulkerson 的差别只有“每次必须取残量图中的最短边数增广路”。
+Dinic
+Dinic(G, s, t):
+$$f(e) = 0 for all edges$$
+while BFS builds level graph and t is reachable:
+remove edges not going from level i to level i+1
+while there exists an s-t path in level graph:
+send blocking flow by DFS
+delete saturated edges from level graph
+return f
+一轮 BFS 加若干 DFS 称为一个 phase。每个 phase 后，残量图中从 s 到 t 的最短距离会变大。
+
+Dinic 的 blocking-flow DFS
+Send(v, pushed):
+if v == t or pushed == 0:
+return pushed
+while ptr[v] < number of outgoing residual arcs:
+$$e = outgoing[v][ptr[v]]$$
+if residual[e] > 0 and level[e.to] == level[v] + 1:
+$$sent = Send(e.to, min(pushed, residual[e]))$$
+if sent > 0:
+$$residual[e] = residual[e] - sent$$
+$$residual[e.reverse] = residual[e.reverse] + sent$$
+return sent
+$$ptr[v] = ptr[v] + 1$$
+return 0
+BlockingFlow():
+$$ptr[v] = 0 for every vertex v$$
+$$total = 0$$
+while (sent = Send(s, infinity)) > 0:
+$$total = total + sent$$
+return total
+ptr 保证已经证明无用的边不会重复扫描，对应典型“到 t 就推流并删 critical edge；到死路就回退并删边”。
+Bipartite Matching as Flow
+BipartiteMatching(L, R, E):
+create source s and sink t
+add edge s -> u capacity 1 for each u in L
+add edge v -> t capacity 1 for each v in R
+add edge u -> v capacity 1 for each bipartite edge (u, v)
+run max flow
+return edges u -> v whose flow is 1
+最大匹配大小等于最大流值；整数容量保证最优流可取整数。
+Hopcroft-Karp
+HopcroftKarp(L, R, E):
+$$pairL[u] = nil for u in L$$
+$$pairR[v] = nil for v in R$$
+$$matching = 0$$
+while BFS builds layers from all free vertices in L:
+for each free u in L:
+if DFS_Augment(u) follows the layers:
+$$matching = matching + 1$$
+return pairL, matching
+BFS 一次找出所有最短增广路的层次，DFS 在层次图中寻找一组顶点不交的增广路；时间 $O(E V )$。
+
+## Linear Programming
+比赛淘汰（Baseball Elimination）建网
+CanTeamXStillWin(teams, remainingGames, x):
+$$M = wins[x] + remainingGamesOf[x]$$
+create source s, sink t
+for each pair of teams i < j, i,j != x:
+create game node g(i,j)
+add s -> g(i,j) with capacity remainingGames[i][j]
+add g(i,j) -> i and g(i,j) -> j with capacity infinity
+for each team i != x:
+if wins[i] > M:
+return false
+add i -> t with capacity M - wins[i]
+$$f = MaxFlow(network, s, t)$$
+return f saturates every edge leaving s
+从 game node 流向哪支队，就表示那支队获得相应胜场；整数容量保证可解释成离散比赛结果。
+作业完整伪代码
+Assignment 5：System of Distinct Representatives
+HasSDR(sets A1..Ak, universe U):
+build bipartite graph with left nodes Ai and right nodes u in U
+add Ai -- u iff u belongs to Ai
+$$M = maximum bipartite matching$$
+return |M| == k
+Assignment 5：Common SDR 建流
+HasCommonSDR(A1..Ak, B1..Bk, universe U):
+create s, t
+create uL and uR for every u in U
+add s -> Ai capacity 1
+add Ai -> uL capacity 1 iff u in Ai
+add uL -> uR capacity 1 for every u
+add uR -> Bj capacity 1 iff u in Bj
+add Bj -> t capacity 1
+return MaxFlow(network, s, t) == k
+中间边 u → u 的容量 1 强制每个代表元素最多使用一次；整数流把每单位流解释成一条 Ai->u->Bj 配对。
+L R
+线性规划、对偶、LP Relaxation 与 Minimax
+LP 标准形
+常用标准形可写为：
+max cT x
+$$s.t. Ax \le b,$$
+$$x \ge 0.$$
+可行域是半空间交出的凸多面体。若最优值有限且可达到，至少存在一个顶点最优解。Simplex 方法沿着顶点和边移动，实
+践中很快，但最坏情况指数；椭球法和内点法给出多项式时间 LP 算法。
+
+对偶
+标准形最大化 primal 的 dual 是：
+min bT y
+$$s.t. AT y \ge c,$$
+$$y \ge 0.$$
+弱对偶：若 x primal feasible，y dual feasible，则：
+$$cT x \le yT Ax \le yT b = bT y.$$
+所以任意 dual feasible solution 都给 primal 最大值一个上界。强对偶说，如果 primal 和 dual 都有最优解，则两者最优值
+相等：
+$$max{cT x : Ax \le b, x \ge 0} = min{bT y : AT y \ge c, y \ge 0}.$$
+经济解释：primal 是资源分配，dual 是资源定价。若每个产品的资源成本至少覆盖产品收益，则任何生产方案的收益都不
+超过资源总估值；强对偶说明最优生产收益和最优资源估值一致。
+LP Relaxation 与 Vertex Cover
+整数规划加入 $x_i\in\mathbb Z$ 或 $x_i\in\{0,1\}$，表达能力强但一般 NP-hard。LP relaxation 把整数约束放宽为连续约束，再把
+fractional solution rounding 成整数解。
+最小点覆盖 IP：
+$$
+\min \sum_{v\in V}x_v
+\quad\text{s.t.}\quad
+x_u+x_v\ge 1\ \forall (u,v)\in E,\qquad x_v\in\{0,1\}.
+$$
+Relaxation 把 $x_v\in\{0,1\}$ 改为 $0\le x_v\le 1$。求 LP 最优解 $x^*$ 后，取：
+$$C=\{v:x_v^*\ge 1/2\}.$$
+这是 vertex cover，因为任意边 $(u,v)$ 有 $x_u^*+x_v^*\ge 1$，至少一个端点不小于 1/2。大小满足：
+$$|C|\le 2\sum_v x_v^*=2OPT_{LP}\le 2OPT_{IP}.$$
+因此得到 2-approximation。
+用 LP 对偶重看最大流最小割
+最大流可写成 LP；其 dual 可解释成 fractional min-cut。若证明该 dual 总存在 integral optimum，就把 fractional cut 变
+回真实 cut。例如用 totally unimodular matrix 说明相关多面体顶点为整数，从而最大流最小割也可由强对偶推出。
+Totally unimodular 的关键结论：若约束矩阵所有方阵子式行列式都在 {−1, 0, 1} 中，且右端向量是整数，则多面体顶点
+是整数。网络流的约束矩阵具有这种结构，所以整数容量下存在整数最大流。
+von Neumann Minimax
+零和博弈由 payoff matrix A 描述。行玩家选择混合策略 p，列玩家选择混合策略 q，行玩家期望收益为：
+pT Aq.
+
+如果行玩家先承诺策略，他希望最大化面对列玩家最佳回应后的最小收益：
+max min pT Aq.
+p q
+若列玩家先承诺策略，对应：
+min max pT Aq.
+q p
+把 max-min 写成 LP，它的 dual 正好是 min-max 的 LP。由强对偶可得：
+$$max min pT Aq = min max pT Aq.$$
+p q q p
+含义是：在零和博弈中，谁先选择混合策略不改变博弈价值。
+Simplex、Farkas Lemma 和强对偶
+Simplex 的几何图像是：从一个可行域顶点出发，沿着能提高目标值的边移动到相邻顶点，直到没有改进方向。它实践中
+非常快，但某些 pivot 规则有指数级最坏例子；“LP 可在多项式时间求解”来自椭球法或内点法，不是来自 Simplex 的最
+坏界。
+Farkas Lemma 是“二选一证书”：对给定 A, b，要么存在 x ≥ 0 使 Ax = b，要么存在一个向量 y 把 b 与所有 Ax 分开，
+但两者不能同时发生。它把“无可行解”也变成一个可验证的线性证书。例如用它推导强对偶；通常掌握结论和证
+书含义即可，不必死背完整几何证明。
+Primal-Dual 分析的通用套路
+Primal-dual 算法不一定先精确求 LP。它可以一边构造整数 primal 解，一边构造可行 dual 解，然后用弱对偶比较两者：
+1. 写出 relaxation 和 dual；
+2. 保持 dual feasible，并逐步提高 dual 变量；
+3. 某个 primal 约束变紧时选择对应对象；
+4. 证明 $ALG \le α \cdot Dual \le α \cdot OPT$。
+这和“拿一个容易计算的下界来压住算法结果”是同一件事。例如用匹配/点覆盖展示了这种思想。
+例子
+糖和油的工厂 LP
+一个二维例子是：糖每吨利润 1，油每吨利润 6，糖最多 200 吨，油最多 300 吨，总重量最多 400 吨。令 x 为糖、
+y 为油：
+$$max x + 6y s.t. x \le 200, y \le 300, x + y \le 400, x, y \ge 0.$$
+最优点在顶点 (x, y) = (100, 300)，目标值 100 + 6 · 300 = 1900。用约束 5y ≤ 1500 加上 x + y ≤ 400，可得 x + 6y ≤ 1900，
+这就是对偶上界的直观来源。
+Vertex Cover rounding 小例子
+三角形图的 LP relaxation 可以取三个点 x = 1/2，LP 值为 1.5。按 x ≥ 1/2 全部取入，得到大小 3 的 cover；整数最优
+v v
+其实是 2。这个例子说明 rounding 有损失，但仍满足 3 ≤ 2 · 1.5 ≤ 2OPT 。
+IP
+石头剪刀布 minimax
+典型 payoff matrix 是行玩家赢为 1、输为 -1、平为 0。若行玩家固定出石头，列玩家最佳回应是布；若行玩家均匀混合
+(1/3, 1/3, 1/3)，列玩家任何纯策略的期望收益都为 0。强对偶说明 max-min 和 min-max 的博弈值相同。
+
+作业题分析：Assignment 5 LP 对偶与 TU
+3. König-Egerváry 定理
+二分图最大匹配 LP：
+$$
+\max \sum_{e\in E}x_e
+\quad\text{s.t.}\quad
+\sum_{e\ni v}x_e\le 1,\qquad x_e\ge 0.
+$$
+其 dual 是 fractional vertex cover：
+$$
+\min \sum_{v\in V}y_v
+\quad\text{s.t.}\quad
+y_u+y_v\ge 1\ \forall (u,v)\in E,\qquad y_v\ge 0.
+$$
+二分图 incidence matrix 是 totally unimodular：任取方阵子矩阵，若某列至多一个 1 就按该列展开归纳；若每列恰有两
+个 1，则两个二分部对应行之和相同，行线性相关，行列式为 0。整数右端保证 primal/dual 都有整数最优顶点，再由强
+对偶得到：
+$$maximum matching size = minimum vertex cover size.$$
+非二分图反例是三角形：最大匹配为 1，最小点覆盖为 2。
+完整伪代码
+Simplex 高层过程
+Simplex(LP):
+$$x = any feasible starting vertex$$
+while there is an adjacent feasible vertex y
+with objective(y) better than objective(x):
+choose an improving neighbor y by a pivot rule
+$$x = y$$
+return x
+这是常用的高层伪代码；如何找初始顶点、如何 pivot、怎样避免 cycling 属于实现细节。Simplex 实践很快但最坏可
+指数，LP 的多项式时间算法由椭球法或内点法保证。
+Vertex Cover LP Rounding
+VertexCoverRounding(G):
+solve LP:
+minimize sum_v x[v]
+$$subject to x[u] + x[v] >= 1 for every edge (u, v)$$
+$$0 <= x[v] <= 1 for every vertex v$$
+$$C = empty set$$
+for each vertex v:
+if x[v] >= 1/2:
+add v to C
+return C
+证明两步：先说明每条边至少一个端点被取，所以 C 是 vertex cover；再说明 $|C|\le 2\sum_v x_v\le 2OPT$。
+
+## Basic Complexity Theory
+在线二分图匹配的固定顺序 Greedy
+OnlineGreedy(A offline, stream of B vertices):
+fix any priority order of A
+for each arriving vertex b in B:
+$$U = unmatched neighbors of b in A$$
+if U is not empty:
+$$a = first vertex of U in the fixed order$$
+match a with b
+return matching
+渐近记号
+记号 定义 提醒
+f(n) = $O(g(n))$ 存在常数 c, n0，使得 n ≥ n0 时 上界，不一定紧。
+$$f(n) \le cg(n)。$$
+f(n) = Ω(g(n)) 存在常数 c, n0，使得 n ≥ n0 时 下界，常用于证明问题不可能更快。
+$$f(n) \ge cg(n)。$$
+f(n) = Θ(g(n)) 同时有 $O(g(n))$ 和 Ω(g(n))。 紧确界。
+f(n) = $o(g(n))$ limn→∞ f(n)/g(n) = 0。 严格小阶。
+算法复杂度表
+主题 核心算法或结论 复杂度 关键证明点
+比较排序（只记结论） 任意比较排序下界 Ω(n log n) 结论仅适用于比较模型。
+Karatsuba 三次半规模乘法 $O(n^{\log_2 3})$ ≈ $O(n^{1.585})$ 用 (a + b)(c + d) 省去一次乘法。
+Strassen 七次半规模矩阵乘法 $O(n^{\log_2 7})$ ≈ $O(n^{2.81})$ 块矩阵乘法减少乘法次数。
+Merge Sort 分治排序 $O(n \log n)$ 线性 merge 加递归树。
+逆序对 归并时统计 crossing inversions $O(n \log n)$ 右半元素先出时一次加上左半剩
+余个数。
+DFS/BFS 图搜索 $O(V + E)$ 每个点、每条边只被常数次处理。
+Dijkstra 非负权最短路 数组 $O(V^{2} + E)$；二叉堆 非负权保证已选点距离不会再变。
+$O((V + E)\log V )$
+Bellman-Ford 负权最短路 $O(V E)$ 第 k 轮得到最多 k 条边的最短路。
+MST Prim / Kruskal $O(E + V\log V )$ / $O(E\log E)$ cut property 与 exchange
+argument。
+DP LIS、编辑距离、背包 $O(n^{2})$、$O(mn)$、$O(nW)$ 状态、转移、拓扑顺序。
+Floyd-Warshall 全源最短路 $O(V^{3})$ 允许中间点集合逐步扩大。
+Ford-Fulkerson 增广路最大流 $O(E|f^*|)$，整数容量时伪多项式 残量网络 + 无增广路等价最小割。
+Edmonds-Karp BFS 最短增广路 $O(V E^{2})$ 残量图中最短距离单调不降。
+Dinic 层次图 + blocking flow 一般 $O(V^2E)$；二分图匹配 $O(E\sqrt V)$，每相位使 s 到 t 层数增加。
+线性规划 LP、对偶、relaxation 多项式可解 弱对偶给界，强对偶给等式。
+NP 完全性 验证 + Karp reduction 不以运行时间求解，而以多项式 方向必须是“已知难题 ≤ p 待证
+归约比较难度 问题”。
+
+正确性证明通用结构
+1. 说明算法维护的对象，例如已排序前缀、已确定最短路集合、残量网络中的可达集合。
+2. 写出不变量：每一步之后哪些性质仍成立。
+3. 证明初始化成立。
+4. 证明一次迭代能保持不变量。
+5. 说明终止时不变量如何推出目标结论。
+导论、计算模型与渐近分析
+算法分析在分析什么
+算法不是一段程序的同义词。真正要分析的是抽象步骤：输入满足什么条件，输出要满足什么性质，算法每一步如
+何推进，为什么一定得到正确输出，以及最坏情况下需要多少基本操作。
+一般默认的计算模型是 RAM 或 word RAM：读写数组元素、比较、加减乘除一个机器字通常算常数时间。大整数乘法和
+图的表示方式可能改变基本操作成本，因此分析前必须先说明模型。
+Worst-case running time
+算法复杂度通常记为输入规模 n 的函数 T (n)。最坏情况复杂度表示所有规模为 n 的输入中最慢的那个：
+$$T(n) = max{algorithm running time on x}.$$
+$$|x|=n$$
+渐近记号的使用
+渐近分析忽略常数和低阶项，但不能忽略算法结构。写 $O(n^{2})$ 时，意思是存在常数 c 使大规模输入上被 cn2 控制；证明
+通常从循环次数或递归式出发。
+常见增长顺序：
+1 ≺ log n ≺ n ≺ n log n ≺ n2 ≺ n3 ≺ 2n ≺ n!.
+要能快速判断：n1.585 比 n2 小，n22n 仍然是指数级，$O(nW)$ 当 W 是输入数值而不是位长时是伪多项式。
+什么叫“问题”和“算法”
+这里把计算问题写成字符串上的函数：
+$$f : {0, 1}* \to {0, 1}*.$$
+图、整数、公式都先编码成有限二进制串，算法接收编码并输出答案。判定问题的输出只有 yes/no，可以写成 f : {0, 1}∗ →
+{0, 1}。这样做不是故意抽象，而是为了让“算法是否存在”“要运行多久”有统一的讨论对象。
+图灵机、λ-calculus 和普通程序的语法不同，但 Church-Turing thesis 认为它们刻画的是同一类可有效计算函数。本课程
+日常设计算法时用 word RAM，不需要真的画图灵机；到了 P、NP 定义时，只需知道“多项式时间图灵机”是一个不依
+赖具体编程语言的正式模型。
+停机问题：不是所有问题都有算法
+停机问题 HALT(M,x) 询问程序或图灵机 M 在输入 x 上是否最终停止。反证思路是：假设存在总能正确判断停机的算法
+Halt，构造程序 B：
+
+B(M):
+if Halt(M, M) says "will halt":
+loop forever
+else:
+halt immediately
+再问 B(B) 会怎样：如果 Halt 说会停，B 就不停；如果说不停，B 就立刻停，两边都矛盾。因此 HALT 不可判定。
+一眼分清。“不可判定”表示任何算法都不可能解决所有实例；“NP-complete”仍然是可判定问题，只是目前没有已知多
+项式时间算法。两者不是一个层次的“难”。
+例子
+计算模型的例子。同样写成“乘两个 n 位整数”，如果把乘法当作 RAM 常数操作，就会看不见大整数本身的成本；而
+Karatsuba 这个例子把“乘法”拆开分析，说明模型必须先讲清楚。排序也一样：比较排序只能问 a < a 吗；Counting
+i j
+Sort 还能直接读键值范围，所以不受比较排序下界约束。
+落笔模板。先说输入规模：数组题用 n，图题用 $|V|$, $|E|$，背包题还要说明容量 W 是数值参数。再说明数据结构：邻
+接表和邻接矩阵会让同一个图算法复杂度不同。
+比较排序下界（只记结论）
+• 比较模型下，任意排序算法最坏需要 Ω(n log n) 次比较。
+• Merge Sort 的 $O(n \log n)$ 因而在比较模型下渐近最优。
+• Counting Sort、Radix Sort 会读取键值或数位，不受比较排序下界约束。
+P、NP、NP-Complete 与多项式归约
+先说人话：P 和 NP 到底差在哪
+• P：我自己能在多项式时间内找到答案。
+• NP：如果答案是 yes，别人给我一个证书，我能在多项式时间内检查证书确实成立。
+• NP-hard：所有 NP 问题都可以多项式归约到它，至少和 NP 中最难问题一样难；它不一定是判定问题，也不一定
+属于 NP。
+• NP-complete：既属于 NP，又是 NP-hard，也就是 NP 中最难的一批判定问题。
+显然 P ⊆ NP ：能自己求解，当然也能验证。是否 P = NP 仍是开放问题。课程里说“NP-complete 很难”是建立在普
+遍相信 P ̸= NP 上，并不是已经证明它没有多项式算法。
+判定问题和证书
+判定问题是函数：
+$$f : Σ * \to {0, 1}.$$
+例如 Vertex Cover 的实例是 (G, k)，问题是“是否存在大小不超过 k 的点覆盖”。若答案是 yes，证书就是一个顶点集合
+S。验证器检查：
+$$1. |S| \le k；$$
+2. 对每条边 (u, v)，至少有 u ∈ S 或 v ∈ S。
+检查时间是多项式，因此 Vertex Cover 属于 NP。注意 NP 要求 yes 实例有短证书，不要求 no 实例也有同样证书。
+五个典型典型 NP 问题
+
+问题 判定版本 一眼看懂的证书
+SAT CNF 公式是否存在满足赋值 每个变量的真假值
+Vertex Cover 是否有大小至多 k 的点集覆盖所有边 被选顶点集合
+Independent Set 是否有大小至少 k 的点集，内部无边 被选顶点集合
+Subset Sum 是否有子集元素和等于目标 K 被选元素下标
+Hamiltonian Path 是否有恰好访问每个顶点一次的路径 顶点排列
+例子：S = {1, 1, 6, 13, 27}。目标 21 是 yes，因为 1 + 1 + 6 + 13 = 21；目标 22 是 no。验证 21 的 yes 证书很快，但
+“如何高效找到这个子集”才是难处。
+Karp Reduction：把 A 的实例翻译成 B 的实例
+写作：
+$$A \le B.$$
+p
+意思是存在一个多项式时间变换 R，满足：
+$$x \in A \Longleftrightarrow R(x) \in B.$$
+于是若有 B 的多项式算法，就能“先变换，再调用 B 算法”解决 A。因此 B 至少和 A 一样难。
+最重要的方向口诀：
+想证明 B 难，就把已经知道很难的 A 归约到 B。箭头指向待证明问题。
+常见错误是从 B 归约到 SAT。那只能说明 SAT 至少和 B 一样难，完全不能证明 B 难。
+归约具有传递性：若 $A \le B$ 且 $B \le C$，则把两个多项式变换复合，得到 $A \le C$。
+p p p
+SAT 到 3SAT：把长子句拆成链
+3SAT 要求每个子句最多三个 literal。对长子句：
+ℓ ∨ ℓ ∨ · · · ∨ ℓ ,
+1 2 k
+引入新变量 y 1 , . . . , y k−3 ，改成：
+(ℓ 1 ∨ ℓ 2 ∨ y 1 ) ∧ (¬y 1 ∨ ℓ 3 ∨ y 2 ) ∧ · · · ∧ (¬y k−3 ∨ ℓ k−1 ∨ ℓ k ).
+直觉。 y 像一根把“前面还没满足”传给下一个子句的接力棒。原子句有某个 literal 为真时，可以在那个位置切断接力，
+i
+让整条链满足；若所有 literal 都假，第一项逼 y = true，随后依次逼所有 y = true，最后一项又要求最后一个 y 为 false，
+1 i
+产生矛盾。
+转换后的变量、子句数量都只线性增加，所以是多项式时间，并且原公式可满足当且仅当新 3CNF 可满足。因此：
+$$SAT \le 3SAT.$$
+p
+3SAT 到 Independent Set：每个子句选一个真 literal
+设 3CNF 有 m 个子句。构图规则：
+1. 每个子句建立一个三角形，三个顶点分别代表三个 literal；
+2. 若两个顶点代表互相矛盾的 literal，例如 x 与 ¬x ，就在它们之间连边；
+i i
+3. 设置目标 k = m。
+
+为什么对：
+• 公式可满足 ⇒ 有大小 m 的独立集。每个子句选一个为真的 literal。一个三角形内只选一个；不同子句中不会同时选
+x 和 ¬x ，所以所选顶点之间没有边。
+i i
+• 有大小 m 的独立集 ⇒ 公式可满足。每个三角形内部两两相连，独立集在每个三角形至多选一个；总共选 m 个，所
+以恰好每个子句选一个。矛盾 literal 之间有边，所以这些选择可以组成一致赋值，并使每个子句至少一个 literal 为
+真。
+得到：
+$$3SAT \le IndependentSet.$$
+p
+一眼记住 gadget。三角形负责“每个子句最多选一个”，跨三角形的矛盾边负责“不同子句的选择必须一致”。
+Independent Set、Vertex Cover、Clique 的互换
+Independent Set 与 Vertex Cover
+对同一图 G = (V, E)：
+S 是 independent set ⇐⇒ V \ S 是 vertex cover.
+因为若补集没覆盖某条边，那么这条边两端都在 S 中，违反独立性。参数关系为：
+$$IndependentSet(G, k) \Longleftrightarrow VertexCover(G, |V| - k).$$
+Independent Set 与 Clique
+在补图 G¯ 中，原图没有边的点对会变成有边，所以：
+S 在G 中独立 ⇐⇒ S 在G¯ 中形成 clique.
+因此 IndependentSet ≤ Clique。这两个归约几乎不需要 gadget，很常见。
+p
+Cook-Levin 定理在说什么
+Cook-Levin 定理：SAT 是 NP-complete。
+证明图像是“把验证器的一次多项式时间运行拍成表格”：横轴是时间，纵轴是纸带位置，每个格子记录符号、状态和读写
+头位置。用布尔变量描述每个格子内容，再用 CNF 子句约束：
+• 初始行确实编码输入与证书；
+• 每个位置恰好有一种符号/状态；
+• 相邻两行符合图灵机的局部转移规则；
+• 最终出现接受状态。
+因为运行时间是多项式，表格和公式大小也是多项式。于是任意 NP 问题都能归约到 SAT。
+NP-complete 证明标准模板
+要证明问题 B 是 NP-complete：
+1. 证明 B ∈ NP ：给出 yes 证书和多项式验证器。
+2. 选已知 NP-complete 问题 A。
+3. 构造多项式归约 $A \le B$。
+p
+4. 证明 iff：A 的 yes 实例映射为 B 的 yes 实例，B 的 yes 实例也能反推出 A 的 yes 实例。
+5. 说明规模和构造时间是多项式。
+很多时候第四步的反向证明，等价于“B 的 no 对应 A 的 no”的逆否命题，比直接处理 no 实例更自然。
+
+更多 NP-Complete 归约与 NP-Hard 优化
+归约设计的七条经验
+1. 选一个和目标问题结构相似的已知 NP-complete 问题。
+2. 先写自然想法，再用小例子主动找反例。
+3. 构造失败时做局部修补，不必立刻推倒重来。
+4. 反向证明常用逆否命题。
+5. 先把目标问题的解“规范化”，再读回原问题的解。
+6. 两个问题差太远时，引入中间问题。
+7. 变量、子句、方向等逻辑关系可以用 gadget 表达。
+Vertex Cover 到 Dominating Set
+Dominating Set 要求集合 S 中的点能够支配所有点：每个不在 S 中的顶点至少与 S 中某点相邻。
+给定 Vertex Cover 实例 (G = (V, E), k)，构造 G′：
+1. 保留每个原顶点 v ∈ V ；
+2. 对每条原边 e = (u, v) 新建一个边顶点 w ，只连接 u 和 v；
+e
+3. 把所有原顶点 V 两两相连，变成 clique；
+4. 令 k′ = k。
+为什么必须把 V 变成 clique？只加 w 时，点覆盖虽然能支配所有边顶点，却不一定支配没被选的原顶点。clique 保证只
+e
+要选了至少一个原顶点，就能支配所有原顶点。
+正向
+若 S ⊆ V 是大小 k 的 vertex cover，则每个 w 至少连接到 S 中一个端点；所有原顶点又被 clique 中的 S 支配。所以 S
+e
+是 G′ 的 dominating set。
+反向
+若 G′ 有大小 k 的 dominating set S′，可以不失一般性地假设 S′ ⊆ V ：若选了某个 w ，把它替换为端点 u 或 v，支配能
+e
+力不会减弱。规范化以后，每个 w 只能由它的两个端点支配，所以每条原边至少一个端点在 S′ 中，S′ 就是原图 vertex
+e
+cover。
+因此：
+$$VertexCover \le DominatingSet.$$
+p
+再加上 Dominating Set 显然属于 NP，得到它是 NP-complete。
+Vertex Cover 到 Subset Sum：先用向量表达约束
+这两个问题看起来很不像，所以可引入 Vector Subset Sum 作为中间问题。
+给原图边编号 e , . . . , e 。对每个顶点 v 建 (m + 1) 维向量 a ：
+1 m i i
+• 第 0 维是 1，表示选择了一个顶点；
+• 第 j 维是 1 当且仅当 v 是边 e 的端点。
+i j
+再为每条边 e 建补充向量 b ，只有第 j 维为 1。目标向量设为：
+j j
+$$K = (k, 2, 2, . . . , 2).$$
+第 0 维强制恰好选 k 个顶点向量。对某条边：
+• 两端都选，坐标已经是 2；
+• 只选一端，可再选 b 补成 2；
+j
+• 两端都不选，即使加入 b 也只有 1，无法达到目标。
+j
+
+所以恰好存在大小 k 的点覆盖，当且仅当这些向量中有子集和为 K。
+接着把向量 (a , a , . . . , a ) 编成一个大整数。选足够大的进制 B，使任何一位相加都不会进位：
+0 1 m
+$$encode(a) = a Bm + a Bm-1 + \cdot \cdot \cdot + a.$$
+0 1 m
+无进位时，整数相加等价于每一维独立相加，于是 Vector Subset Sum 归约到普通 Subset Sum。
+Partition 与伪多项式算法
+Partition 问能否把正整数集合分成两个等和部分。若总和是 S，问题等价于是否存在子集和为 S/2，因此和 Subset Sum
+紧密相关。
+Subset Sum/Knapsack 有 $O(nS)$ 或 $O(nW)$ 的 DP，但 S, W 的二进制位长只有 $O(\log S)$, $O(\log W )$。所以这种复杂度不
+是输入位长的多项式，而是伪多项式，并不与 NP-complete 矛盾。
+Hamiltonian Path gadget：用走法表示真假
+Hamiltonian Path 要恰好访问每个顶点一次。从 3SAT 构造有向 Hamiltonian Path：
+• 每个变量建立一个长链 gadget；
+• 从入口到出口有两种覆盖全部内部点的走法，分别表示 x = true 和 x = f alse；
+i i
+• 链上为每个子句预留位置；
+• 子句顶点只能从能满足该子句的 literal 对应方向绕行访问。
+若公式有满足赋值，按每个变量的真假选择相应方向，并从某个真 literal 的位置绕去访问每个子句顶点，得到 Hamiltonian
+path。反过来，任何 Hamiltonian path 在每个变量 gadget 中只能选择一个方向，从而读出一致赋值；每个子句顶点必须
+被访问，所以该子句至少有一个 literal 在对应真方向上。
+gadget 的本质：把“布尔选择”编码成“路径只能二选一”，再把“子句至少一个真”编码成“子句顶点必须能被某条被
+选路径顺便访问”。
+随后把 Directed Hamiltonian Path 归约为无向 Hamiltonian Path，方法是用小 gadget 代替每个有向顶点/有向连接，
+使无向路径虽然能走边，但只有符合原方向的穿越方式才能访问 gadget 内所有点。
+NP-hard 优化问题
+判定与优化的关系：若一个最小化问题能在多项式时间求出 OPT ，当然能判断 $OPT \le k$；若这个判定问题 NP-hard，则
+优化问题也 NP-hard。
+优化问题 对应困难判定
+Max-3SAT 是否能满足全部子句
+Maximum Independent Set 是否有大小至少 k 的独立集
+Minimum Vertex Cover 是否有大小至多 k 的点覆盖
+Longest Simple Path 是否存在长度覆盖全部顶点的 Hamiltonian path
+Makespan Minimization 两台机器能否做到总工作量的一半，即 Partition
+这也解释了为什么 Makespan 例题不再追求精确多项式算法，而是分析 list scheduling 的 2-approx 和 LPT 的更好近似比。
+TSP 的 NP-hardness 与不可近似性
+TSP 在完全图上寻找最短 Hamiltonian cycle。由 Hamiltonian Cycle 实例 G = (V, E) 构造完全图：
+$$
+w(u, v)=
+\begin{cases}
+1, & (u, v)\in E,\\
+M, & (u, v)\notin E.
+\end{cases}
+$$
+其中 M 是很大的数。若原图有 Hamiltonian cycle，则 TSP 有长度 $|V|$ 的 tour；若没有，任何 tour 至少用一条非原图边，
+长度至少 M。所以判断 $OPT\le |V|$ 就能判断 Hamiltonian Cycle，TSP 是 NP-hard。
+对不要求三角不等式的一般 TSP，还能把 M 设得大于任意给定近似因子乘 $|V|$，制造巨大的 yes/no gap。若存在该因子
+的多项式近似算法，就能从输出长度区分原图是否有 Hamiltonian cycle。因此一般 TSP 在 P ̸= NP 假设下甚至没有任何
+有限因子的多项式近似保证。
+注意。 Metric TSP 额外要求三角不等式，不能使用上述巨大权重 gap，因此有常数近似算法。不要把两种 TSP 混在一起。
+归约题最后检查表
+• 箭头是否从已知 NP-complete 问题指向待证问题？
+• 构造是否在多项式时间完成，输出规模是否多项式？
+• 是否证明了 yes 到 yes？
+• 是否证明了反向，或等价地证明 no 到 no？
+• 参数 k 怎样变化是否写清？
+• 有没有偷偷假设目标解具有某种形式？若有，是否证明可以规范化？
+• gadget 是否可能被“非预期走法”绕过？
+作业题分析：Assignment 6：NP-Complete 归约练习
+Assignment 6 每题都先写“属于 NP”：给出候选解，并说明可在多项式时间验证。真正的区分度在归约构造和 iff 证明。
+(a) 是否存在大小恰为 n/2 的 Clique
+从 Clique(G,k) 归约。设原图有 n 个点：
+1. 新增一个大小为 n 的 clique U ，并把 U 中每个点连向原图全部顶点；
+2. 再新增 2k 个孤立点；
+3. 新图总点数 N = 2n + 2k，目标大小 N /2 = n + k。
+新图最大 clique 大小为 n + ω(G)。因此它含大小 N /2 的 clique，当且仅当 ω(G) ≥ k。这里“恰好”与“至少”等价，因
+为更大 clique 总含目标大小的子 clique。
+(b) Decision Knapsack
+从 Subset Sum 的正整数实例 (a , . . . , a , B) 归约：对每件物品设 w = v = a ，容量 C = B，价值门槛 V = B。若某子
+1 n i i i
+集同时满足总重量 ≤ B、总价值 ≥ B，因为两者是同一个和，只能恰好等于 B。所以两实例 yes/no 完全一致。
+(c) Subgraph
+从 Clique 归约：给定 (G, k)，令模式图 H = K 。H 是 G 的子图，当且仅当 G 含 k-clique。证书是一组不同顶点的映射，
+k
+检查每条 H 边在 G 中存在即可。
+(d) 最大度数不超过 k 的生成树
+从 Hamiltonian Path 归约并固定 k = 2。一棵最大度数不超过 2 的连通生成树只能是一条覆盖全部顶点的路径；反之
+Hamiltonian path 的边本身构成这样的生成树。
+(e) Set Cover
+从 Vertex Cover 归约。令 ground set 为原图边集 U = E；对每个顶点 v 建集合 S ，包含所有与 v 相 incident 的边。选择
+v
+至多 k 个集合覆盖 U ，当且仅当选择至多 k 个顶点覆盖所有边。若题目要求恰好 k 个集合，可用任意未选集合补足，覆
+盖性质不会被破坏。
+
+(f) 含负数的零和子集
+必须明确要求子集非空，否则空集永远使答案为 yes。从正整数 Subset Sum (a , . . . , a , B) 构造：
+1 n
+{a , . . . , a , −B}.
+1 n
+所有 a 都正，所以非空零和子集必须包含 −B；其余被选正数之和恰为 B。因此与原 Subset Sum 等价。
+i
+(g) 初始染黑 k 点使全图最终变黑
+从 Vertex Cover 归约。若初始黑点集合 S 是 vertex cover，则 V \ S 内没有边，每个白点的所有邻居都在 S 中，第一轮
+就全部变黑。
+反之，若存在一条边 (u, v) 两端初始都白，则二者中任何一个要先变黑，都要求另一个已经黑，形成循环等待；它们永远
+不可能成为这对点中第一个变黑者。因此最终全黑推出初始集合覆盖每条边。二者完全等价。
+(h) 两人 Envy-Free Allocation
+从 Partition 归约。令两人的价值完全相同：u = v = a 。无嫉妒要求第一人认为 A 不差于 B，第二人认为 B 不差于 A：
+i i i
+$$\sum_{i\in A}a_i\ge\sum_{i\in B}a_i,\qquad \sum_{i\in B}a_i\ge\sum_{i\in A}a_i.$$
+两式只能同时在两边相等时成立，正好是 Partition。
+(i) 3-Coloring
+从 3SAT 使用标准着色 gadget：先建基准三角形 T, F, B，强迫它们颜色各异。每个变量建 x , ¬x ，二者互连并都连 B，
+i i
+因此只能分别取 T /F 两色，表示互补真假。每个子句接一个 OR gadget，它可合法三染色当且仅当三个 literal 顶点至少
+一个取 T 色。
+正向按满足赋值给变量着色，再扩展每个 clause gadget；反向从任意合法三染色读取变量真假，clause gadget 性质保证每
+个子句至少一真。提交时必须把 gadget 图画出并用 8 种输入真假组合验证性质，只写“存在 gadget”不够。
+(j) Exact Cover
+最短归约可用标准 NP-complete 问题 X3C（Exact Cover by 3-Sets）。X3C 的实例已经是 ground set 与若干三元素子
+集，问题正是能否选出两两不交且并为全集的子集合；把同一实例直接视为 Exact Cover 即可。因此 X3C 是 Exact Cover
+的特殊情形，得到 X3C ≤ ExactCover。
+p
+若不能直接引用 X3C，需要从 3SAT 设计变量选择与子句覆盖 gadget；核心要求是每个变量只能选 true/false 两
+组之一，并且每个 clause element 恰被一个满足它的 literal 集合覆盖。
+高频定理与证明抓手
+主题 重要结论 证明抓手 常见用途
+主定理 $T(n)=aT(n/b)+O(n^d)$：递归树每层总代价是 $a^i(n/b^i)^d$，据 $a$ 与 $b^d$ 比较得到三种复杂度。
+比较排序下界（只记结论） 任意比较排序最坏时间为 了解决策树的信息量思想，不展 区分比较排序与非比较排序。
+Ω(n log n)。 开严格证明。
+拓扑排序定理 DAG 按 DFS finish time 逆序或 DAG 中不存在回边；每条边方向 DAG 最短路、DAG DP。
+入度为 0 队列可得到拓扑序。 都从更早位置指向更晚位置。
+Dijkstra 正确性 边权非负时，每次取出的未确定 若存在更短路，第一条跨出已确 非负权单源最短路。
+最小距离点已经达到最短路。 定集合的边会因非负权产生矛盾。
+Bellman-Ford 定理 第 k 轮松弛后，得到最多使用 k 对路径边数做归纳。 负权边最短路和负环检测。
+条边的最短路。
+
+主题 重要结论 证明抓手 常见用途
+MST Cut Property 对任意割，跨越该割的最轻边属 交换论证：把 MST 中跨割的另 Prim、Kruskal 正确性。
+于某棵 MST。 一条边替换为更轻边。
+Huffman 最优子结构 频率最低的两个字符可以安排为 交换论证：把低频字符换到更深 Huffman 编码正确性。
+最深层的一对兄弟。 处不会增加代价。
+EDF 定理 单机任务若都可在截止时间前完 交换相邻逆序任务，不会让更早 调度可行性证明。
+成，则按最早截止时间排序可行。 截止时间任务变晚到不可行。
+Max-Flow Min-Cut 最大流值等于最小割容量。 无增广路时，残量图中从 s 可达 最大流正确性、割证书。
+点集给出等值割。
+Edmonds-Karp 复杂度 每次取 BFS 最短增广路，总时间 残量图中 s 到各点最短距离单调 证明 Ford-Fulkerson 的多项式版
+$O(V E^{2})$。 不降；每条边成为瓶颈次数有限。 本。
+LP 弱对偶 任意 primal feasible 和 dual 用非负变量和约束方向逐项相乘 给上界/下界，证明近似比。
+feasible 的目标值满足弱对偶不等 求和。
+式。
+LP 强对偶 若 primal 和 dual 都有最优解， 课程中通常作为 LP 基本定理使 Minimax、最大流最小割、对偶
+则最优值相等。 用。 证书。
+Vertex Cover Rounding LP relaxation 解中取所有 每条边约束 xu + xv ≥ 1 保证至 LP relaxation 近似算法。
+xv ≥ 1/2 的点，得到 少一个端点被取；取整后代价至
+2-approximation。 多翻倍。
+Minimax 零和博弈满足 把双方混合策略问题写成一对 博弈均衡、随机策略分析。
+$$maxp minq pT Aq = primal-dual LP。$$
+minq maxp pT Aq。
+Hall 定理 二分图存在覆盖左部的匹配，当 单位容量最大流与最小割。 完全匹配存在性。
+且仅当 $|N(X)| \ge |X|$ 对所有
+X ⊆ L 成立。
+Cook-Levin SAT 是 NP-complete。 把多项式验证过程编码为 CNF。 所有 NP-complete 归约链的起
+点。
+Karp 归约传递性 A ≤ p B 且 B ≤ p C 推出 复合两个多项式时间变换。 沿归约图传递 NP-hardness。
+$$A \le p C。$$
+IS/VC 补集关系 S 独立当且仅当 V \ S 是点覆盖。 未覆盖边恰好对应独立集中的内 Independent Set 与 Vertex
+部边。 Cover 互相归约。
+可计算性与排序下界伪代码
+停机问题中的对角程序 B(x)
+这不是可执行的求解算法，而是例如用来推出矛盾的假想程序。假设 Halt(M,y) 能正确判断程序 M 在输入 y 上是否停
+机：
+B(x):
+if Halt(x, x) == true:
+loop forever
+else:
+return 1
+把 B 自身作为输入即可得到自指矛盾，因此 Halt 不可能存在。比较排序下界在这里只保留结论，不展开决策树计数证
+明。
+NP-Complete 归约伪代码
+
+ProveTargetIsNPComplete(Target):
+1. Give a polynomial-size certificate for Target yes-instances.
+2. Give a polynomial-time verifier.
+3. Choose a known NP-complete problem Source.
+4. For every Source instance x, construct Target instance R(x).
+$$5. Prove: x is yes => R(x) is yes.$$
+$$6. Prove: R(x) is yes => x is yes.$$
+7. Prove construction size and running time are polynomial.
+$$8. Conclude Source <=p Target, so Target is NP-hard;$$
+together with Target in NP, Target is NP-complete.
+自检。第 6 步若难写，尝试把 Target 的解规范化；或者证明它的逆否命题。若第 5、6 步只写了一边，最多只得到单
+向蕴含，不足以完成 Karp reduction。
+$$SAT \le 3SAT$$
+p
+SATto3SAT(phi):
+$$phi3 = empty conjunction$$
+for each clause C = (l1 or ... or lr) in phi:
+if r <= 3:
+append C to phi3 // 或重复 literal 补到 3 个
+else:
+create fresh y1, ..., y[r-3]
+append (l1 or l2 or y1)
+for j = 1 to r - 4:
+append (not y[j] or l[j+2] or y[j+1])
+append (not y[r-3] or l[r-1] or l[r])
+return phi3
+每个长子句被“链”起来；原子句可满足当且仅当新链可满足。
+$$3SAT \le Independent Set$$
+p
+ThreeSATtoIS(phi with m clauses):
+create one vertex for each literal occurrence
+for each clause:
+connect its three occurrence vertices into a triangle
+for every pair of occurrences representing x and not x:
+add a conflict edge between them
+return (G, k = m)
+大小 m 的独立集必须从每个子句三角形恰选一个 literal，冲突边保证不会同时选 x 与 ¬x。
+Independent Set 到 Vertex Cover / Clique
+IStoVC(G, k):
+return (G, |V| - k)
+IStoClique(G, k):
+$$H = complement graph of G$$
+return (H, k)
+使用 S 独立 ⇔ V \ S 为点覆盖，以及 S 在 G 中独立 ⇔ S 在 G 中成 clique。
+
+$$Vertex Cover \le Dominating Set$$
+p
+VCtoDominatingSet(G=(V,E), k):
+H initially contains all original vertices V
+connect every pair of vertices in V, making V a clique
+for each edge e=(u,v) in E:
+create a new vertex w[e]
+add edges (u,w[e]) and (v,w[e])
+return (H, k)
+边顶点 w 被支配当且仅当至少选了原边的一个端点；把原顶点变成 clique 修复了“原顶点可能没有被支配”的漏洞。
+e
+$$Vertex Cover \le Vector Subset Sum$$
+p
+VCtoVectorSubsetSum(G=(V,E), k):
+number edges as e1..em
+$$S = empty multiset of (m+1)-dimensional vectors$$
+for each vertex vi:
+$$a = zero vector$$
+$$a[0] = 1$$
+$$a[j] = 1 iff vi is an endpoint of ej$$
+add a to S
+for each edge ej:
+$$b = zero vector$$
+$$b[j] = 1$$
+add b to S
+$$target = (k, 2, 2, ..., 2)$$
+return (S, target)
+第 0 维强制选 k 个顶点；边维度必须凑到 2，若边没有任何端点被选，仅靠一个 b 最多凑到 1。
+j
+Vector Subset Sum ≤ Subset Sum（无进位编码）
+p
+VectorToScalar(S, target):
+choose base B larger than the maximum possible sum in any coordinate
+$$Encode(a[0..m]) = sum from j=0 to m of a[j] * B^(m-j)$$
+$$numbers = {Encode(a): a in S}$$
+$$K = Encode(target)$$
+return (numbers, K)
+基数 B 足够大时各坐标相加不产生进位，向量逐坐标相等就等价于编码整数之和相等。
+$$Directed Hamiltonian Path \le Hamiltonian Path$$
+p
+DirectedHPtoUndirectedHP(G, s, t):
+for each directed vertex u:
+create u_in -- u_mid -- u_out
+for each directed edge u -> v:
+add undirected edge u_out -- v_in
+force the path endpoints to be s_in and t_out
+return the undirected graph
+三点链强制每个顶点 gadget 按 in->mid->out 穿过，gadget 间的连接只能对应原有向边。若目标问题不指定端点，可
+在 s 、t 外各挂一个度为 1 的新端点。
+in out
+
+$$Hamiltonian Cycle \le TSP$$
+p
+HamiltonianCycleToTSP(G=(V,E)):
+build complete graph K on V
+for every pair u,v:
+if (u,v) in E: weight[u][v] = 1
+else: weight[u][v] = M // M > |V|
+return (K, budget = |V|)
+存在 Hamiltonian cycle 时有长度 $|V|$ 的 tour；不存在时任何 tour 至少用一条重边，长度超过预算。
+题型清单
+证明题高频入口
+• Dijkstra 正确性：非负权 + 已选集合 S 的最短距离不变量。
+• MST 正确性：cut property 与 exchange argument。
+• Huffman 正确性：两个最低频率字符可在最深层互为兄弟。
+• 最大流最小割：无增广路时 residual reachable set 给出等值 cut。
+• LP approximation：relaxation optimum 与 integer optimum 的大小关系，加 rounding 代价。
+• NP-complete：先证属于 NP，再从已知 NP-complete 问题归约，最后写完整 iff。
+算法设计题高频套路
+• 看到“跨左右两边”可考虑分治合并：逆序对。
+• 看到“排序后局部选择”先尝试贪心，但必须找交换论证。
+• 看到“前缀、区间、树子结构”可定义 DP 状态。
+• 看到“匹配、分配、容量、割、可行流”可建网络流。
+• 看到“0/1 选择 + 线性约束 + 近似”可写 IP，再放松成 LP。
+• 看到“证明很难、没有多项式算法”先转成判定问题，再选相似的 NP-complete 问题做归约。

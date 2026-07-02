@@ -1,0 +1,829 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>信息论复习笔记 · Lawrenclia Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/notes-reader.css">
+  <script>
+    const mathDollar = String.fromCharCode(36);
+    window.MathJax = {
+      tex: {
+        inlineMath: [[mathDollar, mathDollar], ['\\(', '\\)']],
+        displayMath: [[mathDollar + mathDollar, mathDollar + mathDollar], ['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'ams'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="navbar" role="navigation" aria-label="主导航">
+    <div class="nav-left">
+      <div class="brand" aria-hidden>
+        笔记 · Lawrenclia
+      </div>
+    </div>
+    <div class="nav-right">
+      <a class="nav-link" href="../../index.html">首页</a>
+      <a class="nav-link" href="../../projects.html">项目</a>
+      <a class="nav-link" href="../../notes.html">笔记</a>
+      <a class="nav-link" href="../../about.html">关于</a>
+      <button class="theme-toggle" aria-label="切换主题">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <h1>信息论复习笔记</h1>
+      <p>课程笔记</p>
+      <nav>
+<ul>
+<li><a href="#信息论复习笔记" id="toc-信息论复习笔记">信息论复习笔记</a>
+<ul>
+<li><a href="#1-信息度量" id="toc-1-信息度量">1. 信息度量</a></li>
+<li><a href="#2-链式法则与不等式" id="toc-2-链式法则与不等式">2.
+链式法则与不等式</a></li>
+<li><a href="#3-aep典型集与型" id="toc-3-aep典型集与型">3.
+AEP、典型集与型</a></li>
+<li><a href="#4-熵率" id="toc-4-熵率">4. 熵率</a></li>
+<li><a href="#5-信源编码" id="toc-5-信源编码">5. 信源编码</a></li>
+<li><a href="#6-信道容量" id="toc-6-信道容量">6. 信道容量</a></li>
+<li><a href="#7-连续变量与高斯信道" id="toc-7-连续变量与高斯信道">7.
+连续变量与高斯信道</a></li>
+<li><a href="#8-解题模板" id="toc-8-解题模板">8. 解题模板</a></li>
+<li><a href="#9-公式速查" id="toc-9-公式速查">9. 公式速查</a></li>
+</ul></li>
+</ul>
+      </nav>
+    </aside>
+    <main>
+      <div class="hero">
+        <h1>信息论复习笔记</h1>
+      </div>
+<h1 id="信息论复习笔记">信息论复习笔记</h1>
+<p>约定：除非特别说明，<span class="math inline">\(\log\)</span> 以 2
+为底，信息单位为 bit。</p>
+<h2 id="1-信息度量">1. 信息度量</h2>
+<h3 id="熵">熵</h3>
+<p>自信息：</p>
+<p><span class="math display">\[
+\imath_X(x)=-\log p(x)=\log\frac1{p(x)}.
+\]</span></p>
+<p>离散熵：</p>
+<p><span class="math display">\[
+H(X)=-\sum_{x\in\mathcal X}p(x)\log p(x)
+=\mathbb E\left[\log\frac1{p(X)}\right].
+\]</span></p>
+<p>性质：</p>
+<ul>
+<li><span class="math inline">\(0\le H(X)\le \log|\mathcal
+X|\)</span>。</li>
+<li><span class="math inline">\(H(X)=0\)</span> 当且仅当 <span
+class="math inline">\(X\)</span> 几乎必然为常数。</li>
+<li><span class="math inline">\(H(X)=\log|\mathcal X|\)</span> 当且仅当
+<span class="math inline">\(X\)</span> 均匀。</li>
+<li><span class="math inline">\(H(p)\)</span> 对分布 <span
+class="math inline">\(p\)</span> 是凹函数。</li>
+</ul>
+<p>二元熵：</p>
+<p><span class="math display">\[
+h_2(p)=-p\log p-(1-p)\log(1-p).
+\]</span></p>
+<p><span class="math inline">\(h_2(p)=h_2(1-p)\)</span>，最大值 <span
+class="math inline">\(1\)</span> 在 <span
+class="math inline">\(p=1/2\)</span> 处取得。</p>
+<h3 id="联合熵与条件熵">联合熵与条件熵</h3>
+<p><span class="math display">\[
+H(X,Y)=-\sum_{x,y}p(x,y)\log p(x,y).
+\]</span></p>
+<p><span class="math display">\[
+H(Y\mid X)
+=\sum_xp(x)H(Y\mid X=x)
+=-\sum_{x,y}p(x,y)\log p(y\mid x).
+\]</span></p>
+<p>链式法则：</p>
+<p><span class="math display">\[
+H(X,Y)=H(X)+H(Y\mid X)=H(Y)+H(X\mid Y).
+\]</span></p>
+<p>多变量版本：</p>
+<p><span class="math display">\[
+H(X_1,\ldots,X_n)
+=\sum_{i=1}^nH(X_i\mid X_1,\ldots,X_{i-1}).
+\]</span></p>
+<p>条件作用减少熵：</p>
+<p><span class="math display">\[
+H(X\mid Y,Z)\le H(X\mid Y)\le H(X).
+\]</span></p>
+<p>零条件熵：</p>
+<p><span class="math display">\[
+H(Y\mid X)=0
+\]</span></p>
+<p>当且仅当存在函数 <span class="math inline">\(g\)</span> 使 <span
+class="math inline">\(Y=g(X)\)</span> 几乎处处成立。</p>
+<h3 id="kl-散度">KL 散度</h3>
+<p><span class="math display">\[
+D(p\|q)=\sum_xp(x)\log\frac{p(x)}{q(x)}.
+\]</span></p>
+<p>性质：</p>
+<ul>
+<li><span class="math inline">\(D(p\|q)\ge0\)</span>，等号当且仅当 <span
+class="math inline">\(p=q\)</span>。</li>
+<li>一般 <span class="math inline">\(D(p\|q)\ne
+D(q\|p)\)</span>，不是距离。</li>
+<li>若 <span class="math inline">\(p(x)&gt;0,q(x)=0\)</span>，则 <span
+class="math inline">\(D(p\|q)=\infty\)</span>。</li>
+<li>对 <span class="math inline">\((p,q)\)</span> 联合凸。</li>
+</ul>
+<p>编码解释：</p>
+<p><span class="math display">\[
+\mathbb E_p[-\log q(X)] = H(p)+D(p\|q).
+\]</span></p>
+<p>用错分布 <span class="math inline">\(q\)</span> 编码真实分布 <span
+class="math inline">\(p\)</span>，平均多付 <span
+class="math inline">\(D(p\|q)\)</span> bit。</p>
+<h3 id="互信息">互信息</h3>
+<p>定义：</p>
+<p><span class="math display">\[
+I(X;Y)=D(p_{XY}\|p_Xp_Y)
+=\sum_{x,y}p(x,y)\log\frac{p(x,y)}{p(x)p(y)}.
+\]</span></p>
+<p>等价式必须熟：</p>
+<p><span class="math display">\[
+\boxed{
+I(X;Y)
+=H(X)-H(X\mid Y)
+=H(Y)-H(Y\mid X)
+=H(X)+H(Y)-H(X,Y)
+}
+\]</span></p>
+<p>性质：</p>
+<ul>
+<li><span class="math inline">\(I(X;Y)=I(Y;X)\ge0\)</span>。</li>
+<li><span class="math inline">\(I(X;Y)=0\)</span> 当且仅当 <span
+class="math inline">\(X,Y\)</span> 独立。</li>
+<li><span class="math inline">\(I(X;X)=H(X)\)</span>。</li>
+<li><span class="math inline">\(I(X;Y)\le
+\min\{H(X),H(Y)\}\)</span>。</li>
+</ul>
+<p>条件互信息：</p>
+<p><span class="math display">\[
+I(X;Y\mid Z)=H(X\mid Z)-H(X\mid Y,Z)\ge0.
+\]</span></p>
+<p>注意：条件作用不一定减少互信息。若 <span
+class="math inline">\(X,Y\)</span> 独立且均为 <span
+class="math inline">\(\mathrm{Bern}(1/2)\)</span>，令 <span
+class="math inline">\(Z=X\oplus Y\)</span>，则</p>
+<p><span class="math display">\[
+I(X;Y)=0,\qquad I(X;Y\mid Z)=1.
+\]</span></p>
+<h3 id="信息图">信息图</h3>
+<p><img src="assets/information-theory/info_diagram_3rv.png"
+alt="三变量信息图" /></p>
+<p>常用对应：</p>
+<table>
+<thead>
+<tr>
+<th>图形语言</th>
+<th>信息论表达</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>并集</td>
+<td><span class="math inline">\(H(X,Y)\)</span></td>
+</tr>
+<tr>
+<td>交集</td>
+<td><span class="math inline">\(I(X;Y)\)</span></td>
+</tr>
+<tr>
+<td>差集</td>
+<td><span class="math inline">\(H(X\mid Y)\)</span></td>
+</tr>
+<tr>
+<td>三元交</td>
+<td><span class="math inline">\(I(X;Y;Z)=I(X;Y)-I(X;Y\mid
+Z)\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>三元互信息可以为负，不要把它当普通面积。</p>
+<h2 id="2-链式法则与不等式">2. 链式法则与不等式</h2>
+<p>熵链式：</p>
+<p><span class="math display">\[
+H(X^n)=\sum_{i=1}^nH(X_i\mid X^{i-1}).
+\]</span></p>
+<p>互信息链式：</p>
+<p><span class="math display">\[
+I(X^n;Y)
+=\sum_{i=1}^nI(X_i;Y\mid X^{i-1}).
+\]</span></p>
+<p>KL 链式：</p>
+<p><span class="math display">\[
+D(p(x,y)\|q(x,y))
+=D(p(x)\|q(x))
++D(p(y\mid x)\|q(y\mid x)).
+\]</span></p>
+<p>其中第二项表示对 <span class="math inline">\(p(x)\)</span>
+加权平均：</p>
+<p><span class="math display">\[
+D(p(y\mid x)\|q(y\mid x))
+=\sum_xp(x)\sum_yp(y\mid x)\log\frac{p(y\mid x)}{q(y\mid x)}.
+\]</span></p>
+<p>数据处理不等式：</p>
+<p><span class="math display">\[
+X\to Y\to Z
+\quad\Longrightarrow\quad
+I(X;Z)\le I(X;Y).
+\]</span></p>
+<p>等价直觉：处理数据不会凭空增加关于源的信息。</p>
+<p>Fano 不等式。若 <span class="math inline">\(X\to Y\to \hat
+X\)</span>，<span class="math inline">\(P_e=\Pr(\hat X\ne
+X)\)</span>，则</p>
+<p><span class="math display">\[
+H(X\mid Y)\le H(X\mid \hat X)
+\le h_2(P_e)+P_e\log(|\mathcal X|-1).
+\]</span></p>
+<p>常用弱化：</p>
+<p><span class="math display">\[
+H(X\mid Y)\le 1+P_e\log|\mathcal X|.
+\]</span></p>
+<p>反推错误率下界：</p>
+<p><span class="math display">\[
+P_e\ge \frac{H(X\mid Y)-1}{\log|\mathcal X|}.
+\]</span></p>
+<h2 id="3-aep典型集与型">3. AEP、典型集与型</h2>
+<h3 id="aep">AEP</h3>
+<p>若 <span class="math inline">\(X_1,X_2,\ldots\)</span> i.i.d. <span
+class="math inline">\(\sim p(x)\)</span>，则</p>
+<p><span class="math display">\[
+-\frac1n\log p(X^n)\xrightarrow{P}H(X).
+\]</span></p>
+<p>弱典型集：</p>
+<p><span class="math display">\[
+A_\epsilon^{(n)}
+=\left\{x^n:
+\left|-\frac1n\log p(x^n)-H(X)\right|&lt;\epsilon
+\right\}.
+\]</span></p>
+<p>典型集三件事：</p>
+<p><span class="math display">\[
+\Pr(X^n\in A_\epsilon^{(n)})\to1.
+\]</span></p>
+<p>若 <span class="math inline">\(x^n\in A_\epsilon^{(n)}\)</span>，</p>
+<p><span class="math display">\[
+2^{-n(H+\epsilon)}
+\le p(x^n)
+\le 2^{-n(H-\epsilon)}.
+\]</span></p>
+<p>典型集大小约为</p>
+<p><span class="math display">\[
+|A_\epsilon^{(n)}|\doteq 2^{nH(X)}.
+\]</span></p>
+<p><img src="assets/information-theory/typical_set_ppt.png"
+alt="典型集直观" /></p>
+<h3 id="型">型</h3>
+<p>序列 <span class="math inline">\(x^n\)</span> 的型：</p>
+<p><span class="math display">\[
+P_{x^n}(a)=\frac1nN(a\mid x^n).
+\]</span></p>
+<p>类型数不超过</p>
+<p><span class="math display">\[
+(n+1)^{|\mathcal X|}.
+\]</span></p>
+<p>型类大小：</p>
+<p><span class="math display">\[
+\frac{1}{(n+1)^{|\mathcal X|}}2^{nH(P)}
+\le |T(P)|\le
+2^{nH(P)}.
+\]</span></p>
+<p>在分布 <span class="math inline">\(Q\)</span>
+下，某个具体序列概率为</p>
+<p><span class="math display">\[
+Q^n(x^n)
+=2^{-n[H(P_{x^n})+D(P_{x^n}\|Q)]}.
+\]</span></p>
+<p>类型类概率指数阶：</p>
+<p><span class="math display">\[
+Q^n(T(P))\doteq 2^{-nD(P\|Q)}.
+\]</span></p>
+<h2 id="4-熵率">4. 熵率</h2>
+<p>随机过程 <span class="math inline">\(\mathcal X=\{X_i\}\)</span>
+的熵率：</p>
+<p><span class="math display">\[
+\bar H(\mathcal X)
+=\lim_{n\to\infty}\frac1nH(X_1,\ldots,X_n).
+\]</span></p>
+<p>条件熵率：</p>
+<p><span class="math display">\[
+H&#39;(\mathcal X)
+=\lim_{n\to\infty}H(X_n\mid X_1,\ldots,X_{n-1}).
+\]</span></p>
+<p>平稳过程满足：</p>
+<p><span class="math display">\[
+\boxed{\bar H(\mathcal X)=H&#39;(\mathcal X)}.
+\]</span></p>
+<p>平稳马尔可夫链若平稳分布为 <span
+class="math inline">\(\mu\)</span>、转移矩阵为 <span
+class="math inline">\(P\)</span>：</p>
+<p><span class="math display">\[
+\bar H(\mathcal X)
+=H(X_2\mid X_1)
+=-\sum_i\mu_i\sum_jP_{ij}\log P_{ij}.
+\]</span></p>
+<p>二状态链</p>
+<p><span class="math display">\[
+P=
+\begin{pmatrix}
+1-\alpha &amp; \alpha\\
+\beta &amp; 1-\beta
+\end{pmatrix},
+\qquad
+\mu=\left(\frac{\beta}{\alpha+\beta},\frac{\alpha}{\alpha+\beta}\right),
+\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[
+\bar H
+=\frac{\beta}{\alpha+\beta}h_2(\alpha)
++\frac{\alpha}{\alpha+\beta}h_2(\beta).
+\]</span></p>
+<h2 id="5-信源编码">5. 信源编码</h2>
+<h3 id="前缀码与-kraft-不等式">前缀码与 Kraft 不等式</h3>
+<p><span class="math inline">\(D\)</span> 叉前缀码长度 <span
+class="math inline">\(\ell_i\)</span> 存在当且仅当</p>
+<p><span class="math display">\[
+\sum_iD^{-\ell_i}\le1.
+\]</span></p>
+<p>若长度满足 Kraft 不等式，就能构造前缀码。</p>
+<p>最优平均长度：</p>
+<p><span class="math display">\[
+H_D(X)\le L^*&lt;H_D(X)+1,
+\]</span></p>
+<p>其中</p>
+<p><span class="math display">\[
+H_D(X)=\sum_ip_i\log_D\frac1{p_i}.
+\]</span></p>
+<p>对 <span class="math inline">\(n\)</span> 个符号分组编码：</p>
+<p><span class="math display">\[
+\frac1nH(X^n)\le \frac1nL_n^*
+&lt;\frac1nH(X^n)+\frac1n.
+\]</span></p>
+<p>i.i.d. 情况下冗余小于 <span
+class="math inline">\(1/n\)</span>，因此平均每符号码长可逼近 <span
+class="math inline">\(H(X)\)</span>。</p>
+<h3 id="huffman-编码">Huffman 编码</h3>
+<p>Huffman
+每次合并最小的两个概率。它给出单符号前缀码的最优平均长度。</p>
+<p><img src="assets/information-theory/huffman_algorithm.png"
+alt="Huffman 算法" /></p>
+<p>步骤：</p>
+<ol type="1">
+<li>概率从小到大排序。</li>
+<li>反复合并两个最小概率。</li>
+<li>从树根回标 0/1 得到码字。</li>
+<li>算 <span class="math inline">\(L=\sum_ip_i\ell_i\)</span>，检查
+<span class="math inline">\(H(X)\le L&lt;H(X)+1\)</span>。</li>
+</ol>
+<h3 id="shannon-code-与错误分布">Shannon code 与错误分布</h3>
+<p>令</p>
+<p><span class="math display">\[
+\ell_i=\left\lceil\log\frac1{p_i}\right\rceil.
+\]</span></p>
+<p>则</p>
+<p><span class="math display">\[
+H(X)\le L&lt;H(X)+1.
+\]</span></p>
+<p>如果真实分布是 <span class="math inline">\(p\)</span>，但按 <span
+class="math inline">\(q\)</span> 设计码长：</p>
+<p><span class="math display">\[
+H(p)+D(p\|q)
+\le \mathbb E_p\ell(X)
+&lt; H(p)+D(p\|q)+1.
+\]</span></p>
+<h2 id="6-信道容量">6. 信道容量</h2>
+<h3 id="dmc">DMC</h3>
+<p>离散无记忆信道由三元组</p>
+<p><span class="math display">\[
+(\mathcal X,p(y\mid x),\mathcal Y)
+\]</span></p>
+<p>给出，每次输出只依赖当前输入。</p>
+<p><img src="assets/information-theory/channel_definition_flow.png"
+alt="DMC 模型" /></p>
+<p>容量：</p>
+<p><span class="math display">\[
+\boxed{C=\max_{p(x)}I(X;Y)}.
+\]</span></p>
+<p>求容量的一般套路：</p>
+<ol type="1">
+<li>写 <span class="math inline">\(p(x)\)</span>，由转移矩阵算 <span
+class="math inline">\(p(y)\)</span>。</li>
+<li>用</li>
+</ol>
+<p><span class="math display">\[
+I(X;Y)=H(Y)-H(Y\mid X).
+\]</span></p>
+<ol start="3" type="1">
+<li><span class="math inline">\(H(Y\mid X)=\sum_xp(x)H(p(\cdot\mid
+x))\)</span>。</li>
+<li>对输入分布最大化。固定信道时 <span
+class="math inline">\(I(X;Y)\)</span> 关于 <span
+class="math inline">\(p(x)\)</span> 凹。</li>
+</ol>
+<p>容量直觉：</p>
+<p><img src="assets/information-theory/capacity_intuition.png"
+alt="容量直觉" /></p>
+<h3 id="常见信道">常见信道</h3>
+<table>
+<thead>
+<tr>
+<th>信道</th>
+<th style="text-align: right;">容量</th>
+<th>最优输入</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无噪二元信道</td>
+<td style="text-align: right;"><span
+class="math inline">\(C=1\)</span></td>
+<td>均匀</td>
+</tr>
+<tr>
+<td>BSC<span class="math inline">\((p)\)</span></td>
+<td style="text-align: right;"><span
+class="math inline">\(C=1-h_2(p)\)</span></td>
+<td>均匀</td>
+</tr>
+<tr>
+<td>BEC<span class="math inline">\((\alpha)\)</span></td>
+<td style="text-align: right;"><span
+class="math inline">\(C=1-\alpha\)</span></td>
+<td>均匀</td>
+</tr>
+<tr>
+<td>Noisy typewriter</td>
+<td style="text-align: right;"><span class="math inline">\(C=\log
+13\)</span></td>
+<td>均匀</td>
+</tr>
+<tr>
+<td>弱对称信道</td>
+<td style="text-align: right;">$C=\log</td>
+<td>\mathcal Y</td>
+</tr>
+<tr>
+<td>Z channel 例题</td>
+<td style="text-align: right;"><span
+class="math inline">\(C=\log(5/4)\)</span></td>
+<td><span class="math inline">\(\Pr(X=1)=2/5\)</span></td>
+</tr>
+</tbody>
+</table>
+<p><img src="assets/information-theory/bsc_diagram.png" alt="BSC" /></p>
+<p><img src="assets/information-theory/bec_diagram.png" alt="BEC" /></p>
+<p><img src="assets/information-theory/z_channel_diagram.png"
+alt="Z Channel" /></p>
+<p>BSC 推导：</p>
+<p><span class="math display">\[
+Y=X\oplus Z,\qquad Z\sim\mathrm{Bern}(p).
+\]</span></p>
+<p><span class="math display">\[
+H(Y\mid X)=H(Z)=h_2(p),\qquad H(Y)\le1.
+\]</span></p>
+<p>均匀输入使 <span class="math inline">\(Y\)</span> 均匀，所以</p>
+<p><span class="math display">\[
+C=1-h_2(p).
+\]</span></p>
+<p>BEC 推导：</p>
+<p><span class="math display">\[
+H(Y\mid X)=h_2(\alpha),
+\]</span></p>
+<p>均匀输入时</p>
+<p><span class="math display">\[
+H(Y)=h_2(\alpha)+1-\alpha,
+\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[
+C=1-\alpha.
+\]</span></p>
+<p>Z channel 例题若 <span
+class="math inline">\(\Pr(X=1)=\pi\)</span>：</p>
+<p><span class="math display">\[
+I(X;Y)=h_2(\pi/2)-\pi.
+\]</span></p>
+<p>令导数为 0 得 <span
+class="math inline">\(\pi^*=2/5\)</span>，容量</p>
+<p><span class="math display">\[
+C=\log(5/4).
+\]</span></p>
+<h3 id="信道编码定理">信道编码定理</h3>
+<p>信道码：</p>
+<p><span class="math display">\[
+M=2^{nR},\qquad R=\frac1n\log M.
+\]</span></p>
+<p>香农第二定理：</p>
+<p><span class="math display">\[
+R&lt;C\Rightarrow \exists\ \text{codes with }P_e^{(n)}\to0,
+\]</span></p>
+<p><span class="math display">\[
+R&gt;C\Rightarrow P_e^{(n)}\not\to0.
+\]</span></p>
+<p>Achievability 证明骨架：</p>
+<ol type="1">
+<li>随机生成 <span class="math inline">\(2^{nR}\)</span> 个码字。</li>
+<li>接收端找唯一与 <span class="math inline">\(Y^n\)</span>
+联合典型的码字。</li>
+<li>真码字不联合典型的概率趋 0。</li>
+<li>错码字联合典型的概率约 <span
+class="math inline">\(2^{-nI(X;Y)}\)</span>。</li>
+<li>并集界：</li>
+</ol>
+<p><span class="math display">\[
+P_e\lesssim \epsilon+2^{nR}2^{-n(I(X;Y)-3\epsilon)}.
+\]</span></p>
+<p>只要 <span
+class="math inline">\(R&lt;I(X;Y)-3\epsilon\)</span>，错误概率趋 0；再对
+<span class="math inline">\(p(x)\)</span> 最大化得到 <span
+class="math inline">\(R&lt;C\)</span>。</p>
+<p>Converse 证明骨架：</p>
+<p><span class="math display">\[
+nR=H(W)
+=I(W;\hat W)+H(W\mid \hat W).
+\]</span></p>
+<p>由 Fano：</p>
+<p><span class="math display">\[
+H(W\mid \hat W)\le1+P_e^{(n)}nR.
+\]</span></p>
+<p>由数据处理：</p>
+<p><span class="math display">\[
+I(W;\hat W)\le I(X^n;Y^n).
+\]</span></p>
+<p>单字母化：</p>
+<p><span class="math display">\[
+I(X^n;Y^n)\le\sum_{i=1}^nI(X_i;Y_i)\le nC.
+\]</span></p>
+<p>合起来：</p>
+<p><span class="math display">\[
+nR\le nC+1+P_e^{(n)}nR.
+\]</span></p>
+<p>若 <span class="math inline">\(P_e^{(n)}\to0\)</span>，则 <span
+class="math inline">\(R\le C\)</span>。</p>
+<p>反馈不增加 DMC 容量：</p>
+<p><span class="math display">\[
+C_{\mathrm{FB}}=C.
+\]</span></p>
+<p>信源-信道分离。若信源熵率为 <span class="math inline">\(\bar
+H(\mathcal V)\)</span>，每个信源符号对应一次信道使用：</p>
+<p><span class="math display">\[
+\bar H(\mathcal V)&lt;C
+\]</span></p>
+<p>时可可靠传输。若 <span class="math inline">\(k\)</span>
+个信源符号使用 <span class="math inline">\(n\)</span> 次信道：</p>
+<p><span class="math display">\[
+\frac{k}{n}\bar H(\mathcal V)&lt;C.
+\]</span></p>
+<h2 id="7-连续变量与高斯信道">7. 连续变量与高斯信道</h2>
+<h3 id="微分熵">微分熵</h3>
+<p>连续随机变量密度为 <span class="math inline">\(f\)</span>：</p>
+<p><span class="math display">\[
+h(X)=-\int f(x)\log f(x)\,dx.
+\]</span></p>
+<p>微分熵可以为负，且缩放会改变：</p>
+<p><span class="math display">\[
+h(aX)=h(X)+\log|a|.
+\]</span></p>
+<p>离散量化关系：</p>
+<p><span class="math display">\[
+H(X^\Delta)+\log\Delta\to h(X),\qquad \Delta\to0.
+\]</span></p>
+<p>连续 KL 与互信息：</p>
+<p><span class="math display">\[
+D(f\|g)=\int f(x)\log\frac{f(x)}{g(x)}\,dx.
+\]</span></p>
+<p><span class="math display">\[
+I(X;Y)=\iint f(x,y)\log\frac{f(x,y)}{f(x)f(y)}\,dxdy.
+\]</span></p>
+<p>互信息仍非负，且对可逆坐标变换不变。</p>
+<p>高斯最大熵。若 <span
+class="math inline">\(\operatorname{Var}(X)=\sigma^2\)</span>：</p>
+<p><span class="math display">\[
+h(X)\le \frac12\log(2\pi e\sigma^2),
+\]</span></p>
+<p>等号当且仅当 <span class="math inline">\(X\)</span> 高斯。</p>
+<h3 id="awgn-容量">AWGN 容量</h3>
+<p>信道：</p>
+<p><span class="math display">\[
+Y=X+Z,\qquad Z\sim\mathcal N(0,N),
+\]</span></p>
+<p>功率约束：</p>
+<p><span class="math display">\[
+\mathbb E[X^2]\le P.
+\]</span></p>
+<p>容量：</p>
+<p><span class="math display">\[
+\boxed{
+C=\frac12\log\left(1+\frac PN\right)
+}
+\]</span></p>
+<p>推导：</p>
+<p><span class="math display">\[
+I(X;Y)=h(Y)-h(Y\mid X)=h(Y)-h(Z).
+\]</span></p>
+<p>由于 <span class="math inline">\(\operatorname{Var}(Y)\le
+P+N\)</span>，</p>
+<p><span class="math display">\[
+h(Y)\le\frac12\log(2\pi e(P+N)),
+\]</span></p>
+<p>而</p>
+<p><span class="math display">\[
+h(Z)=\frac12\log(2\pi eN).
+\]</span></p>
+<p>所以</p>
+<p><span class="math display">\[
+I(X;Y)\le\frac12\log\left(1+\frac PN\right).
+\]</span></p>
+<p>等号由 <span class="math inline">\(X\sim\mathcal N(0,P)\)</span>
+达到。</p>
+<h3 id="并行高斯信道与水填充">并行高斯信道与水填充</h3>
+<p>若</p>
+<p><span class="math display">\[
+Y_j=X_j+Z_j,\qquad Z_j\sim\mathcal N(0,N_j),
+\]</span></p>
+<p>总功率 <span class="math inline">\(\sum_jP_j\le
+P\)</span>，容量优化为</p>
+<p><span class="math display">\[
+C=\max_{P_j\ge0,\ \sum_jP_j\le P}
+\sum_j\frac12\log\left(1+\frac{P_j}{N_j}\right).
+\]</span></p>
+<p>水填充解：</p>
+<p><span class="math display">\[
+P_j=[\nu-N_j]^+,
+\]</span></p>
+<p><span class="math inline">\(\nu\)</span> 由</p>
+<p><span class="math display">\[
+\sum_j[\nu-N_j]^+=P
+\]</span></p>
+<p>确定。</p>
+<h2 id="8-解题模板">8. 解题模板</h2>
+<h3 id="算-hdi">算 <span class="math inline">\(H,D,I\)</span></h3>
+<ol type="1">
+<li>先从联合表算 <span class="math inline">\(p_X,p_Y\)</span>。</li>
+<li>算 <span class="math inline">\(H(X),H(Y),H(X,Y)\)</span>。</li>
+<li>用</li>
+</ol>
+<p><span class="math display">\[
+H(X\mid Y)=H(X,Y)-H(Y).
+\]</span></p>
+<ol start="4" type="1">
+<li>用</li>
+</ol>
+<p><span class="math display">\[
+I(X;Y)=H(X)+H(Y)-H(X,Y).
+\]</span></p>
+<ol start="5" type="1">
+<li>判断独立：看 <span
+class="math inline">\(p(x,y)=p(x)p(y)\)</span>，或看 <span
+class="math inline">\(I(X;Y)=0\)</span>。</li>
+</ol>
+<h3 id="证明不等式">证明不等式</h3>
+<p>常用开局：</p>
+<ul>
+<li>把两边展开成熵。</li>
+<li>移项后识别为 <span
+class="math inline">\(I(\cdot;\cdot\mid\cdot)\ge0\)</span>。</li>
+<li>或构造 KL 散度 <span
+class="math inline">\(D(p\|q)\ge0\)</span>。</li>
+<li>若出现处理链路，尝试用 DPI。</li>
+</ul>
+<h3 id="求-dmc-容量">求 DMC 容量</h3>
+<ol type="1">
+<li>设输入参数，例如 <span
+class="math inline">\(\Pr(X=1)=\pi\)</span>。</li>
+<li>由信道矩阵写输出分布。</li>
+<li>写</li>
+</ol>
+<p><span class="math display">\[
+I(X;Y)=H(Y)-H(Y\mid X).
+\]</span></p>
+<ol start="4" type="1">
+<li>对参数求导或利用对称性。</li>
+<li>检查边界点。</li>
+</ol>
+<h3 id="写信道编码证明">写信道编码证明</h3>
+<p>Achievability：</p>
+<pre class="text"><code>随机码本 -&gt; 联合典型译码 -&gt; 两类错误 -&gt; 并集界 -&gt; R &lt; I(X;Y) -&gt; 最大化</code></pre>
+<p>Converse：</p>
+<pre class="text"><code>均匀消息 -&gt; Fano -&gt; 数据处理 -&gt; 单字母化 -&gt; R &lt;= C</code></pre>
+<h3 id="常见坑">常见坑</h3>
+<ul>
+<li><span class="math inline">\(H(X\mid Y)\le H(X)\)</span>，但 <span
+class="math inline">\(I(X;Y\mid Z)\)</span> 不一定小于 <span
+class="math inline">\(I(X;Y)\)</span>。</li>
+<li><span class="math inline">\(D(p\|q)\)</span>
+不对称，真实分布放前面。</li>
+<li>AEP 不是说所有序列等概率，而是高概率集中到约 <span
+class="math inline">\(2^{nH}\)</span> 个典型序列上。</li>
+<li><span class="math inline">\(H(X\mid Y)=0\)</span> 的方向是“<span
+class="math inline">\(Y\)</span> 由 <span
+class="math inline">\(X\)</span> 决定”，不要反过来。</li>
+<li>熵率不是单时刻熵；平稳马尔可夫链用 <span
+class="math inline">\(H(X_2\mid X_1)\)</span>。</li>
+<li>信道容量优化的是输入分布 <span
+class="math inline">\(p(x)\)</span>，信道转移概率固定。</li>
+<li>微分熵可为负，互信息仍非负。</li>
+<li>AWGN 里的 <span class="math inline">\(P,N\)</span>
+是功率/方差，不是标准差。</li>
+<li>水填充不是平均分功率，而是 <span
+class="math inline">\(P_j=[\nu-N_j]^+\)</span>。</li>
+</ul>
+<h2 id="9-公式速查">9. 公式速查</h2>
+<h3 id="信息度量">信息度量</h3>
+<p><span class="math display">\[
+H(X)=-\sum_xp(x)\log p(x)
+\]</span></p>
+<p><span class="math display">\[
+H(X,Y)=H(X)+H(Y\mid X)
+\]</span></p>
+<p><span class="math display">\[
+D(p\|q)=\sum_xp(x)\log\frac{p(x)}{q(x)}
+\]</span></p>
+<p><span class="math display">\[
+I(X;Y)=H(X)-H(X\mid Y)=D(p_{XY}\|p_Xp_Y)
+\]</span></p>
+<p><span class="math display">\[
+X\to Y\to Z\Rightarrow I(X;Z)\le I(X;Y)
+\]</span></p>
+<p><span class="math display">\[
+H(X\mid Y)\le h_2(P_e)+P_e\log(|\mathcal X|-1)
+\]</span></p>
+<h3 id="aep-与编码">AEP 与编码</h3>
+<p><span class="math display">\[
+-\frac1n\log p(X^n)\xrightarrow{P}H(X)
+\]</span></p>
+<p><span class="math display">\[
+|A_\epsilon^{(n)}|\doteq2^{nH(X)}
+\]</span></p>
+<p><span class="math display">\[
+\sum_iD^{-\ell_i}\le1
+\]</span></p>
+<p><span class="math display">\[
+H_D(X)\le L^*&lt;H_D(X)+1
+\]</span></p>
+<h3 id="信道">信道</h3>
+<p><span class="math display">\[
+C=\max_{p(x)}I(X;Y)
+\]</span></p>
+<p><span class="math display">\[
+C_{\mathrm{BSC}(p)}=1-h_2(p)
+\]</span></p>
+<p><span class="math display">\[
+C_{\mathrm{BEC}(\alpha)}=1-\alpha
+\]</span></p>
+<p><span class="math display">\[
+C_{\mathrm{weak\ sym}}=\log|\mathcal Y|-H(r)
+\]</span></p>
+<p><span class="math display">\[
+C_{\mathrm{AWGN}}=\frac12\log\left(1+\frac PN\right)
+\]</span></p>
+    </main>
+  </div>
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+
+    function updateThemeIcon() {
+      if (body.classList.contains('dark-theme')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-theme');
+    }
+    updateThemeIcon();
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-theme');
+      localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+      updateThemeIcon();
+    });
+  </script>
+</body>
+</html>

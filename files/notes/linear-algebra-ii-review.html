@@ -1,0 +1,546 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>线性代数 II 复习笔记 · Lawrenclia Notes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/notes-reader.css">
+  <script>
+    const mathDollar = String.fromCharCode(36);
+    window.MathJax = {
+      tex: {
+        inlineMath: [[mathDollar, mathDollar], ['\\(', '\\)']],
+        displayMath: [[mathDollar + mathDollar, mathDollar + mathDollar], ['\\[', '\\]']],
+        processEscapes: true,
+        tags: 'ams'
+      },
+      options: {
+        skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <header class="navbar" role="navigation" aria-label="主导航">
+    <div class="nav-left">
+      <div class="brand" aria-hidden>
+        笔记 · Lawrenclia
+      </div>
+    </div>
+    <div class="nav-right">
+      <a class="nav-link" href="../../index.html">首页</a>
+      <a class="nav-link" href="../../projects.html">项目</a>
+      <a class="nav-link" href="../../notes.html">笔记</a>
+      <a class="nav-link" href="../../about.html">关于</a>
+      <button class="theme-toggle" aria-label="切换主题">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside>
+      <h1>线性代数 II 复习笔记</h1>
+      <p>课程笔记</p>
+      <nav>
+<ul>
+<li><a href="#核心公式速查" id="toc-核心公式速查">核心公式速查</a></li>
+<li><a href="#多项式理论" id="toc-多项式理论">多项式理论</a></li>
+<li><a href="#内积正交行列式拾遗"
+id="toc-内积正交行列式拾遗">内积、正交、行列式拾遗</a></li>
+<li><a href="#映射线性映射和矩阵表示"
+id="toc-映射线性映射和矩阵表示">映射、线性映射和矩阵表示</a></li>
+<li><a href="#特征值对角化schur-和正规矩阵"
+id="toc-特征值对角化schur-和正规矩阵">特征值、对角化、Schur
+和正规矩阵</a></li>
+<li><a href="#最小多项式幂零jordan-和根子空间"
+id="toc-最小多项式幂零jordan-和根子空间">最小多项式、幂零、Jordan
+和根子空间</a></li>
+<li><a href="#lambda-矩阵smith-标准形和有理标准形"
+id="toc-lambda-矩阵smith-标准形和有理标准形"><span
+class="math inline">\(\lambda\)</span>-矩阵、Smith
+标准形和有理标准形</a></li>
+<li><a href="#矩阵函数" id="toc-矩阵函数">矩阵函数</a></li>
+<li><a href="#奇异值分解和相抵标准形"
+id="toc-奇异值分解和相抵标准形">奇异值分解和相抵标准形</a></li>
+<li><a href="#对偶空间对偶映射和双线性型"
+id="toc-对偶空间对偶映射和双线性型">对偶空间、对偶映射和双线性型</a></li>
+<li><a href="#题型模板-1" id="toc-题型模板-1">题型模板</a></li>
+</ul>
+      </nav>
+    </aside>
+    <main>
+      <div class="hero">
+        <h1>线性代数 II 复习笔记</h1>
+      </div>
+<h2 id="核心公式速查">核心公式速查</h2>
+<h3 id="线性空间和线性映射">线性空间和线性映射</h3>
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>公式/结论</th>
+<th>考法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>维数公式</td>
+<td><span class="math inline">\(\dim(U+W)=\dim U+\dim W-\dim(U\cap
+W)\)</span></td>
+<td>子空间和、交、直和判断。</td>
+</tr>
+<tr>
+<td>秩-零度</td>
+<td><span class="math inline">\(\dim V=\dim\ker
+T+\dim\operatorname{Im}T\)</span></td>
+<td>核、像、单射、满射、同构。</td>
+</tr>
+<tr>
+<td>矩阵表示</td>
+<td><span class="math inline">\([T(v)]_{B&#39;}=A[v]_B\)</span></td>
+<td>选基后线性映射变矩阵。</td>
+</tr>
+<tr>
+<td>换基相似</td>
+<td><span class="math inline">\(A&#39;=P^{-1}AP\)</span></td>
+<td>同一线性变换在不同基下的矩阵。</td>
+</tr>
+<tr>
+<td>矩阵方程</td>
+<td><span class="math inline">\(\operatorname{vec}(AXB)=(B^T\otimes
+A)\operatorname{vec}(X)\)</span></td>
+<td><span class="math inline">\(AX+XB\)</span>、<span
+class="math inline">\(AXB=C\)</span> 类题。</td>
+</tr>
+</tbody>
+</table>
+<h3 id="内积和正交">内积和正交</h3>
+<p><span class="math display">\[G=((e_i,e_j)),\qquad A^*Ax=A^*b,\qquad
+V=W\oplus W^\perp\quad(\text{有限维内积空间})\]</span></p>
+<ul>
+<li>复内积和复矩阵里，转置通常要换成共轭转置 <span
+class="math inline">\(A^*\)</span>。</li>
+<li>正交投影的核心句子：误差 <span class="math inline">\(b-Ax\)</span>
+落在 <span class="math inline">\(W^\perp\)</span>。</li>
+</ul>
+<h3 id="特征值最小多项式jordan">特征值、最小多项式、Jordan</h3>
+<table>
+<thead>
+<tr>
+<th>判别</th>
+<th>结论</th>
+<th>一句话记法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>可对角化</td>
+<td><span class="math inline">\(m_A(x)\)</span>
+在该数域上分裂且无重因子</td>
+<td>最小多项式没有平方因子。</td>
+</tr>
+<tr>
+<td>最大 Jordan 块</td>
+<td><span class="math inline">\((x-\lambda)\)</span> 在 <span
+class="math inline">\(m_A\)</span> 中的指数</td>
+<td>最小多项式看最大块。</td>
+</tr>
+<tr>
+<td>Jordan 块个数</td>
+<td><span class="math inline">\(\dim\ker(A-\lambda I)\)</span></td>
+<td>几何重数看块数。</td>
+</tr>
+<tr>
+<td>块大小统计</td>
+<td><span class="math inline">\(d_k=\dim\ker(A-\lambda
+I)^k\)</span></td>
+<td><span class="math inline">\(d_k-d_{k-1}\)</span> 是大小至少 <span
+class="math inline">\(k\)</span> 的块数。</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[J_s(\lambda)=\lambda I+N,\qquad
+N^s=0,\qquad
+f(J_s(\lambda))=\sum_{j=0}^{s-1}\frac{f^{(j)}(\lambda)}{j!}N^j\]</span></p>
+<h3 id="λ-矩阵矩阵函数svd对偶">λ-矩阵、矩阵函数、SVD、对偶</h3>
+<table>
+<thead>
+<tr>
+<th>主题</th>
+<th>必须记住</th>
+<th>高频坑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Smith 标准形</td>
+<td><span class="math inline">\(d_1\mid d_2\mid\cdots\mid
+d_r\)</span>；不变因子来自行列式因子之商。</td>
+<td>这是 <span class="math inline">\(F[\lambda]\)</span>
+上的初等变换，不是普通数值行列变换。</td>
+</tr>
+<tr>
+<td>初等因子</td>
+<td><span
+class="math inline">\((\lambda-\lambda_i)^s\leftrightarrow\)</span> 一个
+<span class="math inline">\(s\)</span> 阶 Jordan 块。</td>
+<td>初等因子和 Jordan 块一一对应。</td>
+</tr>
+<tr>
+<td>矩阵函数</td>
+<td>用 Jordan 块或最小多项式插值，不是逐元素代入。</td>
+<td>重 Jordan 块要用导数。</td>
+</tr>
+<tr>
+<td>SVD</td>
+<td><span class="math inline">\(A=U\Sigma V^*\)</span>，奇异值是 <span
+class="math inline">\(A^*A\)</span> 特征值平方根。</td>
+<td>相抵弱于相似；SVD左右两边可不同。</td>
+</tr>
+<tr>
+<td>对偶映射</td>
+<td>若 <span class="math inline">\(T:U\to V\)</span>，则 <span
+class="math inline">\(T^*:V^*\to U^*\)</span>。</td>
+<td>方向反过来，矩阵通常转置。</td>
+</tr>
+</tbody>
+</table>
+<h2 id="多项式理论">多项式理论</h2>
+<p>多项式整除不可约</p>
+<h3 id="要点">要点</h3>
+<ul>
+<li>带余除法和 Euclidean 算法。</li>
+<li>最大公因式、互素、Bezout 表达式。</li>
+<li>不可约和标准分解必须说明所在数域。</li>
+<li>根、重根和 <span class="math inline">\(f&#39;\)</span> 的关系。</li>
+</ul>
+<h3 id="11-形式多项式">1.1 形式多项式</h3>
+<p>在数域 <span class="math inline">\(F\)</span> 上，<span
+class="math inline">\(F[x]\)</span> 是以形式符号 <span
+class="math inline">\(x\)</span>
+为变量的多项式环。两个多项式相等，指对应次数的系数全相等；这不同于两个多项式函数在每个点取值相等。有限域上尤其要小心。</p>
+<h3 id="12-带余除法和最大公因式">1.2 带余除法和最大公因式</h3>
+<p><span class="math display">\[f(x)=q(x)g(x)+r(x),\qquad \deg r&lt;\deg
+g.\]</span></p>
+<p>这个公式是后面一切“可算”的入口。Euclidean
+算法反复做带余除法，最终得到最大公因式；回代得到 Bezout 等式。</p>
+<p><span class="math display">\[d=\gcd(f,g)\quad\Longrightarrow\quad
+\exists u,v\in F[x],\\ uf+vg=d.\]</span></p>
+<h3 id="13-不可约和分解">1.3 不可约和分解</h3>
+<ul>
+<li>“不可约”必须带着数域说：<span class="math inline">\(x^2+1\)</span>
+在 <span class="math inline">\(\mathbb R\)</span> 上不可约，在 <span
+class="math inline">\(\mathbb C\)</span> 上可约。</li>
+<li>实系数多项式的非实根成共轭对出现。</li>
+<li>Eisenstein 判别法常用于构造或证明 <span
+class="math inline">\(\mathbb Q[x]\)</span> 上不可约。</li>
+</ul>
+<h3 id="题型模板">题型模板</h3>
+<ol type="1">
+<li>求 <span class="math inline">\(\gcd(f,g)\)</span> 并写出 <span
+class="math inline">\(uf+vg=d\)</span>。</li>
+<li>判断给定多项式在 <span class="math inline">\(\mathbb Q,\mathbb
+R,\mathbb C,\mathbb F_p\)</span> 上是否可约。</li>
+<li>用互素整除性质证明 <span class="math inline">\(f\mid
+h\)</span>。</li>
+<li>用 <span class="math inline">\(f\)</span> 和 <span
+class="math inline">\(f&#39;\)</span> 判断重根。</li>
+</ol>
+<h2 id="内积正交行列式拾遗">内积、正交、行列式拾遗</h2>
+<p>内积正交投影行列式</p>
+<h3 id="要点-1">要点</h3>
+<ul>
+<li>Gram 矩阵/度量矩阵的性质。</li>
+<li>正交补、直和、维数公式。</li>
+<li>正交投影和最小二乘法方程。</li>
+<li>行列式乘法、初等变换、分块三角矩阵。</li>
+</ul>
+<p><img
+src="data:image/svg+xml;base64,PHN2ZyB2aWV3Ym94PSIwIDAgOTAwIDI2MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSLmraPkuqTmipXlvbHnpLrmhI8iPjxyZWN0IHg9IjQwIiB5PSIxOTAiIHdpZHRoPSI2MTAiIGhlaWdodD0iMTYiIGZpbGw9IiNkY2U5ZWMiIC8+PGxpbmUgeDE9IjE2MCIgeTE9IjE5OCIgeDI9IjY1MCIgeTI9IjE5OCIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiPjwvbGluZT48Y2lyY2xlIGN4PSI1MDAiIGN5PSI3MCIgcj0iOCIgZmlsbD0iI2Q1YTI2MiI+PC9jaXJjbGU+PGNpcmNsZSBjeD0iNTAwIiBjeT0iMTk4IiByPSI4IiBmaWxsPSIjMTc2ODdjIj48L2NpcmNsZT48bGluZSB4MT0iNTAwIiB5MT0iNzAiIHgyPSI1MDAiIHkyPSIxOTgiIHN0cm9rZT0iIzZiNzI4MCIgc3Ryb2tlLWRhc2hhcnJheT0iOCA3IiBzdHJva2Utd2lkdGg9IjMiPjwvbGluZT48dGV4dCB4PSI1MTQiIHk9Ijc0IiBmaWxsPSIjMzM0MTU1IiBmb250LXNpemU9IjI0Ij5iPC90ZXh0Pjx0ZXh0IHg9IjUxNCIgeT0iMjE0IiBmaWxsPSIjMzM0MTU1IiBmb250LXNpemU9IjI0Ij5wcm9qX1cgYjwvdGV4dD48dGV4dCB4PSIyNTAiIHk9IjIzMiIgZmlsbD0iIzMzNDE1NSIgZm9udC1zaXplPSIyNCI+VyA9IENvbChBKTwvdGV4dD48dGV4dCB4PSI1NjAiIHk9IjEzOCIgZmlsbD0iIzZiNzI4MCIgZm9udC1zaXplPSIyMiI+YiAtIEF4IOKIiCBX4oqlPC90ZXh0Pjwvc3ZnPg==" /></p>
+<p>正交投影的方程来自“误差垂直于子空间”：<span
+class="math inline">\(A^*(b-Ax)=0\)</span>。</p>
+<h3 id="21-gram-矩阵和内积">2.1 Gram 矩阵和内积</h3>
+<p>给定基 <span class="math inline">\(e_1,\ldots,e_n\)</span>，Gram
+矩阵为 <span
+class="math inline">\(G=((e_i,e_j))\)</span>。实情形是对称正定矩阵；复情形是
+Hermite 正定矩阵。</p>
+<h3 id="22-正交补和投影">2.2 正交补和投影</h3>
+<p><span class="math display">\[\dim W+\dim W^\perp=\dim V,\qquad
+(U+W)^\perp=U^\perp\cap W^\perp.\]</span></p>
+<p>若 <span class="math inline">\(A\)</span> 的列向量张成子空间 <span
+class="math inline">\(W\)</span>，投影向量写为 <span
+class="math inline">\(Ax\)</span>，则</p>
+<p><span class="math display">\[A^*(b-Ax)=0\quad\Longleftrightarrow\quad
+A^*Ax=A^*b.\]</span></p>
+<h3 id="注意">注意</h3>
+<h2 id="映射线性映射和矩阵表示">映射、线性映射和矩阵表示</h2>
+<p>核和像同构矩阵方程</p>
+<h3 id="要点-2">要点</h3>
+<ul>
+<li>求 <span class="math inline">\(\ker T\)</span>、<span
+class="math inline">\(\operatorname{Im}T\)</span>、秩和零度。</li>
+<li>判断单射、满射、同构。</li>
+<li>写出线性映射在两组基下的矩阵。</li>
+<li>把 <span class="math inline">\(AXB=C\)</span> 或 <span
+class="math inline">\(AX+XB=C\)</span> 转成普通线性方程。</li>
+</ul>
+<h3 id="31-坐标化的核心">3.1 坐标化的核心</h3>
+<p>线性代数 II
+的主线之一是：抽象向量选基后变成坐标，线性映射选基后变成矩阵。</p>
+<p><span class="math display">\[[T(v)]_{B&#39;}=A[v]_B.\]</span></p>
+<p>同一个线性变换在不同基下的矩阵相似，这就是相似关系真正的来源。</p>
+<h3 id="32-hom-空间">3.2 Hom 空间</h3>
+<p>有限维情形下，<span
+class="math inline">\(\operatorname{Hom}(V,W)\)</span>
+本身也是线性空间，并且</p>
+<p><span class="math display">\[\dim\operatorname{Hom}(V,W)=\dim
+V\cdot\dim W.\]</span></p>
+<h3 id="33-矩阵方程">3.3 矩阵方程</h3>
+<p>关键是会把问题变成线性方程。</p>
+<p><span class="math display">\[\operatorname{vec}(AXB)=(B^T\otimes
+A)\operatorname{vec}(X).\]</span></p>
+<h2 id="特征值对角化schur-和正规矩阵">特征值、对角化、Schur
+和正规矩阵</h2>
+<p>特征值对角化正规矩阵</p>
+<h3 id="要点-3">要点</h3>
+<ul>
+<li>不同特征值对应特征向量线性无关。</li>
+<li>可交换矩阵的不变子空间思想。</li>
+<li>Schur：复矩阵可酉相似到上三角。</li>
+<li>正规矩阵可酉对角化；Hermite 特征值实。</li>
+</ul>
+<h3 id="41-对角化">4.1 对角化</h3>
+<p>可对角化的意思是有一组特征向量基。它是“把空间分解成一维不变子空间”的最理想情况。</p>
+<h3 id="42-正规矩阵谱定理">4.2 正规矩阵谱定理</h3>
+<p><span class="math display">\[A^*A=AA^*\quad\Longleftrightarrow\quad
+A\text{ 可酉对角化}.\]</span></p>
+<ul>
+<li>实对称矩阵是 Hermite 矩阵的实版本，可正交对角化。</li>
+<li>Hermite 矩阵特征值全为实数。</li>
+<li>酉/正交相似保持内积结构，比普通相似更强。</li>
+</ul>
+<h3 id="43-注意">4.3 注意</h3>
+<p>古典伴随矩阵和特征值关系常用于小题。Gershgorin 圆盘定理也要会用。</p>
+<h2 id="最小多项式幂零jordan-和根子空间">最小多项式、幂零、Jordan
+和根子空间</h2>
+<p>最小多项式幂零Jordan</p>
+<h3 id="要点-4">要点</h3>
+<ul>
+<li>最小多项式的定义和相似不变性。</li>
+<li>Cayley-Hamilton：<span class="math inline">\(m_A\mid
+\chi_A\)</span>。</li>
+<li>幂零变换的 Jordan 链。</li>
+<li>由 <span class="math inline">\(\dim\ker(A-\lambda I)^k\)</span> 推
+Jordan 块。</li>
+</ul>
+<p><img
+src="data:image/svg+xml;base64,PHN2ZyB2aWV3Ym94PSIwIDAgOTAwIDI5MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJKb3JkYW4g6ZO+56S65oSPIj48ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2Vyd2lkdGg9IjEwIiBtYXJrZXJoZWlnaHQ9IjEwIiByZWZ4PSI3IiByZWZ5PSIzIiBvcmllbnQ9ImF1dG8iPjxwYXRoIGQ9Ik0wLDAgTDAsNiBMOCwzIHoiIGZpbGw9IiMxNzY4N2MiIC8+PC9tYXJrZXI+PC9kZWZzPjxyZWN0IHg9IjcwIiB5PSI4OCIgd2lkdGg9IjE0NSIgaGVpZ2h0PSI1OCIgcng9IjQiIGZpbGw9IiNlZWY3ZjgiIHN0cm9rZT0iIzljYzVjZCIgLz48cmVjdCB4PSIyODUiIHk9Ijg4IiB3aWR0aD0iMTQ1IiBoZWlnaHQ9IjU4IiByeD0iNCIgZmlsbD0iI2VlZjdmOCIgc3Ryb2tlPSIjOWNjNWNkIiAvPjxyZWN0IHg9IjUwMCIgeT0iODgiIHdpZHRoPSIxNDUiIGhlaWdodD0iNTgiIHJ4PSI0IiBmaWxsPSIjZWVmN2Y4IiBzdHJva2U9IiM5Y2M1Y2QiIC8+PHJlY3QgeD0iNzE1IiB5PSI4OCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSI1OCIgcng9IjQiIGZpbGw9IiNmZmY4ZjEiIHN0cm9rZT0iI2Q1YTI2MiIgLz48dGV4dCB4PSIxMDgiIHk9IjEyMyIgZmlsbD0iIzMzNDE1NSIgZm9udC1zaXplPSIyNCI+zrE8L3RleHQ+PHRleHQgeD0iMzE4IiB5PSIxMjMiIGZpbGw9IiMzMzQxNTUiIGZvbnQtc2l6ZT0iMjQiPkLOsTwvdGV4dD48dGV4dCB4PSI1MjIiIHk9IjEyMyIgZmlsbD0iIzMzNDE1NSIgZm9udC1zaXplPSIyNCI+QsKyzrE8L3RleHQ+PHRleHQgeD0iNzU1IiB5PSIxMjMiIGZpbGw9IiMzMzQxNTUiIGZvbnQtc2l6ZT0iMjQiPjA8L3RleHQ+PGxpbmUgeDE9IjIxNSIgeTE9IjExNyIgeDI9IjI4MCIgeTI9IjExNyIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48L2xpbmU+PGxpbmUgeDE9IjQzMCIgeTE9IjExNyIgeDI9IjQ5NSIgeTI9IjExNyIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48L2xpbmU+PGxpbmUgeDE9IjY0NSIgeTE9IjExNyIgeDI9IjcxMCIgeTI9IjExNyIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48L2xpbmU+PHRleHQgeD0iNzIiIHk9IjIwNSIgZmlsbD0iIzUzNjI3MyIgZm9udC1zaXplPSIyMiI+6IulIEJedCDOsT0wIOS9hiBCXnt0LTF9zrHiiaAw77yM5YiZIM6xLELOsSwuLi4sQl57dC0xfc6xIOe6v+aAp+aXoOWFs+OAgjwvdGV4dD48L3N2Zz4=" /></p>
+<p>Jordan 链就是幂零部分把向量一级一级往下推，直到变成 0。</p>
+<h3 id="51-最小多项式">5.1 最小多项式</h3>
+<p>最小多项式 <span class="math inline">\(m_A\)</span>
+是次数最低的首一零化多项式。相似矩阵有相同的最小多项式。</p>
+<p><span class="math display">\[p(A)=0\quad\Longleftrightarrow\quad
+m_A(x)\mid p(x).\]</span></p>
+<h3 id="52-jordan-块读法">5.2 Jordan 块读法</h3>
+<ul>
+<li>代数重数：某特征值在特征多项式里的次数。</li>
+<li>几何重数：<span class="math inline">\(\dim\ker(A-\lambda
+I)\)</span>，也是该特征值的 Jordan 块个数。</li>
+<li>最大块大小：<span class="math inline">\((x-\lambda)\)</span>
+在最小多项式里的指数。</li>
+</ul>
+<h3 id="53-典型计算">5.3 典型计算</h3>
+<ol type="1">
+<li>求 <span class="math inline">\(\chi_A\)</span> 和候选特征值。</li>
+<li>算 <span class="math inline">\(d_k=\dim\ker(A-\lambda
+I)^k\)</span>。</li>
+<li>用 <span class="math inline">\(d_k-d_{k-1}\)</span> 得到大小至少为
+<span class="math inline">\(k\)</span> 的块数。</li>
+<li>写出 Jordan 标准形，必要时构造 Jordan 基。</li>
+</ol>
+<h2 id="lambda-矩阵smith-标准形和有理标准形"><span
+class="math inline">\(\lambda\)</span>-矩阵、Smith
+标准形和有理标准形</h2>
+<p>Smith不变因子初等因子</p>
+<h3 id="要点-5">要点</h3>
+<ul>
+<li><span class="math inline">\(\lambda\)</span>-等价和 Smith
+标准形。</li>
+<li>行列式因子、不变因子、初等因子。</li>
+<li>由初等因子写 Jordan 块。</li>
+<li>用 <span class="math inline">\(\lambda I-A\)</span> 判别相似。</li>
+</ul>
+<h3 id="61-smith-标准形">6.1 Smith 标准形</h3>
+<p>在 <span class="math inline">\(F[\lambda]\)</span>
+上做初等行列变换，可以把多项式矩阵化成对角形式。</p>
+<p><span
+class="math display">\[\operatorname{diag}(d_1(\lambda),d_2(\lambda),\ldots,d_r(\lambda)),\qquad
+d_i\mid d_{i+1}.\]</span></p>
+<h3 id="62-三类因子">6.2 三类因子</h3>
+<ul>
+<li>行列式因子 <span class="math inline">\(D_k\)</span>：所有 <span
+class="math inline">\(k\)</span> 阶子式的最大公因式。</li>
+<li>不变因子：<span
+class="math inline">\(d_k=D_k/D_{k-1}\)</span>。</li>
+<li>初等因子：把不变因子分解成准素因子。</li>
+</ul>
+<h3 id="63-和-jordan-的关系">6.3 和 Jordan 的关系</h3>
+<p><span class="math display">\[\text{初等因子 }(\lambda-\lambda_i)^s
+\quad\Longleftrightarrow\quad \text{一个 }s\text{ 阶 Jordan 块
+}J_s(\lambda_i).\]</span></p>
+<p>概念之间的转换、由初等因子写标准形仍要会。</p>
+<h2 id="矩阵函数">矩阵函数</h2>
+<p>矩阵函数Jordan 块插值</p>
+<h3 id="要点-6">要点</h3>
+<ul>
+<li>会算 <span class="math inline">\(A^n\)</span>、<span
+class="math inline">\(e^A\)</span>、<span class="math inline">\(\sin
+A\)</span> 这类题。</li>
+<li>掌握 Jordan 块公式。</li>
+<li>会用最小多项式做插值降次。</li>
+<li>知道重根/重块时要匹配导数。</li>
+</ul>
+<h3 id="71-jordan-块公式">7.1 Jordan 块公式</h3>
+<p>若 <span class="math inline">\(J_s(\lambda)=\lambda
+I+N\)</span>，其中 <span class="math inline">\(N\)</span>
+是标准幂零块，则</p>
+<p><span
+class="math display">\[f(J_s(\lambda))=f(\lambda)I+f&#39;(\lambda)N+\frac{f&#39;&#39;(\lambda)}{2!}N^2+\cdots+\frac{f^{(s-1)}(\lambda)}{(s-1)!}N^{s-1}.\]</span></p>
+<h3 id="72-最小多项式插值">7.2 最小多项式插值</h3>
+<p>若 <span
+class="math inline">\(m_A(x)=\prod_i(x-\lambda_i)^{\nu_i}\)</span>，要找次数小于
+<span class="math inline">\(\deg m_A\)</span> 的 <span
+class="math inline">\(p\)</span>，满足</p>
+<p><span
+class="math display">\[p^{(j)}(\lambda_i)=f^{(j)}(\lambda_i),\qquad 0\le
+j&lt;\nu_i.\]</span></p>
+<p>然后 <span
+class="math inline">\(f(A)=p(A)\)</span>。这条路线在计算题里很实用，因为不用真的写出完整相似变换矩阵。</p>
+<h2 id="奇异值分解和相抵标准形">奇异值分解和相抵标准形</h2>
+<p>相抵SVD几何意义</p>
+<h3 id="要点-7">要点</h3>
+<ul>
+<li>知道相抵允许左右乘不同可逆矩阵。</li>
+<li>会从 <span class="math inline">\(A^*A\)</span> 求奇异值。</li>
+<li>理解 <span class="math inline">\(A=U\Sigma V^*\)</span>
+的三步几何意义。</li>
+<li>知道非零奇异值个数等于秩。</li>
+</ul>
+<h3 id="81-svd">8.1 SVD</h3>
+<p><span class="math display">\[A=U\Sigma V^*,\qquad
+\sigma_i=\sqrt{\lambda_i(A^*A)}.\]</span></p>
+<p>几何上，<span class="math inline">\(V^*\)</span>
+先做坐标系旋转/反射，<span class="math inline">\(\Sigma\)</span>
+沿坐标轴拉伸，<span class="math inline">\(U\)</span> 再做旋转/反射。</p>
+<h2 id="对偶空间对偶映射和双线性型">对偶空间、对偶映射和双线性型</h2>
+<p>对偶基对偶映射双线性型</p>
+<h3 id="要点-8">要点</h3>
+<ul>
+<li>会写对偶基：<span
+class="math inline">\(e^i(e_j)=\delta_{ij}\)</span>。</li>
+<li>对偶映射方向反过来，矩阵转置。</li>
+<li>双线性型的矩阵表示 <span
+class="math inline">\(B(x,y)=x^TAy\)</span>。</li>
+<li>会求左/右根子空间和正交空间。</li>
+</ul>
+<h3 id="91-对偶空间">9.1 对偶空间</h3>
+<p>线性函数 <span class="math inline">\(f:V\to F\)</span> 构成的空间记为
+<span class="math inline">\(V^*\)</span>。有限维时 <span
+class="math inline">\(\dim V^*=\dim V\)</span>。若 <span
+class="math inline">\(e_1,\ldots,e_n\)</span> 是 <span
+class="math inline">\(V\)</span> 的一组基，则对偶基 <span
+class="math inline">\(e^1,\ldots,e^n\)</span> 满足</p>
+<p><span class="math display">\[e^i(e_j)=\delta_{ij}.\]</span></p>
+<h3 id="92-对偶映射">9.2 对偶映射</h3>
+<p>若 <span class="math inline">\(T:U\to V\)</span>，则</p>
+<p><span class="math display">\[T^*:V^*\to U^*,\qquad T^*(f)=f\circ
+T.\]</span></p>
+<p>注意方向反了，并且 <span
+class="math inline">\((ST)^*=T^*S^*\)</span>。</p>
+<h3 id="93-双线性型">9.3 双线性型</h3>
+<p>双线性型对两个变量分别线性。选基后，矩阵表示为</p>
+<p><span class="math display">\[B(x,y)=x^TAy.\]</span></p>
+<p>对称双线性型和二次型相连；一般双线性型可定义左根子空间、右根子空间和正交空间。</p>
+<p>拿来刷题</p>
+<h2 id="题型模板-1">题型模板</h2>
+<h3 id="模板-1判断可对角化">模板 1：判断可对角化</h3>
+<ol type="1">
+<li>求特征多项式和特征值。</li>
+<li>算每个特征值的几何重数。</li>
+<li>若几何重数之和等于 <span
+class="math inline">\(n\)</span>，可对角化。</li>
+<li>或者求最小多项式：完全分裂且无重因子即对角化。</li>
+</ol>
+<h3 id="模板-2由核维数判断-jordan-块">模板 2：由核维数判断 Jordan
+块</h3>
+<ol type="1">
+<li>固定特征值 <span class="math inline">\(\lambda\)</span>，算 <span
+class="math inline">\(d_k=\dim\ker(A-\lambda I)^k\)</span>。</li>
+<li><span class="math inline">\(d_k-d_{k-1}\)</span> 是大小至少为 <span
+class="math inline">\(k\)</span> 的块数。</li>
+<li>相邻差分得到恰好大小为 <span class="math inline">\(k\)</span>
+的块数。</li>
+</ol>
+<h3 id="模板-3由初等因子写-jordan">模板 3：由初等因子写 Jordan</h3>
+<ol type="1">
+<li>把不变因子分解成 <span
+class="math inline">\((\lambda-\lambda_i)^s\)</span>。</li>
+<li>每个因子对应一个 <span
+class="math inline">\(J_s(\lambda_i)\)</span>。</li>
+<li>把所有 Jordan 块按特征值或大小排好即可。</li>
+</ol>
+<h3 id="模板-4算矩阵函数">模板 4：算矩阵函数</h3>
+<ol type="1">
+<li>若已知 Jordan 形，用 <span
+class="math inline">\(f(J_s(\lambda))\)</span> 的导数公式。</li>
+<li>若已知最小多项式，用 Hermite 插值找低次多项式 <span
+class="math inline">\(p\)</span>。</li>
+<li>最后写 <span
+class="math inline">\(f(A)=p(A)\)</span>，避免把函数逐元素代入。</li>
+</ol>
+<h3 id="模板-5对偶和双线性型">模板 5：对偶和双线性型</h3>
+<ol type="1">
+<li>求对偶基：设 <span class="math inline">\(f_i\)</span> 坐标未知，解
+<span class="math inline">\(f_i(e_j)=\delta_{ij}\)</span>。</li>
+<li>求对偶映射矩阵：在对偶基下通常取原矩阵转置，注意方向。</li>
+<li>求双线性型根子空间：解 <span class="math inline">\(Ay=0\)</span> 或
+<span class="math inline">\(A^Tx=0\)</span>，取决于左/右变量。</li>
+</ol>
+<p>最后查漏</p>
+    </main>
+  </div>
+  <script>
+    const themeToggle = document.querySelector('.theme-toggle');
+    const body = document.body;
+    const icon = themeToggle.querySelector('i');
+
+    function updateThemeIcon() {
+      if (body.classList.contains('dark-theme')) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+      } else {
+        icon.classList.remove('fa-sun');
+        icon.classList.add('fa-moon');
+      }
+    }
+
+    if (localStorage.getItem('theme') === 'dark' ||
+        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      body.classList.add('dark-theme');
+    }
+    updateThemeIcon();
+
+    themeToggle.addEventListener('click', () => {
+      body.classList.toggle('dark-theme');
+      localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
+      updateThemeIcon();
+    });
+  </script>
+</body>
+</html>
