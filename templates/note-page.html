@@ -43,8 +43,13 @@
     </div>
   </header>
 
+  <button class="toc-toggle" type="button" aria-label="打开目录" aria-controls="toc-panel" aria-expanded="false">
+    <i class="fas fa-list-ul" aria-hidden="true"></i>
+  </button>
+  <div class="toc-backdrop" hidden></div>
+
   <div class="layout">
-    <aside>
+    <aside id="toc-panel" class="toc-panel">
       <h1>目录</h1>
       <p>$title$</p>
       <nav>
@@ -83,6 +88,32 @@ $body$
       body.classList.toggle('dark-theme');
       localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
       updateThemeIcon();
+    });
+
+    const tocToggle = document.querySelector(".toc-toggle");
+    const tocPanel = document.querySelector(".toc-panel");
+    const tocBackdrop = document.querySelector(".toc-backdrop");
+
+    function setTocOpen(open) {
+      body.classList.toggle("toc-open", open);
+      if (tocToggle) tocToggle.setAttribute("aria-expanded", String(open));
+      if (tocBackdrop) tocBackdrop.hidden = !open;
+    }
+
+    tocToggle?.addEventListener("click", () => {
+      setTocOpen(!body.classList.contains("toc-open"));
+    });
+
+    tocBackdrop?.addEventListener("click", () => setTocOpen(false));
+
+    tocPanel?.addEventListener("click", (event) => {
+      if (event.target.closest("a") && window.matchMedia("(max-width: 860px)").matches) {
+        setTocOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setTocOpen(false);
     });
   </script>
 </body>
