@@ -26,15 +26,23 @@
         </div>
     </header>
     
-    <div class="wrap" id="wrap">
-        <div class="card" role="main">
-            <div class="deco">
-                <div class="avatar" aria-hidden>
-                    <img src="images/avatar.png" alt="my_avatar">
+    <main class="wrap home-wrap" id="wrap">
+        <section class="home-hero" aria-labelledby="home-title">
+            <div class="home-copy">
+                <p class="home-kicker">Lawrenclia</p>
+                <h1 id="home-title">你好，我是 Lawrenclia。</h1>
+                <p class="home-lead">这里收着课程笔记、项目记录，还有一些平时折腾过的东西。</p>
+                <div class="home-actions">
+                    <a class="home-button primary" href="notes.html">看笔记</a>
+                    <a class="home-button" href="projects.html">看项目</a>
                 </div>
-                <div class="status-message">
-                    <h2>你好，我是 Lawrenclia。</h2>
-                    <h3>这里放一些项目、笔记和偶尔冒出来的想法。</h3>
+            </div>
+
+            <aside class="home-profile" aria-label="个人信息">
+                <img class="home-avatar" src="images/avatar.png" alt="Lawrenclia 的头像">
+                <div class="home-profile-text">
+                    <strong>Lawrenclia</strong>
+                    <span>Computer Science · Notes · Projects</span>
                 </div>
                 <div class="icon-tags">
                     <a class="icon-tag" href="https://github.com/Lawrenclia" title="GitHub" target="_blank" rel="noopener">
@@ -53,9 +61,27 @@
                         <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/x.svg" alt="X">
                     </a>
                 </div>
-            </div>
-        </div>
-    </div>
+            </aside>
+        </section>
+
+        <section class="home-grid" aria-label="站点入口">
+            <a class="home-tile note-tile" href="notes.html">
+                <span>Notes</span>
+                <strong>课程笔记</strong>
+                <p>抽象代数、量子物理、线性代数、信息论、计算机组成。</p>
+            </a>
+            <a class="home-tile project-tile" href="projects.html">
+                <span>Projects</span>
+                <strong>课程项目</strong>
+                <p>CS1604、CS1605、ICE2607、CS3611 和 ACMOJ 记录。</p>
+            </a>
+            <a class="home-tile about-tile" href="about.html">
+                <span>About</span>
+                <strong>关于我</strong>
+                <p>一些个人信息、链接和这个小站的来源。</p>
+            </a>
+        </section>
+    </main>
 
     <script>
         const themeToggle = document.querySelector('.theme-toggle');
