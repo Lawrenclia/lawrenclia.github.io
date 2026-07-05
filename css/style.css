@@ -388,10 +388,12 @@ body.dark-theme .icon-tag img { filter: invert(100%); }
 }
 
 .home-tile {
+    align-items: flex-start;
     color: var(--text);
     display: flex;
     flex-direction: column;
-    min-height: 190px;
+    justify-content: center;
+    min-height: 118px;
     padding: 22px;
     text-decoration: none;
     transition: transform 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
@@ -402,23 +404,9 @@ body.dark-theme .icon-tag img { filter: invert(100%); }
     text-decoration: none;
 }
 
-.home-tile span {
-    color: var(--accent);
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 18px;
-}
-
 .home-tile strong {
     font-size: 24px;
     line-height: 1.25;
-}
-
-.home-tile p {
-    color: var(--muted);
-    font-size: 14px;
-    line-height: 1.7;
-    margin: 12px 0 0;
 }
 
 .note-tile { background: color-mix(in srgb, var(--surface) 82%, #edf3ec); }
