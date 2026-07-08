@@ -59,7 +59,6 @@
   <script>
   const SUPABASE_URL = 'https://glphhykfjhuwltgfwqyw.supabase.co'; 
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdscGhoeWtmamh1d2x0Z2Z3cXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MDA1NjEsImV4cCI6MjA3NDQ3NjU2MX0.QkatvzOsTZ0l9i_rS6MesgeOiS5Lw6eEjzS-INBCU-c';
-  const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   document.addEventListener('DOMContentLoaded', () => {
     const leaveMessageBtn = document.getElementById('leave-message-btn');
     const modal = document.getElementById('message-modal');
@@ -68,6 +67,13 @@
     const authorInput = document.getElementById('author-input');
     const messageInput = document.getElementById('message-input');
     const messageList = document.getElementById('message-list');
+    const supabaseFactory = window.supabase;
+    if (!supabaseFactory || typeof supabaseFactory.createClient !== 'function') {
+      messageList.innerHTML = '<div style="text-align:center; color:var(--accent);">留言服务不可用，请稍后再试。</div>';
+      leaveMessageBtn.disabled = true;
+      return;
+    }
+    const supabase = supabaseFactory.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     loadMessages();
     leaveMessageBtn.addEventListener('click', () => {
       modal.classList.add('visible');
@@ -117,12 +123,13 @@
         return;
       }
       messageList.innerHTML = '';
-      if (messages.length === 0) {
+      const safeMessages = Array.isArray(messages) ? messages : [];
+      if (safeMessages.length === 0) {
         messageList.innerHTML = '<div style="text-align:center; color:var(--muted);">暂无留言，快来写下第一条吧！</div>';
         return;
       }
-      messages.forEach((msg, index) => {
-        const sequenceNumber = messages.length - index; 
+      safeMessages.forEach((msg, index) => {
+        const sequenceNumber = safeMessages.length - index; 
         addMessage(sequenceNumber, msg.author, msg.content);
       });
     }
@@ -140,7 +147,7 @@
       messageList.appendChild(messageItem);
     }
     function escapeHTML(str) {
-      return str.replace(/[&<>"']/g, function(match) {
+      return String(str ?? '').replace(/[&<>"']/g, function(match) {
         return {
           '&': '&amp;',
           '<': '&lt;',
