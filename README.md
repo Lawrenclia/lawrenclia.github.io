@@ -1,33 +1,39 @@
 # Lawrenclia's Personal Website
 
-这是我的个人网站，包含首页、项目展示、博客、留言板和关于页面，支持明暗主题切换，适配各种设备。
+这是我的个人网站仓库，包含个人主页、项目展示、课程笔记与博客内容，支持明暗主题切换并适配多设备。
 
-## 主要内容
+## 站点页面
 
-- **首页**：个人简介与导航入口
-- **项目**：课程及个人开发作品展示
-- **博客**：技术心得与项目经验分享
-- **留言板**：访客可留言交流
-- **关于**：个人介绍与联系方式
+- **首页（`index.html`）**：个人简介与主要导航入口
+- **项目（`projects.html`）**：课程与个人开发项目展示
+- **笔记（`notes.html`）**：课程学习笔记索引与跳转
+- **博客（`blog.html`）**：文章列表与详情页
+- **关于（`about.html`）**：个人介绍与联系方式
 
-## 技术使用
+## 技术栈
 
-- HTML5 + CSS3 + 原生JavaScript
-- Font Awesome图标、Google Fonts（Inter）
-- Supabase（用于留言板数据存储）
+- HTML5 + CSS3 + 原生 JavaScript
+- Font Awesome、Google Fonts（Inter）
+- 静态资源组织：`css/`、`js/`、`images/`、`files/`
 
-## 功能特点
+## 功能特性
 
-- 响应式设计，适配多设备
-- 明暗主题切换，记忆用户偏好
-- 玻璃态UI设计，平滑过渡动画
-- 基于Supabase的留言功能
+- 响应式布局，兼容桌面与移动端
+- 明暗主题切换，并通过本地存储记住用户偏好
+- 统一的导航与视觉风格
+- 课程笔记与博客内容的静态化管理
 
-## 本地查看
+## 本地运行
 
-克隆仓库后直接打开`index.html`即可，留言功能需Supabase配置。
+本项目为纯静态站点，可直接打开 `index.html` 预览。  
+如需更接近线上环境，可在仓库目录启动本地静态服务器，例如：
+
+```bash
+python -m http.server 8000
+```
+
+然后访问 `http://localhost:8000`。
 
 ## 联系方式
 
 - GitHub: [https://github.com/Lawrenclia](https://github.com/Lawrenclia)
-- 网站留言板: 访问"留言"页面
