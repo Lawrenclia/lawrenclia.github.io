@@ -7,7 +7,7 @@
     <meta name="description" content="你好" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=20260713-theme">
+    <link rel="stylesheet" href="css/style.css?v=20260715-refresh">
     <script src="js/theme-transition.js" defer></script>
 </head>
 <body class="page-index">
@@ -28,15 +28,16 @@
     </header>
     
     <main class="wrap home-wrap" id="wrap">
-        <section class="home-hero" aria-labelledby="home-title">
-            <div class="home-copy">
-                <p class="home-kicker">Lawrenclia</p>
-                <h1 id="home-title">你好，<br>我是 Lawrenclia。</h1>
-            </div>
+        <div class="home-bento">
+            <section class="home-hero" aria-labelledby="home-title">
+                <div class="home-identity">
+                    <img class="home-avatar" src="images/avatar.png" alt="Lawrenclia 的头像">
+                    <p class="home-kicker">Lawrenclia</p>
+                </div>
 
-            <aside class="home-profile" aria-label="社交链接">
-                <img class="home-avatar" src="images/avatar.png" alt="Lawrenclia 的头像">
-                <div class="icon-tags">
+                <h1 id="home-title"><span>你好，</span><span>我是 Lawrenclia。</span></h1>
+
+                <div class="icon-tags" aria-label="社交链接">
                     <a class="icon-tag" href="https://github.com/Lawrenclia" title="GitHub" target="_blank" rel="noopener">
                         <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/github.svg" alt="GitHub">
                     </a>
@@ -53,23 +54,41 @@
                         <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/x.svg" alt="X">
                     </a>
                 </div>
-            </aside>
-        </section>
+            </section>
 
-        <section class="home-grid" aria-label="站点入口">
-            <a class="home-tile note-tile" href="notes.html">
-                <span class="home-tile-top"><span>01</span><i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                <strong>课程笔记</strong>
-            </a>
-            <a class="home-tile project-tile" href="projects.html">
-                <span class="home-tile-top"><span>02</span><i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                <strong>课程项目</strong>
-            </a>
-            <a class="home-tile about-tile" href="about.html">
-                <span class="home-tile-top"><span>03</span><i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                <strong>关于我</strong>
-            </a>
-        </section>
+            <section class="home-notes-card" aria-labelledby="home-notes-title">
+                <a class="home-card-heading" href="notes.html">
+                    <span class="home-card-title">
+                        <span class="home-card-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
+                        <strong id="home-notes-title">课程笔记</strong>
+                    </span>
+                    <span class="home-card-meta">06 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+                </a>
+                <div class="home-note-list">
+                    <a href="files/notes/abstract-algebra.html"><span>抽象代数</span><i class="fas fa-chevron-right" aria-hidden="true"></i></a>
+                    <a href="files/notes/quantum-physics-review.html"><span>量子物理复习笔记</span><i class="fas fa-chevron-right" aria-hidden="true"></i></a>
+                    <a href="files/notes/algorithm-design-analysis-exam-manual.html"><span>算法设计与分析</span><i class="fas fa-chevron-right" aria-hidden="true"></i></a>
+                </div>
+            </section>
+
+            <nav class="home-mini-grid" aria-label="站点入口">
+                <a class="home-mini-card" href="projects.html">
+                    <span class="home-mini-top">
+                        <span class="home-card-icon"><i class="fas fa-code" aria-hidden="true"></i></span>
+                        <span class="home-card-meta">05</span>
+                    </span>
+                    <strong>课程项目</strong>
+                    <i class="fas fa-arrow-right home-mini-arrow" aria-hidden="true"></i>
+                </a>
+                <a class="home-mini-card" href="about.html">
+                    <span class="home-mini-top">
+                        <span class="home-card-icon"><i class="fas fa-user" aria-hidden="true"></i></span>
+                    </span>
+                    <strong>关于我</strong>
+                    <i class="fas fa-arrow-right home-mini-arrow" aria-hidden="true"></i>
+                </a>
+            </nav>
+        </div>
     </main>
 
     <script>

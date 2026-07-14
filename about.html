@@ -6,7 +6,7 @@
   <title>关于 · Lawrenclia</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=20260713-theme">
+  <link rel="stylesheet" href="css/style.css?v=20260715-refresh">
   
     <script src="js/theme-transition.js" defer></script>
 </head>
@@ -27,22 +27,43 @@
         </div>
     </header>
     
-  <div class="wrap">
-    <article>
-      <h2>你好，我是 Lawrenclia。</h2>
-      <h3>欢迎来到我的个人页面。</h3>
-      <p>
-      我平时主要用 C++ 和 Python, 最近在学着用 unity 参与游戏制作被抓去用C#干活（请在Steam上搜索<strong>即时象棋</strong>，这是命令！), 也在努力打好数据结构和算法的基础。
-      </p>
-      <p>
-      这个网站是我涉足Web开发的小小尝试。在我的GitHub上, 目前项目内容很少, 很多内容都是与课程大作业有关x_x。
-      </p>
-      <h3>你可以通过我的 <a href="https://github.com/Lawrenclia" target="_blank">GitHub</a> 查看我的项目。</h3>
-      <h3>喜欢的话别忘了点个star。</h3>
-      <p>如果你有任何建议或者想法，欢迎与我交流！</p> <p>最后要感谢一下ChatGPT和Gemini 3pro（其实还有之前的 2.5pro 和 github pro 白送的 ai agent）的帮助, 是它们帮助我网站框架的搭建和大部分内容的实现。</p>
-      <p>孩子们，AI真的太好用了!</p>
-    </article>
-  </div>
+  <main class="wrap">
+    <div class="about-shell">
+      <aside class="about-profile">
+        <img class="about-avatar" src="images/avatar.png" alt="Lawrenclia 的头像">
+        <h1>Lawrenclia</h1>
+        <p>C++ / Python / C#</p>
+        <div class="about-links">
+          <a href="https://github.com/Lawrenclia" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
+        </div>
+      </aside>
+
+      <div class="about-content">
+        <section class="about-panel">
+          <h2>关于我</h2>
+          <p>主要使用 C++ 和 Python，正在学习 Unity 与 C#，也在继续打好数据结构和算法基础。</p>
+          <p>参与制作了游戏《即时象棋》，可以在 Steam 搜索。</p>
+        </section>
+
+        <section class="about-panel">
+          <h2>技术</h2>
+          <ul class="skill-list">
+            <li>C++</li>
+            <li>Python</li>
+            <li>C#</li>
+            <li>Unity</li>
+            <li>数据结构</li>
+            <li>算法</li>
+          </ul>
+        </section>
+
+        <section class="about-panel">
+          <h2>这个网站</h2>
+          <p>用于整理课程笔记、课程项目和个人作品。</p>
+        </section>
+      </div>
+    </div>
+  </main>
 
   <script>
     const themeToggle = document.querySelector('.theme-toggle');

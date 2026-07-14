@@ -6,12 +6,12 @@
 	<title>简历 · Lawrenclia</title>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css?v=20260715-refresh">
 	<style>
 		/* CV 页面专用样式（保持与全局风格一致） */
 		body.page-cv .wrap {
 			max-width: 1080px;
-			margin: 80px auto 60px;
+			margin: 96px auto 60px;
 			padding: 0 26px;
 		}
 
@@ -317,6 +317,18 @@
 	</style>
 </head>
 <body class="page-cv">
+	<header class="navbar" role="navigation" aria-label="主导航">
+		<div class="nav-left">
+			<div class="brand" aria-hidden>简历 · Lawrenclia</div>
+		</div>
+		<div class="nav-right">
+			<a class="nav-link" href="index.html">首页</a>
+			<a class="nav-link" href="projects.html">项目</a>
+			<a class="nav-link" href="notes.html">笔记</a>
+			<a class="nav-link" href="about.html">关于</a>
+			<button class="theme-toggle" aria-label="切换主题"><i class="fas fa-moon"></i></button>
+		</div>
+	</header>
 
 	<div class="wrap">
 		<div class="cv-layout">
@@ -528,13 +540,5 @@
 		}
 	</script>
 
-	<div class="svg-filter-container" aria-hidden="true">
-		<svg width="0" height="0">
-			<filter id="lg-dist">
-				<feTurbulence type="fractalNoise" baseFrequency="0.01 0.04" numOctaves="3" seed="2" stitchTiles="stitch" />
-				<feDisplacementMap in="SourceGraphic" scale="10" xChannelSelector="R" yChannelSelector="G" />
-			</filter>
-		</svg>
-	</div>
 </body>
 </html>

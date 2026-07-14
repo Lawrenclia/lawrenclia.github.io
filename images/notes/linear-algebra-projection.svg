@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 260" role="img" aria-labelledby="title desc">
+  <title id="title">正交投影示意</title>
+  <desc id="desc">向量 b 到列空间 W 的正交投影。</desc>
+  <rect x="40" y="190" width="610" height="16" fill="#dce9ec" />
+  <line x1="160" y1="198" x2="650" y2="198" stroke="#17687c" stroke-width="3" />
+  <circle cx="500" cy="70" r="8" fill="#d5a262" />
+  <circle cx="500" cy="198" r="8" fill="#17687c" />
+  <line x1="500" y1="70" x2="500" y2="198" stroke="#6b7280" stroke-width="3" stroke-dasharray="8 7" />
+  <g fill="#334155" font-family="sans-serif" font-size="24">
+    <text x="514" y="74">b</text>
+    <text x="514" y="214">proj_W b</text>
+    <text x="250" y="232">W = Col(A)</text>
+  </g>
+  <text x="560" y="138" fill="#6b7280" font-family="sans-serif" font-size="22">b - Ax ∈ W⊥</text>
+</svg>

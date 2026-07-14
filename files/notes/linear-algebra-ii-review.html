@@ -6,8 +6,8 @@
   <title>线性代数 II 复习笔记 · Lawrenclia Notes</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="../../css/style.css?v=20260713-theme">
-  <link rel="stylesheet" href="../../css/notes-reader.css">
+  <link rel="stylesheet" href="../../css/style.css?v=20260715-refresh">
+  <link rel="stylesheet" href="../../css/notes-reader.css?v=20260715-refresh">
   <script>
     const mathDollar = String.fromCharCode(36);
     window.MathJax = {
@@ -26,7 +26,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
   <script src="../../js/theme-transition.js" defer></script>
 </head>
-<body>
+<body class="page-note-reader">
   <header class="navbar" role="navigation" aria-label="主导航">
     <div class="nav-left">
       <div class="brand" aria-hidden>
@@ -268,7 +268,7 @@ class="math inline">\(f&#39;\)</span> 判断重根。</li>
 <li>行列式乘法、初等变换、分块三角矩阵。</li>
 </ul>
 <p><img
-src="data:image/svg+xml;base64,PHN2ZyB2aWV3Ym94PSIwIDAgOTAwIDI2MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSLmraPkuqTmipXlvbHnpLrmhI8iPjxyZWN0IHg9IjQwIiB5PSIxOTAiIHdpZHRoPSI2MTAiIGhlaWdodD0iMTYiIGZpbGw9IiNkY2U5ZWMiIC8+PGxpbmUgeDE9IjE2MCIgeTE9IjE5OCIgeDI9IjY1MCIgeTI9IjE5OCIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiPjwvbGluZT48Y2lyY2xlIGN4PSI1MDAiIGN5PSI3MCIgcj0iOCIgZmlsbD0iI2Q1YTI2MiI+PC9jaXJjbGU+PGNpcmNsZSBjeD0iNTAwIiBjeT0iMTk4IiByPSI4IiBmaWxsPSIjMTc2ODdjIj48L2NpcmNsZT48bGluZSB4MT0iNTAwIiB5MT0iNzAiIHgyPSI1MDAiIHkyPSIxOTgiIHN0cm9rZT0iIzZiNzI4MCIgc3Ryb2tlLWRhc2hhcnJheT0iOCA3IiBzdHJva2Utd2lkdGg9IjMiPjwvbGluZT48dGV4dCB4PSI1MTQiIHk9Ijc0IiBmaWxsPSIjMzM0MTU1IiBmb250LXNpemU9IjI0Ij5iPC90ZXh0Pjx0ZXh0IHg9IjUxNCIgeT0iMjE0IiBmaWxsPSIjMzM0MTU1IiBmb250LXNpemU9IjI0Ij5wcm9qX1cgYjwvdGV4dD48dGV4dCB4PSIyNTAiIHk9IjIzMiIgZmlsbD0iIzMzNDE1NSIgZm9udC1zaXplPSIyNCI+VyA9IENvbChBKTwvdGV4dD48dGV4dCB4PSI1NjAiIHk9IjEzOCIgZmlsbD0iIzZiNzI4MCIgZm9udC1zaXplPSIyMiI+YiAtIEF4IOKIiCBX4oqlPC90ZXh0Pjwvc3ZnPg==" /></p>
+src="../../images/notes/linear-algebra-projection.svg" alt="正交投影示意图" /></p>
 <p>正交投影的方程来自“误差垂直于子空间”：<span
 class="math inline">\(A^*(b-Ax)=0\)</span>。</p>
 <h3 id="21-gram-矩阵和内积">2.1 Gram 矩阵和内积</h3>
@@ -346,7 +346,7 @@ A\text{ 可酉对角化}.\]</span></p>
 Jordan 块。</li>
 </ul>
 <p><img
-src="data:image/svg+xml;base64,PHN2ZyB2aWV3Ym94PSIwIDAgOTAwIDI5MCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJKb3JkYW4g6ZO+56S65oSPIj48ZGVmcz48bWFya2VyIGlkPSJhcnJvdyIgbWFya2Vyd2lkdGg9IjEwIiBtYXJrZXJoZWlnaHQ9IjEwIiByZWZ4PSI3IiByZWZ5PSIzIiBvcmllbnQ9ImF1dG8iPjxwYXRoIGQ9Ik0wLDAgTDAsNiBMOCwzIHoiIGZpbGw9IiMxNzY4N2MiIC8+PC9tYXJrZXI+PC9kZWZzPjxyZWN0IHg9IjcwIiB5PSI4OCIgd2lkdGg9IjE0NSIgaGVpZ2h0PSI1OCIgcng9IjQiIGZpbGw9IiNlZWY3ZjgiIHN0cm9rZT0iIzljYzVjZCIgLz48cmVjdCB4PSIyODUiIHk9Ijg4IiB3aWR0aD0iMTQ1IiBoZWlnaHQ9IjU4IiByeD0iNCIgZmlsbD0iI2VlZjdmOCIgc3Ryb2tlPSIjOWNjNWNkIiAvPjxyZWN0IHg9IjUwMCIgeT0iODgiIHdpZHRoPSIxNDUiIGhlaWdodD0iNTgiIHJ4PSI0IiBmaWxsPSIjZWVmN2Y4IiBzdHJva2U9IiM5Y2M1Y2QiIC8+PHJlY3QgeD0iNzE1IiB5PSI4OCIgd2lkdGg9IjEyMCIgaGVpZ2h0PSI1OCIgcng9IjQiIGZpbGw9IiNmZmY4ZjEiIHN0cm9rZT0iI2Q1YTI2MiIgLz48dGV4dCB4PSIxMDgiIHk9IjEyMyIgZmlsbD0iIzMzNDE1NSIgZm9udC1zaXplPSIyNCI+zrE8L3RleHQ+PHRleHQgeD0iMzE4IiB5PSIxMjMiIGZpbGw9IiMzMzQxNTUiIGZvbnQtc2l6ZT0iMjQiPkLOsTwvdGV4dD48dGV4dCB4PSI1MjIiIHk9IjEyMyIgZmlsbD0iIzMzNDE1NSIgZm9udC1zaXplPSIyNCI+QsKyzrE8L3RleHQ+PHRleHQgeD0iNzU1IiB5PSIxMjMiIGZpbGw9IiMzMzQxNTUiIGZvbnQtc2l6ZT0iMjQiPjA8L3RleHQ+PGxpbmUgeDE9IjIxNSIgeTE9IjExNyIgeDI9IjI4MCIgeTI9IjExNyIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48L2xpbmU+PGxpbmUgeDE9IjQzMCIgeTE9IjExNyIgeDI9IjQ5NSIgeTI9IjExNyIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48L2xpbmU+PGxpbmUgeDE9IjY0NSIgeTE9IjExNyIgeDI9IjcxMCIgeTI9IjExNyIgc3Ryb2tlPSIjMTc2ODdjIiBzdHJva2Utd2lkdGg9IjMiIG1hcmtlci1lbmQ9InVybCgjYXJyb3cpIj48L2xpbmU+PHRleHQgeD0iNzIiIHk9IjIwNSIgZmlsbD0iIzUzNjI3MyIgZm9udC1zaXplPSIyMiI+6IulIEJedCDOsT0wIOS9hiBCXnt0LTF9zrHiiaAw77yM5YiZIM6xLELOsSwuLi4sQl57dC0xfc6xIOe6v+aAp+aXoOWFs+OAgjwvdGV4dD48L3N2Zz4=" /></p>
+src="../../images/notes/linear-algebra-jordan-chain.svg" alt="Jordan 链示意图" /></p>
 <p>Jordan 链就是幂零部分把向量一级一级往下推，直到变成 0。</p>
 <h3 id="51-最小多项式">5.1 最小多项式</h3>
 <p>最小多项式 <span class="math inline">\(m_A\)</span>

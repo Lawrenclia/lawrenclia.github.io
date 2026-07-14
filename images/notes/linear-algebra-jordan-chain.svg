@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 290" role="img" aria-labelledby="title desc">
+  <title id="title">Jordan 链示意</title>
+  <desc id="desc">向量依次经过线性变换 B，最终变为零向量。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#17687c" />
+    </marker>
+  </defs>
+  <g stroke="#9cc5cd" fill="#eef7f8">
+    <rect x="70" y="88" width="145" height="58" rx="4" />
+    <rect x="285" y="88" width="145" height="58" rx="4" />
+    <rect x="500" y="88" width="145" height="58" rx="4" />
+  </g>
+  <rect x="715" y="88" width="120" height="58" rx="4" fill="#fff8f1" stroke="#d5a262" />
+  <g fill="#334155" font-family="sans-serif" font-size="24">
+    <text x="108" y="123">α</text>
+    <text x="318" y="123">Bα</text>
+    <text x="522" y="123">B²α</text>
+    <text x="755" y="123">0</text>
+  </g>
+  <g stroke="#17687c" stroke-width="3" marker-end="url(#arrow)">
+    <line x1="215" y1="117" x2="280" y2="117" />
+    <line x1="430" y1="117" x2="495" y2="117" />
+    <line x1="645" y1="117" x2="710" y2="117" />
+  </g>
+  <text x="72" y="205" fill="#536273" font-family="sans-serif" font-size="22">若 B^t α=0 但 B^{t-1}α≠0，则 α,Bα,...,B^{t-1}α 线性无关。</text>
+</svg>
