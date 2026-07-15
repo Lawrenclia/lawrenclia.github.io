@@ -59,16 +59,130 @@
 id="toc-算法设计与分析考试手册">算法设计与分析考试手册</a>
 <ul>
 <li><a href="#divide-and-conquer" id="toc-divide-and-conquer">Divide and
-Conquer</a></li>
-<li><a href="#graph" id="toc-graph">Graph</a></li>
-<li><a href="#greedy" id="toc-greedy">Greedy</a></li>
+Conquer</a>
+<ul>
+<li><a href="#主定理" id="toc-主定理">主定理</a></li>
+<li><a href="#分治题模板" id="toc-分治题模板">分治题模板</a></li>
+<li><a href="#karatsubastrassen-与递归复杂度"
+id="toc-karatsubastrassen-与递归复杂度">Karatsuba、Strassen
+与递归复杂度</a></li>
+<li><a href="#merge-sort-与逆序对计数"
+id="toc-merge-sort-与逆序对计数">Merge Sort 与逆序对计数</a></li>
+<li><a href="#选择问题的-partition-基础"
+id="toc-选择问题的-partition-基础">选择问题的 Partition 基础</a></li>
+<li><a href="#作业题分析assignment-1递归式与分治算法"
+id="toc-作业题分析assignment-1递归式与分治算法">作业题分析：Assignment
+1：递归式与分治算法</a></li>
+<li><a href="#完整伪代码" id="toc-完整伪代码">完整伪代码</a></li>
+<li><a href="#作业完整伪代码"
+id="toc-作业完整伪代码">作业完整伪代码</a></li>
+</ul></li>
+<li><a href="#graph" id="toc-graph">Graph</a>
+<ul>
+<li><a href="#dfs拓扑排序与强连通分量"
+id="toc-dfs拓扑排序与强连通分量">DFS、拓扑排序与强连通分量</a></li>
+<li><a href="#bfsdijkstra-与堆优化"
+id="toc-bfsdijkstra-与堆优化">BFS、Dijkstra 与堆优化</a></li>
+<li><a href="#负权最短路与-bellman-ford"
+id="toc-负权最短路与-bellman-ford">负权最短路与 Bellman-Ford</a></li>
+<li><a href="#作业题分析assignment-2dfsscc-与桥"
+id="toc-作业题分析assignment-2dfsscc-与桥">作业题分析：Assignment
+2：DFS、SCC 与桥</a></li>
+<li><a href="#完整伪代码-1" id="toc-完整伪代码-1">完整伪代码</a></li>
+<li><a href="#作业完整伪代码-1"
+id="toc-作业完整伪代码-1">作业完整伪代码</a></li>
+</ul></li>
+<li><a href="#greedy" id="toc-greedy">Greedy</a>
+<ul>
+<li><a href="#贪心题模板" id="toc-贪心题模板">贪心题模板</a></li>
+<li><a href="#贪心证明edfprim-与-kruskal"
+id="toc-贪心证明edfprim-与-kruskal">贪心证明、EDF、Prim 与
+Kruskal</a></li>
+<li><a href="#更多贪心活动选择huffman-与-makespan"
+id="toc-更多贪心活动选择huffman-与-makespan">更多贪心：活动选择、Huffman
+与 Makespan</a></li>
+<li><a href="#作业题分析assignment-3贪心近似与-matroid"
+id="toc-作业题分析assignment-3贪心近似与-matroid">作业题分析：Assignment
+3：贪心、近似与 Matroid</a></li>
+<li><a href="#完整伪代码-2" id="toc-完整伪代码-2">完整伪代码</a></li>
+</ul></li>
 <li><a href="#dynamic-programming" id="toc-dynamic-programming">Dynamic
-Programming</a></li>
-<li><a href="#max-flow" id="toc-max-flow">Max-Flow</a></li>
+Programming</a>
+<ul>
+<li><a href="#作业完整伪代码-2"
+id="toc-作业完整伪代码-2">作业完整伪代码</a></li>
+<li><a href="#dp-题模板" id="toc-dp-题模板">DP 题模板</a></li>
+<li><a href="#动态规划基础daglis编辑距离背包"
+id="toc-动态规划基础daglis编辑距离背包">动态规划基础：DAG、LIS、编辑距离、背包</a></li>
+<li><a href="#动态规划优化单调队列lis-二分凸包优化knuth"
+id="toc-动态规划优化单调队列lis-二分凸包优化knuth">动态规划优化：单调队列、LIS
+二分、凸包优化、Knuth</a></li>
+<li><a href="#图上的-dpfloyd树-dp-与-treewidth"
+id="toc-图上的-dpfloyd树-dp-与-treewidth">图上的 DP：Floyd、树 DP 与
+Treewidth</a></li>
+<li><a href="#作业题分析assignment-4动态规划设计与优化"
+id="toc-作业题分析assignment-4动态规划设计与优化">作业题分析：Assignment
+4：动态规划设计与优化</a></li>
+<li><a href="#完整伪代码-3" id="toc-完整伪代码-3">完整伪代码</a></li>
+<li><a href="#作业完整伪代码-3"
+id="toc-作业完整伪代码-3">作业完整伪代码</a></li>
+</ul></li>
+<li><a href="#max-flow" id="toc-max-flow">Max-Flow</a>
+<ul>
+<li><a href="#流与-lp-题模板" id="toc-流与-lp-题模板">流与 LP
+题模板</a></li>
+<li><a href="#网络流残量网络ford-fulkerson-与最大流最小割"
+id="toc-网络流残量网络ford-fulkerson-与最大流最小割">网络流：残量网络、Ford-Fulkerson
+与最大流最小割</a></li>
+<li><a href="#网络流运行时间edmonds-karpdinichopcroft-karp"
+id="toc-网络流运行时间edmonds-karpdinichopcroft-karp">网络流运行时间：Edmonds-Karp、Dinic、Hopcroft-Karp</a></li>
+<li><a href="#作业题分析assignment-5-流与-dinic"
+id="toc-作业题分析assignment-5-流与-dinic">作业题分析：Assignment 5 流与
+Dinic</a></li>
+<li><a href="#完整伪代码-4" id="toc-完整伪代码-4">完整伪代码</a></li>
+</ul></li>
 <li><a href="#linear-programming" id="toc-linear-programming">Linear
-Programming</a></li>
+Programming</a>
+<ul>
+<li><a href="#作业完整伪代码-4"
+id="toc-作业完整伪代码-4">作业完整伪代码</a></li>
+<li><a href="#线性规划对偶lp-relaxation-与-minimax"
+id="toc-线性规划对偶lp-relaxation-与-minimax">线性规划、对偶、LP
+Relaxation 与 Minimax</a></li>
+<li><a href="#作业题分析assignment-5-lp-对偶与-tu"
+id="toc-作业题分析assignment-5-lp-对偶与-tu">作业题分析：Assignment 5 LP
+对偶与 TU</a></li>
+<li><a href="#完整伪代码-5" id="toc-完整伪代码-5">完整伪代码</a></li>
+</ul></li>
 <li><a href="#basic-complexity-theory"
-id="toc-basic-complexity-theory">Basic Complexity Theory</a></li>
+id="toc-basic-complexity-theory">Basic Complexity Theory</a>
+<ul>
+<li><a href="#渐近记号" id="toc-渐近记号">渐近记号</a></li>
+<li><a href="#算法复杂度表" id="toc-算法复杂度表">算法复杂度表</a></li>
+<li><a href="#正确性证明通用结构"
+id="toc-正确性证明通用结构">正确性证明通用结构</a></li>
+<li><a href="#导论计算模型与渐近分析"
+id="toc-导论计算模型与渐近分析">导论、计算模型与渐近分析</a></li>
+<li><a href="#比较排序下界只记结论"
+id="toc-比较排序下界只记结论">比较排序下界（只记结论）</a></li>
+<li><a href="#pnpnp-complete-与多项式归约"
+id="toc-pnpnp-complete-与多项式归约">P、NP、NP-Complete
+与多项式归约</a></li>
+<li><a href="#更多-np-complete-归约与-np-hard-优化"
+id="toc-更多-np-complete-归约与-np-hard-优化">更多 NP-Complete 归约与
+NP-Hard 优化</a></li>
+<li><a href="#作业题分析assignment-6np-complete-归约练习"
+id="toc-作业题分析assignment-6np-complete-归约练习">作业题分析：Assignment
+6：NP-Complete 归约练习</a></li>
+<li><a href="#高频定理与证明抓手"
+id="toc-高频定理与证明抓手">高频定理与证明抓手</a></li>
+<li><a href="#可计算性与排序下界伪代码"
+id="toc-可计算性与排序下界伪代码">可计算性与排序下界伪代码</a></li>
+<li><a href="#np-complete-归约伪代码"
+id="toc-np-complete-归约伪代码">NP-Complete 归约伪代码</a></li>
+<li><a href="#题型清单与最后复习顺序"
+id="toc-题型清单与最后复习顺序">题型清单与最后复习顺序</a></li>
+</ul></li>
 </ul></li>
 </ul>
       </nav>
@@ -79,21 +193,24 @@ id="toc-basic-complexity-theory">Basic Complexity Theory</a></li>
       </div>
 <h1 id="算法设计与分析考试手册">算法设计与分析考试手册</h1>
 <h2 id="divide-and-conquer">Divide and Conquer</h2>
-<p>主定理 <span class="math display">\[T(n)=aT(n/b)+O(n^d),\qquad a\ge
-1,\ b&gt;1.\]</span> 情形 结论 直觉 <span
+<h3 id="主定理">主定理</h3>
+<p><span class="math display">\[T(n)=aT(n/b)+O(n^d),\qquad a\ge 1,\
+b&gt;1.\]</span> 情形 结论 直觉 <span
 class="math inline">\(a&lt;b^d\)</span>：<span
 class="math inline">\(T(n)=O(n^d)\)</span>，每层总代价递减，根层主导。
 <span class="math inline">\(a=b^d\)</span>：<span
 class="math inline">\(T(n)=O(n^d\log n)\)</span>，每层总代价相同。 <span
 class="math inline">\(a&gt;b^d\)</span>：<span
-class="math inline">\(T(n)=O(n^{\log_b a})\)</span>，叶子数量主导。
-分治题模板
-分解问题，递归求解子问题，证明合并步骤不会漏掉跨子问题的最优解，最后用递归式分析复杂度。
+class="math inline">\(T(n)=O(n^{\log_b a})\)</span>，叶子数量主导。</p>
+<h3 id="分治题模板">分治题模板</h3>
+<p>分解问题，递归求解子问题，证明合并步骤不会漏掉跨子问题的最优解，最后用递归式分析复杂度。
 典型题：Merge Sort
-与逆序对。重点说明跨左右两部分的逆序对如何在线性合并时一次统计。
-Karatsuba、Strassen 与递归复杂度 整数乘法的分治 设两个 n 位数以基数 B =
-10n/2 拆成： <span class="math display">\[x = aB + b, y = cB +
-d.\]</span> 直接分治会计算 ac, ad, bc, bd 四个半规模乘法： <span
+与逆序对。重点说明跨左右两部分的逆序对如何在线性合并时一次统计。</p>
+<h3 id="karatsubastrassen-与递归复杂度">Karatsuba、Strassen
+与递归复杂度</h3>
+<p>整数乘法的分治 设两个 n 位数以基数 B = 10n/2 拆成： <span
+class="math display">\[x = aB + b, y = cB + d.\]</span> 直接分治会计算
+ac, ad, bc, bd 四个半规模乘法： <span
 class="math display">\[xy=acB^2+(ad+bc)B+bd.\]</span> 递归式是 <span
 class="math inline">\(T(n)=4T(n/2)+O(n)\)</span>，仍为 <span
 class="math inline">\(O(n^2)\)</span>，没有击败小学乘法。 Karatsuba 技巧
@@ -118,21 +235,19 @@ q=34\cdot78=2652,\qquad r=(12+34)(56+78)=46\cdot134=6164.\]</span>
 中间项为 ad + bc = r − p − q = 6164 − 672 − 2652 = 2840，所以： 1234 ·
 5678 = 672 · 1002 + 2840 · 100 + 2652 = 7006652.
 这个例子体现典型主旨：不是“递归”本身带来加速，而是把 4 个半规模乘法降成
-3 个。 Merge Sort 与逆序对计数 Merge Sort Merge Sort
+3 个。</p>
+<h3 id="merge-sort-与逆序对计数">Merge Sort 与逆序对计数</h3>
+<p>Merge Sort Merge Sort
 把数组分成两半，递归排序，再用线性时间合并两个有序数组。合并时维护两个指针，每次取较小元素放入输
 出。正确性来自归纳：如果左右子数组已排序，merge
 输出的每个前缀都是两边剩余元素中最小者按顺序取出，因此最终 有序。 <span
 class="math display">\[T(n)=2T(n/2)+O(n)=O(n\log n).\]</span> 逆序对定义
 数组 A 中一对下标 (i, j) 是逆序对，如果 i &lt; j 且 A[i] &gt;
-A[j]。它常用于衡量两个排序或偏好列表的差异。 分治计数
-把逆序对分成三类：</p>
-<ol type="1">
-<li>两个元素都在左半部分。</li>
-<li>两个元素都在右半部分。</li>
-<li>第一个在左半，第二个在右半。 前两类递归解决。第三类在 merge
+A[j]。它常用于衡量两个排序或偏好列表的差异。 分治计数 把逆序对分成三类：
+1. 两个元素都在左半部分。 2. 两个元素都在右半部分。 3.
+第一个在左半，第二个在右半。 前两类递归解决。第三类在 merge
 时统计。设左半和右半均已排序，若当前 R[j] &lt; L[i]，则 L[i], L[i + 1],
-. . . 都大于 R[j]， 一次增加左半剩余元素个数。</li>
-</ol>
+. . . 都大于 R[j]， 一次增加左半剩余元素个数。</p>
 <p>countSplit(L, R): <span class="math display">\[i = j = 0\]</span>
 <span class="math display">\[ans = 0\]</span> while i &lt; len(L) and j
 &lt; len(R): if L[i] &lt;= R[j]: output L[i]; i += 1 else: output R[j]
@@ -146,10 +261,11 @@ class="math display">\[L = [1, 5, 10, 26], R = [2, 3, 4, 4,
 整体接上。 跨列表逆序对例子 如果原数组左半为 [1, 5, 10, 26]，右半为 [2,
 3, 4, 4, 16]，跨左右逆序对数为 13：1 贡献 0，5 贡献 4，10 贡献 4，26
 贡献 5。 Merge-and-count
-的意义就是在合并时一次性得到这些贡献，而不是每个左元素都扫描整个右表。
-选择问题的 Partition 基础 问题定义 Selection 问题：输入 n 个数和整数
-k，输出第 k 小元素。排序后取第 k 个是 <span class="math inline">\(O(n
-\log n)\)</span>，但排序做了过多工作。 Partition 思想 选一个 pivot
+的意义就是在合并时一次性得到这些贡献，而不是每个左元素都扫描整个右表。</p>
+<h3 id="选择问题的-partition-基础">选择问题的 Partition 基础</h3>
+<p>问题定义 Selection 问题：输入 n 个数和整数 k，输出第 k
+小元素。排序后取第 k 个是 <span class="math inline">\(O(n \log
+n)\)</span>，但排序做了过多工作。 Partition 思想 选一个 pivot
 p，把元素分成： <span class="math display">\[L=\{x:x&lt;p\},\qquad
 M=\{x:x=p\},\qquad R=\{x:x&gt;p\}.\]</span> 若 <span
 class="math inline">\(k\le |L|\)</span>，递归在 L 中找第 k 小；若 <span
@@ -160,7 +276,8 @@ class="math inline">\(k\le |L|+|M|\)</span>，答案就是 p；否则在 R 中�
 = [1, 2, 1, 0], M = [3, 3], R = [5, 4].\]</span> 因为 k = 4 ≤
 |L|，递归到 L。把 L 排序只是为了看答案：[0, 1, 1, 2]，第 4 小为
 2，所以原问题输出 2。</p>
-<p>作业题分析：Assignment 1：递归式与分治算法</p>
+<h3 id="作业题分析assignment-1递归式与分治算法">作业题分析：Assignment
+1：递归式与分治算法</h3>
 <ol type="1">
 <li>带对数项的主定理 题目给出： <span
 class="math display">\[T(n)=aT(n/b)+n^d\log^w n.\]</span>
@@ -202,9 +319,9 @@ class="math inline">\(O(k)\)</span>。
 分治版本把顶点分成两半，递归得到两条有向 Hamiltonian path，再像 merge
 一样比较两条路径当前端点：若 a → b 就 i j 输出 a ，否则输出 b
 。每次输出后都保证上一点指向下一候选点。递推： i j <span
-class="math display">\[T(n)=2T(n/2)+O(n)=O(n\log n).\]</span>
-完整伪代码</li>
+class="math display">\[T(n)=2T(n/2)+O(n)=O(n\log n).\]</span></li>
 </ol>
+<h3 id="完整伪代码">完整伪代码</h3>
 <p>竖式整数乘法 SchoolbookMultiply(x[0..n-1], y[0..m-1]): <span
 class="math display">\[z[0..n+m-1] = 0\]</span> for i = 0 to n - 1: for
 j = 0 to m - 1: <span class="math display">\[z[i+j] = z[i+j] + x[i] *
@@ -282,8 +399,9 @@ class="math display">\[i = i + 1\]</span> else: append A[j] to B <span
 class="math display">\[ans = ans + (m - i)\]</span> <span
 class="math display">\[j = j + 1\]</span> append remaining elements to B
 copy B back to A[l..r) return ans 关键句是
-ans=ans+(m-i)：右半元素先出时，它比左半剩余所有元素都小。 作业完整伪代码
-Assignment 1：一维局部最小值 LocalMin1D(A, l, r): <span
+ans=ans+(m-i)：右半元素先出时，它比左半剩余所有元素都小。</p>
+<h3 id="作业完整伪代码">作业完整伪代码</h3>
+<p>Assignment 1：一维局部最小值 LocalMin1D(A, l, r): <span
 class="math display">\[m = floor((l + r) / 2)\]</span> if A[m] &lt;=
 A[m-1] and A[m] &lt;= A[m+1]: return m if A[m-1] &lt; A[m]: return
 LocalMin1D(A, l, m-1) return LocalMin1D(A, m+1, r) 边界外视为
@@ -313,8 +431,8 @@ i = i + 1 else: append Q[j]; j = j + 1 append all remaining vertices
 return R 合并为线性时间，递推 <span
 class="math inline">\(T(n)=2T(n/2)+O(n)=O(n\log n)\)</span>。</p>
 <h2 id="graph">Graph</h2>
-<p>DFS、拓扑排序与强连通分量 图表示
-邻接矩阵适合稠密图，判断一条边是否存在是 <span
+<h3 id="dfs拓扑排序与强连通分量">DFS、拓扑排序与强连通分量</h3>
+<p>图表示 邻接矩阵适合稠密图，判断一条边是否存在是 <span
 class="math inline">\(O(1)\)</span>，空间 <span
 class="math inline">\(O(V^{2})\)</span>。邻接表适合稀疏图，空间 <span
 class="math inline">\(O(V + E)\)</span>，遍历所有边自然 是 <span
@@ -330,21 +448,19 @@ edge。DAG 中没有 back edge；若 DFS 发现指
 中不可能出现 v 完成后又导致 u 必须排在后面的矛盾；DAG 中没有 back
 edge，完成时间顺序与依赖方 向一致。 强连通分量和 Kosaraju 强连通分量 SCC
 是有向图中互相可达的最大顶点集合。把每个 SCC 缩成一个点得到 SCC DAG。
-Kosaraju 算法：</p>
-<ol type="1">
-<li>在反图 GR 上运行 DFS，记录每个点完成时间。</li>
-<li>按完成时间从大到小，在原图 G 上依次 DFS。</li>
-<li>每次从尚未访问点开始的 DFS 正好得到一个 SCC。
-直觉：反图上的完成时间把 SCC DAG 的“源/汇”关系反过来排序，使第二遍 DFS
-不会越过还没被分离的分量边界。 例子 DFS 边和 SCC 小例子 有向图 a → b → c
-→ a，再加一条 c → d。DFS 若从 a 开始，会发现 c → a
-指向递归栈中的祖先，这是 back edge，也说 明存在有向环。强连通分量为 {a,
-b, c} 和 {d}，缩点以后只有一条边 {a, b, c} → {d}，得到 SCC DAG。
-拓扑排序例子 若有依赖“算法导论 → 图论 →
+Kosaraju 算法： 1. 在反图 GR 上运行 DFS，记录每个点完成时间。 2.
+按完成时间从大到小，在原图 G 上依次 DFS。 3. 每次从尚未访问点开始的 DFS
+正好得到一个 SCC。 直觉：反图上的完成时间把 SCC DAG
+的“源/汇”关系反过来排序，使第二遍 DFS 不会越过还没被分离的分量边界。
+例子 DFS 边和 SCC 小例子 有向图 a → b → c → a，再加一条 c → d。DFS 若从
+a 开始，会发现 c → a 指向递归栈中的祖先，这是 back edge，也说
+明存在有向环。强连通分量为 {a, b, c} 和 {d}，缩点以后只有一条边 {a, b,
+c} → {d}，得到 SCC DAG。 拓扑排序例子 若有依赖“算法导论 → 图论 →
 网络流”，拓扑序必须把算法导论排在图论前、图论排在网络流前。DFS
-完成时间降序就 是把“更依赖前置内容”的点放到后面。 BFS、Dijkstra 与堆优化
-BFS 无权图中每条边长度为 1。BFS 从源点 s 出发，按层探索： L = {s}, L =
-{v : ∃u ∈ L , (u, v) ∈ E, v 未被发现}. 0 i+1 i
+完成时间降序就 是把“更依赖前置内容”的点放到后面。</p>
+<h3 id="bfsdijkstra-与堆优化">BFS、Dijkstra 与堆优化</h3>
+<p>BFS 无权图中每条边长度为 1。BFS 从源点 s 出发，按层探索： L = {s}, L
+= {v : ∃u ∈ L , (u, v) ∈ E, v 未被发现}. 0 i+1 i
 队列保证先发现距离小的点。若一个点第一次出现在第 i 层，则存在长度 i
 的路径；若存在更短路径，它应在更早层被发 现，矛盾。因此 BFS
 给出无权最短路。 Dijkstra 对非负权图，Dijkstra 维护已确定最短距离的集合
@@ -358,8 +474,7 @@ w(u, v): <span class="math display">\[dist[v] = dist[u] + w(u,
 v)\]</span> decrease-key(Q, v) 正确性核心：设 u
 是当前候选距离最小的未确定点。如果有一条更短的 s 到 u 路径，它从 S
 第一次走到外部的边会到达 某个未确定点 y。由于边权非负，dist[y]
-不会大于这条更短路径到 u 的长度，从而应比 u 更早被选，矛盾。</li>
-</ol>
+不会大于这条更短路径到 u 的长度，从而应比 u 更早被选，矛盾。</p>
 <p>实现复杂度 实现 Extract-min Decrease-key 总复杂度
 数组实现：Extract-min 为 <span
 class="math inline">\(O(V)\)</span>，Decrease-key 为 <span
@@ -371,9 +486,9 @@ V)\)</span>。 例子 Dijkstra 跑一遍 图中有边 s → a = 2，s → b = 5�
 = 1，a → c = 4，b → c = 1。Dijkstra 初始选 s，松弛得 dist[a] = 2,
 dist[b] = 5； 再选 a，把 dist[b] 改成 3，把 dist[c] 改成 6；再选 b，把
 dist[c] 改成 4；最后选 c。最终距离为 0, 2, 3, 4。 这个例子也说明
-decrease-key 为什么重要：b 和 c 的候选距离都被后来的边改小了。
-负权最短路与 Bellman-Ford Dijkstra 为什么会失败 Dijkstra
-一旦把某个点加入
+decrease-key 为什么重要：b 和 c 的候选距离都被后来的边改小了。</p>
+<h3 id="负权最短路与-bellman-ford">负权最短路与 Bellman-Ford</h3>
+<p>Dijkstra 为什么会失败 Dijkstra 一旦把某个点加入
 S，就认为它的距离最终确定。负边会破坏这个结论：一个当前距离较大的点可能通过负边把
 已确定点的距离进一步降低。典型典型反例是 1 → 3 权重 3，1 → 2 权重 5，2 →
 3 权重 -3。Dijkstra 会先确定 3 的 距离为 3，但真实最短路是 1 → 2 →
@@ -399,8 +514,9 @@ class="math inline">\(O(V E)\)</span>。若第 V
 负环检测例子</p>
 <p>若 a → b = 1, b → c = −3, c → a = 1，环总权重为
 -1。绕这个环一次距离就少 1，没有有限最短路。Bellman-Ford 第 <span
-class="math inline">\(|V|\)</span> 轮仍可松弛，就是在捕捉这种现象。
-作业题分析：Assignment 2：DFS、SCC 与桥</p>
+class="math inline">\(|V|\)</span> 轮仍可松弛，就是在捕捉这种现象。</p>
+<h3 id="作业题分析assignment-2dfsscc-与桥">作业题分析：Assignment
+2：DFS、SCC 与桥</h3>
 <ol type="1">
 <li>SCC 算法正确性 把 SCC 缩点后得到 DAG。关键不是背“两遍
 DFS”，而是证明完成时间能找出当前 head/tail SCC。 • 若在 <span
@@ -436,7 +552,8 @@ class="math inline">\(low[v] &gt; disc[u]\)</span> ⇐⇒ (u, v) 是桥.
 a → t, b → t 有兼容的距离/拓扑序，但不存在同一棵树同时作为 BFS 和 DFS
 树。 这类判断题必须给完整反例，并逐条验证“满足前件、违反结论”。</li>
 </ol>
-<p>完整伪代码 Explore 与完整 DFS Explore(G, v): <span
+<h3 id="完整伪代码-1">完整伪代码</h3>
+<p>Explore 与完整 DFS Explore(G, v): <span
 class="math display">\[marked[v] = true\]</span> for each edge v -&gt; u
 in G: if not marked[u]: Explore(G, u) DFS(G): <span
 class="math display">\[marked[v] = false for every vertex v\]</span> for
@@ -445,7 +562,7 @@ each vertex v in V: if not marked[v]: Explore(G, v) 一次 Explore
 <span class="math inline">\(O(V + E)\)</span>。
 删除尾点的拓扑排序（例题最初版本） TopoByDeletingTails(G): order[1..|V|]
 for pos = |V| down to 1: <span class="math display">\[v = any vertex
-with outdegree 0\]</span> if no such v exists: report "not a DAG" <span
+with outdegree 0\]</span> if no such v exists: report “not a DAG” <span
 class="math display">\[order[pos] = v\]</span> remove v and its incident
 edges from G return order 若每轮线性寻找尾点，时间 <span
 class="math inline">\(O(V^{2})\)</span>；用出度计数和队列可降至 <span
@@ -503,8 +620,8 @@ class="math display">\[dist[v] = dist[u] + w\]</span> <span
 class="math display">\[changed = true\]</span> <span
 class="math display">\[until changed == false\]</span>
 若要可靠检测负环，仍应限制前 <span class="math inline">\(|V|\)</span> −
-1 轮并额外检查第 <span class="math inline">\(|V|\)</span> 轮。
-作业完整伪代码</p>
+1 轮并额外检查第 <span class="math inline">\(|V|\)</span> 轮。</p>
+<h3 id="作业完整伪代码-1">作业完整伪代码</h3>
 <p>Assignment 2：三色 DFS 判有向环 HasDirectedCycle(G): <span
 class="math display">\[color[v] = WHITE for all v\]</span> DFS(v): <span
 class="math display">\[color[v] = GRAY\]</span> for each edge v -&gt; u:
@@ -536,25 +653,26 @@ not connected: return false return <span
 class="math inline">\(|E|\)</span> == |V| - 1 作业证明了无向图存在同一棵
 DFS/BFS 树当且仅当原图本身是一棵树。</p>
 <h2 id="greedy">Greedy</h2>
-<p>贪心题模板
-先证明存在一个最优解包含贪心选择，再把问题缩小为同类子问题。
+<h3 id="贪心题模板">贪心题模板</h3>
+<p>先证明存在一个最优解包含贪心选择，再把问题缩小为同类子问题。
 常见证明语言是 exchange
 argument：拿任意最优解，如果它没有采用贪心选择，就交换其中某个元素，使目标值不变差，
 同时包含贪心选择。MST 用 cut
 property，活动选择用最早结束活动替换，Huffman
-用两个最小频率字符在最深层互为 兄弟。 贪心证明、EDF、Prim 与 Kruskal
-Earliest Deadline First
+用两个最小频率字符在最深层互为 兄弟。</p>
+<h3 id="贪心证明edfprim-与-kruskal">贪心证明、EDF、Prim 与 Kruskal</h3>
+<p>Earliest Deadline First
 单机调度中，每个任务有处理时间和截止时间，问是否存在一个可行顺序使所有任务按时完成。EDF
 按截止时间从早到 晚排。若 EDF 在某个任务 j 的截止时间 d 前失败，说明所有
 deadline 不晚于 d 的任务总处理时间已经超过 d ，任何 j j j 调度都不可能在
 d 前完成它们。因此 EDF 的失败可作为不可行证明。 j MST 与 cut property
 给定无向连通加权图，最小生成树 MST 是连接所有顶点且总权重最小的树。Cut
-property： 对任意割 (S, V \ S)，跨越该割的最小权边属于某棵
+property： 对任意割 (S, V  S)，跨越该割的最小权边属于某棵
 MST；若最小权边唯一，则属于所有 MST。 证明采用 exchange argument。取任意
 MST T 。如果跨割最小边 e 不在 T 中，把 e 加入 T
 会形成一个环。这个环中必有 另一条跨同一割的边 f 。删去 f
 后仍是生成树，且 w(e) ≤ w(f )，所以不更差。 Prim Prim
-从一个顶点开始维护已连接集合 S，每次选择跨越 (S, V \ S) 的最小边加入。由
+从一个顶点开始维护已连接集合 S，每次选择跨越 (S, V  S) 的最小边加入。由
 cut property，每次选择都是安全的； 二叉堆实现通常写 <span
 class="math inline">\(O(E\log V )\)</span>。 Kruskal Kruskal
 把边按权重从小到大尝试加入：连接不同连通分量就加入，否则跳过。要会用
@@ -568,7 +686,9 @@ deadline 3。这个失 败不是 EDF 的锅：所有 deadline 不超过 3
 例子 设割为 S = {a, b} 与外部，跨割边权分别为 2、5、7。权重 2 的边是 cut
 上最轻边。若某棵生成树没选它，把这条边加进
 去会形成环，环里必有另一条跨同一割的边；删掉那条更重或等重的边，生成树不变差。</p>
-<p>更多贪心：活动选择、Huffman 与 Makespan Activity Selection
+<h3 id="更多贪心活动选择huffman-与-makespan">更多贪心：活动选择、Huffman
+与 Makespan</h3>
+<p>Activity Selection
 给定若干区间活动，选择最多个互不重叠活动。贪心规则是每次选结束时间最早的活动，然后删除与它冲突的活动。
 正确性：设 a 是最早结束活动，取某个最优解中的第一个活动 b。因为 a
 结束不晚于 b，用 a 替换 b 不会影响后续活动可
@@ -611,7 +731,8 @@ g : 15, l : 20。Huffman 自底向上合并： 3 + 3 = 6, 6 + 8 = 14, 10 + 12 =
 1，最后大作业放到某台机器上，得到 2m −
 1。最优调度把大作业单独放一台机器，其余小作业分到其他机器， makespan 为
 m。所以简单贪心的近似比会趋近 2。</p>
-<p>作业题分析：Assignment 3：贪心、近似与 Matroid</p>
+<h3 id="作业题分析assignment-3贪心近似与-matroid">作业题分析：Assignment
+3：贪心、近似与 Matroid</h3>
 <ol type="1">
 <li>权重为 2 的幂时贪心最优 任务的耗时和收益都等于 w ，容量为 T
 。贪心每次选择当前能放下的最大任务。一般背包这样做不对，但 powers of two
@@ -640,16 +761,18 @@ graphic matroid，maximal independent set
 exchange argument 把贪心当前元素换入某个最优基，权重不减，归纳得全局最
 优。 • 线性无关向量集合构成 linear
 matroid，因此按权重递减并用高斯消元判断独立性，就能求最大权线性无关集。
-关键点： Kruskal 不是偶然正确，它就是 graphic matroid 上的加权贪心。
-完整伪代码 Earliest Deadline First EDF(jobs): sort jobs by nondecreasing
+关键点： Kruskal 不是偶然正确，它就是 graphic matroid
+上的加权贪心。</li>
+</ol>
+<h3 id="完整伪代码-2">完整伪代码</h3>
+<p>Earliest Deadline First EDF(jobs): sort jobs by nondecreasing
 deadline d[j] <span class="math display">\[time = 0\]</span> for each
 job j in sorted order: schedule j on interval [time, time + size[j])
 <span class="math display">\[time = time + size[j]\]</span> if time &gt;
-d[j]: return "no feasible schedule" return the schedule 若 EDF
+d[j]: return “no feasible schedule” return the schedule 若 EDF
 都错过某个
 deadline，则不存在能让所有作业准时完成的顺序。排序后扫描，时间 <span
-class="math inline">\(O(n \log n)\)</span>。</li>
-</ol>
+class="math inline">\(O(n \log n)\)</span>。</p>
 <p>Prim MST Prim(G, s): <span class="math display">\[key[v] = infinity
 for all v\]</span> <span class="math display">\[parent[v] = nil for all
 v\]</span> <span class="math display">\[key[s] = 0\]</span> <span
@@ -705,8 +828,9 @@ weight): sort U by nonincreasing weight <span class="math display">\[S =
 empty set\]</span> for x in U: if independent(S union {x}): <span
 class="math display">\[S = S union {x}\]</span> return S
 只有当可行集合构成 matroid
-时，这个“按权从大到小且保持独立”的策略才对所有非负权重都最优。
-作业完整伪代码 Assignment 3：最大可行重量贪心及双元素版本
+时，这个“按权从大到小且保持独立”的策略才对所有非负权重都最优。</p>
+<h3 id="作业完整伪代码-2">作业完整伪代码</h3>
+<p>Assignment 3：最大可行重量贪心及双元素版本
 LargestFeasibleGreedy(weights, T): <span class="math display">\[S =
 empty set, used = 0\]</span> while exists unchosen item i with used +
 w[i] &lt;= T: choose feasible i with maximum w[i] add i to S; used =
@@ -716,11 +840,15 @@ feasible A with 1 &lt;= |A| &lt;= 2: choose feasible A of maximum total
 weight <span class="math display">\[S = S union A; used = used +
 weight(A)\]</span> return S 权重全为 2
 的幂时第一个算法最优；一般权重保证 1/2，允许每轮取至多两个物品可证明
-2/3。 DP 题模板 状态含义要完整，转移只依赖已求状态，答案从状态表中读出。
-写 DP 时一定交代四件事：状态、边界、转移、计算顺序。复杂度通常是“状态数
-× 每个状态转移枚举量”。如果权重 W 出现在复杂度里，要判断是不是伪多项式。
-动态规划基础：DAG、LIS、编辑距离、背包 DP 与分治的区别
-分治的子问题通常不重叠；DP
+2/3。</p>
+<h3 id="dp-题模板">DP 题模板</h3>
+<p>状态含义要完整，转移只依赖已求状态，答案从状态表中读出。 写 DP
+时一定交代四件事：状态、边界、转移、计算顺序。复杂度通常是“状态数 ×
+每个状态转移枚举量”。如果权重 W
+出现在复杂度里，要判断是不是伪多项式。</p>
+<h3
+id="动态规划基础daglis编辑距离背包">动态规划基础：DAG、LIS、编辑距离、背包</h3>
+<p>DP 与分治的区别 分治的子问题通常不重叠；DP
 的子问题大量重叠。记忆化递归是自顶向下，填表是自底向上。两者本质上都在子问题
 DAG 上计算。 DAG Shortest Path 在 DAG
 中可按拓扑序求单源最短路，即使有负边也可以。转移为： <span
@@ -765,8 +893,10 @@ Algorithm Book 10000 500 Laptop 8888 8500 Hermès / QieGao 90000 100000
 sitting 的经典路径是 kitten → sitten，sitten → sittin，sittin →
 sitting，共 3 步。DP 表就是系统地
 比较“删、插、替换/匹配”三种最后一步。</p>
-<p>动态规划优化：单调队列、LIS 二分、凸包优化、Knuth Sliding Window
-Maximum
+<h3
+id="动态规划优化单调队列lis-二分凸包优化knuth">动态规划优化：单调队列、LIS
+二分、凸包优化、Knuth</h3>
+<p>Sliding Window Maximum
 维护一个双端队列，队列中保存候选下标，并保证对应值单调递减。新元素进来时，把队尾所有不大于它的元素弹出；窗
 口左端移动时，把过期下标从队首弹出。队首就是当前窗口最大值。
 每个元素最多入队一次、出队一次，因此全部队列操作的总复杂度为 <span
@@ -799,8 +929,10 @@ class="math inline">\(O(n^{2})\)</span>。至少要能说明
 tail 数组例子 扫描 [2, 5, 3, 7, 11, 8, 10, 13, 6] 时，tail
 会不断保存每个长度的最小结尾。读到 3 时，它替换长度 2 的结尾 5，因为以 3
 结 尾比以 5 结尾更容易继续接后面的数。这个替换不表示真实 LIS
-被改写，只表示保留更强的代表状态。 图上的 DP：Floyd、树 DP 与 Treewidth
-Floyd-Warshall 令 D(k)[i][j] 表示从 i 到 j
+被改写，只表示保留更强的代表状态。</p>
+<h3 id="图上的-dpfloyd树-dp-与-treewidth">图上的 DP：Floyd、树 DP 与
+Treewidth</h3>
+<p>Floyd-Warshall 令 D(k)[i][j] 表示从 i 到 j
 的最短路，且中间点只允许来自集合 {1, 2, . . . , k}。当允许第 k
 个点时，要么最短路不用 k，要 么经过 k：</p>
 <p><span
@@ -827,8 +959,9 @@ B 作为中间点时： <span class="math display">\[D[A][C] = min(10, D[A][B]
 + D[B][C]) = min(10, 3 - 2) = 1.\]</span>
 这就是“允许的中间点集合扩大一位”的具体含义。 树上独立集例子 星形树中心连
 3 个叶子。若选中心，收益为 1，所有叶子都不能选；若不选中心，可以选 3
-个叶子，收益为 3。两状态 DP 的 in/out 正是把这两种选择分开算。
-作业题分析：Assignment 4：动态规划设计与优化</p>
+个叶子，收益为 3。两状态 DP 的 in/out 正是把这两种选择分开算。</p>
+<h3 id="作业题分析assignment-4动态规划设计与优化">作业题分析：Assignment
+4：动态规划设计与优化</h3>
 <ol type="1">
 <li><p>(L, R)-Step Subsequence 令 dp[i] 为以 a 结尾的最大收益： i ( )
 <span class="math display">\[dp[i] = a + max 0, max dp[j].\]</span> i
@@ -861,9 +994,11 @@ preorder 下每棵子树是连续区间，记 next[u] 为子树后的第一个�
 [i][w] 有两种选择： <span class="math display">\[f[i][w] =
 max{f[next[i]][w], v + f[i + 1][w - 1]}.\]</span> i
 跳过节点时必须跳过整棵子树；选择节点后才允许继续考虑其后代。状态数 <span
-class="math inline">\(O(nW)\)</span>。 完整伪代码
-Fibonacci：递归、记忆化与自底向上 FibRecursive(n): if n &lt;= 1: return
-1 return FibRecursive(n - 1) + FibRecursive(n - 2) FibMem<span
+class="math inline">\(O(nW)\)</span>。</p></li>
+</ol>
+<h3 id="完整伪代码-3">完整伪代码</h3>
+<p>Fibonacci：递归、记忆化与自底向上 FibRecursive(n): if n &lt;= 1:
+return 1 return FibRecursive(n - 1) + FibRecursive(n - 2) FibMem<span
 class="math inline">\(o(n)\)</span>: if memo contains n: return memo[n]
 if n &lt;= 1: <span class="math display">\[memo[n] = 1\]</span> else:
 <span class="math display">\[memo[n] = FibMemo(n - 1) + FibMemo(n -
@@ -873,8 +1008,7 @@ class="math display">\[fib[0] = fib[1] = 1\]</span> for i = 2 to n:
 return fib[n] 三者分别体现重复子问题、memoization
 和按依赖拓扑序填表；时间依次为指数级、<span
 class="math inline">\(O(n)\)</span>、<span
-class="math inline">\(O(n)\)</span>。</p></li>
-</ol>
+class="math inline">\(O(n)\)</span>。</p>
 <p>DAG Shortest Path DAGShortestPath(G, s): <span
 class="math display">\[order = TopologicalSort(G)\]</span> <span
 class="math display">\[dist[v] = infinity for all v\]</span> <span
@@ -1017,8 +1151,8 @@ intersect B[c]|)\]</span> <span class="math display">\[dp[u][S] =
 dp[u][S] + best\]</span> return max_S dp[root][S]
 边界交集必须一致；减去交集大小是为了避免父子 bag
 重复计数。常用的粗略复杂度为 <span
-class="math inline">\(O(4kn)\)</span>，其中最大 bag 大小 为 k。
-作业完整伪代码</p>
+class="math inline">\(O(4kn)\)</span>，其中最大 bag 大小 为 k。</p>
+<h3 id="作业完整伪代码-3">作业完整伪代码</h3>
 <p>Assignment 4：(L, R)-Step Subsequence StepSubsequenceQuadratic(A, L,
 R): for i = 1 to n: <span class="math display">\[dp[i] = A[i]\]</span>
 for j = max(1, i-R) to i-L: <span class="math display">\[dp[i] =
@@ -1064,14 +1198,19 @@ class="math inline">\(dp[i][w] = dp[next[i]][w] // 跳过整棵子树\)</span>
 if w &gt; 0: <span class="math display">\[dp[i][w] = max(dp[i][w],
 value[i] + dp[i+1][w-1])\]</span> return dp[1][W] 选择节点后继续到
 preorder 的下一个点；跳过节点则必须跳过其整棵子树。时间 <span
-class="math inline">\(O(nW)\)</span>。 流与 LP 题模板 网络流正确性题围绕
-residual graph：有增广路则当前流非最优；无增广路时，从 s
-可达点集得到一个 cut，且该 cut 容 量等于当前流值。LP 题围绕
+class="math inline">\(O(nW)\)</span>。</p>
+<h3 id="流与-lp-题模板">流与 LP 题模板</h3>
+<p>网络流正确性题围绕 residual
+graph：有增广路则当前流非最优；无增广路时，从 s 可达点集得到一个
+cut，且该 cut 容 量等于当前流值。LP 题围绕
 primal/dual：弱对偶给所有可行解的界，强对偶说明界可达到，relaxation 则用
-fractional optimum 和 rounding 比较。 网络流：残量网络、Ford-Fulkerson
-与最大流最小割 流的定义 网络包含源点 s、汇点 t 和每条边容量 c(u, v)。流
-f (u, v) 满足容量约束： <span class="math display">\[0 \le f (u, v) \le
-c(u, v),\]</span> 以及除 s, t 外每个点的流量守恒： <span
+fractional optimum 和 rounding 比较。</p>
+<h3
+id="网络流残量网络ford-fulkerson-与最大流最小割">网络流：残量网络、Ford-Fulkerson
+与最大流最小割</h3>
+<p>流的定义 网络包含源点 s、汇点 t 和每条边容量 c(u, v)。流 f (u, v)
+满足容量约束： <span class="math display">\[0 \le f (u, v) \le c(u,
+v),\]</span> 以及除 s, t 外每个点的流量守恒： <span
 class="math display">\[\sum_u f(u,v)=\sum_w f(v,w).\]</span> 流值 <span
 class="math inline">\(|f|\)</span> 是从 s 流出的净流量。 残量网络
 残量网络 G 表示在当前流 f 上还可以怎样调整。对原边 (u,
@@ -1088,7 +1227,7 @@ class="math display">\[c(S,T)=\sum_{u\in S,v\in T}c(u,v).\]</span></p>
 <p>对任意流和任意割都有： <span class="math display">\[|f| \le c(S, T
 ).\]</span> 这叫弱对偶式的上界：任何割容量都是最大流的上界。 若
 Ford-Fulkerson 结束，残量网络中没有 s 到 t 路径。令 S 为残量网络中从 s
-可达的点集，T = V \ S。从 S 到 T 的 原图边必须全部饱和，否则残量网络还有
+可达的点集，T = V  S。从 S 到 T 的 原图边必须全部饱和，否则残量网络还有
 forward edge 可越过割；从 T 到 S 的原图边流量必须为 0，否则残量网络有
 backward edge 可越过割。因此： <span class="math display">\[|f| = c(S, T
 ).\]</span> 于是当前流达到某个割上界，必为最大流；该割也为最小割。 应用
@@ -1123,8 +1262,10 @@ t，容量为 W − w ，限制该队最终不能超过目标队。 i
 可能只得到 19。残量网络中的反向边 b → a 允许 把这 1 单位“退回来”，再改走
 a → t，最终达到 20。 所以 Ford-Fulkerson
 的本质不是“找一条路就灌满”这么简单，而是始终在残量网络里允许撤销和重排。</p>
-<p>网络流运行时间：Edmonds-Karp、Dinic、Hopcroft-Karp Edmonds-Karp
-Edmonds-Karp 是 Ford-Fulkerson 的特例：每次在残量网络中用 BFS
+<h3
+id="网络流运行时间edmonds-karpdinichopcroft-karp">网络流运行时间：Edmonds-Karp、Dinic、Hopcroft-Karp</h3>
+<p>Edmonds-Karp Edmonds-Karp 是 Ford-Fulkerson
+的特例：每次在残量网络中用 BFS
 找边数最少的增广路。关键性质是残量网络中从 s
 到任意点的最短距离不会下降。 一条边在某次增广中成为 critical
 edge，表示它被增广到残量容量 0。若同一条边之后再次成为 critical
@@ -1154,7 +1295,9 @@ vertex-disjoint 或 edge-disjoint 的 增广结构。 例子 Edmonds-Karp
 Hopcroft-Karp
 不是找一条最短增广路，而是在所有最短增广路组成的层次图里尽量同时增广。比
 如有两条互不相交的最短增广路，单条增广要两轮，而 blocking flow
-一轮就吃掉它们。 作业题分析：Assignment 5 流与 Dinic</p>
+一轮就吃掉它们。</p>
+<h3 id="作业题分析assignment-5-流与-dinic">作业题分析：Assignment 5 流与
+Dinic</h3>
 <ol type="1">
 <li>System of Distinct Representatives 单个集合族 A = {A , . . . , A
 }：左侧为集合节点，右侧为元素节点，若 u ∈ A 就连边。存在 SDR
@@ -1182,8 +1325,9 @@ class="math display">\[|D_i\cup D_{i+1}|\le V^{1/3}.\]</span>
 取前缀层为割，跨割边数至多 <span class="math inline">\(|D_i||D_{i+1}|\le
 V^{2/3}\)</span>，因此残余最大流至多 <span
 class="math inline">\(V^{2/3}\)</span>，再多至多这么多个 phase。总时间
-<span class="math inline">\(O(V^{2/3}E)\)</span>。 完整伪代码
-构造残量网络 BuildResidual(G, capacity c, flow f): Gf has the same
+<span class="math inline">\(O(V^{2/3}E)\)</span>。</p>
+<h3 id="完整伪代码-4">完整伪代码</h3>
+<p>构造残量网络 BuildResidual(G, capacity c, flow f): Gf has the same
 vertices as G for each original edge object e = (u, v): if c[e] - f[e]
 &gt; 0: add forward residual arc (u, v, edge=e, <span
 class="math display">\[residual=c[e]-f[e])\]</span> if f[e] &gt; 0: add
@@ -1254,20 +1398,24 @@ with capacity infinity for each team i != x: if wins[i] &gt; M: return
 false add i -&gt; t with capacity M - wins[i] <span
 class="math display">\[f = MaxFlow(network, s, t)\]</span> return f
 saturates every edge leaving s 从 game node
-流向哪支队，就表示那支队获得相应胜场；整数容量保证可解释成离散比赛结果。
-作业完整伪代码 Assignment 5：System of Distinct Representatives
-HasSDR(sets A1..Ak, universe U): build bipartite graph with left nodes
-Ai and right nodes u in U add Ai -- u iff u belongs to Ai <span
-class="math display">\[M = maximum bipartite matching\]</span> return
-|M| == k Assignment 5：Common SDR 建流 HasCommonSDR(A1..Ak, B1..Bk,
-universe U): create s, t create uL and uR for every u in U add s -&gt;
-Ai capacity 1 add Ai -&gt; uL capacity 1 iff u in Ai add uL -&gt; uR
-capacity 1 for every u add uR -&gt; Bj capacity 1 iff u in Bj add Bj
--&gt; t capacity 1 return MaxFlow(network, s, t) == k 中间边 u → u
-的容量 1 强制每个代表元素最多使用一次；整数流把每单位流解释成一条
-Ai-&gt;u-&gt;Bj 配对。 L R 线性规划、对偶、LP Relaxation 与 Minimax LP
-标准形 常用标准形可写为： max cT x <span class="math display">\[s.t. Ax
-\le b,\]</span> <span class="math display">\[x \ge 0.\]</span>
+流向哪支队，就表示那支队获得相应胜场；整数容量保证可解释成离散比赛结果。</p>
+<h3 id="作业完整伪代码-4">作业完整伪代码</h3>
+<p>Assignment 5：System of Distinct Representatives HasSDR(sets A1..Ak,
+universe U): build bipartite graph with left nodes Ai and right nodes u
+in U add Ai – u iff u belongs to Ai <span class="math display">\[M =
+maximum bipartite matching\]</span> return |M| == k Assignment 5：Common
+SDR 建流 HasCommonSDR(A1..Ak, B1..Bk, universe U): create s, t create uL
+and uR for every u in U add s -&gt; Ai capacity 1 add Ai -&gt; uL
+capacity 1 iff u in Ai add uL -&gt; uR capacity 1 for every u add uR
+-&gt; Bj capacity 1 iff u in Bj add Bj -&gt; t capacity 1 return
+MaxFlow(network, s, t) == k 中间边 u → u 的容量 1
+强制每个代表元素最多使用一次；整数流把每单位流解释成一条 Ai-&gt;u-&gt;Bj
+配对。 L R</p>
+<h3 id="线性规划对偶lp-relaxation-与-minimax">线性规划、对偶、LP
+Relaxation 与 Minimax</h3>
+<p>LP 标准形 常用标准形可写为： max cT x <span
+class="math display">\[s.t. Ax \le b,\]</span> <span
+class="math display">\[x \ge 0.\]</span>
 可行域是半空间交出的凸多面体。若最优值有限且可达到，至少存在一个顶点最优解。Simplex
 方法沿着顶点和边移动，实
 践中很快，但最坏情况指数；椭球法和内点法给出多项式时间 LP 算法。</p>
@@ -1323,13 +1471,10 @@ b，要么存在一个向量 y 把 b 与所有 Ax 分开，
 但两者不能同时发生。它把“无可行解”也变成一个可验证的线性证书。例如用它推导强对偶；通常掌握结论和证
 书含义即可，不必死背完整几何证明。 Primal-Dual 分析的通用套路
 Primal-dual 算法不一定先精确求 LP。它可以一边构造整数 primal
-解，一边构造可行 dual 解，然后用弱对偶比较两者：</p>
-<ol type="1">
-<li>写出 relaxation 和 dual；</li>
-<li>保持 dual feasible，并逐步提高 dual 变量；</li>
-<li>某个 primal 约束变紧时选择对应对象；</li>
-<li>证明 <span class="math inline">\(ALG \le α \cdot Dual \le α \cdot
-OPT\)</span>。
+解，一边构造可行 dual 解，然后用弱对偶比较两者： 1. 写出 relaxation 和
+dual； 2. 保持 dual feasible，并逐步提高 dual 变量； 3. 某个 primal
+约束变紧时选择对应对象； 4. 证明 <span class="math inline">\(ALG \le α
+\cdot Dual \le α \cdot OPT\)</span>。
 这和“拿一个容易计算的下界来压住算法结果”是同一件事。例如用匹配/点覆盖展示了这种思想。
 例子 糖和油的工厂 LP 一个二维例子是：糖每吨利润 1，油每吨利润 6，糖最多
 200 吨，油最多 300 吨，总重量最多 400 吨。令 x 为糖、 y 为油： <span
@@ -1343,10 +1488,12 @@ rounding 有损失，但仍满足 3 ≤ 2 · 1.5 ≤ 2OPT 。 IP 石头剪刀布
 典型 payoff matrix 是行玩家赢为 1、输为 -1、平为
 0。若行玩家固定出石头，列玩家最佳回应是布；若行玩家均匀混合 (1/3, 1/3,
 1/3)，列玩家任何纯策略的期望收益都为 0。强对偶说明 max-min 和 min-max
-的博弈值相同。</li>
-</ol>
-<p>作业题分析：Assignment 5 LP 对偶与 TU 3. König-Egerváry 定理
-二分图最大匹配 LP： <span class="math display">\[
+的博弈值相同。</p>
+<h3 id="作业题分析assignment-5-lp-对偶与-tu">作业题分析：Assignment 5 LP
+对偶与 TU</h3>
+<ol start="3" type="1">
+<li>König-Egerváry 定理 二分图最大匹配 LP： <span
+class="math display">\[
 \max \sum_{e\in E}x_e
 \quad\text{s.t.}\quad
 \sum_{e\ni v}x_e\le 1,\qquad x_e\ge 0.
@@ -1361,13 +1508,15 @@ unimodular：任取方阵子矩阵，若某列至多一个 1
 1，则两个二分部对应行之和相同，行线性相关，行列式为 0。整数右端保证
 primal/dual 都有整数最优顶点，再由强 对偶得到： <span
 class="math display">\[maximum matching size = minimum vertex cover
-size.\]</span> 非二分图反例是三角形：最大匹配为 1，最小点覆盖为 2。
-完整伪代码 Simplex 高层过程 Simplex(LP): <span class="math display">\[x
-= any feasible starting vertex\]</span> while there is an adjacent
-feasible vertex y with objective(y) better than objective(x): choose an
-improving neighbor y by a pivot rule <span class="math display">\[x =
-y\]</span> return x 这是常用的高层伪代码；如何找初始顶点、如何
-pivot、怎样避免 cycling 属于实现细节。Simplex 实践很快但最坏可 指数，LP
+size.\]</span> 非二分图反例是三角形：最大匹配为 1，最小点覆盖为 2。</li>
+</ol>
+<h3 id="完整伪代码-5">完整伪代码</h3>
+<p>Simplex 高层过程 Simplex(LP): <span class="math display">\[x = any
+feasible starting vertex\]</span> while there is an adjacent feasible
+vertex y with objective(y) better than objective(x): choose an improving
+neighbor y by a pivot rule <span class="math display">\[x = y\]</span>
+return x 这是常用的高层伪代码；如何找初始顶点、如何 pivot、怎样避免
+cycling 属于实现细节。Simplex 实践很快但最坏可 指数，LP
 的多项式时间算法由椭球法或内点法保证。 Vertex Cover LP Rounding
 VertexCoverRounding(G): solve LP: minimize sum_v x[v] <span
 class="math display">\[subject to x[u] + x[v] &gt;= 1 for every edge (u,
@@ -1381,19 +1530,22 @@ for each vertex v: if x[v] &gt;= 1/2: add v to C return C
 vertices): fix any priority order of A for each arriving vertex b in B:
 <span class="math display">\[U = unmatched neighbors of b in A\]</span>
 if U is not empty: <span class="math display">\[a = first vertex of U in
-the fixed order\]</span> match a with b return matching 渐近记号 记号
-定义 提醒 f(n) = <span class="math inline">\(O(g(n))\)</span> 存在常数
-c, n0，使得 n ≥ n0 时 上界，不一定紧。 <span class="math display">\[f(n)
-\le cg(n)。\]</span> f(n) = Ω(g(n)) 存在常数 c, n0，使得 n ≥ n0 时
-下界，常用于证明问题不可能更快。 <span class="math display">\[f(n) \ge
-cg(n)。\]</span> f(n) = Θ(g(n)) 同时有 <span
-class="math inline">\(O(g(n))\)</span> 和 Ω(g(n))。 紧确界。 f(n) =
-<span class="math inline">\(o(g(n))\)</span> limn→∞ f(n)/g(n) = 0。
-严格小阶。 算法复杂度表 主题 核心算法或结论 复杂度 关键证明点
-比较排序（只记结论） 任意比较排序下界 Ω(n log n) 结论仅适用于比较模型。
-Karatsuba 三次半规模乘法 <span class="math inline">\(O(n^{\log_2
-3})\)</span> ≈ <span class="math inline">\(O(n^{1.585})\)</span> 用 (a +
-b)(c + d) 省去一次乘法。 Strassen 七次半规模矩阵乘法 <span
+the fixed order\]</span> match a with b return matching</p>
+<h3 id="渐近记号">渐近记号</h3>
+<p>记号 定义 提醒 f(n) = <span class="math inline">\(O(g(n))\)</span>
+存在常数 c, n0，使得 n ≥ n0 时 上界，不一定紧。 <span
+class="math display">\[f(n) \le cg(n)。\]</span> f(n) = Ω(g(n)) 存在常数
+c, n0，使得 n ≥ n0 时 下界，常用于证明问题不可能更快。 <span
+class="math display">\[f(n) \ge cg(n)。\]</span> f(n) = Θ(g(n)) 同时有
+<span class="math inline">\(O(g(n))\)</span> 和 Ω(g(n))。 紧确界。 f(n)
+= <span class="math inline">\(o(g(n))\)</span> limn→∞ f(n)/g(n) = 0。
+严格小阶。</p>
+<h3 id="算法复杂度表">算法复杂度表</h3>
+<p>主题 核心算法或结论 复杂度 关键证明点 比较排序（只记结论）
+任意比较排序下界 Ω(n log n) 结论仅适用于比较模型。 Karatsuba
+三次半规模乘法 <span class="math inline">\(O(n^{\log_2 3})\)</span> ≈
+<span class="math inline">\(O(n^{1.585})\)</span> 用 (a + b)(c + d)
+省去一次乘法。 Strassen 七次半规模矩阵乘法 <span
 class="math inline">\(O(n^{\log_2 7})\)</span> ≈ <span
 class="math inline">\(O(n^{2.81})\)</span> 块矩阵乘法减少乘法次数。
 Merge Sort 分治排序 <span class="math inline">\(O(n \log n)\)</span>
@@ -1422,14 +1574,16 @@ class="math inline">\(O(E\sqrt V)\)</span>，每相位使 s 到 t 层数增加�
 线性规划 LP、对偶、relaxation 多项式可解 弱对偶给界，强对偶给等式。 NP
 完全性 验证 + Karp reduction 不以运行时间求解，而以多项式
 方向必须是“已知难题 ≤ p 待证 归约比较难度 问题”。</p>
-<p>正确性证明通用结构</p>
+<h3 id="正确性证明通用结构">正确性证明通用结构</h3>
 <ol type="1">
 <li>说明算法维护的对象，例如已排序前缀、已确定最短路集合、残量网络中的可达集合。</li>
 <li>写出不变量：每一步之后哪些性质仍成立。</li>
 <li>证明初始化成立。</li>
 <li>证明一次迭代能保持不变量。</li>
-<li>说明终止时不变量如何推出目标结论。 导论、计算模型与渐近分析
-算法分析在分析什么
+<li>说明终止时不变量如何推出目标结论。</li>
+</ol>
+<h3 id="导论计算模型与渐近分析">导论、计算模型与渐近分析</h3>
+<p>算法分析在分析什么
 算法不是一段程序的同义词。真正要分析的是抽象步骤：输入满足什么条件，输出要满足什么性质，算法每一步如
 何推进，为什么一定得到正确输出，以及最坏情况下需要多少基本操作。
 一般默认的计算模型是 RAM 或 word
@@ -1457,9 +1611,8 @@ RAM，不需要真的画图灵机；到了 P、NP
 定义时，只需知道“多项式时间图灵机”是一个不依 赖具体编程语言的正式模型。
 停机问题：不是所有问题都有算法 停机问题 HALT(M,x) 询问程序或图灵机 M
 在输入 x 上是否最终停止。反证思路是：假设存在总能正确判断停机的算法
-Halt，构造程序 B：</li>
-</ol>
-<p>B(M): if Halt(M, M) says "will halt": loop forever else: halt
+Halt，构造程序 B：</p>
+<p>B(M): if Halt(M, M) says “will halt”: loop forever else: halt
 immediately 再问 B(B) 会怎样：如果 Halt 说会停，B 就不停；如果说不停，B
 就立刻停，两边都矛盾。因此 HALT 不可判定。
 一眼分清。“不可判定”表示任何算法都不可能解决所有实例；“NP-complete”仍然是可判定问题，只是目前没有已知多
@@ -1473,12 +1626,15 @@ a &lt; a 吗；Counting i j Sort
 class="math inline">\(|V|\)</span>, <span
 class="math inline">\(|E|\)</span>，背包题还要说明容量 W
 是数值参数。再说明数据结构：邻
-接表和邻接矩阵会让同一个图算法复杂度不同。 比较排序下界（只记结论） •
-比较模型下，任意排序算法最坏需要 Ω(n log n) 次比较。 • Merge Sort 的
-<span class="math inline">\(O(n \log n)\)</span>
+接表和邻接矩阵会让同一个图算法复杂度不同。</p>
+<h3 id="比较排序下界只记结论">比较排序下界（只记结论）</h3>
+<p>• 比较模型下，任意排序算法最坏需要 Ω(n log n) 次比较。 • Merge Sort
+的 <span class="math inline">\(O(n \log n)\)</span>
 因而在比较模型下渐近最优。 • Counting Sort、Radix Sort
-会读取键值或数位，不受比较排序下界约束。 P、NP、NP-Complete 与多项式归约
-先说人话：P 和 NP 到底差在哪 • P：我自己能在多项式时间内找到答案。 •
+会读取键值或数位，不受比较排序下界约束。</p>
+<h3 id="pnpnp-complete-与多项式归约">P、NP、NP-Complete
+与多项式归约</h3>
+<p>先说人话：P 和 NP 到底差在哪 • P：我自己能在多项式时间内找到答案。 •
 NP：如果答案是
 yes，别人给我一个证书，我能在多项式时间内检查证书确实成立。 •
 NP-hard：所有 NP 问题都可以多项式归约到它，至少和 NP
@@ -1521,13 +1677,9 @@ y 为 false， 1 i 产生矛盾。
 转换后的变量、子句数量都只线性增加，所以是多项式时间，并且原公式可满足当且仅当新
 3CNF 可满足。因此： <span class="math display">\[SAT \le 3SAT.\]</span>
 p 3SAT 到 Independent Set：每个子句选一个真 literal 设 3CNF 有 m
-个子句。构图规则：</p>
-<ol type="1">
-<li>每个子句建立一个三角形，三个顶点分别代表三个 literal；</li>
-<li>若两个顶点代表互相矛盾的 literal，例如 x 与 ¬x ，就在它们之间连边；
-i i</li>
-<li>设置目标 k = m。</li>
-</ol>
+个子句。构图规则： 1. 每个子句建立一个三角形，三个顶点分别代表三个
+literal； 2. 若两个顶点代表互相矛盾的 literal，例如 x 与 ¬x
+，就在它们之间连边； i i 3. 设置目标 k = m。</p>
 <p>为什么对： • 公式可满足 ⇒ 有大小 m 的独立集。每个子句选一个为真的
 literal。一个三角形内只选一个；不同子句中不会同时选 x 和 ¬x
 ，所以所选顶点之间没有边。 i i • 有大小 m 的独立集 ⇒
@@ -1538,7 +1690,7 @@ m 个，所 以恰好每个子句选一个。矛盾 literal
 IndependentSet.\]</span> p 一眼记住
 gadget。三角形负责“每个子句最多选一个”，跨三角形的矛盾边负责“不同子句的选择必须一致”。
 Independent Set、Vertex Cover、Clique 的互换 Independent Set 与 Vertex
-Cover 对同一图 G = (V, E)： S 是 independent set ⇐⇒ V \ S 是 vertex
+Cover 对同一图 G = (V, E)： S 是 independent set ⇐⇒ V  S 是 vertex
 cover. 因为若补集没覆盖某条边，那么这条边两端都在 S
 中，违反独立性。参数关系为： <span
 class="math display">\[IndependentSet(G, k) \Longleftrightarrow
@@ -1553,32 +1705,25 @@ NP-complete。
 相邻两行符合图灵机的局部转移规则； • 最终出现接受状态。
 因为运行时间是多项式，表格和公式大小也是多项式。于是任意 NP
 问题都能归约到 SAT。 NP-complete 证明标准模板 要证明问题 B 是
-NP-complete：</p>
-<ol type="1">
-<li>证明 B ∈ NP ：给出 yes 证书和多项式验证器。</li>
-<li>选已知 NP-complete 问题 A。</li>
-<li>构造多项式归约 <span class="math inline">\(A \le B\)</span>。 p</li>
-<li>证明 iff：A 的 yes 实例映射为 B 的 yes 实例，B 的 yes 实例也能反推出
-A 的 yes 实例。</li>
-<li>说明规模和构造时间是多项式。 很多时候第四步的反向证明，等价于“B 的
-no 对应 A 的 no”的逆否命题，比直接处理 no 实例更自然。</li>
-</ol>
-<p>更多 NP-Complete 归约与 NP-Hard 优化 归约设计的七条经验</p>
-<ol type="1">
-<li>选一个和目标问题结构相似的已知 NP-complete 问题。</li>
-<li>先写自然想法，再用小例子主动找反例。</li>
-<li>构造失败时做局部修补，不必立刻推倒重来。</li>
-<li>反向证明常用逆否命题。</li>
-<li>先把目标问题的解“规范化”，再读回原问题的解。</li>
-<li>两个问题差太远时，引入中间问题。</li>
-<li>变量、子句、方向等逻辑关系可以用 gadget 表达。 Vertex Cover 到
-Dominating Set Dominating Set 要求集合 S 中的点能够支配所有点：每个不在
-S 中的顶点至少与 S 中某点相邻。 给定 Vertex Cover 实例 (G = (V, E),
-k)，构造 G′：</li>
-<li>保留每个原顶点 v ∈ V ；</li>
-<li>对每条原边 e = (u, v) 新建一个边顶点 w ，只连接 u 和 v； e</li>
-<li>把所有原顶点 V 两两相连，变成 clique；</li>
-<li>令 k′ = k。 为什么必须把 V 变成 clique？只加 w
+NP-complete： 1. 证明 B ∈ NP ：给出 yes 证书和多项式验证器。 2. 选已知
+NP-complete 问题 A。 3. 构造多项式归约 <span class="math inline">\(A \le
+B\)</span>。 p 4. 证明 iff：A 的 yes 实例映射为 B 的 yes 实例，B 的 yes
+实例也能反推出 A 的 yes 实例。 5. 说明规模和构造时间是多项式。
+很多时候第四步的反向证明，等价于“B 的 no 对应 A 的
+no”的逆否命题，比直接处理 no 实例更自然。</p>
+<h3 id="更多-np-complete-归约与-np-hard-优化">更多 NP-Complete 归约与
+NP-Hard 优化</h3>
+<p>归约设计的七条经验 1. 选一个和目标问题结构相似的已知 NP-complete
+问题。 2. 先写自然想法，再用小例子主动找反例。 3.
+构造失败时做局部修补，不必立刻推倒重来。 4. 反向证明常用逆否命题。 5.
+先把目标问题的解“规范化”，再读回原问题的解。 6.
+两个问题差太远时，引入中间问题。 7. 变量、子句、方向等逻辑关系可以用
+gadget 表达。 Vertex Cover 到 Dominating Set Dominating Set 要求集合 S
+中的点能够支配所有点：每个不在 S 中的顶点至少与 S 中某点相邻。 给定
+Vertex Cover 实例 (G = (V, E), k)，构造 G′： 1. 保留每个原顶点 v ∈ V ；
+2. 对每条原边 e = (u, v) 新建一个边顶点 w ，只连接 u 和 v； e 3.
+把所有原顶点 V 两两相连，变成 clique； 4. 令 k′ = k。 为什么必须把 V
+变成 clique？只加 w
 时，点覆盖虽然能支配所有边顶点，却不一定支配没被选的原顶点。clique
 保证只 e 要选了至少一个原顶点，就能支配所有原顶点。 正向 若 S ⊆ V 是大小
 k 的 vertex cover，则每个 w 至少连接到 S 中一个端点；所有原顶点又被
@@ -1596,8 +1741,7 @@ NP-complete。 Vertex Cover 到 Subset Sum：先用向量表达约束
 j j <span class="math display">\[K = (k, 2, 2, . . . , 2).\]</span> 第 0
 维强制恰好选 k 个顶点向量。对某条边： • 两端都选，坐标已经是 2； •
 只选一端，可再选 b 补成 2； j • 两端都不选，即使加入 b 也只有
-1，无法达到目标。 j</li>
-</ol>
+1，无法达到目标。 j</p>
 <p>所以恰好存在大小 k 的点覆盖，当且仅当这些向量中有子集和为 K。
 接着把向量 (a , a , . . . , a ) 编成一个大整数。选足够大的进制
 B，使任何一位相加都不会进位： 0 1 m <span
@@ -1658,17 +1802,17 @@ gap，因此有常数近似算法。不要把两种 TSP 混在一起。 归约�
 构造是否在多项式时间完成，输出规模是否多项式？ • 是否证明了 yes 到 yes？
 • 是否证明了反向，或等价地证明 no 到 no？ • 参数 k 怎样变化是否写清？ •
 有没有偷偷假设目标解具有某种形式？若有，是否证明可以规范化？ • gadget
-是否可能被“非预期走法”绕过？ 作业题分析：Assignment 6：NP-Complete
-归约练习 Assignment 6 每题都先写“属于
+是否可能被“非预期走法”绕过？</p>
+<h3
+id="作业题分析assignment-6np-complete-归约练习">作业题分析：Assignment
+6：NP-Complete 归约练习</h3>
+<p>Assignment 6 每题都先写“属于
 NP”：给出候选解，并说明可在多项式时间验证。真正的区分度在归约构造和 iff
 证明。 (a) 是否存在大小恰为 n/2 的 Clique 从 Clique(G,k) 归约。设原图有
-n 个点：</p>
-<ol type="1">
-<li>新增一个大小为 n 的 clique U ，并把 U
-中每个点连向原图全部顶点；</li>
-<li>再新增 2k 个孤立点；</li>
-<li>新图总点数 N = 2n + 2k，目标大小 N /2 = n + k。 新图最大 clique
-大小为 n + ω(G)。因此它含大小 N /2 的 clique，当且仅当 ω(G) ≥
+n 个点： 1. 新增一个大小为 n 的 clique U ，并把 U
+中每个点连向原图全部顶点； 2. 再新增 2k 个孤立点； 3. 新图总点数 N = 2n
++ 2k，目标大小 N /2 = n + k。 新图最大 clique 大小为 n +
+ω(G)。因此它含大小 N /2 的 clique，当且仅当 ω(G) ≥
 k。这里“恰好”与“至少”等价，因 为更大 clique 总含目标大小的子 clique。
 (b) Decision Knapsack 从 Subset Sum 的正整数实例 (a , . . . , a , B)
 归约：对每件物品设 w = v = a ，容量 C = B，价值门槛 V = B。若某子 1 n i
@@ -1682,44 +1826,46 @@ Hamiltonian path 的边本身构成这样的生成树。 (e) Set Cover 从 Verte
 Cover 归约。令 ground set 为原图边集 U = E；对每个顶点 v 建集合 S
 ，包含所有与 v 相 incident 的边。选择 v 至多 k 个集合覆盖 U
 ，当且仅当选择至多 k 个顶点覆盖所有边。若题目要求恰好 k
-个集合，可用任意未选集合补足，覆 盖性质不会被破坏。</li>
-</ol>
-<p>(f) 含负数的零和子集 必须明确要求子集非空，否则空集永远使答案为
+个集合，可用任意未选集合补足，覆 盖性质不会被破坏。</p>
+<ol start="6" type="a">
+<li>含负数的零和子集 必须明确要求子集非空，否则空集永远使答案为
 yes。从正整数 Subset Sum (a , . . . , a , B) 构造： 1 n {a , . . . , a ,
 −B}. 1 n 所有 a 都正，所以非空零和子集必须包含 −B；其余被选正数之和恰为
-B。因此与原 Subset Sum 等价。 i (g) 初始染黑 k 点使全图最终变黑 从
-Vertex Cover 归约。若初始黑点集合 S 是 vertex cover，则 V \ S
-内没有边，每个白点的所有邻居都在 S 中，第一轮 就全部变黑。
-反之，若存在一条边 (u, v)
+B。因此与原 Subset Sum 等价。 i</li>
+<li>初始染黑 k 点使全图最终变黑 从 Vertex Cover 归约。若初始黑点集合 S
+是 vertex cover，则 V  S 内没有边，每个白点的所有邻居都在 S 中，第一轮
+就全部变黑。 反之，若存在一条边 (u, v)
 两端初始都白，则二者中任何一个要先变黑，都要求另一个已经黑，形成循环等待；它们永远
-不可能成为这对点中第一个变黑者。因此最终全黑推出初始集合覆盖每条边。二者完全等价。
-(h) 两人 Envy-Free Allocation 从 Partition 归约。令两人的价值完全相同：u
+不可能成为这对点中第一个变黑者。因此最终全黑推出初始集合覆盖每条边。二者完全等价。</li>
+<li>两人 Envy-Free Allocation 从 Partition 归约。令两人的价值完全相同：u
 = v = a 。无嫉妒要求第一人认为 A 不差于 B，第二人认为 B 不差于 A： i i i
 <span class="math display">\[\sum_{i\in A}a_i\ge\sum_{i\in B}a_i,\qquad
 \sum_{i\in B}a_i\ge\sum_{i\in A}a_i.\]</span>
-两式只能同时在两边相等时成立，正好是 Partition。 (i) 3-Coloring 从 3SAT
-使用标准着色 gadget：先建基准三角形 T, F,
+两式只能同时在两边相等时成立，正好是 Partition。</li>
+<li>3-Coloring 从 3SAT 使用标准着色 gadget：先建基准三角形 T, F,
 B，强迫它们颜色各异。每个变量建 x , ¬x ，二者互连并都连 B， i i
 因此只能分别取 T /F 两色，表示互补真假。每个子句接一个 OR
 gadget，它可合法三染色当且仅当三个 literal 顶点至少 一个取 T 色。
 正向按满足赋值给变量着色，再扩展每个 clause
 gadget；反向从任意合法三染色读取变量真假，clause gadget 性质保证每
 个子句至少一真。提交时必须把 gadget 图画出并用 8
-种输入真假组合验证性质，只写“存在 gadget”不够。 (j) Exact Cover
-最短归约可用标准 NP-complete 问题 X3C（Exact Cover by 3-Sets）。X3C
-的实例已经是 ground set 与若干三元素子
+种输入真假组合验证性质，只写“存在 gadget”不够。</li>
+<li>Exact Cover 最短归约可用标准 NP-complete 问题 X3C（Exact Cover by
+3-Sets）。X3C 的实例已经是 ground set 与若干三元素子
 集，问题正是能否选出两两不交且并为全集的子集合；把同一实例直接视为 Exact
 Cover 即可。因此 X3C 是 Exact Cover 的特殊情形，得到 X3C ≤ ExactCover。
 p 若不能直接引用 X3C，需要从 3SAT 设计变量选择与子句覆盖
 gadget；核心要求是每个变量只能选 true/false 两 组之一，并且每个 clause
-element 恰被一个满足它的 literal 集合覆盖。 高频定理与证明抓手 主题
-重要结论 证明抓手 常见用途 主定理 <span
+element 恰被一个满足它的 literal 集合覆盖。</li>
+</ol>
+<h3 id="高频定理与证明抓手">高频定理与证明抓手</h3>
+<p>主题 重要结论 证明抓手 常见用途 主定理 <span
 class="math inline">\(T(n)=aT(n/b)+O(n^d)\)</span>：递归树每层总代价是
 <span class="math inline">\(a^i(n/b^i)^d\)</span>，据 <span
 class="math inline">\(a\)</span> 与 <span
 class="math inline">\(b^d\)</span> 比较得到三种复杂度。
 比较排序下界（只记结论） 任意比较排序最坏时间为
-了解决策树的信息量思想，不展 区分比较排序与非比较排序。 Ω(n log n)。
+了解决策树的信息量思想，不展 区分比较排序与非比较排序。 Ω(n log n)。
 开严格证明。 拓扑排序定理 DAG 按 DFS finish time 逆序或 DAG
 中不存在回边；每条边方向 DAG 最短路、DAG DP。 入度为 0
 队列可得到拓扑序。 都从更早位置指向更晚位置。 Dijkstra 正确性
@@ -1756,33 +1902,31 @@ Cook-Levin SAT 是 NP-complete。 把多项式验证过程编码为 CNF。 所�
 NP-complete 归约链的起 点。 Karp 归约传递性 A ≤ p B 且 B ≤ p C 推出
 复合两个多项式时间变换。 沿归约图传递 NP-hardness。 <span
 class="math display">\[A \le p C。\]</span> IS/VC 补集关系 S
-独立当且仅当 V \ S 是点覆盖。 未覆盖边恰好对应独立集中的内 Independent
-Set 与 Vertex 部边。 Cover 互相归约。 可计算性与排序下界伪代码
-停机问题中的对角程序 B(x)
+独立当且仅当 V  S 是点覆盖。 未覆盖边恰好对应独立集中的内 Independent
+Set 与 Vertex 部边。 Cover 互相归约。</p>
+<h3 id="可计算性与排序下界伪代码">可计算性与排序下界伪代码</h3>
+<p>停机问题中的对角程序 B(x)
 这不是可执行的求解算法，而是例如用来推出矛盾的假想程序。假设 Halt(M,y)
 能正确判断程序 M 在输入 y 上是否停 机： B(x): if Halt(x, x) == true:
 loop forever else: return 1 把 B 自身作为输入即可得到自指矛盾，因此 Halt
-不可能存在。比较排序下界在这里只保留结论，不展开决策树计数证 明。
-NP-Complete 归约伪代码</p>
-<p>ProveTargetIsNPComplete(Target):</p>
-<ol type="1">
-<li>Give a polynomial-size certificate for Target yes-instances.</li>
-<li>Give a polynomial-time verifier.</li>
-<li>Choose a known NP-complete problem Source.</li>
-<li>For every Source instance x, construct Target instance R(x). <span
+不可能存在。比较排序下界在这里只保留结论，不展开决策树计数证 明。</p>
+<h3 id="np-complete-归约伪代码">NP-Complete 归约伪代码</h3>
+<p>ProveTargetIsNPComplete(Target): 1. Give a polynomial-size
+certificate for Target yes-instances. 2. Give a polynomial-time
+verifier. 3. Choose a known NP-complete problem Source. 4. For every
+Source instance x, construct Target instance R(x). <span
 class="math display">\[5. Prove: x is yes =&gt; R(x) is yes.\]</span>
 <span class="math display">\[6. Prove: R(x) is yes =&gt; x is
-yes.\]</span></li>
-<li>Prove construction size and running time are polynomial. <span
-class="math display">\[8. Conclude Source &lt;=p Target, so Target is
-NP-hard;\]</span> together with Target in NP, Target is NP-complete.
-自检。第 6 步若难写，尝试把 Target
+yes.\]</span> 7. Prove construction size and running time are
+polynomial. <span class="math display">\[8. Conclude Source &lt;=p
+Target, so Target is NP-hard;\]</span> together with Target in NP,
+Target is NP-complete. 自检。第 6 步若难写，尝试把 Target
 的解规范化；或者证明它的逆否命题。若第 5、6 步只写了一边，最多只得到单
 向蕴含，不足以完成 Karp reduction。 <span class="math display">\[SAT \le
 3SAT\]</span> p SATto3SAT(phi): <span class="math display">\[phi3 =
-empty conjunction\]</span> for each clause C = (l1 or ... or lr) in phi:
+empty conjunction\]</span> for each clause C = (l1 or … or lr) in phi:
 if r &lt;= 3: append C to phi3 // 或重复 literal 补到 3 个 else: create
-fresh y1, ..., y[r-3] append (l1 or l2 or y1) for j = 1 to r - 4: append
+fresh y1, …, y[r-3] append (l1 or l2 or y1) for j = 1 to r - 4: append
 (not y[j] or l[j+2] or y[j+1]) append (not y[r-3] or l[r-1] or l[r])
 return phi3 每个长子句被“链”起来；原子句可满足当且仅当新链可满足。 <span
 class="math display">\[3SAT \le Independent Set\]</span> p
@@ -1793,9 +1937,8 @@ conflict edge between them return (G, k = m) 大小 m
 的独立集必须从每个子句三角形恰选一个 literal，冲突边保证不会同时选 x 与
 ¬x。 Independent Set 到 Vertex Cover / Clique IStoVC(G, k): return (G,
 |V| - k) IStoClique(G, k): <span class="math display">\[H = complement
-graph of G\]</span> return (H, k) 使用 S 独立 ⇔ V \ S 为点覆盖，以及 S
-在 G 中独立 ⇔ S 在 G 中成 clique。</li>
-</ol>
+graph of G\]</span> return (H, k) 使用 S 独立 ⇔ V  S 为点覆盖，以及 S 在
+G 中独立 ⇔ S 在 G 中成 clique。</p>
 <p><span class="math display">\[Vertex Cover \le Dominating Set\]</span>
 p VCtoDominatingSet(G=(V,E), k): H initially contains all original
 vertices V connect every pair of vertices in V, making V a clique for
@@ -1823,9 +1966,9 @@ return (numbers, K) 基数 B
 足够大时各坐标相加不产生进位，向量逐坐标相等就等价于编码整数之和相等。
 <span class="math display">\[Directed Hamiltonian Path \le Hamiltonian
 Path\]</span> p DirectedHPtoUndirectedHP(G, s, t): for each directed
-vertex u: create u_in -- u_mid -- u_out for each directed edge u -&gt;
-v: add undirected edge u_out -- v_in force the path endpoints to be s_in
-and t_out return the undirected graph 三点链强制每个顶点 gadget 按
+vertex u: create u_in – u_mid – u_out for each directed edge u -&gt; v:
+add undirected edge u_out – v_in force the path endpoints to be s_in and
+t_out return the undirected graph 三点链强制每个顶点 gadget 按
 in-&gt;mid-&gt;out 穿过，gadget
 间的连接只能对应原有向边。若目标问题不指定端点，可 在 s 、t
 外各挂一个度为 1 的新端点。 in out</p>
@@ -1834,14 +1977,16 @@ HamiltonianCycleToTSP(G=(V,E)): build complete graph K on V for every
 pair u,v: if (u,v) in E: weight[u][v] = 1 else: weight[u][v] = M // M
 &gt; |V| return (K, budget = |V|) 存在 Hamiltonian cycle 时有长度 <span
 class="math inline">\(|V|\)</span> 的 tour；不存在时任何 tour
-至少用一条重边，长度超过预算。 题型清单 证明题高频入口 • Dijkstra
-正确性：非负权 + 已选集合 S 的最短距离不变量。 • MST 正确性：cut
-property 与 exchange argument。 • Huffman
-正确性：两个最低频率字符可在最深层互为兄弟。 • 最大流最小割：无增广路时
-residual reachable set 给出等值 cut。 • LP approximation：relaxation
-optimum 与 integer optimum 的大小关系，加 rounding 代价。 •
-NP-complete：先证属于 NP，再从已知 NP-complete 问题归约，最后写完整
-iff。 算法设计题高频套路 • 看到“跨左右两边”可考虑分治合并：逆序对。 •
+至少用一条重边，长度超过预算。</p>
+<h3 id="题型清单与最后复习顺序">题型清单与最后复习顺序</h3>
+<p>证明题高频入口 • Dijkstra 正确性：非负权 + 已选集合 S
+的最短距离不变量。 • MST 正确性：cut property 与 exchange argument。 •
+Huffman 正确性：两个最低频率字符可在最深层互为兄弟。 •
+最大流最小割：无增广路时 residual reachable set 给出等值 cut。 • LP
+approximation：relaxation optimum 与 integer optimum 的大小关系，加
+rounding 代价。 • NP-complete：先证属于 NP，再从已知 NP-complete
+问题归约，最后写完整 iff。 算法设计题高频套路 •
+看到“跨左右两边”可考虑分治合并：逆序对。 •
 看到“排序后局部选择”先尝试贪心，但必须找交换论证。 •
 看到“前缀、区间、树子结构”可定义 DP 状态。 •
 看到“匹配、分配、容量、割、可行流”可建网络流。 • 看到“0/1 选择 +

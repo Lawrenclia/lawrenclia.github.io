@@ -1,15 +1,22 @@
 # 算法设计与分析考试手册
+
 ## Divide and Conquer
-主定理
+
+### 主定理
+
 $$T(n)=aT(n/b)+O(n^d),\qquad a\ge 1,\ b>1.$$
 情形 结论 直觉
 $a<b^d$：$T(n)=O(n^d)$，每层总代价递减，根层主导。
 $a=b^d$：$T(n)=O(n^d\log n)$，每层总代价相同。
 $a>b^d$：$T(n)=O(n^{\log_b a})$，叶子数量主导。
-分治题模板
+
+### 分治题模板
+
 分解问题，递归求解子问题，证明合并步骤不会漏掉跨子问题的最优解，最后用递归式分析复杂度。
 典型题：Merge Sort 与逆序对。重点说明跨左右两部分的逆序对如何在线性合并时一次统计。
-Karatsuba、Strassen 与递归复杂度
+
+### Karatsuba、Strassen 与递归复杂度
+
 整数乘法的分治
 设两个 n 位数以基数 B = 10n/2 拆成：
 $$x = aB + b, y = cB + d.$$
@@ -40,7 +47,9 @@ $$p=12\cdot56=672,\qquad q=34\cdot78=2652,\qquad r=(12+34)(56+78)=46\cdot134=616
 中间项为 ad + bc = r − p − q = 6164 − 672 − 2652 = 2840，所以：
 1234 · 5678 = 672 · 1002 + 2840 · 100 + 2652 = 7006652.
 这个例子体现典型主旨：不是“递归”本身带来加速，而是把 4 个半规模乘法降成 3 个。
-Merge Sort 与逆序对计数
+
+### Merge Sort 与逆序对计数
+
 Merge Sort
 Merge Sort 把数组分成两半，递归排序，再用线性时间合并两个有序数组。合并时维护两个指针，每次取较小元素放入输
 出。正确性来自归纳：如果左右子数组已排序，merge 输出的每个前缀都是两边剩余元素中最小者按顺序取出，因此最终
@@ -77,7 +86,9 @@ $$L = [1, 5, 10, 26], R = [2, 3, 4, 4, 16].$$
 跨列表逆序对例子
 如果原数组左半为 [1, 5, 10, 26]，右半为 [2, 3, 4, 4, 16]，跨左右逆序对数为 13：1 贡献 0，5 贡献 4，10 贡献 4，26 贡献 5。
 Merge-and-count 的意义就是在合并时一次性得到这些贡献，而不是每个左元素都扫描整个右表。
-选择问题的 Partition 基础
+
+### 选择问题的 Partition 基础
+
 问题定义
 Selection 问题：输入 n 个数和整数 k，输出第 k 小元素。排序后取第 k 个是 $O(n \log n)$，但排序做了过多工作。
 Partition 思想
@@ -91,7 +102,8 @@ Quick Selection 例子
 $$L = [1, 2, 1, 0], M = [3, 3], R = [5, 4].$$
 因为 k = 4 ≤ |L|，递归到 L。把 L 排序只是为了看答案：[0, 1, 1, 2]，第 4 小为 2，所以原问题输出 2。
 
-作业题分析：Assignment 1：递归式与分治算法
+### 作业题分析：Assignment 1：递归式与分治算法
+
 1. 带对数项的主定理
 题目给出：
 $$T(n)=aT(n/b)+n^d\log^w n.$$
@@ -123,7 +135,8 @@ i j
 输出 a ，否则输出 b 。每次输出后都保证上一点指向下一候选点。递推：
 i j
 $$T(n)=2T(n/2)+O(n)=O(n\log n).$$
-完整伪代码
+
+### 完整伪代码
 
 竖式整数乘法
 SchoolbookMultiply(x[0..n-1], y[0..m-1]):
@@ -235,7 +248,9 @@ append remaining elements to B
 copy B back to A[l..r)
 return ans
 关键句是 ans=ans+(m-i)：右半元素先出时，它比左半剩余所有元素都小。
-作业完整伪代码
+
+### 作业完整伪代码
+
 Assignment 1：一维局部最小值
 LocalMin1D(A, l, r):
 $$m = floor((l + r) / 2)$$
@@ -279,8 +294,11 @@ append Q[j]; j = j + 1
 append all remaining vertices
 return R
 合并为线性时间，递推 $T(n)=2T(n/2)+O(n)=O(n\log n)$。
+
 ## Graph
-DFS、拓扑排序与强连通分量
+
+### DFS、拓扑排序与强连通分量
+
 图表示
 邻接矩阵适合稠密图，判断一条边是否存在是 $O(1)$，空间 $O(V^{2})$。邻接表适合稀疏图，空间 $O(V + E)$，遍历所有边自然
 是 $O(V + E)$。后续复杂度多数默认邻接表。
@@ -308,7 +326,9 @@ DFS 边和 SCC 小例子
 拓扑排序例子
 若有依赖“算法导论 → 图论 → 网络流”，拓扑序必须把算法导论排在图论前、图论排在网络流前。DFS 完成时间降序就
 是把“更依赖前置内容”的点放到后面。
-BFS、Dijkstra 与堆优化
+
+### BFS、Dijkstra 与堆优化
+
 BFS
 无权图中每条边长度为 1。BFS 从源点 s 出发，按层探索：
 L = {s}, L = {v : ∃u ∈ L , (u, v) ∈ E, v 未被发现}.
@@ -339,7 +359,9 @@ Dijkstra 跑一遍
 图中有边 s → a = 2，s → b = 5，a → b = 1，a → c = 4，b → c = 1。Dijkstra 初始选 s，松弛得 dist[a] = 2, dist[b] = 5；
 再选 a，把 dist[b] 改成 3，把 dist[c] 改成 6；再选 b，把 dist[c] 改成 4；最后选 c。最终距离为 0, 2, 3, 4。
 这个例子也说明 decrease-key 为什么重要：b 和 c 的候选距离都被后来的边改小了。
-负权最短路与 Bellman-Ford
+
+### 负权最短路与 Bellman-Ford
+
 Dijkstra 为什么会失败
 Dijkstra 一旦把某个点加入 S，就认为它的距离最终确定。负边会破坏这个结论：一个当前距离较大的点可能通过负边把
 已确定点的距离进一步降低。典型典型反例是 1 → 3 权重 3，1 → 2 权重 5，2 → 3 权重 -3。Dijkstra 会先确定 3 的
@@ -369,7 +391,9 @@ Dijkstra 负边反例
 
 若 a → b = 1, b → c = −3, c → a = 1，环总权重为 -1。绕这个环一次距离就少 1，没有有限最短路。Bellman-Ford 第 $|V|$
 轮仍可松弛，就是在捕捉这种现象。
-作业题分析：Assignment 2：DFS、SCC 与桥
+
+### 作业题分析：Assignment 2：DFS、SCC 与桥
+
 1. SCC 算法正确性
 把 SCC 缩点后得到 DAG。关键不是背“两遍 DFS”，而是证明完成时间能找出当前 head/tail SCC。
 • 若在 $G^R$ 中 v 能到达 u，且二者属于不同 SCC，则无论谁先被发现，都有 $finish[v]>finish[u]$。
@@ -406,7 +430,8 @@ $low[v] > disc[u]$ ⇐⇒ (u, v) 是桥.
 DFS 树。
 这类判断题必须给完整反例，并逐条验证“满足前件、违反结论”。
 
-完整伪代码
+### 完整伪代码
+
 Explore 与完整 DFS
 Explore(G, v):
 $$marked[v] = true$$
@@ -519,7 +544,8 @@ $$dist[v] = dist[u] + w$$
 $$changed = true$$
 $$until changed == false$$
 若要可靠检测负环，仍应限制前 $|V|$ − 1 轮并额外检查第 $|V|$ 轮。
-作业完整伪代码
+
+### 作业完整伪代码
 
 Assignment 2：三色 DFS 判有向环
 HasDirectedCycle(G):
@@ -570,13 +596,18 @@ IsGoodUndirectedGraph(G):
 if G is not connected: return false
 return $|E|$ == |V| - 1
 作业证明了无向图存在同一棵 DFS/BFS 树当且仅当原图本身是一棵树。
+
 ## Greedy
-贪心题模板
+
+### 贪心题模板
+
 先证明存在一个最优解包含贪心选择，再把问题缩小为同类子问题。
 常见证明语言是 exchange argument：拿任意最优解，如果它没有采用贪心选择，就交换其中某个元素，使目标值不变差，
 同时包含贪心选择。MST 用 cut property，活动选择用最早结束活动替换，Huffman 用两个最小频率字符在最深层互为
 兄弟。
-贪心证明、EDF、Prim 与 Kruskal
+
+### 贪心证明、EDF、Prim 与 Kruskal
+
 Earliest Deadline First
 单机调度中，每个任务有处理时间和截止时间，问是否存在一个可行顺序使所有任务按时完成。EDF 按截止时间从早到
 晚排。若 EDF 在某个任务 j 的截止时间 d 前失败，说明所有 deadline 不晚于 d 的任务总处理时间已经超过 d ，任何
@@ -603,7 +634,8 @@ MST cut 例子
 设割为 S = {a, b} 与外部，跨割边权分别为 2、5、7。权重 2 的边是 cut 上最轻边。若某棵生成树没选它，把这条边加进
 去会形成环，环里必有另一条跨同一割的边；删掉那条更重或等重的边，生成树不变差。
 
-更多贪心：活动选择、Huffman 与 Makespan
+### 更多贪心：活动选择、Huffman 与 Makespan
+
 Activity Selection
 给定若干区间活动，选择最多个互不重叠活动。贪心规则是每次选结束时间最早的活动，然后删除与它冲突的活动。
 正确性：设 a 是最早结束活动，取某个最优解中的第一个活动 b。因为 a 结束不晚于 b，用 a 替换 b 不会影响后续活动可
@@ -642,7 +674,8 @@ Makespan 的紧例子
 到负载 m − 1，最后大作业放到某台机器上，得到 2m − 1。最优调度把大作业单独放一台机器，其余小作业分到其他机器，
 makespan 为 m。所以简单贪心的近似比会趋近 2。
 
-作业题分析：Assignment 3：贪心、近似与 Matroid
+### 作业题分析：Assignment 3：贪心、近似与 Matroid
+
 1. 权重为 2 的幂时贪心最优
 任务的耗时和收益都等于 w ，容量为 T 。贪心每次选择当前能放下的最大任务。一般背包这样做不对，但 powers of two
 i
@@ -670,7 +703,9 @@ Matroid 的 hereditary property 保证独立集的子集仍独立；exchange pro
 优。
 • 线性无关向量集合构成 linear matroid，因此按权重递减并用高斯消元判断独立性，就能求最大权线性无关集。
 关键点： Kruskal 不是偶然正确，它就是 graphic matroid 上的加权贪心。
-完整伪代码
+
+### 完整伪代码
+
 Earliest Deadline First
 EDF(jobs):
 sort jobs by nondecreasing deadline d[j]
@@ -760,6 +795,7 @@ return ListScheduling(jobs, m)
 朴素 list scheduling 是 2-approximation；LPT 利用“大作业先排”得到更强保证。用最小堆维护机器负载，时间 $O(n log m)$。
 
 ## Dynamic Programming
+
 Matroid 最大权独立集贪心
 WeightedMatroidGreedy(U, independent, weight):
 sort U by nonincreasing weight
@@ -769,7 +805,9 @@ if independent(S union {x}):
 $$S = S union {x}$$
 return S
 只有当可行集合构成 matroid 时，这个“按权从大到小且保持独立”的策略才对所有非负权重都最优。
-作业完整伪代码
+
+### 作业完整伪代码
+
 Assignment 3：最大可行重量贪心及双元素版本
 LargestFeasibleGreedy(weights, T):
 $$S = empty set, used = 0$$
@@ -784,11 +822,15 @@ choose feasible A of maximum total weight
 $$S = S union A; used = used + weight(A)$$
 return S
 权重全为 2 的幂时第一个算法最优；一般权重保证 1/2，允许每轮取至多两个物品可证明 2/3。
-DP 题模板
+
+### DP 题模板
+
 状态含义要完整，转移只依赖已求状态，答案从状态表中读出。
 写 DP 时一定交代四件事：状态、边界、转移、计算顺序。复杂度通常是“状态数 × 每个状态转移枚举量”。如果权重 W
 出现在复杂度里，要判断是不是伪多项式。
-动态规划基础：DAG、LIS、编辑距离、背包
+
+### 动态规划基础：DAG、LIS、编辑距离、背包
+
 DP 与分治的区别
 分治的子问题通常不重叠；DP 的子问题大量重叠。记忆化递归是自顶向下，填表是自底向上。两者本质上都在子问题
 DAG 上计算。
@@ -835,7 +877,8 @@ Hermès / QieGao 90000 100000
 把 kitten 变成 sitting 的经典路径是 kitten → sitten，sitten → sittin，sittin → sitting，共 3 步。DP 表就是系统地
 比较“删、插、替换/匹配”三种最后一步。
 
-动态规划优化：单调队列、LIS 二分、凸包优化、Knuth
+### 动态规划优化：单调队列、LIS 二分、凸包优化、Knuth
+
 Sliding Window Maximum
 维护一个双端队列，队列中保存候选下标，并保证对应值单调递减。新元素进来时，把队尾所有不大于它的元素弹出；窗
 口左端移动时，把过期下标从队首弹出。队首就是当前窗口最大值。
@@ -872,7 +915,9 @@ Sliding Window Maximum
 LIS tail 数组例子
 扫描 [2, 5, 3, 7, 11, 8, 10, 13, 6] 时，tail 会不断保存每个长度的最小结尾。读到 3 时，它替换长度 2 的结尾 5，因为以 3 结
 尾比以 5 结尾更容易继续接后面的数。这个替换不表示真实 LIS 被改写，只表示保留更强的代表状态。
-图上的 DP：Floyd、树 DP 与 Treewidth
+
+### 图上的 DP：Floyd、树 DP 与 Treewidth
+
 Floyd-Warshall
 令 D(k)[i][j] 表示从 i 到 j 的最短路，且中间点只允许来自集合 {1, 2, . . . , k}。当允许第 k 个点时，要么最短路不用 k，要
 么经过 k：
@@ -901,7 +946,9 @@ $$D[A][C] = min(10, D[A][B] + D[B][C]) = min(10, 3 - 2) = 1.$$
 树上独立集例子
 星形树中心连 3 个叶子。若选中心，收益为 1，所有叶子都不能选；若不选中心，可以选 3 个叶子，收益为 3。两状态 DP
 的 in/out 正是把这两种选择分开算。
-作业题分析：Assignment 4：动态规划设计与优化
+
+### 作业题分析：Assignment 4：动态规划设计与优化
+
 1. (L, R)-Step Subsequence
 令 dp[i] 为以 a 结尾的最大收益：
 i
@@ -927,7 +974,9 @@ $O(n)$ 根，总时间 $O(n^{3})$。
 $$f[i][w] = max{f[next[i]][w], v + f[i + 1][w - 1]}.$$
 i
 跳过节点时必须跳过整棵子树；选择节点后才允许继续考虑其后代。状态数 $O(nW)$。
-完整伪代码
+
+### 完整伪代码
+
 Fibonacci：递归、记忆化与自底向上
 FibRecursive(n):
 if n <= 1:
@@ -1171,7 +1220,8 @@ $$dp[u][S] = dp[u][S] + best$$
 return max_S dp[root][S]
 边界交集必须一致；减去交集大小是为了避免父子 bag 重复计数。常用的粗略复杂度为 $O(4kn)$，其中最大 bag 大小
 为 k。
-作业完整伪代码
+
+### 作业完整伪代码
 
 Assignment 4：(L, R)-Step Subsequence
 StepSubsequenceQuadratic(A, L, R):
@@ -1221,6 +1271,7 @@ $$dp[u] = next$$
 答案为 max(0, max k≤W dp[root][k])，时间 $O(nW 2)$。作业的 preorder 优化如下：
 
 ## Max-Flow
+
 PreorderTreeKnapsack():
 number vertices by DFS preorder
 $$next[i] = first index after the subtree of i$$
@@ -1233,11 +1284,15 @@ if w > 0:
 $$dp[i][w] = max(dp[i][w], value[i] + dp[i+1][w-1])$$
 return dp[1][W]
 选择节点后继续到 preorder 的下一个点；跳过节点则必须跳过其整棵子树。时间 $O(nW)$。
-流与 LP 题模板
+
+### 流与 LP 题模板
+
 网络流正确性题围绕 residual graph：有增广路则当前流非最优；无增广路时，从 s 可达点集得到一个 cut，且该 cut 容
 量等于当前流值。LP 题围绕 primal/dual：弱对偶给所有可行解的界，强对偶说明界可达到，relaxation 则用 fractional
 optimum 和 rounding 比较。
-网络流：残量网络、Ford-Fulkerson 与最大流最小割
+
+### 网络流：残量网络、Ford-Fulkerson 与最大流最小割
+
 流的定义
 网络包含源点 s、汇点 t 和每条边容量 c(u, v)。流 f (u, v) 满足容量约束：
 $$0 \le f (u, v) \le c(u, v),$$
@@ -1295,7 +1350,8 @@ i
 把这 1 单位“退回来”，再改走 a → t，最终达到 20。
 所以 Ford-Fulkerson 的本质不是“找一条路就灌满”这么简单，而是始终在残量网络里允许撤销和重排。
 
-网络流运行时间：Edmonds-Karp、Dinic、Hopcroft-Karp
+### 网络流运行时间：Edmonds-Karp、Dinic、Hopcroft-Karp
+
 Edmonds-Karp
 Edmonds-Karp 是 Ford-Fulkerson 的特例：每次在残量网络中用 BFS 找边数最少的增广路。关键性质是残量网络中从 s
 到任意点的最短距离不会下降。
@@ -1324,7 +1380,9 @@ Ford-Fulkerson 如果总选很绕的增广路，可能反复推翻之前选择�
 二分图匹配中的 blocking flow
 在二分图匹配里，一轮 Hopcroft-Karp 不是找一条最短增广路，而是在所有最短增广路组成的层次图里尽量同时增广。比
 如有两条互不相交的最短增广路，单条增广要两轮，而 blocking flow 一轮就吃掉它们。
-作业题分析：Assignment 5 流与 Dinic
+
+### 作业题分析：Assignment 5 流与 Dinic
+
 1. System of Distinct Representatives
 单个集合族 A = {A , . . . , A }：左侧为集合节点，右侧为元素节点，若 u ∈ A 就连边。存在 SDR 当且仅当最大匹配大
 1 k i
@@ -1342,7 +1400,9 @@ $O(E^{3/2})$ 证明。前 $\sqrt E$ 个 phase 后，最短增广路长度大于 
 $O(V^{2/3}E)$ 证明。运行约 $2V^{2/3}$ 个 phase 后考察 BFS 层 $D_i$。前 $2V^{2/3}$ 层中必有相邻层满足：
 $$|D_i\cup D_{i+1}|\le V^{1/3}.$$
 取前缀层为割，跨割边数至多 $|D_i||D_{i+1}|\le V^{2/3}$，因此残余最大流至多 $V^{2/3}$，再多至多这么多个 phase。总时间 $O(V^{2/3}E)$。
-完整伪代码
+
+### 完整伪代码
+
 构造残量网络
 BuildResidual(G, capacity c, flow f):
 Gf has the same vertices as G
@@ -1438,6 +1498,7 @@ return pairL, matching
 BFS 一次找出所有最短增广路的层次，DFS 在层次图中寻找一组顶点不交的增广路；时间 $O(E V )$。
 
 ## Linear Programming
+
 比赛淘汰（Baseball Elimination）建网
 CanTeamXStillWin(teams, remainingGames, x):
 $$M = wins[x] + remainingGamesOf[x]$$
@@ -1453,7 +1514,9 @@ add i -> t with capacity M - wins[i]
 $$f = MaxFlow(network, s, t)$$
 return f saturates every edge leaving s
 从 game node 流向哪支队，就表示那支队获得相应胜场；整数容量保证可解释成离散比赛结果。
-作业完整伪代码
+
+### 作业完整伪代码
+
 Assignment 5：System of Distinct Representatives
 HasSDR(sets A1..Ak, universe U):
 build bipartite graph with left nodes Ai and right nodes u in U
@@ -1472,7 +1535,9 @@ add Bj -> t capacity 1
 return MaxFlow(network, s, t) == k
 中间边 u → u 的容量 1 强制每个代表元素最多使用一次；整数流把每单位流解释成一条 Ai->u->Bj 配对。
 L R
-线性规划、对偶、LP Relaxation 与 Minimax
+
+### 线性规划、对偶、LP Relaxation 与 Minimax
+
 LP 标准形
 常用标准形可写为：
 max cT x
@@ -1556,7 +1621,8 @@ IP
 典型 payoff matrix 是行玩家赢为 1、输为 -1、平为 0。若行玩家固定出石头，列玩家最佳回应是布；若行玩家均匀混合
 (1/3, 1/3, 1/3)，列玩家任何纯策略的期望收益都为 0。强对偶说明 max-min 和 min-max 的博弈值相同。
 
-作业题分析：Assignment 5 LP 对偶与 TU
+### 作业题分析：Assignment 5 LP 对偶与 TU
+
 3. König-Egerváry 定理
 二分图最大匹配 LP：
 $$
@@ -1575,7 +1641,9 @@ $$
 对偶得到：
 $$maximum matching size = minimum vertex cover size.$$
 非二分图反例是三角形：最大匹配为 1，最小点覆盖为 2。
-完整伪代码
+
+### 完整伪代码
+
 Simplex 高层过程
 Simplex(LP):
 $$x = any feasible starting vertex$$
@@ -1600,6 +1668,7 @@ return C
 证明两步：先说明每条边至少一个端点被取，所以 C 是 vertex cover；再说明 $|C|\le 2\sum_v x_v\le 2OPT$。
 
 ## Basic Complexity Theory
+
 在线二分图匹配的固定顺序 Greedy
 OnlineGreedy(A offline, stream of B vertices):
 fix any priority order of A
@@ -1609,7 +1678,9 @@ if U is not empty:
 $$a = first vertex of U in the fixed order$$
 match a with b
 return matching
-渐近记号
+
+### 渐近记号
+
 记号 定义 提醒
 f(n) = $O(g(n))$ 存在常数 c, n0，使得 n ≥ n0 时 上界，不一定紧。
 $$f(n) \le cg(n)。$$
@@ -1617,7 +1688,9 @@ f(n) = Ω(g(n)) 存在常数 c, n0，使得 n ≥ n0 时 下界，常用于证�
 $$f(n) \ge cg(n)。$$
 f(n) = Θ(g(n)) 同时有 $O(g(n))$ 和 Ω(g(n))。 紧确界。
 f(n) = $o(g(n))$ limn→∞ f(n)/g(n) = 0。 严格小阶。
-算法复杂度表
+
+### 算法复杂度表
+
 主题 核心算法或结论 复杂度 关键证明点
 比较排序（只记结论） 任意比较排序下界 Ω(n log n) 结论仅适用于比较模型。
 Karatsuba 三次半规模乘法 $O(n^{\log_2 3})$ ≈ $O(n^{1.585})$ 用 (a + b)(c + d) 省去一次乘法。
@@ -1640,13 +1713,16 @@ Dinic 层次图 + blocking flow 一般 $O(V^2E)$；二分图匹配 $O(E\sqrt V)$
 NP 完全性 验证 + Karp reduction 不以运行时间求解，而以多项式 方向必须是“已知难题 ≤ p 待证
 归约比较难度 问题”。
 
-正确性证明通用结构
+### 正确性证明通用结构
+
 1. 说明算法维护的对象，例如已排序前缀、已确定最短路集合、残量网络中的可达集合。
 2. 写出不变量：每一步之后哪些性质仍成立。
 3. 证明初始化成立。
 4. 证明一次迭代能保持不变量。
 5. 说明终止时不变量如何推出目标结论。
-导论、计算模型与渐近分析
+
+### 导论、计算模型与渐近分析
+
 算法分析在分析什么
 算法不是一段程序的同义词。真正要分析的是抽象步骤：输入满足什么条件，输出要满足什么性质，算法每一步如
 何推进，为什么一定得到正确输出，以及最坏情况下需要多少基本操作。
@@ -1689,11 +1765,15 @@ i j
 Sort 还能直接读键值范围，所以不受比较排序下界约束。
 落笔模板。先说输入规模：数组题用 n，图题用 $|V|$, $|E|$，背包题还要说明容量 W 是数值参数。再说明数据结构：邻
 接表和邻接矩阵会让同一个图算法复杂度不同。
-比较排序下界（只记结论）
+
+### 比较排序下界（只记结论）
+
 • 比较模型下，任意排序算法最坏需要 Ω(n log n) 次比较。
 • Merge Sort 的 $O(n \log n)$ 因而在比较模型下渐近最优。
 • Counting Sort、Radix Sort 会读取键值或数位，不受比较排序下界约束。
-P、NP、NP-Complete 与多项式归约
+
+### P、NP、NP-Complete 与多项式归约
+
 先说人话：P 和 NP 到底差在哪
 • P：我自己能在多项式时间内找到答案。
 • NP：如果答案是 yes，别人给我一个证书，我能在多项式时间内检查证书确实成立。
@@ -1794,7 +1874,8 @@ p
 5. 说明规模和构造时间是多项式。
 很多时候第四步的反向证明，等价于“B 的 no 对应 A 的 no”的逆否命题，比直接处理 no 实例更自然。
 
-更多 NP-Complete 归约与 NP-Hard 优化
+### 更多 NP-Complete 归约与 NP-Hard 优化
+
 归约设计的七条经验
 1. 选一个和目标问题结构相似的已知 NP-complete 问题。
 2. 先写自然想法，再用小例子主动找反例。
@@ -1903,7 +1984,9 @@ $$
 • 参数 k 怎样变化是否写清？
 • 有没有偷偷假设目标解具有某种形式？若有，是否证明可以规范化？
 • gadget 是否可能被“非预期走法”绕过？
-作业题分析：Assignment 6：NP-Complete 归约练习
+
+### 作业题分析：Assignment 6：NP-Complete 归约练习
+
 Assignment 6 每题都先写“属于 NP”：给出候选解，并说明可在多项式时间验证。真正的区分度在归约构造和 iff 证明。
 (a) 是否存在大小恰为 n/2 的 Clique
 从 Clique(G,k) 归约。设原图有 n 个点：
@@ -1960,7 +2043,9 @@ i i
 p
 若不能直接引用 X3C，需要从 3SAT 设计变量选择与子句覆盖 gadget；核心要求是每个变量只能选 true/false 两
 组之一，并且每个 clause element 恰被一个满足它的 literal 集合覆盖。
-高频定理与证明抓手
+
+### 高频定理与证明抓手
+
 主题 重要结论 证明抓手 常见用途
 主定理 $T(n)=aT(n/b)+O(n^d)$：递归树每层总代价是 $a^i(n/b^i)^d$，据 $a$ 与 $b^d$ 比较得到三种复杂度。
 比较排序下界（只记结论） 任意比较排序最坏时间为 了解决策树的信息量思想，不展 区分比较排序与非比较排序。
@@ -2003,7 +2088,9 @@ Karp 归约传递性 A ≤ p B 且 B ≤ p C 推出 复合两个多项式时间�
 $$A \le p C。$$
 IS/VC 补集关系 S 独立当且仅当 V \ S 是点覆盖。 未覆盖边恰好对应独立集中的内 Independent Set 与 Vertex
 部边。 Cover 互相归约。
-可计算性与排序下界伪代码
+
+### 可计算性与排序下界伪代码
+
 停机问题中的对角程序 B(x)
 这不是可执行的求解算法，而是例如用来推出矛盾的假想程序。假设 Halt(M,y) 能正确判断程序 M 在输入 y 上是否停
 机：
@@ -2014,7 +2101,8 @@ else:
 return 1
 把 B 自身作为输入即可得到自指矛盾，因此 Halt 不可能存在。比较排序下界在这里只保留结论，不展开决策树计数证
 明。
-NP-Complete 归约伪代码
+
+### NP-Complete 归约伪代码
 
 ProveTargetIsNPComplete(Target):
 1. Give a polynomial-size certificate for Target yes-instances.
@@ -2121,7 +2209,9 @@ if (u,v) in E: weight[u][v] = 1
 else: weight[u][v] = M // M > |V|
 return (K, budget = |V|)
 存在 Hamiltonian cycle 时有长度 $|V|$ 的 tour；不存在时任何 tour 至少用一条重边，长度超过预算。
-题型清单
+
+### 题型清单与最后复习顺序
+
 证明题高频入口
 • Dijkstra 正确性：非负权 + 已选集合 S 的最短距离不变量。
 • MST 正确性：cut property 与 exchange argument。
