@@ -1,132 +1,41 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>HELLO · Lawrenclia的小破站</title>
-    <meta name="description" content="你好" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css?v=20260715-refresh">
-    <script src="js/theme-transition.js" defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lawrenclia 的个人主页：项目、研究、经历与联系方式。">
+  <meta name="theme-color" content="#e7ebea">
+  <title>Lawrenclia · Desktop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/home-desktop.css?v=20260723-home-v6">
+  <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "htm": "https://esm.sh/htm@3.1.1",
+        "lucide-react": "https://esm.sh/lucide-react@0.468.0?external=react"
+      }
+    }
+  </script>
 </head>
-<body class="page-index">
-    <header class="navbar" role="navigation" aria-label="主导航">
-        <div class="nav-left">
-            <div class="brand" aria-hidden>
-                首页 · Lawrenclia
-            </div>
-        </div>
-        <div class="nav-right">
-            <a class="nav-link" href="projects.html">项目</a>
-            <a class="nav-link" href="notes.html">笔记</a>
-            <a class="nav-link" href="about.html">关于</a>
-            <button class="theme-toggle" aria-label="切换主题">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </header>
-    
-    <main class="wrap home-wrap" id="wrap">
-        <div class="home-bento">
-            <section class="home-hero" aria-labelledby="home-title">
-                <div class="home-identity">
-                    <img class="home-avatar" src="images/avatar.png" alt="Lawrenclia 的头像">
-                    <p class="home-kicker">Lawrenclia</p>
-                </div>
-
-                <h1 id="home-title"><span>你好，</span><span>我是 Lawrenclia。</span></h1>
-
-                <div class="icon-tags" aria-label="社交链接">
-                    <a class="icon-tag" href="https://github.com/Lawrenclia" title="GitHub" target="_blank" rel="noopener">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/github.svg" alt="GitHub">
-                    </a>
-                    <a class="icon-tag" href="mqqapi://card/show_pslcard?uin=1041302645" title="QQ" target="_blank" rel="noopener">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/tencentqq.svg" alt="QQ">
-                    </a>
-                    <a class="icon-tag" href="https://space.bilibili.com/1334003335" title="Bilibili" target="_blank" rel="noopener">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v5/icons/bilibili.svg" alt="Bilibili">
-                    </a>
-                    <a class="icon-tag" href="https://v.douyin.com/75IGq8XG3r4/" title="Douyin" target="_blank" rel="noopener">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tiktok.svg" alt="Douyin">
-                    </a>
-                    <a class="icon-tag" href="https://x.com/LeoakyX" title="X" target="_blank" rel="noopener">
-                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/x.svg" alt="X">
-                    </a>
-                </div>
-            </section>
-
-            <section class="home-notes-card" aria-labelledby="home-notes-title">
-                <a class="home-card-heading" href="notes.html">
-                    <span class="home-card-title">
-                        <span class="home-card-icon"><i class="fas fa-book-open" aria-hidden="true"></i></span>
-                        <strong id="home-notes-title">课程笔记</strong>
-                    </span>
-                    <span class="home-card-meta">06 <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-                </a>
-                <div class="home-note-list">
-                    <a href="files/notes/abstract-algebra.html"><span>抽象代数</span><i class="fas fa-chevron-right" aria-hidden="true"></i></a>
-                    <a href="files/notes/quantum-physics-review.html"><span>量子物理复习笔记</span><i class="fas fa-chevron-right" aria-hidden="true"></i></a>
-                    <a href="files/notes/algorithm-design-analysis-exam-manual.html"><span>算法设计与分析</span><i class="fas fa-chevron-right" aria-hidden="true"></i></a>
-                </div>
-            </section>
-
-            <nav class="home-mini-grid" aria-label="站点入口">
-                <a class="home-mini-card" href="projects.html">
-                    <span class="home-mini-top">
-                        <span class="home-card-icon"><i class="fas fa-code" aria-hidden="true"></i></span>
-                        <span class="home-card-meta">05</span>
-                    </span>
-                    <strong>课程项目</strong>
-                    <i class="fas fa-arrow-right home-mini-arrow" aria-hidden="true"></i>
-                </a>
-                <a class="home-mini-card" href="about.html">
-                    <span class="home-mini-top">
-                        <span class="home-card-icon"><i class="fas fa-user" aria-hidden="true"></i></span>
-                    </span>
-                    <strong>关于我</strong>
-                    <i class="fas fa-arrow-right home-mini-arrow" aria-hidden="true"></i>
-                </a>
-            </nav>
-        </div>
+<body class="desktop-home">
+  <div id="root">
+    <main class="boot-screen" aria-label="正在载入个人主页">
+      <div class="boot-mark">L</div>
+      <p>Loading desktop...</p>
     </main>
-
-    <script>
-        const themeToggle = document.querySelector('.theme-toggle');
-        const body = document.body;
-        const icon = themeToggle.querySelector('i');
-        
-        function updateThemeIcon() {
-            if (body.classList.contains('dark-theme')) {
-                icon.classList.remove('fa-moon');
-                icon.classList.add('fa-sun');
-            } else {
-                icon.classList.remove('fa-sun');
-                icon.classList.add('fa-moon');
-            }
-        }
-
-        // 初始化主题
-        if (localStorage.getItem('theme') === 'dark' || 
-            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            body.classList.add('dark-theme');
-        }
-        updateThemeIcon();
-
-        themeToggle.addEventListener('click', () => {
-            body.classList.toggle('dark-theme');
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-            updateThemeIcon();
-        });
-
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                if (e.matches) body.classList.add('dark-theme');
-                else body.classList.remove('dark-theme');
-                updateThemeIcon();
-            }
-        });
-    </script>
-
+  </div>
+  <noscript>
+    <div class="noscript-message">
+      此主页需要 JavaScript。你仍然可以访问
+      <a href="projects.html">项目</a>、
+      <a href="notes.html">笔记</a>和
+      <a href="about.html">关于</a>页面。
+    </div>
+  </noscript>
+  <script type="module" src="src/home/main.js?v=20260723-home-v6"></script>
 </body>
 </html>

@@ -3,139 +3,97 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e7ebea">
   <title>笔记 · Lawrenclia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=20260715-refresh">
-  <link rel="stylesheet" href="css/notes-reader.css?v=20260715-refresh">
-    <script src="js/theme-transition.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/macos-pages.css?v=20260723-macos-v5">
+  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script defer src="js/macos-pages.js?v=20260723-macos-v5"></script>
 </head>
-<body class="page-notes">
-  <header class="navbar" role="navigation" aria-label="主导航">
-    <div class="nav-left">
-      <div class="brand" aria-hidden>
-        笔记 · Lawrenclia
-      </div>
-    </div>
-    <div class="nav-right">
-      <a class="nav-link" href="index.html">首页</a>
-      <a class="nav-link" href="projects.html">项目</a>
-      <a class="nav-link" href="notes.html">笔记</a>
-      <a class="nav-link" href="about.html">关于</a>
-      <button class="theme-toggle" aria-label="切换主题">
-        <i class="fas fa-moon"></i>
+<body class="macos-page page-notes">
+  <header class="page-menubar">
+    <a class="page-brand" href="index.html" aria-label="返回主页">
+      <span class="page-brand-mark">L</span>
+      <strong>Lawrenclia</strong>
+      <span class="page-context">Notes</span>
+    </a>
+    <span class="page-dock-divider" aria-hidden="true"></span>
+    <nav class="page-nav" aria-label="主导航">
+      <a href="projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
+      <a href="notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
+      <a href="about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
+    </nav>
+    <div class="page-status">
+      <span class="page-date" data-current-date></span>
+      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
+        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
       </button>
     </div>
   </header>
 
-  <button class="toc-toggle" type="button" aria-label="打开目录" aria-controls="toc-panel" aria-expanded="false">
-    <i class="fas fa-list-ul" aria-hidden="true"></i>
-  </button>
-  <div class="toc-backdrop" hidden></div>
+  <main class="page-stage">
+    <section class="mac-app-window" aria-labelledby="notes-title">
+      <header class="mac-titlebar">
+        <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
+        <div class="mac-title"><i data-lucide="notebook-tabs" aria-hidden="true"></i><span>Notes</span></div>
+        <span class="mac-titlebar-spacer"></span>
+      </header>
 
-  <div class="layout">
-    <aside id="toc-panel" class="toc-panel">
-      <h1>课程笔记</h1>
-      <p>06 篇</p>
-      <nav>
-        <a href="#notes">全部笔记</a>
-        <a href="files/notes/abstract-algebra.html">抽象代数</a>
-        <a href="files/notes/quantum-physics-review.html">量子物理</a>
-        <a href="files/notes/linear-algebra-ii-review.html">线性代数 II</a>
-        <a href="files/notes/algorithm-design-analysis-exam-manual.html">算法设计与分析</a>
-        <a href="files/notes/information-theory-review.html">信息论</a>
-        <a href="files/notes/computer-organization-review.html">计算机组成</a>
-      </nav>
-    </aside>
-    <main>
-      <div class="hero">
-        <p class="kicker">LAWRENCLIA NOTES</p>
-        <h1>课程笔记</h1>
-      </div>
+      <div class="app-split">
+        <aside class="app-sidebar" aria-label="笔记概览">
+          <div class="notes-sidebar-head">
+            <span class="notes-sidebar-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span>
+            <span><strong>课程笔记</strong><span>6 篇笔记</span></span>
+          </div>
+          <span class="sidebar-label">Library</span>
+          <a class="sidebar-link is-active" href="#notes"><i data-lucide="files" aria-hidden="true"></i>全部笔记</a>
+        </aside>
 
-      <section id="notes">
-        <h2>全部笔记</h2>
-        <div class="notes-index">
-          <a class="note-row" href="files/notes/abstract-algebra.html">
-            <strong>抽象代数</strong>
-            <em>打开</em>
-          </a>
-          <a class="note-row" href="files/notes/quantum-physics-review.html">
-            <strong>量子物理复习笔记</strong>
-            <em>打开</em>
-          </a>
-          <a class="note-row" href="files/notes/linear-algebra-ii-review.html">
-            <strong>线性代数 II 复习笔记</strong>
-            <em>打开</em>
-          </a>
-          <a class="note-row" href="files/notes/algorithm-design-analysis-exam-manual.html">
-            <strong>算法设计与分析考试手册</strong>
-            <em>打开</em>
-          </a>
-          <a class="note-row" href="files/notes/information-theory-review.html">
-            <strong>信息论复习笔记</strong>
-            <em>打开</em>
-          </a>
-          <a class="note-row" href="files/notes/computer-organization-review.html">
-            <strong>计算机组成复习笔记</strong>
-            <em>打开</em>
-          </a>
+        <div class="app-main" id="notes">
+          <header class="app-toolbar">
+            <div>
+              <h1 id="notes-title">全部笔记</h1>
+            </div>
+            <span class="toolbar-count">06 notes</span>
+          </header>
+
+          <div class="note-list">
+            <a class="note-entry" href="files/notes/abstract-algebra.html">
+              <span class="note-index">01</span>
+              <strong>抽象代数</strong>
+              <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
+            </a>
+            <a class="note-entry" href="files/notes/quantum-physics-review.html">
+              <span class="note-index">02</span>
+              <strong>量子物理复习笔记</strong>
+              <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
+            </a>
+            <a class="note-entry" href="files/notes/linear-algebra-ii-review.html">
+              <span class="note-index">03</span>
+              <strong>线性代数 II 复习笔记</strong>
+              <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
+            </a>
+            <a class="note-entry" href="files/notes/algorithm-design-analysis-exam-manual.html">
+              <span class="note-index">04</span>
+              <strong>算法设计与分析考试手册</strong>
+              <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
+            </a>
+            <a class="note-entry" href="files/notes/information-theory-review.html">
+              <span class="note-index">05</span>
+              <strong>信息论复习笔记</strong>
+              <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
+            </a>
+            <a class="note-entry" href="files/notes/computer-organization-review.html">
+              <span class="note-index">06</span>
+              <strong>计算机组成复习笔记</strong>
+              <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
+            </a>
+          </div>
         </div>
-      </section>
-    </main>
-  </div>
-  <script>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-
-    function updateThemeIcon() {
-      if (body.classList.contains('dark-theme')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    }
-
-    if (localStorage.getItem('theme') === 'dark' ||
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-theme');
-    }
-    updateThemeIcon();
-
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-      updateThemeIcon();
-    });
-
-    const tocToggle = document.querySelector(".toc-toggle");
-    const tocPanel = document.querySelector(".toc-panel");
-    const tocBackdrop = document.querySelector(".toc-backdrop");
-
-    function setTocOpen(open) {
-      body.classList.toggle("toc-open", open);
-      if (tocToggle) tocToggle.setAttribute("aria-expanded", String(open));
-      if (tocBackdrop) tocBackdrop.hidden = !open;
-    }
-
-    tocToggle?.addEventListener("click", () => {
-      setTocOpen(!body.classList.contains("toc-open"));
-    });
-
-    tocBackdrop?.addEventListener("click", () => setTocOpen(false));
-
-    tocPanel?.addEventListener("click", (event) => {
-      if (event.target.closest("a") && window.matchMedia("(max-width: 860px)").matches) {
-        setTocOpen(false);
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setTocOpen(false);
-    });
-  </script>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

@@ -1,93 +1,83 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e7ebea">
   <title>关于 · Lawrenclia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=20260715-refresh">
-  
-    <script src="js/theme-transition.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/macos-pages.css?v=20260723-macos-v5">
+  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script defer src="js/macos-pages.js?v=20260723-macos-v5"></script>
 </head>
-<body class="page-about">
-  <header class="navbar" role="navigation" aria-label="主导航">
-        <div class="nav-left">
-            <div class="brand" aria-hidden>
-                关于 · Lawrenclia
-            </div>
-        </div>
-        <div class="nav-right">
-            <a class="nav-link" href="index.html">首页</a>
-            <a class="nav-link" href="projects.html">项目</a>
-            <a class="nav-link" href="notes.html">笔记</a>
-            <button class="theme-toggle" aria-label="切换主题">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </header>
-    
-  <main class="wrap">
-    <div class="about-shell">
-      <aside class="about-profile">
-        <img class="about-avatar" src="images/avatar.png" alt="Lawrenclia 的头像">
-        <h1>Lawrenclia</h1>
-        <p>C++ / Python / C#</p>
-        <div class="about-links">
-          <a href="https://github.com/Lawrenclia" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a>
-        </div>
-      </aside>
-
-      <div class="about-content">
-        <section class="about-panel">
-          <h2>关于我</h2>
-          <p>主要使用 C++ 和 Python，正在学习 Unity 与 C#，也在继续打好数据结构和算法基础。</p>
-          <p>参与制作了游戏《即时象棋》，可以在 Steam 搜索。</p>
-        </section>
-
-        <section class="about-panel">
-          <h2>技术</h2>
-          <ul class="skill-list">
-            <li>C++</li>
-            <li>Python</li>
-            <li>C#</li>
-            <li>Unity</li>
-            <li>数据结构</li>
-            <li>算法</li>
-          </ul>
-        </section>
-
-        <section class="about-panel">
-          <h2>这个网站</h2>
-          <p>用于整理课程笔记、课程项目和个人作品。</p>
-        </section>
-      </div>
+<body class="macos-page page-about">
+  <header class="page-menubar">
+    <a class="page-brand" href="index.html" aria-label="返回主页">
+      <span class="page-brand-mark">L</span>
+      <strong>Lawrenclia</strong>
+      <span class="page-context">About</span>
+    </a>
+    <span class="page-dock-divider" aria-hidden="true"></span>
+    <nav class="page-nav" aria-label="主导航">
+      <a href="projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
+      <a href="notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
+      <a href="about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
+    </nav>
+    <div class="page-status">
+      <span class="page-date" data-current-date></span>
+      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
+        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
+      </button>
     </div>
+  </header>
+
+  <main class="page-stage">
+    <section class="mac-app-window about-app" aria-labelledby="about-title">
+      <header class="mac-titlebar">
+        <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
+        <div class="mac-title"><i data-lucide="user-round" aria-hidden="true"></i><span>About</span></div>
+        <span class="mac-titlebar-spacer"></span>
+      </header>
+
+      <div class="about-layout">
+        <aside class="about-profile-pane">
+          <img src="images/avatar.png" alt="Lawrenclia 的头像">
+          <h1>Lawrenclia</h1>
+          <p>Computer Science · SJTU</p>
+          <div class="profile-facts">
+            <span class="profile-fact"><span>School</span><strong>Shanghai Jiao Tong University</strong></span>
+            <span class="profile-fact"><span>Focus</span><strong>Algorithms & Systems</strong></span>
+          </div>
+        </aside>
+
+        <div class="about-detail-pane">
+          <header>
+            <h2 id="about-title">关于我</h2>
+          </header>
+
+          <section class="about-section" id="experience">
+            <h3>经历</h3>
+            <p>上海交通大学计算机科学本科。</p>
+          </section>
+
+          <section class="about-section">
+            <h3>项目</h3>
+            <p>《即时象棋》、计算机网络与软件开发课程项目。</p>
+          </section>
+
+          <section class="about-section" id="contact">
+            <h3>联系</h3>
+            <div class="about-section-links">
+              <a href="https://github.com/Lawrenclia" target="_blank" rel="noopener"><i data-lucide="github" aria-hidden="true"></i>GitHub</a>
+              <a href="https://x.com/LeoakyX" target="_blank" rel="noopener"><i data-lucide="at-sign" aria-hidden="true"></i>X</a>
+              <a href="https://space.bilibili.com/1334003335" target="_blank" rel="noopener"><i data-lucide="play" aria-hidden="true"></i>Bilibili</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <script>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-    if (localStorage.getItem('theme') === 'dark' || 
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-theme');
-      icon.classList.remove('fa-moon');
-      icon.classList.add('fa-sun');
-    }
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      if (body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        localStorage.setItem('theme', 'light');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    });
-  </script>
-
-  </body>
+</body>
 </html>

@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="../../css/style.css?v=20260715-refresh">
   <link rel="stylesheet" href="../../css/notes-reader.css?v=20260715-refresh">
+  <link rel="stylesheet" href="../../css/macos-pages.css?v=20260723-macos-v5">
   <script>
     const mathDollar = String.fromCharCode(36);
     window.MathJax = {
@@ -24,32 +25,42 @@
     };
   </script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  <script src="../../js/theme-transition.js" defer></script>
+  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script defer src="../../js/macos-pages.js?v=20260723-macos-v5"></script>
+  <script defer src="../../js/notes-reader.js?v=20260723-macos-v5"></script>
 </head>
-<body class="page-note-reader">
-  <header class="navbar" role="navigation" aria-label="主导航">
-    <div class="nav-left">
-      <div class="brand" aria-hidden>
-        笔记 · Lawrenclia
-      </div>
-    </div>
-    <div class="nav-right">
-      <a class="nav-link" href="../../index.html">首页</a>
-      <a class="nav-link" href="../../projects.html">项目</a>
-      <a class="nav-link" href="../../notes.html">笔记</a>
-      <a class="nav-link" href="../../about.html">关于</a>
-      <button class="theme-toggle" aria-label="切换主题">
-        <i class="fas fa-moon"></i>
+<body class="macos-page page-note-reader">
+  <header class="page-menubar">
+    <a class="page-brand" href="../../index.html" aria-label="返回主页">
+      <span class="page-brand-mark">L</span>
+      <strong>Lawrenclia</strong>
+      <span class="page-context">Notes Reader</span>
+    </a>
+    <span class="page-dock-divider" aria-hidden="true"></span>
+    <nav class="page-nav" aria-label="主导航">
+      <a href="../../projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
+      <a href="../../notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
+      <a href="../../about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
+    </nav>
+    <div class="page-status">
+      <span class="page-date" data-current-date></span>
+      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
+        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
       </button>
     </div>
   </header>
 
   <button class="toc-toggle" type="button" aria-label="打开目录" aria-controls="toc-panel" aria-expanded="false">
-    <i class="fas fa-list-ul" aria-hidden="true"></i>
+    <i data-lucide="list" aria-hidden="true"></i>
   </button>
   <div class="toc-backdrop" hidden></div>
 
   <div class="layout">
+    <header class="reader-titlebar">
+      <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
+      <div class="mac-title"><i data-lucide="file-text" aria-hidden="true"></i><span>线性代数 II</span></div>
+      <span class="mac-titlebar-spacer"></span>
+    </header>
     <aside id="toc-panel" class="toc-panel">
       <h1>目录</h1>
       <p>线性代数 II 复习笔记</p>
@@ -521,58 +532,5 @@ class="math inline">\(f(A)=p(A)\)</span>，避免把函数逐元素代入。</li
 <p>最后查漏</p>
     </main>
   </div>
-  <script>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-
-    function updateThemeIcon() {
-      if (body.classList.contains('dark-theme')) {
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    }
-
-    if (localStorage.getItem('theme') === 'dark' ||
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-theme');
-    }
-    updateThemeIcon();
-
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-      updateThemeIcon();
-    });
-
-    const tocToggle = document.querySelector(".toc-toggle");
-    const tocPanel = document.querySelector(".toc-panel");
-    const tocBackdrop = document.querySelector(".toc-backdrop");
-
-    function setTocOpen(open) {
-      body.classList.toggle("toc-open", open);
-      if (tocToggle) tocToggle.setAttribute("aria-expanded", String(open));
-      if (tocBackdrop) tocBackdrop.hidden = !open;
-    }
-
-    tocToggle?.addEventListener("click", () => {
-      setTocOpen(!body.classList.contains("toc-open"));
-    });
-
-    tocBackdrop?.addEventListener("click", () => setTocOpen(false));
-
-    tocPanel?.addEventListener("click", (event) => {
-      if (event.target.closest("a") && window.matchMedia("(max-width: 860px)").matches) {
-        setTocOpen(false);
-      }
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setTocOpen(false);
-    });
-  </script>
 </body>
 </html>

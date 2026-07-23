@@ -1,91 +1,112 @@
 <!doctype html>
 <html lang="zh-CN">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e7ebea">
   <title>项目 · Lawrenclia</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css?v=20260715-refresh">
-
-    <script src="js/theme-transition.js" defer></script>
-  </head>
-<body class="page-projects">
-  <header class="navbar" role="navigation" aria-label="主导航">
-        <div class="nav-left">
-            <div class="brand" aria-hidden>
-                项目 · Lawrenclia
-            </div>
-        </div>
-        <div class="nav-right">
-            <a class="nav-link" href="index.html">首页</a>
-            <a class="nav-link" href="notes.html">笔记</a>
-            <a class="nav-link" href="about.html">关于</a>
-            <button class="theme-toggle" aria-label="切换主题">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </header>
-    
-  <main class="wrap">
-    <header class="page-heading">
-      <h1>课程项目</h1>
-      <span>05</span>
-    </header>
-    <div class="grid">
-      <a class="item" href="https://github.com/Lawrenclia/CS1604" target="_blank" rel="noopener">
-        <span class="project-card-top"><span class="project-card-icon"><i class="fas fa-code" aria-hidden="true"></i></span><i class="fas fa-arrow-up-right-from-square project-card-arrow" aria-hidden="true"></i></span>
-        <h3>CS1604 课程项目</h3>
-        <p>GitHub</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/CS1605" target="_blank" rel="noopener">
-        <span class="project-card-top"><span class="project-card-icon"><i class="fas fa-code" aria-hidden="true"></i></span><i class="fas fa-arrow-up-right-from-square project-card-arrow" aria-hidden="true"></i></span>
-        <h3>CS1605 课程项目</h3>
-        <p>GitHub</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/ICE2607" target="_blank" rel="noopener">
-        <span class="project-card-top"><span class="project-card-icon"><i class="fas fa-code" aria-hidden="true"></i></span><i class="fas fa-arrow-up-right-from-square project-card-arrow" aria-hidden="true"></i></span>
-        <h3>ICE2607 课程项目</h3>
-        <p>GitHub</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/CS3611_ComputerNetworks_Project" target="_blank" rel="noopener">
-        <span class="project-card-top"><span class="project-card-icon"><i class="fas fa-network-wired" aria-hidden="true"></i></span><i class="fas fa-arrow-up-right-from-square project-card-arrow" aria-hidden="true"></i></span>
-        <h3>CS3611 计算机网络</h3>
-        <p>GitHub</p>
-      </a>
-      <a class="item" href="https://github.com/Lawrenclia/CS2602" target="_blank" rel="noopener">
-        <span class="project-card-top"><span class="project-card-icon"><i class="fas fa-terminal" aria-hidden="true"></i></span><i class="fas fa-arrow-up-right-from-square project-card-arrow" aria-hidden="true"></i></span>
-        <h3>ACMOJ问题解答</h3>
-        <p>GitHub</p>
-      </a>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/macos-pages.css?v=20260723-macos-v5">
+  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script defer src="js/macos-pages.js?v=20260723-macos-v5"></script>
+</head>
+<body class="macos-page page-projects">
+  <header class="page-menubar">
+    <a class="page-brand" href="index.html" aria-label="返回主页">
+      <span class="page-brand-mark">L</span>
+      <strong>Lawrenclia</strong>
+      <span class="page-context">Projects</span>
+    </a>
+    <span class="page-dock-divider" aria-hidden="true"></span>
+    <nav class="page-nav" aria-label="主导航">
+      <a href="projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
+      <a href="notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
+      <a href="about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
+    </nav>
+    <div class="page-status">
+      <span class="page-date" data-current-date></span>
+      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
+        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
+      </button>
     </div>
+  </header>
+
+  <main class="page-stage">
+    <section class="mac-app-window" aria-labelledby="projects-title">
+      <header class="mac-titlebar">
+        <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
+        <div class="mac-title"><i data-lucide="folder-code" aria-hidden="true"></i><span>Projects</span></div>
+        <span class="mac-titlebar-spacer"></span>
+      </header>
+
+      <div class="app-split">
+        <aside class="app-sidebar" aria-label="项目导航">
+          <span class="sidebar-label">Favorites</span>
+          <a class="sidebar-link is-active" href="#all"><i data-lucide="folder-open" aria-hidden="true"></i>全部项目</a>
+          <a class="sidebar-link" href="#all"><i data-lucide="graduation-cap" aria-hidden="true"></i>课程项目</a>
+          <a class="sidebar-link" href="#all"><i data-lucide="network" aria-hidden="true"></i>计算机网络</a>
+          <a class="sidebar-link" href="#all"><i data-lucide="terminal" aria-hidden="true"></i>算法练习</a>
+        </aside>
+
+        <div class="app-main" id="all">
+          <header class="app-toolbar">
+            <div>
+              <h1 id="projects-title">课程项目</h1>
+            </div>
+            <span class="toolbar-count">05 items</span>
+          </header>
+
+          <div class="project-list">
+            <a class="project-entry" href="https://github.com/Lawrenclia/CS3611_ComputerNetworks_Project" target="_blank" rel="noopener">
+              <span class="project-thumb network" aria-hidden="true"></span>
+              <span class="project-copy">
+                <strong>CS3611 计算机网络</strong>
+                <span class="project-meta"><span>Networking</span><span>C++</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" href="https://github.com/Lawrenclia/CS1604" target="_blank" rel="noopener">
+              <span class="project-thumb code" aria-hidden="true"></span>
+              <span class="project-copy">
+                <strong>CS1604 课程项目</strong>
+                <span class="project-meta"><span>Coursework</span><span>C++</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" href="https://github.com/Lawrenclia/CS1605" target="_blank" rel="noopener">
+              <span class="project-thumb course" aria-hidden="true"></span>
+              <span class="project-copy">
+                <strong>CS1605 课程项目</strong>
+                <span class="project-meta"><span>Software</span><span>Teamwork</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" href="https://github.com/Lawrenclia/ICE2607" target="_blank" rel="noopener">
+              <span class="project-thumb system" aria-hidden="true"></span>
+              <span class="project-copy">
+                <strong>ICE2607 课程项目</strong>
+                <span class="project-meta"><span>Systems</span><span>Lab</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" href="https://github.com/Lawrenclia/CS2602" target="_blank" rel="noopener">
+              <span class="project-thumb algorithm" aria-hidden="true"></span>
+              <span class="project-copy">
+                <strong>ACMOJ 问题解答</strong>
+                <span class="project-meta"><span>Algorithms</span><span>C++</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
-
-  <script>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-    if (localStorage.getItem('theme') === 'dark' || 
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-theme');
-      icon.classList.remove('fa-moon');
-      icon.classList.add('fa-sun');
-    }
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      if (body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        localStorage.setItem('theme', 'light');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    });
-  </script>
-  
-  
-
-  </body>
+</body>
 </html>
