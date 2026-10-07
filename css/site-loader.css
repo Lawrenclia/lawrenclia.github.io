@@ -1,0 +1,78 @@
+/* Industrial terminal intro; isolated from the site's desktop appearance. */
+html.site-loading { overflow: hidden; }
+#site-loader {
+  --boot-yellow: #e9fa50;
+  position: fixed; inset: 0; z-index: 20000; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: max(30px, env(safe-area-inset-top)) 40px max(26px, env(safe-area-inset-bottom));
+  box-sizing: border-box; background: #111413; color: #edf0e9;
+  font: 12px/1.5 "SFMono-Regular", Consolas, "Microsoft YaHei", monospace;
+  color-scheme: dark; text-align: left; isolation: isolate;
+  transition: opacity 360ms ease, clip-path 480ms cubic-bezier(.22,1,.36,1);
+}
+#site-loader *, #site-loader *::before, #site-loader *::after { box-sizing: border-box; }
+#site-loader::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .45;
+  background: linear-gradient(#8993830a 1px, transparent 1px), linear-gradient(90deg, #8993830a 1px, transparent 1px);
+  background-size: 48px 48px; mask-image: linear-gradient(110deg, transparent, #000 70%);
+}
+#site-loader::after { content: ""; position: absolute; right: 6%; top: 18%; height: 64%; width: 1px; background: #89938328; z-index: -1; }
+#site-loader.is-leaving { opacity: 0; clip-path: inset(0 0 100% 0); pointer-events: none; }
+#site-loader .boot-top, #site-loader .boot-bottom { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+#site-loader .boot-brand { display: flex; align-items: center; gap: 13px; font-size: 13px; letter-spacing: .15em; font-weight: 700; }
+#site-loader .boot-brand svg { width: 30px; height: 30px; color: var(--boot-yellow); }
+#site-loader .boot-top-code { color: #8d9689; font-size: 10px; letter-spacing: .16em; }
+#site-loader .boot-core { width: min(960px, 100%); margin: auto; padding: 36px 0; position: relative; }
+#site-loader .boot-code { display: flex; align-items: center; gap: 10px; color: var(--boot-yellow); letter-spacing: .2em; font-size: 11px; }
+#site-loader .boot-code::before { content: ""; width: 7px; height: 7px; background: var(--boot-yellow); }
+#site-loader .boot-visual { position: absolute; right: 12px; top: 8px; width: 260px; height: 260px; opacity: .65; pointer-events: none; }
+#site-loader .boot-visual svg { width: 100%; height: 100%; }
+#site-loader .boot-orbit { transform-origin: 130px 130px; animation: boot-orbit 18s linear infinite; }
+#site-loader .boot-wordmark { position: relative; margin: 32px 0 0; font: 800 clamp(32px, 6.5vw, 82px)/1.02 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: -.045em; }
+#site-loader .boot-wordmark::after { content: "/"; margin-left: 12px; color: var(--boot-yellow); font-weight: 400; }
+#site-loader .boot-subtitle { margin: 12px 0 48px; color: #a4ada0; letter-spacing: .22em; font-size: 12px; }
+#site-loader .boot-progress-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+#site-loader .boot-status { margin: 0 0 4px; font-size: 14px; letter-spacing: .1em; }
+#site-loader .boot-status-code { margin: 0; font-size: 10px; letter-spacing: .14em; color: #8d9689; }
+#site-loader .boot-percentage { font-size: 44px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -.055em; font-weight: 700; }
+#site-loader .boot-percentage small { font-size: 13px; margin-left: 6px; color: var(--boot-yellow); }
+#site-loader .boot-progress { height: 6px; margin-top: 18px; background: #3c4435; position: relative; overflow: hidden; }
+#site-loader .boot-progress-fill { display: block; height: 100%; width: 0; background: var(--boot-yellow); transition: width 120ms linear; }
+#site-loader .boot-progress::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 23px, #111413 23px 27px); }
+#site-loader .boot-stages { display: flex; gap: 30px; margin-top: 15px; color: #717b6e; font-size: 10px; letter-spacing: .08em; }
+#site-loader .boot-stages span[data-active] { color: var(--boot-yellow); }
+#site-loader .boot-stages b { margin-right: 8px; font-weight: 400; }
+#site-loader .boot-footer-code { display: flex; align-items: center; gap: 12px; font-size: 10px; color: #8d9689; letter-spacing: .12em; }
+#site-loader .boot-stripes { height: 12px; width: 52px; background: repeating-linear-gradient(120deg, var(--boot-yellow) 0 3px, transparent 3px 7px); }
+#site-loader button { font: inherit; padding: 10px 0 10px 18px; border: 0; background: transparent; border-radius: 0; color: #b9c1b5; cursor: pointer; letter-spacing: .08em; min-height: 44px; }
+#site-loader button:hover { color: var(--boot-yellow); }
+#site-loader button:focus-visible { outline: 2px solid var(--boot-yellow); outline-offset: 4px; }
+@keyframes boot-orbit { to { transform: rotate(360deg); } }
+@media (max-width: 600px) {
+  #site-loader { padding: max(22px, env(safe-area-inset-top)) 22px max(18px, env(safe-area-inset-bottom)); }
+  #site-loader .boot-top-code { display: none; }
+  #site-loader .boot-brand { font-size: 11px; letter-spacing: .1em; }
+  #site-loader .boot-core { padding-top: 145px; }
+  #site-loader .boot-visual { width: 150px; height: 150px; right: -5px; top: -16px; opacity: .45; }
+  #site-loader .boot-wordmark { font-size: clamp(27px, 7.3vw, 43px); margin-top: 24px; }
+  #site-loader .boot-wordmark::after { margin-left: 6px; }
+  #site-loader .boot-subtitle { font-size: 10px; margin-bottom: 36px; letter-spacing: .14em; }
+  #site-loader .boot-stages { justify-content: space-between; gap: 8px; }
+  #site-loader .boot-percentage { font-size: 36px; }
+  #site-loader .boot-footer-code { font-size: 9px; gap: 8px; }
+  #site-loader .boot-bottom { gap: 8px; }
+  #site-loader .boot-stripes { width: 25px; }
+  #site-loader button { font-size: 11px; padding-left: 6px; }
+}
+@media (max-height: 520px) {
+  #site-loader { padding: 16px 24px; }
+  #site-loader .boot-core { padding: 16px 0; }
+  #site-loader .boot-wordmark { margin-top: 14px; font-size: clamp(27px, 6vw, 38px); }
+  #site-loader .boot-subtitle { margin-bottom: 18px; }
+  #site-loader .boot-visual { width: 150px; height: 150px; top: 0; opacity: .3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #site-loader, #site-loader .boot-progress-fill { transition: none; }
+  #site-loader .boot-orbit { animation: none; }
+}
+@media print { #site-loader { display: none; } }

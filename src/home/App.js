@@ -20,6 +20,9 @@ function useMobileLayout() {
 }
 
 export function App() {
+  useEffect(() => {
+    window.dispatchEvent(new Event('site-desktop-ready'));
+  }, []);
   const isMobile = useMobileLayout();
   const initialZ = useMemo(
     () => Object.fromEntries(desktopWindows.map((item) => [item.id, item.initialZIndex])),
