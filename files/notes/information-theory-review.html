@@ -3,12 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../../js/theme.js?v=20261007-macos-v3"></script>
+  <script defer src="../../js/site-dock.js?v=20261007-dock-v4"></script>
   <title>信息论复习笔记 · Lawrenclia Notes</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="../../css/style.css?v=20260715-refresh">
+  <link rel="stylesheet" href="../../css/style.css?v=20261007-unified-v1">
   <link rel="stylesheet" href="../../css/notes-reader.css?v=20260715-refresh">
-  <link rel="stylesheet" href="../../css/macos-pages.css?v=20260723-macos-v5">
+  <link rel="stylesheet" href="../../css/macos-pages.css?v=20261007-rebuild-v1">
   <script>
     const mathDollar = String.fromCharCode(36);
     window.MathJax = {
@@ -24,32 +26,15 @@
       svg: { fontCache: 'global' }
     };
   </script>
+  <script async src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" onload="window.lucide?.createIcons()"></script>
+  <script defer src="../../js/macos-pages.js?v=20261007-rebuild-v1"></script>
+  <script defer src="../../js/notes-reader.js?v=20261007-rebuild-v1"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script defer src="../../js/macos-pages.js?v=20260723-macos-v5"></script>
-  <script defer src="../../js/notes-reader.js?v=20260723-macos-v5"></script>
+  <link rel="stylesheet" href="../../css/site-dock-layout.css?v=20261007-rebuild-v1">
+  <link rel="stylesheet" href="../../css/site-appearance.css?v=20261007-rebuild-v1">
 </head>
 <body class="macos-page page-note-reader">
-  <header class="page-menubar">
-    <a class="page-brand" href="../../index.html" aria-label="返回主页">
-      <span class="page-brand-mark">L</span>
-      <strong>Lawrenclia</strong>
-      <span class="page-context">Notes Reader</span>
-    </a>
-    <span class="page-dock-divider" aria-hidden="true"></span>
-    <nav class="page-nav" aria-label="主导航">
-      <a href="../../projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
-      <a href="../../notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
-      <a href="../../about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
-    </nav>
-    <div class="page-status">
-      <span class="page-date" data-current-date></span>
-      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
-        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
-      </button>
-    </div>
-  </header>
-
+  <site-dock><a href="../../index.html">主页</a><a href="../../projects.html">项目</a><a href="../../notes.html">笔记</a><a href="../../about.html">关于</a></site-dock>
   <button class="toc-toggle" type="button" aria-label="打开目录" aria-controls="toc-panel" aria-expanded="false">
     <i data-lucide="list" aria-hidden="true"></i>
   </button>
@@ -59,7 +44,7 @@
     <header class="reader-titlebar">
       <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
       <div class="mac-title"><i data-lucide="file-text" aria-hidden="true"></i><span>信息论</span></div>
-      <span class="mac-titlebar-spacer"></span>
+      <a class="mac-titlebar-spacer chrome-back" href="../../notes.html" aria-label="返回笔记"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
     </header>
     <aside id="toc-panel" class="toc-panel">
       <h1>目录</h1>

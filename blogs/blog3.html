@@ -3,33 +3,21 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>博客 · Lawrenclia</title> 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="../js/theme.js?v=20261007-macos-v3"></script>
+  <script defer src="../js/site-dock.js?v=20261007-dock-v4"></script>
+  <title>博客 · Lawrenclia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="../css/style.css?v=20260715-refresh">
-    <script src="../js/theme-transition.js" defer></script>
+  <link rel="stylesheet" href="../css/style.css?v=20261007-unified-v1">
+  <link rel="stylesheet" href="../css/site-dock-layout.css?v=20261007-rebuild-v1">
+  <link rel="stylesheet" href="../css/site-appearance.css?v=20261007-rebuild-v1">
+  <script defer src="../js/site-chrome.js?v=20261007-rebuild-v1"></script>
 </head>
 <body class="page-blog-post">
-  <header class="navbar" role="navigation" aria-label="主导航">
-        <div class="nav-left">
-            <div class="brand" aria-hidden>
-                <div style="display:flex;flex-direction:column;line-height:1;">
-                    <div style="font-size:16px;font-weight:600">博客 · Lawrenclia</div>
-                </div>
-            </div>
-        </div>
-        <div class="nav-right">
-            <a class="nav-link" href="../index.html">首页</a>
-            <a class="nav-link" href="../projects.html">项目</a>
-            <a class="nav-link" href="../notes.html">笔记</a>
-            <a class="nav-link" href="../about.html">关于</a>
-            <button class="theme-toggle" aria-label="切换主题">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </header>
-
-  <div class="wrap">
+  <site-dock><a href="../index.html">主页</a><a href="../projects.html">项目</a><a href="../notes.html">笔记</a><a href="../about.html">关于</a></site-dock>
+  <div class="wrap site-window finder-window">
+    <header class="site-titlebar"><span class="site-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span><div class="site-window-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h10l4 4v14H5Z"/><path d="M15 3v5h4M9 12h6m-6 4h6"/></svg><span>博客 · 嘉豪必备</span></div><a class="chrome-back" href="../blog.html" aria-label="返回博客"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a></header>
+    <div class="finder-split"><aside class="finder-sidebar"><site-sidebar></site-sidebar></aside><div class="finder-content">
     <article class="blog-post">
         <h1>嘉豪必备</h1>
         <div class="blog-card-meta">
@@ -46,31 +34,11 @@
         </div>
         <a href="../blog.html" class="back-link">&larr; 返回博客列表</a>
     </article>
-  </div>
 
-  <script>
-    const themeToggle = document.querySelector('.theme-toggle');
-    const body = document.body;
-    const icon = themeToggle.querySelector('i');
-    if (localStorage.getItem('theme') === 'dark' || 
-        (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      body.classList.add('dark-theme');
-      icon.classList.remove('fa-moon');
-      icon.classList.add('fa-sun');
-    }
-    themeToggle.addEventListener('click', () => {
-      body.classList.toggle('dark-theme');
-      if (body.classList.contains('dark-theme')) {
-        localStorage.setItem('theme', 'dark');
-        icon.classList.remove('fa-moon');
-        icon.classList.add('fa-sun');
-      } else {
-        localStorage.setItem('theme', 'light');
-        icon.classList.remove('fa-sun');
-        icon.classList.add('fa-moon');
-      }
-    });
-  </script>
+    </div></div>
+</div>
+
+
 
   </body>
 </html>

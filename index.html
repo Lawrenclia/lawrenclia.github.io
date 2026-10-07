@@ -5,11 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Lawrenclia 的个人主页：项目、研究、经历与联系方式。">
   <meta name="theme-color" content="#e7ebea">
+  <script src="js/theme.js?v=20261007-macos-v3"></script>
+  <script defer src="js/site-dock.js?v=20261007-dock-v4"></script>
   <title>Lawrenclia · Desktop</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/home-desktop.css?v=20260723-home-v6">
+  <link rel="stylesheet" href="css/home-desktop.css?v=20261007-rebuild-v1">
   <script type="importmap">
     {
       "imports": {
@@ -20,12 +22,16 @@
       }
     }
   </script>
+  <link rel="stylesheet" href="css/site-dock-layout.css?v=20261007-rebuild-v1">
+  <link rel="stylesheet" href="css/site-appearance.css?v=20261007-rebuild-v1">
 </head>
 <body class="desktop-home">
+  <site-dock><a href="index.html">主页</a><a href="projects.html">项目</a><a href="notes.html">笔记</a><a href="about.html">关于</a></site-dock>
   <div id="root">
     <main class="boot-screen" aria-label="正在载入个人主页">
       <div class="boot-mark">L</div>
-      <p>Loading desktop...</p>
+      <p id="boot-status">正在打开个人空间…</p>
+      <nav class="boot-links" aria-label="直接访问"><a href="projects.html">项目</a><a href="notes.html">笔记</a><a href="about.html">关于</a></nav>
     </main>
   </div>
   <noscript>
@@ -36,6 +42,6 @@
       <a href="about.html">关于</a>页面。
     </div>
   </noscript>
-  <script type="module" src="src/home/main.js?v=20260723-home-v6"></script>
+  <script type="module" src="src/home/boot.js?v=20261007-rebuild-v1"></script>
 </body>
 </html>

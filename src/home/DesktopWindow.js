@@ -8,8 +8,8 @@ import {
   Telescope,
   UserRound
 } from "lucide-react";
-import { html } from "./ui.js?v=20260723-home-v6";
-import { WindowContent } from "./WindowContent.js?v=20260723-home-v6";
+import { html } from "./ui.js?v=20261007-rebuild-v1";
+import { WindowContent } from "./WindowContent.js?v=20261007-rebuild-v1";
 
 const iconMap = {
   AtSign,
@@ -92,6 +92,7 @@ export function DesktopWindow({
       <div
         className="window-content"
         aria-hidden=${isMobile ? !expanded : undefined}
+        inert=${isMobile && !expanded ? "" : undefined}
       >
         <${WindowContent} windowInfo=${windowInfo} />
       </div>

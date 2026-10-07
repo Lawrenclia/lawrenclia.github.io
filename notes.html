@@ -4,88 +4,70 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#e7ebea">
+  <script src="js/theme.js?v=20261007-macos-v3"></script>
+  <script defer src="js/site-dock.js?v=20261007-dock-v4"></script>
   <title>笔记 · Lawrenclia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/macos-pages.css?v=20260723-macos-v5">
-  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script defer src="js/macos-pages.js?v=20260723-macos-v5"></script>
+  <link rel="stylesheet" href="css/macos-pages.css?v=20261007-rebuild-v1">
+  <script async src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" onload="window.lucide?.createIcons()"></script>
+  <script defer src="js/macos-pages.js?v=20261007-rebuild-v1"></script>
+  <link rel="stylesheet" href="css/site-dock-layout.css?v=20261007-rebuild-v1">
+  <link rel="stylesheet" href="css/site-appearance.css?v=20261007-rebuild-v1">
+  <script defer src="js/site-chrome.js?v=20261007-rebuild-v1"></script>
 </head>
 <body class="macos-page page-notes">
-  <header class="page-menubar">
-    <a class="page-brand" href="index.html" aria-label="返回主页">
-      <span class="page-brand-mark">L</span>
-      <strong>Lawrenclia</strong>
-      <span class="page-context">Notes</span>
-    </a>
-    <span class="page-dock-divider" aria-hidden="true"></span>
-    <nav class="page-nav" aria-label="主导航">
-      <a href="projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
-      <a href="notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
-      <a href="about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
-    </nav>
-    <div class="page-status">
-      <span class="page-date" data-current-date></span>
-      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
-        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
-      </button>
-    </div>
-  </header>
-
+  <site-dock><a href="index.html">主页</a><a href="projects.html">项目</a><a href="notes.html">笔记</a><a href="about.html">关于</a></site-dock>
   <main class="page-stage">
     <section class="mac-app-window" aria-labelledby="notes-title">
       <header class="mac-titlebar">
         <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
-        <div class="mac-title"><i data-lucide="notebook-tabs" aria-hidden="true"></i><span>Notes</span></div>
-        <span class="mac-titlebar-spacer"></span>
+        <div class="mac-title"><i data-lucide="notebook-tabs" aria-hidden="true"></i><span>笔记</span></div>
+        <a class="mac-titlebar-spacer chrome-back" href="index.html" aria-label="返回桌面"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
       </header>
 
       <div class="app-split">
-        <aside class="app-sidebar" aria-label="笔记概览">
-          <div class="notes-sidebar-head">
-            <span class="notes-sidebar-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span>
-            <span><strong>课程笔记</strong><span>6 篇笔记</span></span>
-          </div>
-          <span class="sidebar-label">Library</span>
-          <a class="sidebar-link is-active" href="#notes"><i data-lucide="files" aria-hidden="true"></i>全部笔记</a>
-        </aside>
+        <aside class="app-sidebar"><site-sidebar></site-sidebar></aside>
 
         <div class="app-main" id="notes">
           <header class="app-toolbar">
             <div>
               <h1 id="notes-title">全部笔记</h1>
+              <p>整理知识，也记录理解的过程。</p>
             </div>
-            <span class="toolbar-count">06 notes</span>
+            <span class="toolbar-count" data-result-count role="status" aria-live="polite">6 篇笔记</span>
           </header>
 
+          <div class="list-search"><label for="note-search">搜索笔记</label><input id="note-search" type="search" data-list-search placeholder="搜索课程或笔记名称…" autocomplete="off"></div>
+          <p class="empty-state" data-empty-state hidden>没有找到匹配的笔记。<button type="button" data-clear-search>清空搜索</button></p>
           <div class="note-list">
-            <a class="note-entry" href="files/notes/abstract-algebra.html">
+            <a class="note-entry" data-list-entry href="files/notes/abstract-algebra.html">
               <span class="note-index">01</span>
               <strong>抽象代数</strong>
               <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
             </a>
-            <a class="note-entry" href="files/notes/quantum-physics-review.html">
+            <a class="note-entry" data-list-entry href="files/notes/quantum-physics-review.html">
               <span class="note-index">02</span>
               <strong>量子物理复习笔记</strong>
               <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
             </a>
-            <a class="note-entry" href="files/notes/linear-algebra-ii-review.html">
+            <a class="note-entry" data-list-entry href="files/notes/linear-algebra-ii-review.html">
               <span class="note-index">03</span>
               <strong>线性代数 II 复习笔记</strong>
               <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
             </a>
-            <a class="note-entry" href="files/notes/algorithm-design-analysis-exam-manual.html">
+            <a class="note-entry" data-list-entry href="files/notes/algorithm-design-analysis-exam-manual.html">
               <span class="note-index">04</span>
               <strong>算法设计与分析考试手册</strong>
               <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
             </a>
-            <a class="note-entry" href="files/notes/information-theory-review.html">
+            <a class="note-entry" data-list-entry href="files/notes/information-theory-review.html">
               <span class="note-index">05</span>
               <strong>信息论复习笔记</strong>
               <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>
             </a>
-            <a class="note-entry" href="files/notes/computer-organization-review.html">
+            <a class="note-entry" data-list-entry href="files/notes/computer-organization-review.html">
               <span class="note-index">06</span>
               <strong>计算机组成复习笔记</strong>
               <i class="note-open" data-lucide="chevron-right" aria-hidden="true"></i>

@@ -3,347 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HACKER JIAHAO</title>
+    <script src="../js/theme.js?v=20261007-macos-v3"></script>
+  <script defer src="../js/site-dock.js?v=20261007-dock-v4"></script>
+  <title>HACKER JIAHAO</title>
     <!-- Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-green: #00FF00;
-            --dark-green: #008000;
-            --bg-black: #000000;
-            --panel-bg: rgba(0, 0, 0, 0.75);
-            --border-color: rgba(0, 255, 0, 0.3);
-            --alert-red: #FF0000;
-            --warn-yellow: #FFFF00;
-            --info-blue: #00FFFF;
-        }
-
-        /* Force override all elements */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto Mono', monospace;
-            color: var(--primary-green);
-            text-shadow: 0 0 5px var(--primary-green), 0 0 10px var(--primary-green);
-            border-radius: 0 !important; /* Force no rounded corners */
-        }
-
-        body {
-            background-color: var(--bg-black);
-            overflow: hidden;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%2300FF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>') 12 12, crosshair;
-        }
-
-        /* Dynamic Matrix Rain Background */
-        #matrix-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.7;
-        }
-
-        /* CRT Scanlines Overlay */
-        .scanlines {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 100;
-            background: linear-gradient(
-                to bottom,
-                rgba(0, 0, 0, 0) 50%,
-                rgba(0, 0, 0, 0.2) 51%
-            );
-            background-size: 100% 4px;
-            animation: flicker 0.15s infinite;
-        }
-
-        /* Text flicker animation */
-        @keyframes flicker {
-            0% { opacity: 0.9; }
-            50% { opacity: 1; }
-            100% { opacity: 0.9; }
-        }
-
-        .main-container {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-            padding: 1rem;
-            gap: 1rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Panel base style */
-        .panel {
-            background: var(--panel-bg);
-            border: 1px solid var(--border-color);
-            box-shadow: 0 0 15px var(--border-color) inset;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-
-        /* Left Nav Panel */
-        .nav-panel {
-            flex-basis: 250px;
-            flex-shrink: 0;
-        }
-
-        /* Right Content Panel */
-        .content-panel {
-            flex-grow: 1;
-        }
-
-        .panel-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-
-        /* Nav Links */
-        .nav-links {
-            list-style: none;
-            flex-grow: 1;
-        }
-        .nav-links li {
-            margin-bottom: 0.75rem;
-        }
-        .nav-links a {
-            display: block;
-            text-decoration: none;
-            font-size: 1.1rem;
-            padding: 0.5rem;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active {
-            background: var(--primary-green);
-            color: var(--bg-black);
-            text-shadow: none;
-        }
-        .nav-links a:hover::before {
-            content: '[> ';
-            position: absolute;
-            left: -10px;
-        }
-        .nav-links a:hover::after {
-            content: ' <]';
-            position: absolute;
-            right: -10px;
-        }
-
-        /* System Status */
-        .system-status {
-            font-size: 0.9rem;
-        }
-        .status-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-        .status-label {
-            color: var(--dark-green);
-        }
-        .status-value {
-            font-weight: 700;
-        }
-
-        /* Main Content Area */
-        #welcome-title {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            color: #FFF; /* White for emphasis */
-            text-shadow: 0 0 10px var(--primary-green), 0 0 20px var(--primary-green);
-        }
-        /* Typewriter cursor */
-        #welcome-title::after {
-            content: '█';
-            animation: blink-cursor 0.7s infinite;
-        }
-        @keyframes blink-cursor {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
-        }
-
-        /* Panel Grid Layout */
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1rem;
-            height: calc(100% - 70px); /* Adjust for title height */
-        }
-
-        /* Log Window */
-        .log-window {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        .log-title {
-            font-weight: 700;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-        }
-        .log-content {
-            flex-grow: 1;
-            overflow-y: scroll; /* Allow scrolling */
-            font-size: 0.8rem;
-            line-height: 1.6;
-        }
-        /* Hide scrollbar */
-        .log-content::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
-        }
-        
-        .log-content span, .log-content div {
-            display: block;
-        }
-        .log-ok { color: var(--primary-green); }
-        .log-warn { color: var(--warn-yellow); text-shadow: 0 0 5px var(--warn-yellow); }
-        .log-error { color: var(--alert-red); text-shadow: 0 0 5px var(--alert-red); font-weight: 700; }
-        .log-info { color: var(--info-blue); text-shadow: 0 0 5px var(--info-blue); }
-        .log-alert {
-            color: var(--alert-red);
-            background: rgba(255, 0, 0, 0.3);
-            font-weight: 700;
-            font-size: 1.1em;
-            text-shadow: 0 0 8px var(--alert-red);
-            animation: pulse-red 1s infinite;
-        }
-        @keyframes pulse-red {
-            0%, 100% { background: rgba(255, 0, 0, 0.5); }
-            50% { background: rgba(255, 0, 0, 0.2); }
-        }
-
-        /* Terminal Input */
-        .terminal-prompt {
-            margin-top: 1rem;
-            font-size: 1.2rem;
-        }
-        .terminal-prompt span {
-            color: var(--dark-green);
-        }
-        .terminal-input {
-            color: #FFF;
-            text-shadow: 0 0 5px #FFF;
-        }
-        .terminal-input::after {
-            content: '█';
-            animation: blink-cursor 0.7s infinite;
-            margin-left: 5px;
-        }
-        
-        /* Hidden Tab Content */
-        .tab-content {
-            display: none;
-            height: 100%;
-        }
-        .tab-content.active {
-            display: block;
-        }
-
-        /* ASCII World Map */
-        #ascii-map {
-            font-size: 8px; /* Tiny font to fit map */
-            line-height: 1;
-            white-space: pre;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid var(--border-color);
-            background: rgba(0,0,0,0.5);
-            color: var(--dark-green); /* Map itself is dark */
-            text-shadow: none;
-        }
-        .map-node {
-            position: absolute;
-            color: var(--info-blue);
-            text-shadow: 0 0 5px var(--info-blue), 0 0 10px var(--info-blue);
-            font-weight: 700;
-            font-size: 12px;
-            animation: blink-cursor 0.5s infinite;
-        }
-
-        /* Hacker Form */
-        .hacker-form {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 0.5rem;
-        }
-        .hacker-input {
-            flex-grow: 1;
-            background: rgba(0,0,0,0.8);
-            border: 1px solid var(--border-color);
-            padding: 0.5rem;
-            font-size: 1rem;
-            outline: none;
-        }
-        .hacker-input:focus {
-            box-shadow: 0 0 10px var(--primary-green) inset;
-        }
-        .hacker-btn {
-            background: var(--dark-green);
-            border: 1px solid var(--primary-green);
-            padding: 0.5rem 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .hacker-btn:hover {
-            background: var(--primary-green);
-            color: var(--bg-black);
-            text-shadow: none;
-        }
-        
-        /* ASCII Art */
-        #ascii-art {
-            white-space: pre;
-            font-size: 0.7rem;
-            line-height: 1.1;
-            color: var(--dark-green);
-            text-shadow: 0 0 5px var(--dark-green);
-            overflow: auto; /* Just in case */
-        }
-        #ascii-art::-webkit-scrollbar {
-            width: 0;
-            background: transparent;
-        }
-        
-    </style>
+    <link rel="stylesheet" href="../css/terminal-page.css?v=20261007-rebuild-v1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/site-dock-layout.css?v=20261007-rebuild-v1">
+  <link rel="stylesheet" href="../css/site-appearance.css?v=20261007-rebuild-v1">
 </head>
-<body>
-
-    <!-- Scanlines Effect -->
-    <div class="scanlines"></div>
-
-    <!-- Matrix Rain Background -->
-    <canvas id="matrix-bg"></canvas>
+<body class="page-hacker">
+  <site-dock><a href="../index.html">主页</a><a href="../projects.html">项目</a><a href="../notes.html">笔记</a><a href="../about.html">关于</a></site-dock>
 
     <!-- Main UI Container -->
-    <div class="main-container">
+    <div class="main-container site-window">
+    <header class="site-titlebar"><span class="site-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span><div class="site-window-title">Terminal · Jiahao</div><a class="chrome-back" href="../blog.html" aria-label="返回博客"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a></header>
 
         <!-- Left Nav Panel -->
         <aside class="panel nav-panel">
             <h2 class="panel-title">// STATUS_LINK</h2>
-            
+
             <ul class="nav-links">
                 <li><a href="#" class="nav-tab active" data-target="dashboard">DASHBOARD</a></li>
                 <li><a href="#" class="nav-tab" data-target="network">NETWORK</a></li>
@@ -379,11 +59,11 @@
 
         <!-- Right Content Panel -->
         <main class="panel content-panel">
-            
+
             <!-- Dashboard (Default) -->
             <div id="dashboard-content" class="tab-content active">
                 <h1 id="welcome-title"></h1> <!-- JS Populated -->
-                
+
                 <div class="content-grid">
                     <!-- System Logs -->
                     <div class="log-window">
@@ -456,7 +136,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Database (Hidden) -->
             <div id="database-content" class="tab-content">
                  <h1 class="panel-title">// DATABASE_MANAGEMENT</h1>
@@ -474,7 +154,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- NEW: Tools (Hidden) -->
             <div id="tools-content" class="tab-content">
                  <h1 class="panel-title">// UTILITY_KIT</h1>
@@ -493,7 +173,7 @@
                     <div class="log-window">
                         <h3 class="log-title">[ /misc/art.txt ]</h3>
                         <pre id="ascii-art" class="log-content">
-    
+
                        ...
                      ;::::;
                    ;::::; :;
@@ -526,34 +206,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. Matrix Rain Background
-            const canvas = document.getElementById('matrix-bg');
-            const ctx = canvas.getContext('2d');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            const alphabet = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン' + 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + '0123456789';
-            const fontSize = 16;
-            const columns = canvas.width / fontSize;
-            const drops = Array.from({ length: columns }).fill(1);
 
-            function drawMatrix() {
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = 'rgba(0, 255, 0, 0.7)';
-                ctx.font = fontSize + 'px monospace';
-                for (let i = 0; i < drops.length; i++) {
-                    const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    drops[i]++;
-                }
-            }
-            setInterval(drawMatrix, 33);
-
-            // 2. Typewriter Effect
+            // Typewriter Effect
             const titleEl = document.getElementById('welcome-title');
             const titleText = "SYSTEM_ONLINE. ACCESS_GRANTED.";
             let charIndex = 0;
@@ -616,7 +270,7 @@
                 '<span class="log-ok">[OK]</span> Firewall rules applied.',
                 '<span class="log-warn">[WARN]</span> High CPU temperature detected: 85°C'
             ];
-            
+
             const idsTypes = [
                 '<span class="log-ok">[SCAN]</span> Checking port 22 (SSH)... OK',
                 '<span class="log-ok">[SCAN]</span> Checking port 80 (HTTP)... OK',
@@ -629,7 +283,7 @@
                 '<span class="log-alert">[ALERT]</span> UNRECOGNIZED PROCESS DETECTED: /tmp/xK8s.sh',
                 '<span class="log-error">[ACTION]</span> Process /tmp/xK8s.sh terminated.'
             ];
-            
+
             const queryTypes = [
                 '<span class="log-info">[SELECT]</span> SELECT user, pass FROM users WHERE id=1',
                 '<span class="log-info">[SELECT]</span> SELECT * FROM logs LIMIT 50',
@@ -657,7 +311,7 @@
                 const colorClass = action === 'ACCEPT' ? 'log-info' : 'log-warn';
                 return `<span class="${colorClass}">[${action}]</span> SRC:${src} -> DEST:${dest} PORT:${port}`;
             }
-            
+
             function generateDataDump() {
                 let line = `<span class="log-ok">${(Math.random() * 0xFFFFFF).toString(16).padStart(6, '0')}:</span> `;
                 for(let i=0; i<16; i++) {
@@ -725,7 +379,7 @@
                 e.preventDefault();
                 const ip = traceInput.value;
                 if (!ip) return;
-                traceStream.innerHTML = ''; 
+                traceStream.innerHTML = '';
                 addLogEntry(traceStream, `TRACING ROUTE to ${ip} [${ipPool[Math.floor(Math.random() * ipPool.length)]}]...`);
                 let hop = 1;
                 const maxHops = 10;
@@ -746,7 +400,7 @@
                 }
                 runTraceHop();
             });
-            
+
             // 8. NEW: Password Cracker
             const crackForm = document.getElementById('crack-form');
             const crackInput = document.getElementById('hash-input');
@@ -757,15 +411,15 @@
                 e.preventDefault();
                 const hash = crackInput.value;
                 if (!hash) return;
-                
+
                 clearInterval(crackInterval); // Clear previous attempts
                 crackStream.innerHTML = '';
                 addLogEntry(crackStream, `[INFO] Initializing dictionary attack on hash: ${hash.substring(0,10)}...`);
                 addLogEntry(crackStream, `[INFO] Using wordlist: /usr/share/wordlists/rockyou.txt`);
-                
+
                 let attempts = 0;
                 const commonPasswords = ['123456', 'password', 'admin', 'qwerty', 'monkey', 'dragon', 'bada55', 'shadow', 'matrix', 'p@ssword!'];
-                
+
                 crackInterval = setInterval(() => {
                     if (attempts > 50) {
                         clearInterval(crackInterval);
@@ -774,7 +428,7 @@
                         addLogEntry(crackStream, `[INFO] Adding credentials to rootkit...`);
                         return;
                     }
-                    
+
                     const randomPass = commonPasswords[Math.floor(Math.random() * commonPasswords.length)] + (Math.random()*100).toFixed(0);
                     addLogEntry(crackStream, `[ATTEMPT] Trying: ${randomPass}`);
                     attempts++;

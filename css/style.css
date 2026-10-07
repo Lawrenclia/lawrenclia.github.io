@@ -1,53 +1,6 @@
 /* =================================================================
-   Lawrenclia | Anthropic-inspired editorial UI
+   Lawrenclia | Content page layouts
    ================================================================= */
-
-:root {
-    --accent: #c35f42;
-    --accent-strong: #8c3f2b;
-    --accent-soft: #f5e6df;
-    --bg: #f1f1ee;
-    --surface: #ffffff;
-    --surface-muted: #f5f5f2;
-    --text: #1b1b19;
-    --muted: #686861;
-    --border: #d8d8d1;
-    --separator: #e5e5df;
-    --warning-bg: #fff8e5;
-    --warning-text: #8a5a00;
-    --card-bg: var(--surface);
-    --link: var(--accent);
-    --nav-text: var(--text);
-    --nav-hover: #f0f0ec;
-    --index-text: var(--text);
-    --index-muted: var(--muted);
-    --radius-lg: 16px;
-    --radius-md: 12px;
-    --radius-sm: 8px;
-    --card-shadow: none;
-}
-
-body.dark-theme {
-    --accent: #df8467;
-    --accent-strong: #f0a087;
-    --accent-soft: rgba(223, 132, 103, 0.14);
-    --bg: #151514;
-    --surface: #1e1e1c;
-    --surface-muted: #272725;
-    --text: #f2f2ee;
-    --muted: #aaa9a1;
-    --border: #3b3b37;
-    --separator: #30302d;
-    --warning-bg: #35270e;
-    --warning-text: #f0c36a;
-    --card-bg: var(--surface);
-    --link: var(--accent);
-    --nav-text: var(--text);
-    --nav-hover: #2a2a27;
-    --index-text: var(--text);
-    --index-muted: var(--muted);
-    --card-shadow: none;
-}
 
 * { box-sizing: border-box; }
 
@@ -349,7 +302,7 @@ img { max-width: 100%; }
     filter: none;
 }
 
-body.dark-theme .icon-tag img { filter: invert(100%); }
+:root[data-theme="dark"] body:not(.macos-page):not(.desktop-home) .icon-tag img { filter: invert(100%); }
 
 .home-notes-card {
     padding: 22px;
@@ -899,7 +852,7 @@ body.dark-theme .icon-tag img { filter: invert(100%); }
     border-radius: 999px;
 }
 
-body.dark-theme .blog-card-tags span {
+:root[data-theme="dark"] body:not(.macos-page):not(.desktop-home) .blog-card-tags span {
     color: var(--accent);
 }
 

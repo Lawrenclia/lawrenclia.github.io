@@ -4,63 +4,48 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#e7ebea">
+  <script src="js/theme.js?v=20261007-macos-v3"></script>
+  <script defer src="js/site-dock.js?v=20261007-dock-v4"></script>
   <title>项目 · Lawrenclia</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/macos-pages.css?v=20260723-macos-v5">
-  <script defer src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
-  <script defer src="js/macos-pages.js?v=20260723-macos-v5"></script>
+  <link rel="stylesheet" href="css/macos-pages.css?v=20261007-rebuild-v1">
+  <script async src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" onload="window.lucide?.createIcons()"></script>
+  <script defer src="js/macos-pages.js?v=20261007-rebuild-v1"></script>
+  <link rel="stylesheet" href="css/site-dock-layout.css?v=20261007-rebuild-v1">
+  <link rel="stylesheet" href="css/site-appearance.css?v=20261007-rebuild-v1">
+  <script defer src="js/site-chrome.js?v=20261007-rebuild-v1"></script>
 </head>
 <body class="macos-page page-projects">
-  <header class="page-menubar">
-    <a class="page-brand" href="index.html" aria-label="返回主页">
-      <span class="page-brand-mark">L</span>
-      <strong>Lawrenclia</strong>
-      <span class="page-context">Projects</span>
-    </a>
-    <span class="page-dock-divider" aria-hidden="true"></span>
-    <nav class="page-nav" aria-label="主导航">
-      <a href="projects.html"><i data-lucide="folder" aria-hidden="true"></i><span>项目</span></a>
-      <a href="notes.html"><i data-lucide="book-open" aria-hidden="true"></i><span>笔记</span></a>
-      <a href="about.html"><i data-lucide="user-round" aria-hidden="true"></i><span>关于</span></a>
-    </nav>
-    <div class="page-status">
-      <span class="page-date" data-current-date></span>
-      <button class="page-theme-button" type="button" data-theme-toggle aria-label="切换主题">
-        <i data-lucide="moon" data-theme-icon aria-hidden="true"></i>
-      </button>
-    </div>
-  </header>
-
+  <site-dock><a href="index.html">主页</a><a href="projects.html">项目</a><a href="notes.html">笔记</a><a href="about.html">关于</a></site-dock>
   <main class="page-stage">
     <section class="mac-app-window" aria-labelledby="projects-title">
       <header class="mac-titlebar">
         <span class="mac-traffic-lights" aria-hidden="true"><span></span><span></span><span></span></span>
-        <div class="mac-title"><i data-lucide="folder-code" aria-hidden="true"></i><span>Projects</span></div>
-        <span class="mac-titlebar-spacer"></span>
+        <div class="mac-title"><i data-lucide="folder-code" aria-hidden="true"></i><span>项目</span></div>
+        <a class="mac-titlebar-spacer chrome-back" href="index.html" aria-label="返回桌面"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg></a>
       </header>
 
       <div class="app-split">
-        <aside class="app-sidebar" aria-label="项目导航">
-          <span class="sidebar-label">Favorites</span>
-          <a class="sidebar-link is-active" href="#all"><i data-lucide="folder-open" aria-hidden="true"></i>全部项目</a>
-          <a class="sidebar-link" href="#all"><i data-lucide="graduation-cap" aria-hidden="true"></i>课程项目</a>
-          <a class="sidebar-link" href="#all"><i data-lucide="network" aria-hidden="true"></i>计算机网络</a>
-          <a class="sidebar-link" href="#all"><i data-lucide="terminal" aria-hidden="true"></i>算法练习</a>
-        </aside>
+        <aside class="app-sidebar"><site-sidebar></site-sidebar></aside>
 
         <div class="app-main" id="all">
           <header class="app-toolbar">
             <div>
-              <h1 id="projects-title">课程项目</h1>
+              <h1 id="projects-title">全部项目</h1>
+              <p>课程实践与开源代码，持续积累。</p>
             </div>
-            <span class="toolbar-count">05 items</span>
+            <span class="toolbar-count" data-result-count role="status" aria-live="polite">5 个项目</span>
           </header>
 
+          <nav class="page-filters" aria-label="项目筛选"><button class="sidebar-link" type="button" data-project-filter="all" aria-pressed="true"><i data-lucide="folder-open" aria-hidden="true"></i>全部项目</button><button class="sidebar-link" type="button" data-project-filter="course" aria-pressed="false"><i data-lucide="graduation-cap" aria-hidden="true"></i>课程项目</button><button class="sidebar-link" type="button" data-project-filter="network" aria-pressed="false"><i data-lucide="network" aria-hidden="true"></i>计算机网络</button><button class="sidebar-link" type="button" data-project-filter="algorithms" aria-pressed="false"><i data-lucide="terminal" aria-hidden="true"></i>算法练习</button></nav>
+
+          <div class="list-search"><label for="project-search">搜索项目</label><input id="project-search" type="search" data-list-search placeholder="项目名称或技术栈…" autocomplete="off"></div>
+          <p class="empty-state" data-empty-state hidden>没有找到匹配的项目。<button type="button" data-clear-search>清空搜索</button></p>
           <div class="project-list">
-            <a class="project-entry" href="https://github.com/Lawrenclia/CS3611_ComputerNetworks_Project" target="_blank" rel="noopener">
-              <span class="project-thumb network" aria-hidden="true"></span>
+            <a class="project-entry" data-list-entry data-category="course network" href="https://github.com/Lawrenclia/CS3611_ComputerNetworks_Project" target="_blank" rel="noopener">
+              <span class="project-thumb network" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
               <span class="project-copy">
                 <strong>CS3611 计算机网络</strong>
                 <span class="project-meta"><span>Networking</span><span>C++</span></span>
@@ -68,8 +53,8 @@
               <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
             </a>
 
-            <a class="project-entry" href="https://github.com/Lawrenclia/CS1604" target="_blank" rel="noopener">
-              <span class="project-thumb code" aria-hidden="true"></span>
+            <a class="project-entry" data-list-entry data-category="course" href="https://github.com/Lawrenclia/CS1604" target="_blank" rel="noopener">
+              <span class="project-thumb code" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
               <span class="project-copy">
                 <strong>CS1604 课程项目</strong>
                 <span class="project-meta"><span>Coursework</span><span>C++</span></span>
@@ -77,8 +62,8 @@
               <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
             </a>
 
-            <a class="project-entry" href="https://github.com/Lawrenclia/CS1605" target="_blank" rel="noopener">
-              <span class="project-thumb course" aria-hidden="true"></span>
+            <a class="project-entry" data-list-entry data-category="course" href="https://github.com/Lawrenclia/CS1605" target="_blank" rel="noopener">
+              <span class="project-thumb course" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
               <span class="project-copy">
                 <strong>CS1605 课程项目</strong>
                 <span class="project-meta"><span>Software</span><span>Teamwork</span></span>
@@ -86,8 +71,8 @@
               <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
             </a>
 
-            <a class="project-entry" href="https://github.com/Lawrenclia/ICE2607" target="_blank" rel="noopener">
-              <span class="project-thumb system" aria-hidden="true"></span>
+            <a class="project-entry" data-list-entry data-category="course" href="https://github.com/Lawrenclia/ICE2607" target="_blank" rel="noopener">
+              <span class="project-thumb system" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
               <span class="project-copy">
                 <strong>ICE2607 课程项目</strong>
                 <span class="project-meta"><span>Systems</span><span>Lab</span></span>
@@ -95,8 +80,8 @@
               <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
             </a>
 
-            <a class="project-entry" href="https://github.com/Lawrenclia/CS2602" target="_blank" rel="noopener">
-              <span class="project-thumb algorithm" aria-hidden="true"></span>
+            <a class="project-entry" data-list-entry data-category="algorithms" href="https://github.com/Lawrenclia/CS2602" target="_blank" rel="noopener">
+              <span class="project-thumb algorithm" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
               <span class="project-copy">
                 <strong>ACMOJ 问题解答</strong>
                 <span class="project-meta"><span>Algorithms</span><span>C++</span></span>

@@ -1,0 +1,10 @@
+/* Reserve room for the shared Dock; page and TOC layout live in their own sheets. */
+html { scroll-padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
+body { padding-bottom: calc(100px + env(safe-area-inset-bottom, 0px)); }
+body.desktop-home, body.page-note-reader { padding-bottom: 0; }
+site-dock:not(:defined) { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 300; padding: 12px; border-radius: 16px; background: var(--surface-solid); color: var(--text); white-space: nowrap; }
+site-dock:not(:defined) a { color: inherit; margin: 0 8px; }
+@media print {
+  body { padding-bottom: 0; }
+  site-dock { display: none !important; }
+}

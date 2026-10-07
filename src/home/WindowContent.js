@@ -5,7 +5,7 @@ import {
   Github,
   Play
 } from "lucide-react";
-import { html } from "./ui.js?v=20260723-home-v6";
+import { html } from "./ui.js?v=20261007-rebuild-v1";
 
 const socialIcons = { AtSign, Github, Play };
 

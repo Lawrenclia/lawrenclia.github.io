@@ -1,0 +1,66 @@
+/* The interactive terminal lives inside the same desktop app frame. */
+* { box-sizing: border-box; }
+body { margin: 0; }
+.page-hacker {
+  --primary-green: var(--accent-green);
+  --dark-green: var(--muted);
+  --border-color: var(--line);
+  --alert-red: var(--accent-coral);
+  --warn-yellow: var(--accent-amber);
+  --info-blue: var(--accent);
+}
+.main-container {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  grid-template-rows: 48px minmax(0, 1fr);
+  width: min(1220px, calc(100% - 60px));
+  height: calc(100svh - 128px);
+  min-height: 608px;
+  margin: 28px auto 24px;
+  overflow: hidden;
+}
+.main-container .site-titlebar { grid-column: 1 / -1; margin: 0; }
+.panel { min-width: 0; min-height: 0; padding: 28px 24px; overflow: auto; }
+.nav-panel { background: var(--sidebar-bg); border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+.panel-title, .log-title { font-size: 12px; font-weight: 600; color: var(--muted); padding-bottom: 12px; margin: 0 0 16px; border-bottom: 1px solid var(--line); }
+.nav-links { list-style: none; padding: 0; margin: 0; flex: 1; }
+.nav-links a { display: block; padding: 12px; margin-bottom: 4px; color: var(--muted); text-decoration: none; border-radius: 8px; font-size: 12px; }
+.nav-links a:hover, .nav-links a.active { background: var(--accent-soft); color: var(--accent-strong); }
+.system-status { font-size: 11px; margin-top: 28px; }
+.status-item { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+.status-label { color: var(--muted); }
+#welcome-title { font-size: clamp(16px, 2vw, 24px); font-weight: 600; margin: 0 0 24px; min-height: 34px; overflow-wrap: anywhere; }
+.content-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; height: calc(100% - 104px); min-height: 330px; }
+.log-window { display: flex; flex-direction: column; padding: 16px; min-height: 0; min-width: 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.log-content { flex: 1; overflow: auto; margin: 0; font: 12px/1.8 "Roboto Mono", monospace; overflow-wrap: anywhere; }
+pre.log-content { white-space: pre-wrap; }
+.log-content span, .log-content div { display: block; }
+.log-ok { color: var(--primary-green); }
+.log-warn { color: var(--warn-yellow); }
+.log-error, .log-alert { color: var(--alert-red); }
+.log-info { color: var(--info-blue); }
+.terminal-prompt { margin-top: 24px; color: var(--muted); font: 12px/1.6 "Roboto Mono", monospace; }
+.terminal-input { color: var(--text); }
+.terminal-input::after { content: '▌'; animation: cursor-blink 1s steps(2, start) infinite; }
+@keyframes cursor-blink { to { opacity: 0; } }
+.tab-content { display: none; height: 100%; }
+.tab-content.active { display: block; }
+.hacker-form { display: flex; gap: 8px; margin: 0 0 16px; flex-wrap: wrap; }
+.hacker-input { flex: 1; min-width: 0; width: 100%; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-solid); padding: 10px 12px; color: var(--text); }
+.hacker-btn { min-height: 44px; padding: 8px 14px; background: var(--accent-soft); color: var(--accent-strong); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+.hacker-btn:hover { background: var(--soft); }
+#ascii-map { position: relative; font: 8px/1 monospace; overflow: auto; color: var(--muted); }
+.map-node { position: absolute; color: var(--accent); font-weight: 700; font-size: 12px; }
+#ascii-art { white-space: pre; font: 10px/1.1 monospace; overflow: auto; color: var(--muted); }
+@media (max-width: 860px) {
+  .main-container { width: calc(100% - 24px); margin: 16px 12px 24px; height: auto; min-height: 0; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; }
+  .nav-panel { padding: 16px 18px; border-right: 0; border-bottom: 1px solid var(--line); }
+  .nav-panel > .panel-title, .system-status { display: none; }
+  .nav-links { display: flex; flex-wrap: wrap; gap: 4px; }
+  .nav-links a { padding: 12px 8px; margin: 0; }
+  .content-panel { padding: 24px 18px; }
+  .content-grid { height: auto; grid-template-columns: minmax(0, 1fr); }
+  .log-content { max-height: 320px; }
+  .hacker-input { font-size: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { .terminal-input::after { animation: none; } }
