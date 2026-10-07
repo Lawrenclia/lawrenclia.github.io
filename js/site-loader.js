@@ -13,17 +13,19 @@
   host.id = 'site-loader';
   host.setAttribute('aria-label', '正在打开个人空间');
   host.innerHTML = `
+    <div class="boot-window">
     <header class="boot-top">
-      <div class="boot-brand"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16Z" stroke="currentColor"/><path d="M12 9v14h10v-4h-6V9Z" fill="currentColor"/></svg><span>LAWRENCLIA</span></div>
-      <span class="boot-top-code">PERSONAL SPACE &nbsp; / &nbsp; ACCESS POINT 01</span>
+      <span class="boot-lights" aria-hidden="true"><span></span><span></span><span></span></span>
+      <div class="boot-brand"><svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M16 2 30 16 16 30 2 16Z" stroke="currentColor"/><path d="M12 9v14h10v-4h-6V9Z" fill="currentColor"/></svg><span>个人空间</span></div>
+      <span class="boot-top-code" aria-hidden="true">LC / 01</span>
     </header>
     <div class="boot-core">
       <div class="boot-visual" aria-hidden="true"><svg viewBox="0 0 260 260" fill="none">
-        <g stroke="#64715b" stroke-width="1"><path d="M130 12v236M12 130h236"/><circle cx="130" cy="130" r="110" stroke-dasharray="2 9"/>
-        <g class="boot-orbit"><path d="M25 70a120 120 0 0 1 55-48m130 168a120 120 0 0 1-55 48" stroke="#e9fa50" stroke-width="2"/></g></g>
-        <g stroke="#c9d2bf" stroke-width="1"><path d="m130 50 70 40v80l-70 40-70-40V90Z"/><path d="m60 90 70 40 70-40m-70 40v80m0-160v80m-70 40 70-40 70 40"/></g>
-        <path d="m60 107V90l15-9m110 98 15-9v-17M115 58l15-8 15 8" stroke="#e9fa50" stroke-width="3"/>
-        <rect x="125" y="125" width="10" height="10" fill="#e9fa50"/>
+        <g class="boot-axis" stroke="currentColor" stroke-width="1"><path d="M130 12v236M12 130h236"/><circle cx="130" cy="130" r="110" stroke-dasharray="2 9"/></g>
+        <g class="boot-orbit"><path d="M25 70a120 120 0 0 1 55-48m130 168a120 120 0 0 1-55 48" stroke="currentColor" stroke-width="2"/></g>
+        <g class="boot-wire" stroke="currentColor" stroke-width="1"><path d="m130 50 70 40v80l-70 40-70-40V90Z"/><path d="m60 90 70 40 70-40m-70 40v80m0-160v80m-70 40 70-40 70 40"/></g>
+        <path class="boot-highlight" d="m60 107V90l15-9m110 98 15-9v-17M115 58l15-8 15 8" stroke="currentColor" stroke-width="3"/>
+        <rect class="boot-highlight" x="125" y="125" width="10" height="10" fill="currentColor"/>
       </svg></div>
       <div class="boot-code">[ SYSTEM INITIALIZATION ]</div>
       <h2 class="boot-wordmark">LAWRENCLIA</h2>
@@ -32,7 +34,8 @@
       <div class="boot-progress" role="progressbar" aria-label="启动动画进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="boot-progress-fill"></span></div>
       <div class="boot-stages" aria-hidden="true"><span data-active><b>01</b>界面准备</span><span><b>02</b>内容载入</span><span><b>03</b>准备就绪</span></div>
     </div>
-    <footer class="boot-bottom"><div class="boot-footer-code"><span class="boot-stripes" aria-hidden="true"></span><span>LC / PERSONAL ARCHIVE</span></div><button type="button">跳过动画 →</button></footer>`;
+    <footer class="boot-bottom"><div class="boot-footer-code"><span class="boot-stripes" aria-hidden="true"></span><span>LC / PERSONAL ARCHIVE</span></div><button type="button">跳过动画 →</button></footer>
+    </div>`;
   root.classList.add('site-loading');
   root.append(host);
 
