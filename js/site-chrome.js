@@ -4,8 +4,7 @@
   const stylesheet = new URL('css/site-chrome.css?v=20261007-rebuild-v1', root);
   const pages = [
     ['index.html', '主页', 'home'], ['projects.html', '项目', 'folder'],
-    ['notes.html', '笔记', 'book'], ['blog.html', '博客', 'file'],
-    ['mc.html', '相册', 'image'], ['about.html', '关于', 'user']
+    ['notes.html', '笔记', 'book'], ['about.html', '关于', 'user']
   ];
   const paths = {
     home: '<path d="m3 11 9-8 9 8v10H3Z"/><path d="M9 21v-8h6v8"/>',

@@ -20,7 +20,7 @@
       const shadow = this.attachShadow({ mode: 'open' });
       shadow.innerHTML = `<link rel="stylesheet" href="${stylesheet.href}">
         <nav aria-label="主导航" class="dock">
-          ${[['home', 'index.html', 'home', '主页'], ['projects', 'projects.html', 'folder', '项目'], ['notes', 'notes.html', 'book', '笔记'], ['blog', 'blog.html', 'file', '博客'], ['mc', 'mc.html', 'image', '相册'], ['about', 'about.html', 'user', '关于']]
+          ${[['home', 'index.html', 'home', '主页'], ['projects', 'projects.html', 'folder', '项目'], ['notes', 'notes.html', 'book', '笔记'], ['about', 'about.html', 'user', '关于']]
             .map(([page, path, icon, label]) => `<a data-page="${page}" href="${new URL(path, siteRoot)}" aria-label="${label}"><span class="app-icon">${svg(icon)}</span><span class="label">${label}</span></a>`).join('')}
           <span class="divider" aria-hidden="true"></span>
           <button type="button" class="theme" aria-label="切换主题"><span class="app-icon"></span><span class="label">外观</span></button>
@@ -29,8 +29,6 @@
       const current = !path || path === 'index.html' ? 'home'
         : path.startsWith('files/notes/') || path === 'notes.html' ? 'notes'
         : path === 'projects.html' ? 'projects'
-        : path.startsWith('blogs/') || path === 'blog.html' ? 'blog'
-        : path === 'mc.html' ? 'mc'
         : path === 'about.html' || path === 'cv.html' ? 'about' : null;
       if (current) shadow.querySelector(`[data-page="${current}"]`).setAttribute('aria-current', 'page');
       const button = shadow.querySelector('button');
