@@ -8,14 +8,15 @@
   const empty = document.querySelector('[data-empty-state]');
   const heading = document.querySelector('#projects-title');
   let category = 'all';
-  const labels = { all: '全部项目', course: '课程项目', network: '计算机网络', algorithms: '算法练习' };
+  const labels = { all: '全部项目', course: '课程项目', network: '计算机网络', algorithms: '算法练习', research: '研究实践', tools: '实用工具' };
 
   function updateList() {
     const query = (search?.value || '').trim().normalize('NFKC').toLocaleLowerCase();
     let visible = 0;
     entries.forEach((entry) => {
       const categories = (entry.dataset.category || '').split(' ');
-      const matches = (category === 'all' || categories.includes(category)) && entry.textContent.normalize('NFKC').toLocaleLowerCase().includes(query);
+      const searchable = `${entry.textContent} ${entry.dataset.search || ''}`.normalize('NFKC').toLocaleLowerCase();
+      const matches = (category === 'all' || categories.includes(category)) && searchable.includes(query);
       entry.hidden = !matches;
       if (matches) visible++;
     });

@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/macos-pages.css?v=20261007-rebuild-v1">
   <script async src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" onload="window.lucide?.createIcons()"></script>
-  <script defer src="js/macos-pages.js?v=20261007-rebuild-v1"></script>
+  <script defer src="js/macos-pages.js?v=20261014-projects-v1"></script>
   <link rel="stylesheet" href="css/site-dock-layout.css?v=20261007-rebuild-v1">
   <link rel="stylesheet" href="css/site-appearance.css?v=20261007-rebuild-v1">
   <script defer src="js/site-chrome.js?v=20261007-nav-v1"></script>
@@ -38,14 +38,50 @@
               <h1 id="projects-title">全部项目</h1>
               <p>课程实践与开源代码，持续积累。</p>
             </div>
-            <span class="toolbar-count" data-result-count role="status" aria-live="polite">5 个项目</span>
+            <span class="toolbar-count" data-result-count role="status" aria-live="polite">9 个项目</span>
           </header>
 
-          <nav class="page-filters" aria-label="项目筛选"><button class="sidebar-link" type="button" data-project-filter="all" aria-pressed="true"><i data-lucide="folder-open" aria-hidden="true"></i>全部项目</button><button class="sidebar-link" type="button" data-project-filter="course" aria-pressed="false"><i data-lucide="graduation-cap" aria-hidden="true"></i>课程项目</button><button class="sidebar-link" type="button" data-project-filter="network" aria-pressed="false"><i data-lucide="network" aria-hidden="true"></i>计算机网络</button><button class="sidebar-link" type="button" data-project-filter="algorithms" aria-pressed="false"><i data-lucide="terminal" aria-hidden="true"></i>算法练习</button></nav>
+          <nav class="page-filters" aria-label="项目筛选"><button class="sidebar-link" type="button" data-project-filter="all" aria-pressed="true"><i data-lucide="folder-open" aria-hidden="true"></i>全部项目</button><button class="sidebar-link" type="button" data-project-filter="course" aria-pressed="false"><i data-lucide="graduation-cap" aria-hidden="true"></i>课程项目</button><button class="sidebar-link" type="button" data-project-filter="network" aria-pressed="false"><i data-lucide="network" aria-hidden="true"></i>计算机网络</button><button class="sidebar-link" type="button" data-project-filter="algorithms" aria-pressed="false"><i data-lucide="terminal" aria-hidden="true"></i>算法练习</button><button class="sidebar-link" type="button" data-project-filter="research" aria-pressed="false"><i data-lucide="flask-conical" aria-hidden="true"></i>研究实践</button><button class="sidebar-link" type="button" data-project-filter="tools" aria-pressed="false"><i data-lucide="wrench" aria-hidden="true"></i>实用工具</button></nav>
 
           <div class="list-search"><label for="project-search">搜索项目</label><input id="project-search" type="search" data-list-search placeholder="项目名称或技术栈…" autocomplete="off"></div>
           <p class="empty-state" data-empty-state hidden>没有找到匹配的项目。<button type="button" data-clear-search>清空搜索</button></p>
           <div class="project-list">
+            <a class="project-entry" data-list-entry data-category="research" data-search="D2NN_Chinese_MNIST 衍射神经网络 光学计算 中文 MNIST" href="https://github.com/Lawrenclia/D2NN_Chinese_MNIST" target="_blank" rel="noopener">
+              <span class="project-thumb code" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
+              <span class="project-copy">
+                <strong>D2NN 中文手写数字识别</strong>
+                <span class="project-meta"><span>PyTorch</span><span>衍射神经网络</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" data-list-entry data-category="course research" data-search="PlateRecognitionProject License Plate Recognition ICE2607" href="https://github.com/Lawrenclia/PlateRecognitionProject" target="_blank" rel="noopener">
+              <span class="project-thumb course" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
+              <span class="project-copy">
+                <strong>车牌识别系统</strong>
+                <span class="project-meta"><span>ICE2607</span><span>Python</span><span>团队项目</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" data-list-entry data-category="tools" data-search="cheating-paper-skill two-page-cheating-paper 考试复习" href="https://github.com/Lawrenclia/cheating-paper-skill" target="_blank" rel="noopener">
+              <span class="project-thumb system" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
+              <span class="project-copy">
+                <strong>两页速查表 Skill</strong>
+                <span class="project-meta"><span>Codex</span><span>LaTeX</span><span>学习工具</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
+            <a class="project-entry" data-list-entry data-category="tools" data-search="digit_maid desktop companion" href="https://github.com/Lawrenclia/digit_maid" target="_blank" rel="noopener">
+              <span class="project-thumb code" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
+              <span class="project-copy">
+                <strong>Digit Maid 数字女仆</strong>
+                <span class="project-meta"><span>Python</span><span>PyQt6</span><span>桌宠</span><span>Fork</span></span>
+              </span>
+              <i class="project-open" data-lucide="arrow-up-right" aria-hidden="true"></i>
+            </a>
+
             <a class="project-entry" data-list-entry data-category="course network" href="https://github.com/Lawrenclia/CS3611_ComputerNetworks_Project" target="_blank" rel="noopener">
               <span class="project-thumb network" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a1 1 0 0 1 1-1h5l2 3h9a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></svg></span>
               <span class="project-copy">
