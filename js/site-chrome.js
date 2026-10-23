@@ -1,7 +1,7 @@
 /* Shared Finder sidebar navigation. */
 (() => {
   const root = new URL('../', document.currentScript.src);
-  const stylesheet = new URL('css/site-chrome.css?v=20261007-rebuild-v1', root);
+  const stylesheet = new URL('css/site-chrome.css?v=20261023-stable-v3', root);
   const pages = [
     ['index.html', '主页', 'home'], ['projects.html', '项目', 'folder'],
     ['notes.html', '笔记', 'book'], ['about.html', '关于', 'user']
@@ -14,7 +14,7 @@
     image: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m3 17 6-6 4 4 3-3 5 5"/>',
     user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'
   };
-  const icon = (name) => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
+  const icon = (name) => `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
   const path = location.pathname.slice(root.pathname.length);
   const current = path.startsWith('files/notes/') ? 'notes.html' : path.startsWith('blogs/') ? 'blog.html'
     : path === 'cv.html' ? 'about.html' : path || 'index.html';
@@ -23,7 +23,7 @@
   class SiteSidebar extends HTMLElement {
     connectedCallback() {
       if (this.shadowRoot) return;
-      this.attachShadow({mode:'open'}).innerHTML = `<link rel="stylesheet" href="${stylesheet}"><div class="sidebar"><p>个人空间</p><nav aria-label="页面导航">${links()}</nav><div class="sidebar-footer">Lawrenclia<br><span>项目 · 笔记 · 日常</span></div></div>`;
+      this.attachShadow({mode:'open'}).innerHTML = `<style>:host{visibility:hidden}svg{width:17px;height:17px}</style><link rel="stylesheet" href="${stylesheet}"><div class="sidebar"><p>个人空间</p><nav aria-label="页面导航">${links()}</nav><div class="sidebar-footer">Lawrenclia<br><span>项目 · 笔记 · 日常</span></div></div>`;
     }
   }
   customElements.define('site-sidebar', SiteSidebar);

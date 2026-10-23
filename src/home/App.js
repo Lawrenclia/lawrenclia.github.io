@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DesktopWindow } from "./DesktopWindow.js?v=20261007-rebuild-v1";
-import { desktopWindows } from "./windowData.js?v=20261007-rebuild-v1";
+import { DesktopWindow } from "./DesktopWindow.js?v=20261023-refined-v2";
+import { desktopWindows } from "./windowData.js?v=20261023-refined-v2";
 import { html } from "./ui.js?v=20261007-rebuild-v1";
 
 const MOBILE_QUERY = "(max-width: 980px)";

@@ -9,7 +9,7 @@ import {
   UserRound
 } from "lucide-react";
 import { html } from "./ui.js?v=20261007-rebuild-v1";
-import { WindowContent } from "./WindowContent.js?v=20261007-rebuild-v1";
+import { WindowContent } from "./WindowContent.js?v=20261023-refined-v2";
 
 const iconMap = {
   AtSign,
