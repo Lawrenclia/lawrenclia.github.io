@@ -43,3 +43,5 @@
 
 - GitHub: [https://github.com/Lawrenclia](https://github.com/Lawrenclia)
 - 网站留言板: 访问"留言"页面
+
+站内跨页面跳转使用浏览器原生 View Transitions，轻微淡出后淡入，兼容浏览器的前进与后退；主题切换继续使用原来的圆形过渡。系统开启减少动态效果时不播放页面切换动画。不支持跨文档过渡的浏览器直接跳转。

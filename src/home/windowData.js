@@ -105,8 +105,8 @@ export const desktopWindows = [
     content: {
       links: [
         { label: "GitHub", href: "https://github.com/Lawrenclia", icon: "Github" },
-        { label: "chianghx23@gmail.com", href: "mailto:chianghx23@gmail.com", icon: "Mail" },
-        { label: "chianghx@sjtu.edu.cn", href: "mailto:chianghx@sjtu.edu.cn", icon: "Mail" }
+        { label: "X", href: "https://x.com/LeoakyX", icon: "AtSign" },
+        { label: "Bilibili", href: "https://space.bilibili.com/1334003335", icon: "Play" }
       ]
     }
   }

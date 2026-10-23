@@ -3,12 +3,11 @@ import {
   AtSign,
   BookOpenText,
   Github,
-  Mail,
   Play
 } from "lucide-react";
 import { html } from "./ui.js?v=20261007-rebuild-v1";
 
-const socialIcons = { AtSign, Github, Mail, Play };
+const socialIcons = { AtSign, Github, Play };
 
 function InteractiveLink({ href, className, children, label }) {
   const external = /^https?:/.test(href);
