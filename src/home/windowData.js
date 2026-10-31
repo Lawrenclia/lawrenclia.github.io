@@ -1,3 +1,4 @@
+// Content verified against public GitHub profile and project READMEs, 2026-10-23.
 export const desktopWindows = [
   {
     id: "about",
@@ -11,8 +12,9 @@ export const desktopWindows = [
     content: {
       name: "Lawrenclia",
       school: "Shanghai Jiao Tong University",
-      major: "Computer Science",
-      interests: ["Algorithms", "Systems", "Interactive media"]
+      major: "Computer Science & Technology",
+      detail: "Haoxiang Jiang · IEEE Pilot Class",
+      interests: ["C++", "Python", "Vibe coding"]
     }
   },
   {
@@ -49,7 +51,7 @@ export const desktopWindows = [
   },
   {
     id: "research",
-    title: "Research",
+    title: "Languages & Tools",
     route: "notes.html",
     icon: "Telescope",
     accent: "violet",
@@ -58,15 +60,16 @@ export const desktopWindows = [
     initialZIndex: 30,
     content: {
       focus: [
-        { title: "Algorithms & Optimization" },
-        { title: "Information & Systems" }
+        { title: "C++ & Python", description: "My main programming languages." },
+        { title: "C# & Java", description: "Currently learning and experimenting." }
       ],
-      reading: ["Algorithm Design", "Information Theory", "Computer Architecture"]
+      readingLabel: "Making",
+      reading: ["AI-assisted tools", "LaTeX", "Animation"]
     }
   },
   {
     id: "experience",
-    title: "Experience",
+    title: "At a Glance",
     route: "about.html#experience",
     icon: "Milestone",
     accent: "green",
@@ -77,15 +80,15 @@ export const desktopWindows = [
       timeline: [
         {
           period: "Now",
-          title: "Computer Science at SJTU"
+          title: "IEEE Pilot Class · SJTU"
         },
         {
-          period: "Projects",
-          title: "Course & independent builds"
+          period: "Build",
+          title: "Tools, networks & desktop pets"
         },
         {
-          period: "Archive",
-          title: "Open study notes"
+          period: "Share",
+          title: "Open-source projects & study notes"
         }
       ]
     }

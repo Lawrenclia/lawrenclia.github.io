@@ -34,6 +34,7 @@ function AboutContent({ content }) {
         <span className="eyebrow">${content.school}</span>
         <h1>${content.name}</h1>
         <p className="major">${content.major}</p>
+        <p className="profile-detail">${content.detail}</p>
       </div>
       <div className="interest-list" aria-label="兴趣方向">
         ${content.interests.map((interest) => html`<span key=${interest}>${interest}</span>`)}
@@ -64,6 +65,7 @@ function ProjectsContent({ content }) {
           <${ProjectPreview} tone=${project.tone} />
           <span className="project-window-copy">
             <strong>${project.name}</strong>
+            ${project.description && html`<span className="project-description">${project.description}</span>`}
             <span className="stack-list">
               ${project.stack.map((item) => html`<em key=${item}>${item}</em>`)}
             </span>
@@ -83,13 +85,14 @@ function ResearchContent({ content }) {
           <section key=${item.title} className="focus-item">
             <span className="focus-index">0${index + 1}</span>
             <strong>${item.title}</strong>
+            <p className="focus-description">${item.description}</p>
           </section>
         `)}
       </div>
       <div className="reading-row">
         <span className="reading-label">
           <${BookOpenText} size=${15} aria-hidden="true" />
-          Reading
+          ${content.readingLabel}
         </span>
         <div>
           ${content.reading.map((item) => html`<span key=${item}>${item}</span>`)}

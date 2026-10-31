@@ -34,7 +34,7 @@
       <div class="boot-progress" role="progressbar" aria-label="启动动画进度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="boot-progress-fill"></span></div>
       <div class="boot-stages" aria-hidden="true"><span data-active><b>01</b>界面准备</span><span><b>02</b>内容载入</span><span><b>03</b>准备就绪</span></div>
     </div>
-    <footer class="boot-bottom"><div class="boot-footer-code"><span class="boot-stripes" aria-hidden="true"></span><span>LC / PERSONAL ARCHIVE</span></div><button type="button">跳过动画 →</button></footer>
+    <footer class="boot-bottom"><div class="boot-footer-code"><span class="boot-stripes" aria-hidden="true"></span><span>LC / PERSONAL ARCHIVE</span></div></footer>
     </div>`;
   root.classList.add('site-loading');
   root.append(host);
@@ -45,7 +45,6 @@
   const progress = host.querySelector('[role="progressbar"]');
   const fill = host.querySelector('.boot-progress-fill');
   const stages = [...host.querySelectorAll('.boot-stages span')];
-  const button = host.querySelector('button');
   const start = performance.now();
   const duration = reducedMotion ? 0 : 1600;
   let ready = false, closing = false, ended = false, frame, exitTimer;
@@ -81,7 +80,6 @@
     try { sessionStorage.setItem(storageKey, 'done'); } catch (_) { /* Never block entry. */ }
     unlock();
     host.classList.add('is-leaving');
-    button.disabled = true;
     exitTimer = setTimeout(dispose, reducedMotion ? 0 : 480);
   }
   function onReady() { ready = true; }
@@ -110,14 +108,11 @@
     const codes = ['01 / PREPARING INTERFACE', '02 / LOADING CONTENT', '03 / READY TO ENTER'];
     if (status.textContent !== labels[phase]) { status.textContent = labels[phase]; code.textContent = codes[phase]; }
     if (value === 100) {
-      if (!preview) { exitTimer = setTimeout(finish, reducedMotion ? 0 : 160); return; }
-      clearTimeout(watchdog);
-      button.textContent = '进入个人空间 →';
+      exitTimer = setTimeout(finish, reducedMotion ? 0 : 160);
       return;
     }
     frame = requestAnimationFrame(tick);
   }
-  button.addEventListener('click', finish);
   window.addEventListener('site-desktop-ready', onReady);
   document.addEventListener('DOMContentLoaded', onDocumentReady, { once: true });
   window.addEventListener('pagehide', dispose, { once: true });

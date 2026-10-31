@@ -899,3 +899,31 @@ a {
 }
 
 @media (max-width: 980px) { .desktop-stage { padding-bottom: calc(112px + env(safe-area-inset-bottom, 0px)); } }
+
+/* Short, source-backed descriptions stay readable in the overlapping windows. */
+.about-window-copy .profile-detail {
+  color: var(--window-muted);
+  font-size: 11px;
+  line-height: 1.5;
+  margin: 4px 0 0;
+}
+.project-description {
+  color: var(--window-muted);
+  font-size: 10px;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.focus-description {
+  color: var(--window-muted);
+  font-size: 10px;
+  line-height: 1.5;
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .project-window-item { grid-template-columns: 46px minmax(0, 1fr) auto; gap: 8px; }
+  .project-window-item .project-preview { width: 46px; }
+  .project-window-copy strong { white-space: normal; }
+}
