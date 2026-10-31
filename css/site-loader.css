@@ -1,8 +1,8 @@
 /* Desktop glass with industrial terminal details; intro styles stay local. */
 html.site-loading { overflow: hidden; }
 #site-loader {
-  --boot-accent: #788519;
-  --boot-fill: #b6c84f;
+  --boot-accent: #0063cf;
+  --boot-fill: #5b9ff0;
   --boot-panel: rgba(247, 250, 252, .76);
   --boot-solid: #f0f3f3;
   --boot-text: #252529;
@@ -20,8 +20,8 @@ html.site-loading { overflow: hidden; }
   text-align: left; isolation: isolate; transition: opacity 360ms ease;
 }
 :root[data-theme="dark"] #site-loader {
-  --boot-accent: #cfdf79;
-  --boot-fill: #ccdc75;
+  --boot-accent: #70b5ff;
+  --boot-fill: #409cff;
   --boot-panel: rgba(37, 43, 50, .76);
   --boot-solid: #252b32;
   --boot-text: #f5f5f7;

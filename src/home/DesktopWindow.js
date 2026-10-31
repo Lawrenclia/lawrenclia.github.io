@@ -9,7 +9,7 @@ import {
   UserRound
 } from "lucide-react";
 import { html } from "./ui.js?v=20261007-rebuild-v1";
-import { WindowContent } from "./WindowContent.js?v=20261007-rebuild-v1";
+import { WindowContent } from "./WindowContent.js?v=20261031-a11y-layout";
 
 const iconMap = {
   AtSign,
@@ -51,10 +51,8 @@ export function DesktopWindow({
     onActivate(windowInfo.id);
   };
 
-  const handleKeyDown = (event) => {
-    if (event.target !== event.currentTarget) return;
-    if (event.key !== "Enter" && event.key !== " ") return;
-    event.preventDefault();
+  const activateTitlebar = (event) => {
+    event.stopPropagation();
     onActivate(windowInfo.id);
   };
 
@@ -68,15 +66,17 @@ export function DesktopWindow({
         expanded ? "is-expanded" : ""
       ].filter(Boolean).join(" ")}
       style=${style}
-      role="button"
-      tabIndex="0"
       aria-label=${`${windowInfo.title} 窗口`}
-      aria-pressed=${active}
-      aria-expanded=${isMobile ? expanded : undefined}
       onClick=${activate}
-      onKeyDown=${handleKeyDown}
     >
-      <header className="window-titlebar">
+      <button
+        type="button"
+        className="window-titlebar"
+        aria-label=${`${active ? "打开" : "选择"} ${windowInfo.title} 窗口`}
+        aria-controls=${isMobile ? `window-content-${windowInfo.id}` : undefined}
+        aria-expanded=${isMobile ? expanded : undefined}
+        onClick=${activateTitlebar}
+      >
         <span className="traffic-lights" aria-hidden="true">
           <span className="traffic-light traffic-red"></span>
           <span className="traffic-light traffic-yellow"></span>
@@ -86,10 +86,13 @@ export function DesktopWindow({
           <${Icon} size=${15} strokeWidth=${1.9} aria-hidden="true" />
           ${windowInfo.title}
         </span>
-        <span aria-hidden="true"></span>
-      </header>
+        <span className="window-open-hint" aria-hidden="true">
+          ${active ? "打开 ↗" : "选择"}
+        </span>
+      </button>
 
       <div
+        id=${`window-content-${windowInfo.id}`}
         className="window-content"
         aria-hidden=${isMobile ? !expanded : undefined}
         inert=${isMobile && !expanded ? "" : undefined}

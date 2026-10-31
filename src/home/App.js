@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { DesktopWindow } from "./DesktopWindow.js?v=20261007-rebuild-v1";
-import { desktopWindows } from "./windowData.js?v=20261007-rebuild-v1";
+import { DesktopWindow } from "./DesktopWindow.js?v=20261031-a11y-layout";
+import { desktopWindows } from "./windowData.js?v=20261031-larger-windows";
 import { html } from "./ui.js?v=20261007-rebuild-v1";
 
 const MOBILE_QUERY = "(max-width: 980px)";
@@ -57,9 +57,7 @@ export function App() {
       return;
     }
 
-    const maxZ = Math.max(...Object.values(zIndices));
-    const isTopmost = activeId === id && zIndices[id] === maxZ;
-    if (isTopmost) {
+    if (activeId === id) {
       window.location.assign(target.route);
       return;
     }
@@ -69,7 +67,7 @@ export function App() {
       [id]: Math.max(...Object.values(current)) + 1
     }));
     setActiveId(id);
-  }, [activeId, expandedId, isMobile, zIndices]);
+  }, [activeId, expandedId, isMobile]);
 
   return html`
     <div className="portfolio-desktop">
@@ -89,6 +87,13 @@ export function App() {
             />
           `)}
         </section>
+
+        <footer className="desktop-footer">
+          <span>01 — A QUIET PLACE TO BUILD & LEARN</span>
+          <span className="desktop-footer-hint">
+            ${isMobile ? "点击展开窗口，再次点击进入页面" : "点击选择窗口，再次点击进入页面"}
+          </span>
+        </footer>
       </main>
     </div>
   `;

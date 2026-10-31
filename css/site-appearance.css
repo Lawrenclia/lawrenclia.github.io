@@ -1,10 +1,10 @@
 /* Shared desktop palette and window chrome. Keep page-specific content layouts local. */
 :root {
   color-scheme: light;
-  --site-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --wallpaper-a: #d9e0df;
-  --wallpaper-b: #f0f1ee;
-  --wallpaper-c: #d8dde5;
+  --site-font: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  --wallpaper-a: #e5e8e8;
+  --wallpaper-b: #f3f3ef;
+  --wallpaper-c: #dfe4e8;
   --wallpaper-dot: rgba(56, 65, 68, .14);
   --menu-bg: rgba(247, 250, 252, .42);
   --menu-border: rgba(30, 30, 40, .08);
@@ -18,8 +18,8 @@
   --surface: #ffffff;
   --surface-solid: #f5f5f7;
   --text: #252529;
-  --muted: #686b73;
-  --line: rgba(30, 30, 40, .12);
+  --muted: #6e7278;
+  --line: rgba(30, 30, 40, .1);
   --soft: rgba(30, 30, 40, .045);
   --accent: #007aff;
   --accent-soft: rgba(0, 122, 255, .1);
@@ -27,16 +27,16 @@
   --selection-bg: rgba(255, 255, 255, .62);
   --selection-text: #0865cf;
   --titlebar-bg: linear-gradient(180deg, #ffffff35, #ffffff08);
-  --accent-coral: #c85f48;
+  --accent-coral: #b96550;
   --accent-blue: var(--accent);
-  --accent-violet: #76698f;
-  --accent-green: #4f8069;
+  --accent-violet: #7c7192;
+  --accent-green: #587f6c;
   --accent-amber: #a37234;
-  --accent-pink: #a85c79;
+  --accent-pink: #a56d81;
   --active-ring: rgba(255, 255, 255, .9);
-  --shadow: 0 24px 64px rgba(34, 45, 48, .16), 0 4px 14px rgba(34, 45, 48, .08), inset 0 1px 0 var(--glass-highlight);
-  --active-shadow: 0 30px 72px rgba(34, 45, 48, .24), 0 6px 22px rgba(34, 45, 48, .1), inset 0 1px 0 var(--glass-highlight);
-  --inactive-shadow: 0 18px 42px rgba(38, 48, 51, .16), 0 3px 10px rgba(38, 48, 51, .08);
+  --shadow: 0 22px 56px rgba(34, 45, 48, .13), 0 3px 10px rgba(34, 45, 48, .05), inset 0 1px 0 var(--glass-highlight);
+  --active-shadow: 0 28px 64px rgba(34, 45, 48, .19), 0 5px 18px rgba(34, 45, 48, .08), inset 0 1px 0 var(--glass-highlight);
+  --inactive-shadow: 0 16px 36px rgba(38, 48, 51, .11), 0 2px 7px rgba(38, 48, 51, .05);
   --warning-bg: #fff8e5;
   --warning-text: #8a5a00;
   --radius-lg: 16px;
@@ -89,11 +89,11 @@
   --selection-bg: rgba(255, 255, 255, .12);
   --selection-text: #f5f5f7;
   --titlebar-bg: linear-gradient(180deg, #ffffff0d, #ffffff02);
-  --accent-coral: #e78269;
+  --accent-coral: #df8b75;
   --accent-violet: #aa9bc1;
-  --accent-green: #75aa8d;
+  --accent-green: #85ad96;
   --accent-amber: #d3a25f;
-  --accent-pink: #cf82a0;
+  --accent-pink: #cf8ba3;
   --active-ring: rgba(255, 255, 255, .2);
   --shadow: 0 24px 64px rgba(0, 0, 0, .4), 0 4px 14px rgba(0, 0, 0, .18), inset 0 1px 0 var(--glass-highlight);
   --active-shadow: 0 32px 74px rgba(0, 0, 0, .48), 0 8px 24px rgba(0, 0, 0, .22), inset 0 1px 0 var(--glass-highlight);

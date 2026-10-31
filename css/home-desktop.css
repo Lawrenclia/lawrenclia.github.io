@@ -16,7 +16,7 @@ html {
 body.desktop-home {
   color: var(--window-text);
   background: var(--wallpaper-a);
-  font-family: Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "PingFang SC", sans-serif;
+  font-family: var(--site-font);
   overflow-x: hidden;
 }
 
@@ -36,8 +36,7 @@ a {
 
 .portfolio-desktop {
   min-height: 100svh;
-  background:
-    linear-gradient(132deg, var(--wallpaper-a) 0%, var(--wallpaper-b) 48%, var(--wallpaper-c) 100%);
+  background: transparent;
   transition: background-color 260ms ease, color 260ms ease;
 }
 
@@ -61,7 +60,7 @@ a {
 .desktop-stage {
   height: 100svh;
   isolation: isolate;
-  min-height: 720px;
+  min-height: 760px;
   overflow: hidden;
   position: relative;
 }
@@ -70,7 +69,7 @@ a {
   background-image:
     linear-gradient(var(--menu-border) 1px, transparent 1px),
     linear-gradient(90deg, var(--menu-border) 1px, transparent 1px);
-  background-size: 68px 68px;
+  background-size: 80px 80px;
   inset: 0;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.35), transparent 88%);
   opacity: 0.2;
@@ -79,9 +78,10 @@ a {
 }
 
 .window-layer {
-  height: 100%;
+  height: calc(100% - 126px);
+  margin: 0 48px;
+  padding-top: 32px;
   position: relative;
-  width: 100%;
 }
 
 .desktop-window {
@@ -90,7 +90,7 @@ a {
   -webkit-backdrop-filter: blur(30px) saturate(130%);
   background: var(--window-bg);
   border: 1px solid var(--window-border);
-  border-radius: 16px;
+  border-radius: 14px;
   box-shadow: var(--inactive-shadow), inset 0 0 0 1px var(--window-inner-border);
   cursor: pointer;
   display: flex;
@@ -142,12 +142,16 @@ a {
 
 .window-titlebar {
   align-items: center;
+  background: transparent;
+  border: 0;
   border-bottom: 1px solid var(--window-line);
+  color: inherit;
+  cursor: pointer;
   display: grid;
-  flex: 0 0 42px;
+  flex: 0 0 44px;
   gap: 10px;
   grid-template-columns: 62px minmax(0, 1fr) 62px;
-  padding: 0 13px;
+  padding: 0 15px;
   user-select: none;
 }
 
@@ -161,8 +165,8 @@ a {
   border: 0.5px solid rgba(0, 0, 0, 0.16);
   border-radius: 50%;
   display: block;
-  height: 11px;
-  width: 11px;
+  height: 10px;
+  width: 10px;
 }
 
 .traffic-red { background: #ff5f57; }
@@ -173,9 +177,10 @@ a {
   align-items: center;
   display: flex;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   gap: 7px;
   justify-content: center;
+  letter-spacing: -.01em;
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -187,28 +192,52 @@ a {
   flex: 0 0 auto;
 }
 
+.window-open-hint {
+  color: var(--window-muted);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  justify-self: end;
+  opacity: 0;
+  white-space: nowrap;
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.desktop-window:hover .window-open-hint,
+.window-titlebar:focus-visible .window-open-hint,
+.desktop-window.is-active .window-open-hint {
+  opacity: 1;
+}
+
+.desktop-window.is-active .window-open-hint {
+  color: var(--window-accent);
+}
+
+@media (hover: none) {
+  .window-open-hint { opacity: 1; }
+}
+
 .window-content {
   flex: 1;
   min-height: 0;
   overflow: hidden;
-  padding: 18px 20px 20px;
+  padding: 18px 22px 21px;
 }
 
 .about-window-content {
   align-items: center;
   display: grid;
-  gap: 0 16px;
-  grid-template-columns: 104px minmax(0, 1fr);
+  gap: 0 18px;
+  grid-template-columns: 112px minmax(0, 1fr);
   height: 100%;
 }
 
 .desktop-avatar {
   background: #f3e7e2;
   border: 1px solid var(--window-line);
-  border-radius: 15px;
-  height: 104px;
+  border-radius: 12px;
+  height: 112px;
   object-fit: cover;
-  width: 104px;
+  width: 112px;
 }
 
 .about-window-copy {
@@ -219,24 +248,26 @@ a {
   color: var(--window-accent);
   display: block;
   font-size: 10px;
-  font-weight: 700;
-  margin-bottom: 5px;
+  font-weight: 600;
+  margin-bottom: 8px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .about-window-copy h1 {
-  font-size: 28px;
+  font-size: 32px;
+  font-weight: 650;
+  letter-spacing: -.045em;
   line-height: 1.05;
   margin: 0;
 }
 
 .about-window-copy .major {
   color: var(--window-muted);
-  font-size: 11px;
-  font-weight: 600;
-  margin: 5px 0 10px;
+  font-size: 12px;
+  font-weight: 500;
+  margin: 8px 0 12px;
 }
 
 .about-window-copy > p:last-child {
@@ -248,9 +279,9 @@ a {
 .interest-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
   grid-column: 1 / -1;
-  margin-top: 14px;
+  margin-top: 18px;
 }
 
 .interest-list span,
@@ -260,10 +291,10 @@ a {
   border: 1px solid var(--window-line);
   border-radius: 6px;
   color: var(--window-muted);
-  font-size: 9px;
+  font-size: 10px;
   font-style: normal;
-  font-weight: 600;
-  padding: 4px 7px;
+  font-weight: 500;
+  padding: 4px 8px;
 }
 
 .project-window-list {
@@ -275,12 +306,12 @@ a {
 .project-window-item {
   align-items: center;
   border: 1px solid transparent;
-  border-radius: 10px;
+  border-radius: 9px;
   display: grid;
-  gap: 12px;
-  grid-template-columns: 74px minmax(0, 1fr) auto;
+  gap: 14px;
+  grid-template-columns: 82px minmax(0, 1fr) auto;
   min-height: 0;
-  padding: 7px;
+  padding: 8px;
   transition: background-color 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
@@ -295,16 +326,16 @@ a {
 .project-preview {
   background: #263437;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 8px;
+  border-radius: 7px;
   display: grid;
   gap: 4px;
   grid-template-columns: repeat(3, 5px);
   grid-template-rows: 8px 4px 4px;
-  height: 48px;
+  height: 52px;
   overflow: hidden;
-  padding: 8px;
+  padding: 9px;
   position: relative;
-  width: 74px;
+  width: 82px;
 }
 
 .project-preview span {
@@ -338,12 +369,13 @@ a {
 
 .project-window-copy {
   display: grid;
-  gap: 3px;
+  gap: 6px;
   min-width: 0;
 }
 
 .project-window-copy strong {
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 600;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -351,12 +383,12 @@ a {
 
 .stack-list {
   display: flex;
-  gap: 4px;
+  gap: 5px;
 }
 
 .stack-list em {
-  font-size: 8px;
-  padding: 2px 5px;
+  font-size: 9px;
+  padding: 2px 6px;
 }
 
 .project-open-icon {
@@ -372,28 +404,31 @@ a {
 
 .focus-grid {
   display: grid;
-  gap: 9px;
+  gap: 10px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .focus-item {
+  background: var(--window-subtle);
   border: 1px solid var(--window-line);
-  border-radius: 10px;
+  border-radius: 9px;
   min-width: 0;
-  padding: 11px;
+  padding: 13px;
 }
 
 .focus-index {
   color: var(--window-accent);
   display: block;
   font-family: "JetBrains Mono", monospace;
-  font-size: 9px;
-  margin-bottom: 9px;
+  font-size: 10px;
+  margin-bottom: 12px;
 }
 
 .focus-item strong {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
+  font-weight: 550;
+  line-height: 1.5;
   margin-bottom: 5px;
 }
 
@@ -410,13 +445,14 @@ a {
   align-items: center;
   color: var(--window-accent);
   display: inline-flex;
-  font-size: 9px;
-  font-weight: 700;
+  font-size: 10px;
+  font-weight: 600;
   gap: 5px;
 }
 
 .reading-row > div {
   display: flex;
+  flex-wrap: wrap;
   gap: 5px;
   min-width: 0;
   overflow: hidden;
@@ -424,7 +460,7 @@ a {
 
 .reading-row > div span {
   flex: 0 0 auto;
-  font-size: 8px;
+  font-size: 9px;
   padding: 3px 6px;
 }
 
@@ -436,8 +472,8 @@ a {
 
 .timeline-item {
   display: grid;
-  gap: 8px;
-  grid-template-columns: 9px 42px minmax(0, 1fr);
+  gap: 10px;
+  grid-template-columns: 9px 62px minmax(0, 1fr);
   min-height: 0;
   position: relative;
 }
@@ -465,13 +501,15 @@ a {
 .timeline-period {
   color: var(--window-accent);
   font-family: "JetBrains Mono", monospace;
-  font-size: 8px;
+  font-size: 9px;
   padding-top: 2px;
 }
 
 .timeline-item strong {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
+  font-weight: 550;
+  line-height: 1.5;
   margin-bottom: 3px;
 }
 
@@ -485,14 +523,14 @@ a {
   background: #f3e7e2;
   border: 1px solid var(--window-line);
   border-radius: 50%;
-  height: 38px;
+  height: 42px;
   object-fit: cover;
-  width: 38px;
+  width: 42px;
 }
 
 .contact-links {
   display: grid;
-  gap: 5px;
+  gap: 7px;
   margin-top: auto;
 }
 
@@ -501,10 +539,11 @@ a {
   border: 1px solid var(--window-line);
   border-radius: 8px;
   display: grid;
-  font-size: 9px;
-  gap: 7px;
+  font-size: 11px;
+  gap: 9px;
   grid-template-columns: auto minmax(0, 1fr) auto;
-  padding: 6px 8px;
+  min-height: 38px;
+  padding: 7px 10px;
   transition: background-color 160ms ease, border-color 160ms ease;
 }
 
@@ -521,6 +560,27 @@ a {
 
 .contact-link svg:last-child {
   color: var(--window-muted);
+}
+
+.desktop-footer {
+  align-items: center;
+  bottom: 29px;
+  color: var(--muted);
+  display: flex;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 9px;
+  justify-content: space-between;
+  left: 48px;
+  letter-spacing: .075em;
+  position: absolute;
+  right: 48px;
+  z-index: 100;
+}
+
+.desktop-footer-hint {
+  font-family: var(--site-font);
+  font-size: 10px;
+  letter-spacing: .02em;
 }
 
 .boot-screen {
@@ -559,9 +619,32 @@ a {
   z-index: 1000;
 }
 
+@media (min-width: 1600px) {
+  .window-layer {
+    margin-left: max(48px, calc((100vw - 1560px) / 2));
+    margin-right: max(48px, calc((100vw - 1560px) / 2));
+  }
+
+  .desktop-footer {
+    left: max(48px, calc((100vw - 1560px) / 2));
+    right: max(48px, calc((100vw - 1560px) / 2));
+  }
+}
+
 @media (max-width: 1100px) and (min-width: 981px) {
-  .desktop-window {
-    min-width: 260px;
+  .window-layer {
+    margin-left: 28px;
+    margin-right: 28px;
+  }
+
+  .window-titlebar {
+    grid-template-columns: 52px minmax(0, 1fr) 52px;
+    gap: 6px;
+    padding-inline: 10px;
+  }
+
+  .window-open-hint {
+    font-size: 8px;
   }
 
   .window-content {
@@ -578,12 +661,35 @@ a {
   }
 
   .about-window-copy h1 {
-    font-size: 23px;
+    font-size: 24px;
   }
 
   .window-contact {
-    left: 74%;
-    width: 23%;
+    left: 70%;
+    width: 30%;
+  }
+
+  .window-research .focus-item {
+    padding: 8px;
+  }
+
+  .window-research .focus-index {
+    font-size: 9px;
+    margin-bottom: 5px;
+  }
+
+  .window-research .focus-item strong {
+    font-size: 11px;
+    line-height: 1.4;
+  }
+
+  .window-research .research-window-content {
+    gap: 8px;
+  }
+
+  .desktop-footer {
+    left: 28px;
+    right: 28px;
   }
 }
 
@@ -592,32 +698,24 @@ a {
     overflow: auto;
   }
 
-
-
-
-
   .desktop-stage {
     height: auto;
     min-height: 100svh;
     overflow: visible;
-    padding: 18px 14px 42px;
+    padding: 0 24px 42px;
   }
-
-  .wallpaper-grid {
-    position: fixed;
-  }
-
 
   .window-layer {
     display: grid;
-    gap: 12px;
+    gap: 14px;
     height: auto;
     margin: 0 auto;
     max-width: 680px;
+    padding-top: 24px;
   }
 
   .desktop-window {
-    border-radius: 14px;
+    border-radius: 13px;
     filter: none;
     height: auto;
     left: auto;
@@ -649,7 +747,7 @@ a {
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    padding: 0 18px;
+    padding: 0 22px;
     visibility: hidden;
     transition:
       max-height 360ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -661,19 +759,19 @@ a {
   .desktop-window.is-expanded .window-content {
     max-height: 820px;
     opacity: 1;
-    padding: 18px;
+    padding: 22px;
     visibility: visible;
     transition-delay: 0s;
   }
 
   .about-window-content {
-    grid-template-columns: 92px minmax(0, 1fr);
+    grid-template-columns: 96px minmax(0, 1fr);
     min-height: 190px;
   }
 
   .desktop-avatar {
-    height: 92px;
-    width: 92px;
+    height: 96px;
+    width: 96px;
   }
 
   .project-window-list {
@@ -693,19 +791,36 @@ a {
   }
 
   .contact-window-content {
-    min-height: 220px;
+    min-height: 238px;
+  }
+
+  .contact-link {
+    min-height: 44px;
+  }
+
+  .desktop-footer {
+    bottom: auto;
+    justify-content: center;
+    left: 0;
+    margin-top: 28px;
+    position: relative;
+    right: 0;
+  }
+
+  .desktop-footer > span:first-child {
+    display: none;
   }
 }
 
 @media (max-width: 520px) {
   .desktop-stage {
-    padding-inline: 10px;
+    padding-inline: 14px;
   }
 
   .window-titlebar {
     gap: 5px;
-    grid-template-columns: 58px minmax(0, 1fr) 58px;
-    padding-inline: 11px;
+    grid-template-columns: 48px minmax(0, 1fr) 48px;
+    padding-inline: 12px;
   }
 
   .traffic-lights {
@@ -722,26 +837,31 @@ a {
   }
 
   .desktop-window.is-expanded .window-content {
-    padding: 15px;
+    padding: 18px;
   }
 
   .about-window-content {
     align-items: start;
     gap: 12px;
-    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-columns: 76px minmax(0, 1fr);
   }
 
   .desktop-avatar {
-    height: 72px;
-    width: 72px;
+    height: 76px;
+    width: 76px;
   }
 
   .about-window-copy h1 {
-    font-size: 22px;
+    font-size: 25px;
+  }
+
+  .eyebrow {
+    line-height: 1.5;
+    white-space: normal;
   }
 
   .project-window-item {
-    gap: 9px;
+    gap: 10px;
     grid-template-columns: 58px minmax(0, 1fr) auto;
   }
 

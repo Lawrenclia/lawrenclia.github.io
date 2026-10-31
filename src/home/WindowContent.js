@@ -79,9 +79,9 @@ function ResearchContent({ content }) {
   return html`
     <div className="research-window-content">
       <div className="focus-grid">
-        ${content.focus.map((item) => html`
+        ${content.focus.map((item, index) => html`
           <section key=${item.title} className="focus-item">
-            <span className="focus-index">0${content.focus.indexOf(item) + 1}</span>
+            <span className="focus-index">0${index + 1}</span>
             <strong>${item.title}</strong>
           </section>
         `)}

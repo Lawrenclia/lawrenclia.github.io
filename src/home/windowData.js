@@ -5,8 +5,8 @@ export const desktopWindows = [
     route: "about.html",
     icon: "UserRound",
     accent: "coral",
-    position: { left: "5%", top: "8%" },
-    size: { width: "39%", height: "44%" },
+    position: { left: "0%", top: "2%" },
+    size: { width: "43%", height: "62%" },
     initialZIndex: 60,
     content: {
       name: "Lawrenclia",
@@ -21,8 +21,8 @@ export const desktopWindows = [
     route: "projects.html",
     icon: "FolderCode",
     accent: "blue",
-    position: { left: "36%", top: "20%" },
-    size: { width: "53%", height: "48%" },
+    position: { left: "27%", top: "14%" },
+    size: { width: "53%", height: "64%" },
     initialZIndex: 50,
     content: {
       projects: [
@@ -53,8 +53,8 @@ export const desktopWindows = [
     route: "notes.html",
     icon: "Telescope",
     accent: "violet",
-    position: { left: "8%", top: "52%" },
-    size: { width: "43%", height: "35%" },
+    position: { left: "2%", top: "64%" },
+    size: { width: "44%", height: "36%" },
     initialZIndex: 30,
     content: {
       focus: [
@@ -70,8 +70,8 @@ export const desktopWindows = [
     route: "about.html#experience",
     icon: "Milestone",
     accent: "green",
-    position: { left: "57%", top: "6%" },
-    size: { width: "36%", height: "34%" },
+    position: { left: "76%", top: "0%" },
+    size: { width: "24%", height: "44%" },
     initialZIndex: 20,
     content: {
       timeline: [
@@ -96,8 +96,8 @@ export const desktopWindows = [
     route: "about.html#contact",
     icon: "Send",
     accent: "pink",
-    position: { left: "62%", top: "58%" },
-    size: { width: "30%", height: "29%" },
+    position: { left: "64%", top: "58%" },
+    size: { width: "36%", height: "42%" },
     initialZIndex: 40,
     content: {
       links: [
